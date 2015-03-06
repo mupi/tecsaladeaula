@@ -38,7 +38,8 @@
                 {'name': 'trueorfalse', 'label': 'Verdadeiro ou falso'},
                 {'name': 'relationship', 'label': 'Relacionar sentenças'},
                 {'name': 'html5', 'label': 'HTML5'},
-                {'name': 'markdown', 'label': 'Texto simples'}
+                {'name': 'markdown', 'label': 'Texto simples'},
+                {'name': 'text', 'label': 'Texto rico'}
             ];
 
             /*  Methods */
