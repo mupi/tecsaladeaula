@@ -1,0 +1,18 @@
+<div class="question textleft">
+    <span ng-bind-html="currentActivity.data.question|markdown"></span>
+    testeee
+</div>
+<div class="submit">
+    <!-- if no answer or incorrect -->
+    <div class="row" ng-if="! answer.correct">
+        <div class="col-lg-12 col-md-12 col-sm-12 textright">
+            <button class="btn btn-success" ng-click="nextStep()" translate>Continuar</button>
+        </div>
+    </div>
+    <!-- if correct -->
+    <div class="row" ng-if="answer.correct">
+        <div class="col-lg-12 col-md-12 col-sm-12 textright">
+            <button class="btn btn-success" ng-click="nextStep()" translate>Continuar</button>
+        </div>
+    </div>
+</div>
