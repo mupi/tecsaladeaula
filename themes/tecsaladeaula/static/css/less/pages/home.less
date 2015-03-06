@@ -1,8 +1,45 @@
 .home{
-  margin-top: 80px
+  margin-top: 80px;
+}
+#home{
+  font-family: 'Raleway', sans-serif;
+  .home-title{
+    font-size: 3vw;
+    font-family: 'Raleway';
+  }
 }
 .title_midia{
-  font-size: 2em;
+  font-size: 1.5em;
   text-transform: uppercase;
-  margin-top: 2.2em;
+  margin-top: 1.5em;
+  color: @brand-red;
+  font-weight: bold;
+}
+.logo-inova{
+  padding-top: 1em;
+}
+.carousel-home{
+  .carousel-inner{
+    display: table;
+  }
+  .carousel-control.left, .carousel-control.right{
+    background: none;
+    cursor: pointer;
+  }
+  .carousel-caption{
+    color: @gray-dark;
+    position: static;
+    text-shadow: none;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  .carousel-indicators{
+    position: static;
+    margin: 0 auto;
+  }
+}
+.testimonial{
+  font-size: 2em;
+  max-width: 80%;
+  margin: 0 auto;
 }
