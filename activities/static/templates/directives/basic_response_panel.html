@@ -1,20 +1,18 @@
 <div>
     <div ng-show="answer.correct" class="alert alert-success">
-        <i class="fa fa-smile-o"></i><span translate> Sua resposta está <strong>correta!</strong></span>
+        <span>Reposta submetida com sucesso</span>
     </div>
 
     <div ng-show="answer.correct === false" class="alert alert-danger">
-        <i class="fa fa-frown-o"></i> <span translate>Sua resposta está <strong>incorreta</strong>. Reveja o vídeo com mais atenção e tente novamente.</span>
+        <span>Reposta incorreta. Se tiver dúvidas não esqueça de usar o fórum abaixo =)</span>
     </div>
-
     <div class="submit">
         <!-- if no answer or incorrect -->
         <div class="row" ng-if="! answer.correct">
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <button onClick="ga('send', 'event', 'activity', 'skip activity');" class="btn btn-default" ng-click="nextStep(true)" translate>Pular</button>
+                <button onClick="ga('send', 'event', 'activity', 'skip activity');" class="btn btn-default" ng-click="nextStep(true)" translate>Próximo</button>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 textright">
-                <button onClick="ga('send', 'event', 'activity', 'rewatch video');" class="btn btn-info" ng-click="play()" translate>Rever o vídeo</button>
                 <button class="btn btn-success" ng-click="sendAnswer()" translate>Enviar</button>
             </div>
         </div>
