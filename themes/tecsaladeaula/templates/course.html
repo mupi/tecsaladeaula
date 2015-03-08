@@ -4,6 +4,7 @@
 {% load i18n %}
 {% load timtec_markdown %}
 {% load is_assistant_or_coordinator %}
+{% load is_enrolled %}
 
 {% if in_admin %}
     {% block js %} {{block.super}}
@@ -383,6 +384,10 @@ wrapper-course-intro
                     {% endif %}
 
                     <!-- END ABSTRACT -->
+
+                    {% if user|is_enrolled:course and course.has_started %}
+                        <a href="{% url "resume_course" course.slug %}" class="btn btn-success">Continuar curso</a>
+                    {% endif %}
 
                     <!-- COURSE-INSTRUCTORS -->
                     {%  include '_course_authors_inline.html' %}
