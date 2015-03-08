@@ -1,0 +1,11 @@
+Olá! Confirmamos seu cadastro na plataforma Mupi :)
+
+Estamos felizes por você estar aqui e termos a oportunidade de repensar juntos o uso de tecnologia na educação.
+
+Por favor, clique no link abaixo para confirmar o seu endereço de e-mail.
+
+{{ activate_url }}
+
+
+Abraços,
+Equipe Mupi
