@@ -35,8 +35,8 @@ MANAGERS = (ADMINS[1],)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
-DEFAULT_FROM_EMAIL = 'donotreply-dev@m.timtec.com.br'
-CONTACT_RECIPIENT_LIST = ['timtec-dev@listas.hacklab.com.br', ]
+DEFAULT_FROM_EMAIL = 'contato@mupi.me'
+CONTACT_RECIPIENT_LIST = ['contato@mupi.me', ]
 
 TERMS_ACCEPTANCE_REQUIRED = True
 
@@ -499,7 +499,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "[timtec] "
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[tecsaladeaula] "
 ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.SignupForm'
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
