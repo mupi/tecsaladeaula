@@ -54,9 +54,9 @@
                 // $scope.question_votes = $scope.question.votes;
                 $scope.editor_enabled = true;
                 ForumAnswer.query({question: questionId, user: userId}, function(current_user_answer){
-                    if (current_user_answer.length !== 0) {
-                        $scope.editor_enabled = false;
-                    }
+                    // if (current_user_answer.length !== 0) {
+                    //     $scope.editor_enabled = false;
+                    // }
                 });
 
                 $scope.new_answer = function () {
@@ -69,7 +69,7 @@
                             $scope.num_answers += 1;
                         });
                         $scope.answers.push(new_answer);
-                        $scope.editor_enabled = false;
+                        // $scope.editor_enabled = false;
                     }
 
                 };
