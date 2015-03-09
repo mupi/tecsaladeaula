@@ -1,0 +1,51 @@
+#forum {
+	#forum-content {
+		max-width: 800px;
+		margin: 0 auto;
+		.title{
+			margin: 0;
+		}
+		.content{
+			font-family: 'Lora', serif;
+			font-size: 1em;
+			line-height: 1.5em;
+			border: none;
+		}
+		.question{
+			font-size: 110%;
+			margin-bottom: 10px;
+			border-bottom: 1px solid #eee;
+			.title{
+				font-size: 1.5em;
+			}
+		}
+		.answer{
+			max-width: 800px;
+			margin: 0 auto;
+			padding-top: 5px;
+			padding-bottom: 10px;
+		}
+		.answer-text{
+			background-color: #fff;
+			padding: 5px;
+		}
+		.answer:nth-of-type(2n+1){
+			background-color: #F8F8F8;
+		}
+		.rating, .answer .rating{
+			padding-top: 10px;
+			.arrow-up{
+				border-width: 0 8px 8px 8px;
+			}
+			.arrow-down{
+				border-width: 8px 8px 0 8px;
+			}
+		}
+		.author{
+			border-top: none;
+			font-size: 80%;
+			padding: 5px 0;
+			text-align: left;
+		}
+	}
+}
