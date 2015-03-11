@@ -8,6 +8,8 @@
 {% block js %}
 {{ block.super }}
 {% compressed_js 'lesson' %}
+{% compressed_js 'forum' %}
+
 
 <script type="text/javascript" src="{% static 'js/introjs/lesson.js' %}"></script>
 
@@ -149,10 +151,6 @@ $(document).ready(function() {
                     <span ng-bind-html="currentUnit.side_notes"></span>
                 </div>
                 <!-- END SIDENOTES -->
-
-                <!-- FORUM -->
-                {% include "_forum_inline.html"  with course=lesson.course question_form=1 %}
-                <!-- END FORUM -->
             </div>
         </div>
         </div>
