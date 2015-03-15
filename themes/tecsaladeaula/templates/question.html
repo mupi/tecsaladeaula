@@ -37,17 +37,22 @@ wrapper-course-lesson
                 </div>
             </div>
             <div class="content col-sm-11">
-                <h1 class="title">{{ question.title }}</h1>
-                <div class="author">
-                    Por
-                    <a ng-if="!question.user_obj.name" href="/profile/{{ question.username }}">
-                        {{ question.username }}
-                    </a>
-                    <a ng-if="question.user_obj.name" href="/profile/{{ question.username }}">
-                        {{ question.user_obj.name }}
-                    </a>
-                    em <strong>{{ question.timestamp|date:"dd/MM/yy" }}</strong>
+                <div class="author-info clearfix">
+                    <div class="forum-avatar">
+                        <img src="{{ question.user_obj.picture }}" class="img-responsive img-rounded">
+                    </div>
+                    <div class="author">
+                        Por
+                        <a ng-if="!question.user_obj.name" href="/profile/{{ question.username }}">
+                            {{ question.username }}
+                        </a>
+                        <a ng-if="question.user_obj.name" href="/profile/{{ question.username }}">
+                            {{ question.user_obj.name }}
+                        </a>
+                        em <strong>{{ question.timestamp|date:"dd/MM/yy" }}</strong>
+                    </div>
                 </div>
+                <h1 class="title">{{ question.title }}</h1>
                 <div class="text" ng-bind-html="question.text|markdown"></div>
             </div>
         </div>
@@ -68,13 +73,18 @@ wrapper-course-lesson
                     </div>
                 </aside>
                 <section class="content col-sm-11">
-                    <div class="author">
-                        <a ng-if="!answer.user_obj.name" href="/profile/{{ answer.username }}">
-                            {{ answer.username }}
-                        </a>
-                        <a ng-if="answer.user_obj.name" href="/profile/{{ answer.username }}">
-                            {{ answer.user_obj.name }}
-                        </a> em <strong>{{ answer.timestamp|date:"dd/MM/yy" }}</strong> respondeu:
+                    <div class="author-info clearfix">
+                        <div class="forum-avatar">
+                            <img src="{{ answer.user_obj.picture }}" class="img-responsive img-rounded">
+                        </div>
+                        <div class="author">
+                            <a ng-if="!answer.user_obj.name" href="/profile/{{ answer.username }}">
+                                {{ answer.username }}
+                            </a>
+                            <a ng-if="answer.user_obj.name" href="/profile/{{ answer.username }}">
+                                {{ answer.user_obj.name }}
+                            </a> em <strong>{{ answer.timestamp|date:"dd/MM/yy" }}</strong> respondeu:
+                        </div>
                     </div>
                     <div class="answer-text" ng-bind-html="answer.text|markdown"></div>
 
