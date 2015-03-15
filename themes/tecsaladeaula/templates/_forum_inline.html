@@ -129,23 +129,29 @@
                                     <div class="votes">
                                         <p><span class="numbers-votes">{% verbatim %}{{question.votes}}{% endverbatim %}</span>{% trans 'votes' %}</p>
                                         <p><span class="numbers-answers">{% verbatim %}{{ question.answers.length }}{% endverbatim %}</span>{% trans 'answers' %}</p>
+                                        <p><span class="participantes">{{ course.students.length }}</span> participantes</p>
                                     </div>
 
                                     <div ng-if="!question.hidden && is_current_user_forum_moderator" ng-click="justification_modal(question)" class="hide-question btn btn-danger btn-sm">{% trans 'Hide' %}</div>
                                 </td>
                                 <td class="content">
                                     {% verbatim %}
+                                    <div class="clearfix">
+                                        <div class="forum-avatar">
+                                            <img src="{{ question.user_obj.picture }}" class="img-responsive img-rounded">
+                                        </div>
+                                        <div class="author">Pergunta feita feita em
+                                            <strong>{{ question.timestamp|date:"dd/MM/yy" }}</strong> por
+                                            <a ng-if="!question.user_obj.name" href="/profile/{{ question.username }}">
+                                                {{ question.username }}
+                                            </a>
+                                            <a ng-if="question.user_obj.name" href="/profile/{{ question.username }}">
+                                                {{ question.user_obj.name }}
+                                            </a>
+                                        </div>
+                                    </div>
                                     <h1 class="title"><a href="/forum/question/{{ question.slug }}">{{ question.title }}</a></h1>
                                     <div class="text" ng-bind-html="question.text|markdown|words:50"></div>
-                                    <div class="author">Pergunta feita feita em
-                                        <strong>{{ question.timestamp|date:"dd/MM/yy" }}</strong> por
-                                        <a ng-if="!question.user_obj.name" href="/profile/{{ question.username }}">
-                                            {{ question.username }}
-                                        </a>
-                                        <a ng-if="question.user_obj.name" href="/profile/{{ question.username }}">
-                                            {{ question.user_obj.name }}
-                                        </a>
-                                    </div>
                                     {% endverbatim %}
                                 </td>
                             </tr>
