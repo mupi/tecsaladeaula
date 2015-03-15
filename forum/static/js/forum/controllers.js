@@ -69,7 +69,18 @@
                             $scope.num_answers += 1;
                         });
                         $scope.answers.push(new_answer);
-                        // $scope.editor_enabled = false;
+                        $scope.new_text = '';
+                        $scope.new_answer_text = '';
+                        var eanswer = document.getElementsByClassName("answer");
+                        var total = eanswer.length;
+                        if (eanswer[--total]) {
+                            eanswer[--total].scrollIntoView();
+                        } else {
+                            var eforum = document.getElementById("forum");
+                            if (eforum){
+                                eforum.scrollIntoView();
+                            };
+                        };
                     }
 
                 };
