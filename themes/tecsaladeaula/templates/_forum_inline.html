@@ -129,7 +129,6 @@
                                     <div class="votes">
                                         <p><span class="numbers-votes">{% verbatim %}{{question.votes}}{% endverbatim %}</span>{% trans 'votes' %}</p>
                                         <p><span class="numbers-answers">{% verbatim %}{{ question.answers.length }}{% endverbatim %}</span>{% trans 'answers' %}</p>
-                                        <p><span class="participantes">{{ course.students.length }}</span> participantes</p>
                                     </div>
 
                                     <div ng-if="!question.hidden && is_current_user_forum_moderator" ng-click="justification_modal(question)" class="hide-question btn btn-danger btn-sm">{% trans 'Hide' %}</div>
