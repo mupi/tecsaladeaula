@@ -26,8 +26,8 @@ SITE_NAME = 'Tecnologia para Sala de Aula'
 SITE_DOMAIN = 'tecsaladeaula.com.br'
 
 ADMINS = (
-    ('Admin1', 'root@localhost'),
-    ('timtec-dev list', 'timtec-dev@listas.hacklab.com.br'),
+    ('anarute', 'anarute@mupi.me'),
+    ('contato', 'contato@mupi.me'),
 )
 
 MANAGERS = (ADMINS[1],)
@@ -48,7 +48,7 @@ DATABASES = {
 
 METRON_SETTINGS = {
     "google": {
-        1: "set-your-google-analytics-key-here",
+        1: "UA-60772693-1",
     },
 }
 
