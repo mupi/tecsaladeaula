@@ -114,6 +114,14 @@
                 ga('send', 'event', 'activity', 'submit');
             };
 
+            $scope.sendAnswerText = function() {
+                var progress;
+                console.log('mandando resposta texto');
+                progress = Progress.complete($scope.currentUnit.id);
+                $scope.currentUnit.progress = progress;
+                $scope.nextUnit();
+            };
+
             $scope.nextStep = function(skipComment) {
                 var progress;
                 if($scope.section === 'video') {
