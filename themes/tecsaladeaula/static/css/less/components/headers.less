@@ -4,3 +4,19 @@
 .wrapper{
 	padding-top: 75px;
 }
+.navbar-default{
+	.navbar-nav {
+		text-transform: uppercase;
+		.sign-in{
+			padding: 5px 10px;
+			margin: 10px 5px;
+			background-color: @brand-success;
+			color: #FFF;
+			border-radius: 5px;
+			&:hover, &:focus{
+				background-color: darken(@brand-success, 10%);
+				color: #FFF;
+			}
+		}
+	}
+}
