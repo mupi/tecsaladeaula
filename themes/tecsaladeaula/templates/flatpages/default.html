@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load django_markdown %}
+
+{% block title %}
+{{ flatpage.title }}
+{% endblock %}
+
+{% block body_attrs %}
+class="static-page-body"
+{% endblock %}
+
+{% block content %}
+        <div class="page static-page">
+            <div class="main-content">
+                {{ flatpage.content|markdown }}
+            </div>
+        </div>
+{% endblock %}
