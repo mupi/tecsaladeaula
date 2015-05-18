@@ -1,3 +1,14 @@
 #main-footer{
 	background-color: @brand-primary;
+	.nav-social-icons{
+		li{
+			font-size: 1.5em;
+			&:after{
+				content: "";
+			}
+			& a:hover{
+				color: darken(@brand-primary, 20%)
+			}
+		}
+	}
 }
