@@ -40,12 +40,11 @@ home
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center">
-                        <h1 class="home-title">Tecnologia para Sala de Aula </h1>
-                        <p class="lead">Aprenda o passo-a-passo de como utilizar as ferramentas gratuitas mais
+                        <h1 class="home-title">Formação de professores</h1>
+                        <p class="lead">Aprenda com nossos cursos online o passo-a-passo de como utilizar as ferramentas gratuitas mais
                             populares da internet em sua sala de aula.</p>
-                        <p class="lead">Próxima turma: <span class="opening-date">18 de maio</span></p>
                         <p>
-                            <a href="/pages/inscricoes" class="btn btn-success text-uppercase">Inscreva-se <strong>agora</strong>!</a>
+                            <a href="{% url 'courses' %}" class="btn btn-success text-uppercase">Conheça nossos cursos</a>
                         </p>
                     </div>
                 </div>
@@ -55,6 +54,7 @@ home
         <section id="courses" class="container">
 
             <header>
+                <h2 class="text-center"><strong>Comece agora</strong> a aprender como utilizar tecnologia para enriquecer suas aulas!</h2>
                 <div class="row">
                     {% if in_admin %}
                     <div class="col-xs-12 textright">
@@ -152,7 +152,7 @@ home
                                                   ng-hide="!bottom_home_flatpages.$resolved">
                     </modalmarkdowneditorwithtitle>
                 </div>
-                {% else %}
+                {% endif %}
 
                 <div class="highlight textcenter">
                     <div class="row midia">
@@ -181,12 +181,12 @@ home
                         </div>
                     </div>
                 </div>
-                {% endif %}
 
                 <div id="carousel-testimonials" class="carousel slide carousel-home" data-ride="carousel" data-interval="false">
 
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner" role="listbox">
+
                     <div class="item active">
                         <blockquote class="testimonial">
                             <p>
@@ -200,6 +200,7 @@ home
                         Professor (Ensino Fundamental e Médio) de Ciências, Robótica e Biologia e professor de Didática - pós-graduação da Uningá.
                       </div>
                     </div>
+
                     <div class="item">
                         <blockquote class="testimonial">
                             <p>
@@ -213,6 +214,7 @@ home
                         Professora de língua estrangeira no Centro de Ensino de Línguas na Unicamp na área de espanhol.
                       </div>
                     </div>
+
                     <div class="item">
                         <blockquote class="testimonial">
                             <p>
@@ -226,6 +228,7 @@ home
                         Professora de língua estrangeira no Centro de Ensino de Línguas na Unicamp na área de português para estrangeiros.
                       </div>
                     </div>
+
                     <div class="item">
                         <blockquote class="testimonial">
                             <p>
@@ -239,6 +242,7 @@ home
                         Coordenadora pedagógica e empresária - Educação infantil e Fundamental I - Jardim Escola Ursinhos Risonhos.
                       </div>
                     </div>
+
                     <div class="item">
                         <blockquote class="testimonial">
                             <p>
@@ -252,6 +256,7 @@ home
                         Professora de ensino fundamental I e tutora em cursos online.
                       </div>
                     </div>
+
                   </div>
 
                   <!-- Controls -->
