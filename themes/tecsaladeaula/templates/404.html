@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div id="non-existe" class="container">
+        <h1>Ops, você recebeu um 404!</h1>
+        <h2>A página que você está procurando não existe.</h2>
+        <div class="row">
+        	<div class="col-md-5">
+        		<img class="img-responsive" src="{% static 'img/404.gif' %}" />
+	        </div>
+	        <div class="col-md-7">
+		        <p>
+		        	404 é o código de resposta padrão para quando o servidor não consegue encontrar o recurso pedido. Normalmente acontece quando a página não existe mais ou o endereço digitado está incorreto.
+		        	É possível que seja culpa nossa, nos desculpe! E sinta-se vontade para nos deixar um recadinho no chat ali embaixo e evitar que outros exploradores se percam por aqui.
+		        </p>
+		        <p>Mas não se preocupe basta continuar navegando por aí que vai dar tudo certo :)</p>
+		        <p><a href="/">Ou clique aqui para voltar à página inicial.</a></p>
+		        <p>Talvez você queira acessar a página de <a href="{% url 'courses' %}">cursos</a>?</p>
+
+			</div>
+        </div>
+
+        <div class="panel panel-success">
+		  <div class="panel-body">
+				Página inspirada na do <a href="https://webmaker.org/pt-BR/" target="_blank">Webmaker</a>, que também é uma ótima fonte de estudos para aprender a criar na Web ;)
+		  </div>
+		</div>
+
+
+    </div>
+
+
+{% endblock %}
