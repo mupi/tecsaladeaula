@@ -139,8 +139,11 @@ class CourseView(DetailView):
                                                 .values_list('unit', flat=True)
             context['units_done'] = units_done
 
-            user_is_enrolled = self.object.students.filter(id=user.id).exists()
+            user_is_enrolled = self.object.is_enrolled(user=user)
+            user_enroll_is_pending = self.object.is_pending_enroll(user=user)
+
             context['user_is_enrolled'] = user_is_enrolled
+            context['user_enroll_is_pending'] = user_enroll_is_pending
 
         return context
 
