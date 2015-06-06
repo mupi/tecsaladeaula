@@ -240,6 +240,18 @@ class CourseStudent(models.Model):
         return u'{0} - {1}'.format(self.course, self.user)
 
     @property
+    def is_enrolled(self):
+        if self.status == self.STATES[1][0]:
+            return True
+        return False
+
+    @property
+    def is_pending(self):
+        if self.status == self.STATES[0][0]:
+            return True
+        return False
+
+    @property
     def units_done(self):
         return StudentProgress.objects.exclude(complete=None)\
                                       .filter(user=self.user, unit__lesson__course=self.course)

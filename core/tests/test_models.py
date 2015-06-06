@@ -117,3 +117,26 @@ def test_course_student_registration_number():
     enroll = mommy.make('CourseStudent', id=1234567, created_at=datetime.datetime(2014, 05, 05))
     expected_registration_number = '2014234567'
     assert enroll.registration_number == expected_registration_number
+
+
+@pytest.mark.django_db
+def test_course_student_is_pending():
+    enroll = mommy.make('CourseStudent', status='1')
+    assert enroll.is_pending
+
+    enroll = mommy.make('CourseStudent', status='2')
+    assert not enroll.is_pending
+
+    enroll = mommy.make('CourseStudent', status='3')
+    assert not enroll.is_pending
+
+@pytest.mark.django_db
+def test_course_student_is_enrolled():
+    enroll = mommy.make('CourseStudent', status='2')
+    assert enroll.is_enrolled
+
+    enroll = mommy.make('CourseStudent', status='1')
+    assert not enroll.is_enrolled
+
+    enroll = mommy.make('CourseStudent', status='3')
+    assert not enroll.is_enrolled
