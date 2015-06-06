@@ -1,8 +1,6 @@
 # coding: utf-8
-
+import datetime
 import pytest
-
-from django.utils import timezone
 
 from model_mommy import mommy
 from core.models import CourseStudent
@@ -112,10 +110,10 @@ def test_get_current_user_classes(user):
 
 @pytest.mark.django_db
 def test_course_student_registration_number():
-    enroll = mommy.make('CourseStudent', id=123)
-    expected_registration_number = '%s000123' % timezone.now().year
+    enroll = mommy.make('CourseStudent', id=123, created_at=datetime.datetime(2015, 05, 05))
+    expected_registration_number = '2015000123'
     assert enroll.registration_number == expected_registration_number
 
-    enroll = mommy.make('CourseStudent', id=1234567)
-    expected_registration_number = '%s234567' % timezone.now().year
+    enroll = mommy.make('CourseStudent', id=1234567, created_at=datetime.datetime(2014, 05, 05))
+    expected_registration_number = '2014234567'
     assert enroll.registration_number == expected_registration_number

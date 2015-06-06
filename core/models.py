@@ -312,7 +312,7 @@ class CourseStudent(models.Model):
     @property
     def registration_number(self):
         register = '%.6d' % self.id
-        return '%s%s' % (timezone.now().year, register[-6:])
+        return '%s%s' % (self.created_at.year, register[-6:])
 
 
 class CourseProfessor(models.Model):
