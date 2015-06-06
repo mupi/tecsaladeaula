@@ -89,6 +89,7 @@ class Course(models.Model):
     home_published = models.BooleanField(default=False)
     default_class = models.OneToOneField(Class, verbose_name=_('Default Class'), related_name='default_course', null=True, blank=True)
     tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
+    payment_url = models.URLField(_('Payment URL'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Course')
