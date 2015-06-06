@@ -12,6 +12,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import Template, Context
 from django.contrib.contenttypes import generic
 from django.conf import settings
+from django.utils import timezone
 from autoslug import AutoSlugField
 
 from notes.models import Note
@@ -215,8 +216,17 @@ class Course(models.Model):
 
 
 class CourseStudent(models.Model):
+
+    STATES = (
+        ('1', _('Pending')),
+        ('2', _('OK')),
+        ('3', _('Cancelled')),
+    )
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Student'))
     course = models.ForeignKey(Course, verbose_name=_('Course'))
+    status = models.CharField(_('Status'), choices=STATES, default=STATES[0][0], max_length=1)
+    created_at = models.DateTimeField(_('Created At'), default=timezone.now)
 
     class Meta:
         unique_together = (('user', 'course'),)
@@ -298,6 +308,11 @@ class CourseStudent(models.Model):
 
     def forum_answers_by_lesson(self):
         return self.user.forum_answers.values('question__lesson').annotate(Count('question__lesson'))
+
+    @property
+    def registration_number(self):
+        register = '%.6d' % self.id
+        return '%s%s' % (timezone.now().year, register[-6:])
 
 
 class CourseProfessor(models.Model):

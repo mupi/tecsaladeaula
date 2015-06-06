@@ -2,6 +2,8 @@
 
 import pytest
 
+from django.utils import timezone
+
 from model_mommy import mommy
 from core.models import CourseStudent
 
@@ -106,3 +108,14 @@ def test_get_current_user_classes(user):
     klass = mommy.make('Class', assistant=user, course=course)
 
     assert klass == course_professor.get_current_user_classes()[0]
+
+
+@pytest.mark.django_db
+def test_course_student_registration_number():
+    enroll = mommy.make('CourseStudent', id=123)
+    expected_registration_number = '%s000123' % timezone.now().year
+    assert enroll.registration_number == expected_registration_number
+
+    enroll = mommy.make('CourseStudent', id=1234567)
+    expected_registration_number = '%s234567' % timezone.now().year
+    assert enroll.registration_number == expected_registration_number
