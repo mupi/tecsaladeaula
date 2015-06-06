@@ -18,7 +18,7 @@ from core.views import (CourseView, GenericCourseView, CourseViewSet,
                         ClassCreateView, ClassUpdateView, ClassDeleteView,
                         ClassRemoveUserView, ClassAddUsersView, ClassViewSet,
                         FlatpageViewSet, CoursePictureUploadViewSet,
-                        ResumeCourseView, )
+                        ResumeCourseView, EnrollCourseAPIView)
 
 from activities.views import AnswerViewSet
 from forum.views import CourseForumView, QuestionView, QuestionCreateView, QuestionViewSet, QuestionVoteViewSet, AnswerVoteViewSet
@@ -59,6 +59,8 @@ router.register(r'course_stats', CourseStatsByLessonViewSet)
 router.register(r'course_classes', ClassViewSet)
 router.register(r'flatpage', FlatpageViewSet)
 
+router.register(r'enroll', EnrollCourseAPIView)
+
 urlpatterns = patterns(
     '',
     url(r'^$', HomeView.as_view(), name='home_view'),
@@ -76,6 +78,7 @@ urlpatterns = patterns(
     url(r'^accept_terms/$', AcceptTermsView.as_view(), name='accept_terms'),
     url(r'^course/(?P<slug>[-a-zA-Z0-9_]+)/intro/$', CourseView.as_view(), name='course_intro'),
     url(r'^course/(?P<slug>[-a-zA-Z0-9_]+)/enroll/$', EnrollCourseView.as_view(), name='enroll_course'),
+    #url(r'^api/enroll/$', EnrollCourseAPIView.as_view(), name='api_enroll_course'),
     url(r'^course/(?P<slug>[-a-zA-Z0-9_]+)/resume/$', ResumeCourseView.as_view(), name='resume_course'),
     url(r'^course/(?P<course_slug>[-a-zA-Z0-9_]+)/lesson/(?P<slug>[-a-zA-Z0-9_]+)/$', LessonDetailView.as_view(), name='lesson'),
     url(r'^html5/', TemplateView.as_view(template_name="html5.html")),

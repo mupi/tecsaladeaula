@@ -9,6 +9,7 @@
 {% if in_admin %}
     {% block js %} {{block.super}}
     <script type="text/javascript" src="{% static 'js/new-course/app.js' %}">// must be the 1º</script>
+    <script type="text/javascript" src="{% static 'js/course/app.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/factories/timtec-models.js' %}">// must be the 2º</script>
     <script type="text/javascript" src="{% static 'js/filters/text.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/new-course/directives.js' %}"></script>
@@ -27,7 +28,7 @@
     {% endblock %}
 
     {% block body_attrs %}
-    ng-app="new-course"
+    ng-app="course"
     {% endblock %}
 {% endif %}
 
@@ -411,7 +412,7 @@ wrapper-course-intro
                                     <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase">{% trans "Pending" %}</a>
 
                                 {% else %}
-                                    <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-subscribe" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
                                 {% endif %}
                             <div>
                             {% endif %}
@@ -612,6 +613,8 @@ wrapper-course-intro
         <!-- END ROW -->
     </section>
     <!-- END COURSE CONTENT -->
+
+    {% include '_course_enroll_modals.html' %}
 
     {% if in_admin %}
         {% include '_course_professors_modal.html' %}
