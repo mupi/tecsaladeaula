@@ -12,6 +12,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import Template, Context
 from django.contrib.contenttypes import generic
 from django.conf import settings
+from django.utils import timezone
 from autoslug import AutoSlugField
 
 from notes.models import Note
@@ -87,6 +88,8 @@ class Course(models.Model):
     start_date = models.DateField(_('Start date'), default=None, blank=True, null=True)
     home_published = models.BooleanField(default=False)
     default_class = models.OneToOneField(Class, verbose_name=_('Default Class'), related_name='default_course', null=True, blank=True)
+    tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
+    payment_url = models.URLField(_('Payment URL'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Course')
@@ -115,7 +118,10 @@ class Course(models.Model):
             CourseStudent.objects.create(course=self, user=student)
 
     def is_enrolled(self, user):
-        return CourseStudent.objects.filter(course=self, user=user).exists()
+        return CourseStudent.objects.filter(course=self, user=user, status=CourseStudent.STATES[1][0]).exists()
+
+    def is_pending_enroll(self, user):
+        return CourseStudent.objects.filter(course=self, user=user, status=CourseStudent.STATES[0][0]).exists()
 
     def get_thumbnail_url(self):
         if self.thumbnail:
@@ -215,8 +221,17 @@ class Course(models.Model):
 
 
 class CourseStudent(models.Model):
+
+    STATES = (
+        ('1', _('Pending')),
+        ('2', _('OK')),
+        ('3', _('Cancelled')),
+    )
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Student'))
     course = models.ForeignKey(Course, verbose_name=_('Course'))
+    status = models.CharField(_('Status'), choices=STATES, default=STATES[0][0], max_length=1)
+    created_at = models.DateTimeField(_('Created At'), default=timezone.now)
 
     class Meta:
         unique_together = (('user', 'course'),)
@@ -224,6 +239,18 @@ class CourseStudent(models.Model):
 
     def __unicode__(self):
         return u'{0} - {1}'.format(self.course, self.user)
+
+    @property
+    def is_enrolled(self):
+        if self.status == self.STATES[1][0]:
+            return True
+        return False
+
+    @property
+    def is_pending(self):
+        if self.status == self.STATES[0][0]:
+            return True
+        return False
 
     @property
     def units_done(self):
@@ -298,6 +325,11 @@ class CourseStudent(models.Model):
 
     def forum_answers_by_lesson(self):
         return self.user.forum_answers.values('question__lesson').annotate(Count('question__lesson'))
+
+    @property
+    def registration_number(self):
+        register = '%.6d' % self.id
+        return '%s%s' % (self.created_at.year, register[-6:])
 
 
 class CourseProfessor(models.Model):

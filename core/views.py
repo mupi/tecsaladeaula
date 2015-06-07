@@ -139,8 +139,11 @@ class CourseView(DetailView):
                                                 .values_list('unit', flat=True)
             context['units_done'] = units_done
 
-            user_is_enrolled = self.object.students.filter(id=user.id).exists()
+            user_is_enrolled = self.object.is_enrolled(user=user)
+            user_enroll_is_pending = self.object.is_pending_enroll(user=user)
+
             context['user_is_enrolled'] = user_is_enrolled
+            context['user_enroll_is_pending'] = user_enroll_is_pending
 
         return context
 
@@ -177,6 +180,24 @@ class EnrollCourseView(LoginRequiredMixin, RedirectView):
                 return reverse_lazy('course_intro', args=[course.slug, ])
         else:
             return reverse_lazy('accept_terms')
+
+
+class EnrollCourseAPIView(viewsets.ModelViewSet):
+    model = CourseStudent
+
+    def create(self, request, **kwargs):
+        course_id = self.request.DATA['id']
+        course = Course.objects.get(id=course_id)
+
+        try:
+            course.enroll_student(self.request.user)
+            enroll = self.model.objects.get(course=course, user=self.request.user)
+            return Response(
+                {'registration_number': enroll.registration_number},
+                status=200
+            )
+        except Exception:
+            return Response({}, status=400)
 
 
 class ResumeCourseView(LoginRequiredMixin, RedirectView):

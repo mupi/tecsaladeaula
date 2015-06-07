@@ -1,0 +1,62 @@
+{% load i18n %}
+<!-- ENROLL MODAL -->
+<div class="modal fade" id="modal-subscribe" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Você tem certeza que deseja inscrever-se neste curso?</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>Você está prestes a concluir a sua inscrição. Para isto, clique em <i>PROSSEGUIR</i>.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-md-4 col-xs-12">
+                        <a href="#" class="btn btn-lg btn-success col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Next" %}</a>
+                    </div>
+                    <div class="col-sm-7 col-md-7 col-xs-12 text-right tuition">
+                        <p>{% trans "Tuition" %}</p>
+                        <p><span class="value">{{ course.tuition }}</span><span class="currency">R$</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END ENROLL MODAL -->
+
+
+<!-- SUCCESS ENROLL MODAL -->
+<div class="modal fade" id="modal-subscribe-success" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Sua inscrição foi realizada com sucesso!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>A sua matrícula neste curso está com o status <b>Pendente</b>.</p>
+                        <p>Para concluí-la é necessário realizar o pagamento através deste <a href="{{ course.payment_url }}" target="_blank">link</a>.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>O número da sua inscrição é</p>
+                        <p>[[ registration_number ]]</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>Caso possua alguma dúvida, entre em contato conosco através do email <i>contato@mupi.me</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SUCCESS ENROLL MODAL -->

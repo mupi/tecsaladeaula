@@ -55,8 +55,11 @@ class StudentProgressAdmin(ModelAdmin):
 
 
 class CourseStudentAdmin(ModelAdmin):
-    search_fields = ('user__username',)
-    list_display = ('user', 'course')
+
+    search_fields = ('user__username', )
+    list_filter = ('status', )
+    list_display = ('user', 'course', 'status', 'registration_number', )
+
 
 admin.site.register(Video, VideoAdmin)
 admin.site.register(CourseProfessor, CourseProfessorAdmin)
