@@ -1827,32 +1827,6 @@ msgstr ""
 msgid "Signup"
 msgstr "Cadastre-se"
 
-#: themes/if/templates/account/signup.html:38
-#: themes/if/templates/ifs/signup-completion.html:107
-#: themes/if/templates/ifs/signup-completion.html:109
-msgid "Academic Identifier"
-msgstr "Matrícula"
-
-#: themes/if/templates/ifs/signup-completion.html:10
-msgid "Please verify and complete you account information"
-msgstr "Por favor verifique e complete seus dados"
-
-#: themes/tecsaladeaula/templates/course.html:631
-msgid "Next"
-msgstr "Prossegir"
-
-#: themes/timtec/templates/footer.html:9
-msgid "Terms of Use"
-msgstr "Termos de Uso"
-
-#: themes/timtec/templates/footer.html:43
-msgid "Clear"
-msgstr "Limpar"
-
-#: themes/timtec/templates/header.html:10
-msgid "Instituto TIM"
-msgstr "Instituto TIM"
-
 #: timtec/settings.py:86
 msgid "Brazilian Portuguese"
 msgstr "Português"
@@ -1891,14 +1865,8 @@ msgstr "Inglês"
 #~ msgid "New"
 #~ msgstr "Novo"
 
-#~ msgid "Publication"
-#~ msgstr "Publicação"
-
 #~ msgid "Edit text"
 #~ msgstr "Editar texto"
-
-#~ msgid "Este curso começa dia %(start_date)s e vocẽ já está inscrito."
-#~ msgstr "Este curso começa dia %(start_date)s e você já está inscrito"
 
 #~ msgid "Settings"
 #~ msgstr "Configurações"
