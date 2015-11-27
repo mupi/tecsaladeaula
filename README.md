@@ -1,6 +1,6 @@
 #TIMTec Mooc
 
-## LICENSE - AGPLV3 
+## LICENSE - AGPLV3
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
@@ -13,7 +13,7 @@
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see LICENSE file here or 
+    along with this program.  If not, see LICENSE file here or
     [AGPLv3](http://www.gnu.org/licenses).
 
 [![Build Status](https://drone.io/github.com/hacklabr/timtec/status.png)](https://drone.io/github.com/hacklabr/timtec/latest)
@@ -115,8 +115,4 @@ Activate virtual env, then:
 In the root of repository:
 
     make karma_tests
-    
-    
-### Suporte
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/hacklabr/timtec?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
