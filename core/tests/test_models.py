@@ -141,6 +141,7 @@ def test_course_student_is_pending():
     enroll = mommy.make('CourseStudent', status='3')
     assert not enroll.is_pending
 
+
 @pytest.mark.django_db
 def test_course_student_is_enrolled():
     enroll = mommy.make('CourseStudent', status='2')
