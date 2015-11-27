@@ -16,7 +16,7 @@
     along with this program.  If not, see LICENSE file here or
     [AGPLv3](http://www.gnu.org/licenses).
 
-[![Build Status](https://drone.io/github.com/hacklabr/timtec/status.png)](https://drone.io/github.com/hacklabr/timtec/latest)
+[![Build Status](https://drone.io/github.com/mupi/tecsaladeaula/status.png)](https://drone.io/github.com/mupi/tecsaladeaula/latest)
 [![Coverage](https://coveralls.io/repos/hacklabr/timtec/badge.png)](https://coveralls.io/r/hacklabr/timtec)
 
 ## US-EN
