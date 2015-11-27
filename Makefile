@@ -28,7 +28,7 @@ endef
 create-staging:
 	virtualenv ~/env
 	~/env/bin/pip install -r requirements.txt
-	sudo `which npm` install -g less yuglify uglify-js cssmin ngmin --loglevel silent
+	sudo `which npm` install -g less yuglify uglify-js cssmin ng-annotate --loglevel silent
 	mkdir -p ~/webfiles/static
 	mkdir -p ~/webfiles/media
 
@@ -63,8 +63,6 @@ update-ifsul:
 	$(call base_update,ifsul)
 
 update-design:
-	$(call resetdb_to_backup,timtec-design)
-	$(call reset_media)
 	$(call base_update,design)
 
 update-production:
@@ -78,7 +76,7 @@ clean:
 	find . -type f -name '*.py[co]' -exec rm {} \;
 
 python_tests: clean
-	py.test --pep8 --flakes --splinter-webdriver=phantomjs --reuse-db --cov . . $*
+	py.test --pep8 --flakes --splinter-webdriver=phantomjs --cov . . $*
 
 js_tests:
 	find . -path ./bower_components -prune -o -path bower_components/ -prune -o -path ./node_modules -prune -o -regex ".*/vendor/.*" -prune -o -name '*.js' -exec jshint {} \;
@@ -101,8 +99,8 @@ setup_coveralls:
 	pip install -q coveralls
 
 setup_js:
-	sudo `which npm` install -g less@2.2 yuglify uglify-js cssmin karma karma-cli karma-phantomjs-launcher karma-jasmine jshint ngmin grunt-cli --loglevel silent
-	sudo npm install grunt grunt-angular-gettext
+	sudo `which npm` install -g less@2.2 yuglify uglify-js cssmin karma-cli jshint ng-annotate grunt-cli # --loglevel silent
+	sudo npm install grunt grunt-angular-gettext karma karma-jasmine karma-phantomjs-launcher
 
 setup_django: clean
 	python manage.py syncdb --all --noinput

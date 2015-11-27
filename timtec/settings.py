@@ -136,6 +136,9 @@ PIPELINE_COMPILERS = (
     'pipeline.compilers.less.LessCompiler',
 )
 
+# Source Map Less
+PIPELINE_LESS_ARGUMENTS = '--source-map=main.css.map'
+
 PIPELINE_CSS = {
     'common': {
         'source_filenames': (
@@ -255,6 +258,7 @@ PIPELINE_JS = {
             'js/lesson/services.js',
             'js/directives/markdowneditor.js',
             'js/directives/codemirror.js',
+            'js/directives/layout.js',
         ),
         'output_filename': 'js/lesson.js',
     },
@@ -262,11 +266,14 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/course_material/app.js',
             'js/course_material/controllers.js',
+            'js/course_material/services.js',
             'js/course_material/directives.js',
             'js/course_material/filters.js',
-            'js/course_material/services.js',
             'js/directives/markdowneditor.js',
             'dropzone/downloads/dropzone.js',
+            'angular-dropzone/lib/angular-dropzone.js',
+            'js/directives/alertPopup.js',
+            'js/directives/fixedBar.js',
         ),
         'output_filename': 'js/course_material.js',
     },
@@ -323,6 +330,17 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/course_permissions.js',
     },
+    'users_admin': {
+        'source_filenames': (
+            'js/users-admin/app.js',
+            'js/users-admin/controllers.js',
+            'js/users-admin/services.js',
+            'js/factories/timtec-models.js',
+            'js/directives/fixedBar.js',
+            'js/directives/alertPopup.js',
+        ),
+        'output_filename': 'js/users_admin.js',
+    },
 }
 
 MOMMY_CUSTOM_FIELDS_GEN = {
@@ -358,7 +376,7 @@ SECRET_KEY = 'e%6a01vfbue28$xxssu!9r_)usqjh817((mr+7vv3ek&@#p0!$'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
+    'core.loaders.TimtecThemeLoader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
@@ -440,7 +458,6 @@ INSTALLED_APPS = (
     'rosetta',
     'autoslug',
     # TIM Tec
-    'core',
     'accounts',
     'activities',
     'administration',
@@ -448,6 +465,7 @@ INSTALLED_APPS = (
     'course_material',
     'notes',
     'reports',
+    'core',
     # django-metron
     'metron',
     # allauth
@@ -490,6 +508,7 @@ TWITTER_ACESS_TOKEN = ''
 TWITTER_ACESS_TOKEN_SECRET = ''
 TWITTER_USER = ''
 
+YOUTUBE_API_KEY = ''
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

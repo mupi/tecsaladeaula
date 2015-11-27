@@ -9,7 +9,6 @@
 {% if in_admin %}
     {% block js %} {{block.super}}
     <script type="text/javascript" src="{% static 'js/new-course/app.js' %}">// must be the 1º</script>
-    <script type="text/javascript" src="{% static 'js/course/app.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/factories/timtec-models.js' %}">// must be the 2º</script>
     <script type="text/javascript" src="{% static 'js/filters/text.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/new-course/directives.js' %}"></script>
@@ -28,7 +27,7 @@
     {% endblock %}
 
     {% block body_attrs %}
-    ng-app="course"
+    ng-app="new-course"
     {% endblock %}
 {% endif %}
 
@@ -88,8 +87,7 @@ wrapper-course-intro
                                   title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}.">
                                 <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Go to course" %}</button>
                             </div>
-                        {% endif %}
-                        {% comment %}
+
                         {% else %} {# user is not enrolled #}
                             {% if course.has_started %}
                                 <a href="{% url "enroll_course" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Go to course" %}</a>
@@ -97,7 +95,7 @@ wrapper-course-intro
                                 <a href="{% url "enroll_course" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
                             {% endif %}
                         {% endif %}
-                        {% endcomment %}
+
                     </div>
 
             </div>

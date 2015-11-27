@@ -92,20 +92,30 @@
 
 
     /**
-     *  Provide a Course class. The property Class.fields contains the
+     *  Provide a Course Professor class. The property Class.fields contains the
      *  list of fields that reflects Course model in Django
      */
     app.factory('CourseProfessor', ['$resource', function($resource) {
-        var resourceConfig = {
+
+        return $resource('/api/course_professor/:id', {'id':'@id'}, {
             'update': {
                 'method': 'PUT'
             }
-        };
-        var CourseProfessor = $resource('/api/course_professor/:id', {'id':'@id'}, resourceConfig);
-        CourseProfessor.prototype.saveOrUpdate = function() {
-            return this.id > 0 ? this.$update() : this.$save();
-        };
-        return CourseProfessor;
+        });
+    }]);
+
+
+    /**
+     *  Provide a Course Author class. The property Class.fields contains the
+     *  list of fields that reflects Course model in Django
+     */
+    app.factory('CourseAuthor', ['$resource', function($resource) {
+
+        return $resource('/api/course_author/:id', {'id':'@id'}, {
+            'update': {
+                'method': 'PUT'
+            }
+        });
     }]);
 
 
@@ -241,7 +251,7 @@
      * A object that fetch info from Youtube. It expects a video ID and returns
      * a promise that video info will be fetched.
      */
-    app.factory('VideoData', ['$document', '$q', function($document, $q){
+    app.factory('VideoData', ['$document', '$q', 'YOUTUBE_API_KEY', function($document, $q, YOUTUBE_API_KEY){
         var funcName = 'getYoutubeData'+Math.random().toString(16).substring(2);
 
         var VideoData = function() {
@@ -249,8 +259,11 @@
                 this.deferred = $q.defer();
 
                 // youtube service
-                this.src = 'http://gdata.youtube.com/feeds/api/videos/'+
-                            vid + '?alt=json&callback=' + funcName;
+                //https://www.googleapis.com/youtube/v3/videos?part=snippet&id=7lCDEYXw3mM&key=AIzaSyC7Czwy79W_Xd-ANIIZScJ6aW8dMG13wFQ
+                this.src = 'https://www.googleapis.com/youtube/v3/videos?part=snippet&id=' +
+                            vid +
+                            '&key=' + YOUTUBE_API_KEY +
+                            '&alt=json&callback=' + funcName;
 
                 var script = $document[0].createElement('script');
                 script.type = 'text/javascript';
