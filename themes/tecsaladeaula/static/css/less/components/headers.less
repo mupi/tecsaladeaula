@@ -1,22 +1,31 @@
 .site-logo{
-	max-height: 100%;
+    max-height: 100%;
 }
 .wrapper{
-	padding-top: 75px;
+    padding-top: 75px;
 }
 .navbar-default{
-	.navbar-nav {
-		text-transform: uppercase;
-		.sign-in{
-			padding: 5px 10px;
-			margin: 10px 5px;
-			background-color: @gray-light;
-			color: #FFF;
-			border-radius: 5px;
-			&:hover, &:focus{
-				background-color: darken(@gray-light, 10%);
-				color: #FFF;
-			}
-		}
-	}
+    .navbar-nav {
+        text-transform: uppercase;
+        .sign-in, .sign-up{
+            padding: 5px 10px;
+            margin: 10px 5px;
+            color: #FFF;
+            border-radius: 5px;
+        }
+        .sign-in{
+            background-color: @gray-light;
+            &:hover, &:focus{
+                background-color: darken(@gray-light, 10%);
+                color: #FFF;
+            }
+        }
+        .sign-up{
+            background-color: #60A76F;
+            &:hover, &:focus{
+                background-color: darken(#60A76F, 10%);
+                color: #FFF;
+            }
+        }
+    }
 }

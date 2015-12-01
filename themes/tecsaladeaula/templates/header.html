@@ -109,6 +109,12 @@
                         </form>
                     </div>
                 </li>
+                <li>
+                    {% block header_signup_link %}
+                        <a class="dropdown-toggle sign-up" data-toggle="dropdown" href="#">{% trans 'Sign Up' %}</a>
+                        {% include '_signup_modal.html' %}
+                    {% endblock %}
+                </li>
             {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
