@@ -357,6 +357,28 @@ wrapper-course-intro
             </div>
 
             <div class="col-md-7 col-sm-8 hidden-xs">
+
+                <!-- COURSE TUITION -->
+                    <section class="tuition">
+                        <div class="page-header-double"><h3>Inscrição</h3></div>
+                        <div class="row">
+                            <div class="col-sm-7 col-md-7 col-xs-12">
+                                <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                            </div>
+                            {% if not user_is_enrolled %}
+                            <div class="col-sm-5 col-md-5 col-xs-12">
+                                {% if user_enroll_is_pending %}
+                                    <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase">{% trans "Pending" %}</a>
+
+                                {% else %}
+                                    <a href="#" data-toggle="modal" data-target="#modal-subscribe" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
+                                {% endif %}
+                            <div>
+                            {% endif %}
+                        </div>
+                    </section>
+                <!-- END COURSE TUITION -->
+
                 <!-- COURSE-SUMMARY -->
                 <section class="summary">
                     <!-- START DATE -->
@@ -396,27 +418,6 @@ wrapper-course-intro
                     <!-- END COURSE-INSTRUCTORS -->
                 </section>
                 <!-- END COURSE-SUMMARY -->
-
-                <!-- COURSE TUITION -->
-                    <section class="tuition">
-                        <div class="page-header-double"><h3>{% trans 'Tuition' %}</h3></div>
-                        <div class="row">
-                            <div class="col-sm-7 col-md-7 col-xs-12">
-                                <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
-                            </div>
-                            {% if not user_is_enrolled %}
-                            <div class="col-sm-5 col-md-5 col-xs-12">
-                                {% if user_enroll_is_pending %}
-                                    <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase">{% trans "Pending" %}</a>
-
-                                {% else %}
-                                    <a href="#" data-toggle="modal" data-target="#modal-subscribe" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
-                                {% endif %}
-                            <div>
-                            {% endif %}
-                        </div>
-                    </section>
-                <!-- END COURSE TUITION -->
 
                 <!-- COURSE-LESSONS -->
                     {% if in_admin %}
