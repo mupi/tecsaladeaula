@@ -368,7 +368,7 @@ wrapper-course-intro
                             {% if not user_is_enrolled %}
                             <div class="col-sm-5 col-md-5 col-xs-12">
                                 {% if user_enroll_is_pending %}
-                                    <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase">{% trans "Pending" %}</a>
+                                    <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">{% trans "Pending" %}</a>
 
                                 {% else %}
                                     <a href="#" data-toggle="modal" data-target="#modal-subscribe" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
