@@ -93,7 +93,15 @@ $(document).ready(function() {
             <!-- END UNITS NAVIGATION FOR PHONES -->
             {% endverbatim %}
 
-            <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12">
+            <div class="col-md-8 col-sm-10 col-xs-12">
+
+                <!-- SIDENOTES -->
+                <div ng-show="currentUnit.side_notes" class="side-notes">
+                    <h3>Orientações</h3>
+                    <span ng-bind-html="currentUnit.side_notes"></span>
+                </div>
+                <!-- END SIDENOTES -->
+
                 <!--
                 this class exists to circunvent a flash + youtube api error
                 in which if the video div is really hidden the api breaks
@@ -131,7 +139,7 @@ $(document).ready(function() {
             <!-- div ng-view></div -->
 
             <!-- NOTES -->
-            <div class="col-lg-3 col-md-3 col-sm-10 col-xs-12 col-md-offset-0 col-sm-offset-1" id="student-notes">
+            <div class="col-md-3 col-sm-10 col-xs-12 col-md-offset-0 col-sm-offset-1" id="student-notes">
                 <h3 class="top">{% trans 'My Annotations' %}</h3>
                 <div class="tab-content">
                     {% include "_notes_inline.html" %}
@@ -141,18 +149,7 @@ $(document).ready(function() {
         </div>
         <!-- END ROW -->
 
-        <div class="row">
-            <div class="col-lg-8 col-sm-10 col-lg-offset-1 col-sm-offset-1" id="materials">
-                <!-- SIDENOTES -->
-                <div class="side-notes">
-                    <div class="page-header-double">
-                        <h3>Orientações</h3>
-                    </div>
-                    <span ng-bind-html="currentUnit.side_notes"></span>
-                </div>
-                <!-- END SIDENOTES -->
-            </div>
-        </div>
+
         </div>
     </section>
     <!-- END COURSE CONTENT -->
