@@ -371,7 +371,7 @@ wrapper-course-intro
                                     <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">{% trans "Pending" %}</a>
 
                                 {% else %}
-                                    <a href="#" data-toggle="modal" data-target="#modal-subscribe" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal-subscribe-success" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
                                 {% endif %}
                             <div>
                             {% endif %}
