@@ -363,7 +363,11 @@ wrapper-course-intro
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
-                                <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% if course.tuition != 0 %}
+                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% else %}
+                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                {% endif %}
                             </div>
                             {% if not user_is_enrolled %}
                             <div class="col-sm-5 col-md-5 col-xs-12">
