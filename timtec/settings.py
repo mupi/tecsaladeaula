@@ -36,6 +36,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'tecsaladeaula.com.br'
 DEFAULT_FROM_EMAIL = 'contato@mupi.me'
 CONTACT_RECIPIENT_LIST = ['contato@mupi.me', ]
+EMAIL_SUPPORT = 'suporte@mupi.me'
 
 TERMS_ACCEPTANCE_REQUIRED = True
 

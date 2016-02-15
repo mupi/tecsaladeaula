@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.contrib.auth import get_user_model
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import get_template
+from django.template import Context
 
 User = get_user_model()
-
 
 class ProfileEditForm(forms.ModelForm):
     email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
@@ -49,5 +52,19 @@ class AcceptTermsForm(forms.Form):
 class SignupForm(AcceptTermsForm):
 
     def signup(self, request, user):
-        user.accepted_terms = self.cleaned_data['accept_terms']
+        username = self.cleaned_data['username']
+	email = self.cleaned_data['email']        
+ 
+	now = datetime.datetime.now()
+
+	user.accepted_terms = self.cleaned_data['accept_terms']
         user.save()
+        send_mail( 'Novo Usuário Cadastrado',
+		   get_template('account/email/email_new_user_message.txt').render(Context({
+			'date' : now.strftime("%d/%m/%Y"),
+			'time' : now.strftime("%H:%M"),
+			'username': username,                   	
+			'email': email			
+                   })), 
+	           settings.EMAIL_SUPPORT, 
+                   [settings.EMAIL_SUPPORT])
