@@ -10,9 +10,10 @@ from django.template import Context
 
 User = get_user_model()
 
-class ProfileEditForm(forms.ModelForm):
-    email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
 
+class ProfileEditForm(forms.ModelForm):
+
+    email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
     password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
 
@@ -53,18 +54,10 @@ class SignupForm(AcceptTermsForm):
 
     def signup(self, request, user):
         username = self.cleaned_data['username']
-	email = self.cleaned_data['email']        
- 
-	now = datetime.datetime.now()
+        email = self.cleaned_data['email']
 
-	user.accepted_terms = self.cleaned_data['accept_terms']
+        now = datetime.datetime.now()
+
+        user.accepted_terms = self.cleaned_data['accept_terms']
         user.save()
-        send_mail( 'Novo Usuário Cadastrado',
-		   get_template('account/email/email_new_user_message.txt').render(Context({
-			'date' : now.strftime("%d/%m/%Y"),
-			'time' : now.strftime("%H:%M"),
-			'username': username,                   	
-			'email': email			
-                   })), 
-	           settings.EMAIL_SUPPORT, 
-                   [settings.EMAIL_SUPPORT])
+        send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
