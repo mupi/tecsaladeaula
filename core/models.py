@@ -116,9 +116,11 @@ class Course(models.Model):
     def enroll_student(self, student):
         if not Class.objects.filter(course=self, students=student).exists():
             self.default_class.students.add(student)
-
         if not CourseStudent.objects.filter(course=self, user=student).exists():
-            CourseStudent.objects.create(course=self, user=student)
+            if self.tuition == 0:
+                CourseStudent.objects.create(course=self, user=student, status='2')
+            else:
+                CourseStudent.objects.create(course=self, user=student)
 
     def is_enrolled(self, user):
         return CourseStudent.objects.filter(course=self, user=user, status=CourseStudent.STATES[1][0]).exists()

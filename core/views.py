@@ -186,6 +186,7 @@ class EnrollCourseView(LoginRequiredMixin, RedirectView):
             return '{}?next={}'.format(reverse_lazy('accept_terms'), self.request.path)
 
 
+
 class EnrollCourseAPIView(viewsets.ModelViewSet):
     model = CourseStudent
 
@@ -197,7 +198,7 @@ class EnrollCourseAPIView(viewsets.ModelViewSet):
             course.enroll_student(self.request.user)
             enroll = self.model.objects.get(course=course, user=self.request.user)
             return Response(
-                {'registration_number': enroll.registration_number},
+                {'registration_number': enroll.registration_number, 'enroll_status': enroll.status, },
                 status=200
             )
         except Exception:

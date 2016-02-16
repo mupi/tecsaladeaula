@@ -437,10 +437,12 @@
                     location.reload();
                 });
                 Enroll.save({id: course_id}, function success(data) {
-                    $('#modal-subscribe').modal('toggle');
                     $scope.registration_number = data.registration_number;
-
-                    $('#modal-subscribe-success').modal('show');
+                    if ($scope.course.tuition != 0){
+                        $('#modal-subscribe-success').modal('show');
+                    } else {
+                        location.reload();
+                    }
                 });
             };
 
