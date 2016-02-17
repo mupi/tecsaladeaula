@@ -186,7 +186,6 @@ class EnrollCourseView(LoginRequiredMixin, RedirectView):
             return '{}?next={}'.format(reverse_lazy('accept_terms'), self.request.path)
 
 
-
 class EnrollCourseAPIView(viewsets.ModelViewSet):
     model = CourseStudent
 
