@@ -77,27 +77,6 @@ wrapper-course-intro
                     <h1>{{course.name}}</h1>
                     {% include "_course-details-inline.html" with course=course %}
                 </div>
-                    <div class="col-sm-4 col-md-3 col-xs-12 textright">
-                        {% if user_is_enrolled and not course.has_started %}
-                            <div class="has-tooltip js-login-required uppercase"
-                                  href="#"
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  data-original-title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}."
-                                  title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}.">
-                                <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Go to course" %}</button>
-                            </div>
-
-                        {% else %} {# user is not enrolled #}
-                            {% if course.has_started %}
-                                <a href="{% url "enroll_course" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Go to course" %}</a>
-                            {% else %}
-                                <a href="{% url "enroll_course" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase">{% trans "Subscribe" %}</a>
-                            {% endif %}
-                        {% endif %}
-
-                    </div>
-
             </div>
             <!-- END ROW -->
         </div>
@@ -369,16 +348,31 @@ wrapper-course-intro
                                     <p class="text-success text-uppercase lead">Curso Gratuito!</p>
                                 {% endif %}
                             </div>
-                            {% if not user_is_enrolled %}
-                            <div class="col-sm-5 col-md-5 col-xs-12">
-                                {% if user_enroll_is_pending %}
-                                    <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">{% trans "Pending" %}</a>
 
+                            <div class="col-sm-5 col-md-5 col-xs-12">
+                                {% if not user_is_enrolled %}
+                                    {% if user_enroll_is_pending %}
+                                        <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+
+                                    {% else %}
+                                        <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
+                                    {% endif %}
                                 {% else %}
-                                    <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
+                                    {% if course.has_started %}
+                                        <a href="{% url "resume_course" course.slug %}" class="btn btn-lg btn-success uppercase">{% trans "Go to course" %}</a>
+                                    {% else %}
+                                        <div class="has-tooltip js-login-required uppercase"
+                                              href="#"
+                                              data-toggle="tooltip"
+                                              data-placement="bottom"
+                                              data-original-title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}."
+                                              title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}.">
+                                            <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Go to course" %}</button>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                             <div>
-                            {% endif %}
+
                         </div>
                     </section>
                 <!-- END COURSE TUITION -->
@@ -412,10 +406,6 @@ wrapper-course-intro
                     {% endif %}
 
                     <!-- END ABSTRACT -->
-
-                    {% if user|is_enrolled:course and course.has_started %}
-                        <a href="{% url "resume_course" course.slug %}" class="btn btn-success">Continuar curso</a>
-                    {% endif %}
 
                     <!-- COURSE-INSTRUCTORS -->
                     {%  include '_course_authors_inline.html' %}
