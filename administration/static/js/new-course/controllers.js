@@ -441,7 +441,8 @@
                     if ($scope.course.tuition != 0){
                         $('#modal-subscribe-success').modal('show');
                     } else {
-                        location.reload();
+                        // location.reload();
+                        $window.location.href = '/course/' + $scope.course.slug + '/resume';
                     }
                 });
             };
