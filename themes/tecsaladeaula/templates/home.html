@@ -98,6 +98,7 @@ home
                     <div class="block course col-md-4 col-sm-6">
                         <a href="{% url "course_intro" course.slug %}" class="course-link">
                             {% if not course.has_started %}<span class="coming-soon-label">{% trans 'Soon' %}</span>{% endif %}
+                            {% if course.tuition == 0 %}<span class="free-label">Gratuito!</span>{% endif %}
                             <div class="thumb-wrapper">
                                 <span class="mouseover"></span>
                                 <span class="thumb" {% if course.home_thumbnail %}style="background-image: url({{ course.home_thumbnail.url }})"{% endif %}></span>
