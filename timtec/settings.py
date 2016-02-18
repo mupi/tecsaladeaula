@@ -56,7 +56,7 @@ METRON_SETTINGS = {
 
 LOGIN_URL = '/accounts/login/'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/my-courses'
 
 AUTHENTICATION_BACKENDS = ("django.contrib.auth.backends.ModelBackend",
                            "allauth.account.auth_backends.AuthenticationBackend")

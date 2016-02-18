@@ -51,10 +51,7 @@ class HomeView(ListView):
     def dispatch(self, request, *args, **kwargs):
         user = self.request.user
 
-        if user.is_authenticated():
-            return redirect('/my-courses', *args, **kwargs)
-        else:
-            return super(HomeView, self).dispatch(request, *args, **kwargs)
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
 
 if settings.TWITTER_USER != '':
     from twitter import Twitter, OAuth
