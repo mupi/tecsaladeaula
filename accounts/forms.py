@@ -40,7 +40,7 @@ class ProfileEditForm(forms.ModelForm):
 
 
 class AcceptTermsForm(forms.Form):
-    accept_terms = forms.BooleanField(label=_('Accept '), initial=False, required=False)
+    accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)
 
     def clean_accept_terms(self):
         data = self.cleaned_data['accept_terms']
