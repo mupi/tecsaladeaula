@@ -441,8 +441,11 @@
                     if ($scope.course.tuition != 0){
                         $('#modal-subscribe-success').modal('show');
                     } else {
-                        // location.reload();
-                        $window.location.href = '/course/' + $scope.course.slug + '/resume';
+                        if ($scope.course.has_started){
+                            $window.location.href = '/course/' + $scope.course.slug + '/resume';
+                        } else {
+                            location.reload();
+                        }
                     }
                 });
             };
