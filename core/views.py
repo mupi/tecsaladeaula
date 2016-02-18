@@ -12,7 +12,6 @@ from django.views.generic.base import RedirectView, View, TemplateView
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
 from django.conf import settings
 from django.utils import timezone
 from rest_framework import viewsets
@@ -43,15 +42,8 @@ class HomeView(ListView):
     context_object_name = 'home_courses'
     template_name = "home.html"
 
-    permanent = False
-
     def get_queryset(self):
         return Course.objects.filter(home_published=True).order_by('home_position')
-
-    def dispatch(self, request, *args, **kwargs):
-        user = self.request.user
-
-        return super(HomeView, self).dispatch(request, *args, **kwargs)
 
 if settings.TWITTER_USER != '':
     from twitter import Twitter, OAuth
