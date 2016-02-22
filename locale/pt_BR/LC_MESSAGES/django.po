@@ -1043,7 +1043,7 @@ msgstr "Exportar"
 #: themes/default/templates/user-courses.html:90
 #, python-format
 msgid " This course starts on %(start_date)s and you are already subscribed"
-msgstr "Este curso começa em %(start_date)s e você já está inscrito"
+msgstr "Este curso começa em %(start_date)s e você já se inscreveu"
 
 #: themes/default/templates/course.html:94
 #: themes/default/templates/course.html:98
@@ -1847,8 +1847,8 @@ msgstr "Inglês"
 #~ msgstr "Publicação"
 
 #, fuzzy
-#~ msgid "Este curso começa dia %(start_date)s e vocẽ já está inscrito."
-#~ msgstr "Este curso começa dia %(start_date)s e você já está inscrito"
+#~ msgid "Este curso começa dia %(start_date)s e vocẽ já se inscreveu."
+#~ msgstr "Este curso começa dia %(start_date)s e você já se inscreveu."
 
 #~ msgid "Questions & Answers"
 #~ msgstr "Perguntas e Respostas"
