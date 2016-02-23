@@ -78,7 +78,7 @@ def test_custom_login_does_not_redirect_to_unsafe_next(admin_client):
     response = admin_client.get('/accounts/login/', {'next': 'http://fakenext.com/profile/edit'})
 
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/my-courses'
+    assert response['Location'] == 'http://testserver/courses'
 
 
 @pytest.mark.django_db
@@ -116,14 +116,14 @@ def test_admin_user(admin_client):
 def test_username_login(client, user):
     response = client.post('/accounts/login/', {'login': user.username, 'password': 'password'})
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/my-courses'
+    assert response['Location'] == 'http://testserver/courses'
 
 
 @pytest.mark.django_db
 def test_email_login(client, user):
     response = client.post('/accounts/login/', {'login': user.email, 'password': 'password'})
     assert response.status_code == 302
-    assert response['Location'] == 'http://testserver/my-courses'
+    assert response['Location'] == 'http://testserver/courses'
 
 
 @pytest.mark.django_db
