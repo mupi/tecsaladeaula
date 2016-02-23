@@ -16,7 +16,6 @@ from django.utils import timezone
 from autoslug import AutoSlugField
 from django.core.mail import send_mail
 from django.template.loader import get_template
-from django.template import Context
 
 from notes.models import Note
 from course_material.models import CourseMaterial
