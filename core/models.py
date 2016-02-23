@@ -121,7 +121,7 @@ class Course(models.Model):
 
     def enroll_student(self, student):
         now = datetime.datetime.now()
-        course_link = 'http://tecsaladeaula.com.br/course/'+self.slug+'/intro/' 
+        course_link = 'http://tecsaladeaula.com.br/course/' + self.slug + '/intro/' 
 
         if not Class.objects.filter(course=self, students=student).exists():
             self.default_class.students.add(student)
