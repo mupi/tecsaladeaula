@@ -4,34 +4,34 @@
 </div>
 <div class="answers relationship-answers">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6">Coluna 1</div>
-        <div class="col-lg-6 col-md-6 col-sm-6">Coluna 2</div>
+        <div class="col-sm-6">Coluna 1</div>
+        <div class="col-sm-6">Coluna 2</div>
     </div>
     <br/>
     <div class="answer relationship-answers" ng-repeat="alt in currentActivity.data.column1 track by $index">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="col-sm-6">
                 <span ng-bind="($index+1)+'.'"></span>
                 <span class="editable-text">
                   <input type="text" ng-model="currentActivity.data.column1[$index]" placeholder="Texto para coluna 1"/>
                 </span>
             </div>
-            <div class="col-lg-5 col-md-5 col-sm-5">
+            <div class="col-sm-5">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-sm-4">
                         <input ng-model="currentActivity.expected[$index]" type="number"
                                name="unit-{{currentUnitId}}-alt-{{$index}}"
                                class="form-control"
                                id="numberbox-{{$index}}" />
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9">
+                    <div class="col-sm-8">
                         <span class="editable-text">
                           <input type="text" ng-model="currentActivity.data.column2[$index]" placeholder="Texto para coluna 2"/>
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-1 col-md-1 col-sm-1">
+            <div class="col-sm-1">
                 <button class="btn btn-danger"
                         title="Apagar alternativa"
                         ng-click="currentActivity.data.column1.splice($index,1);

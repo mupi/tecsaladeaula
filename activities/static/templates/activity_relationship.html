@@ -4,26 +4,26 @@
     </div>
     <div class="answers relationship-answers">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">Coluna 1</div>
-            <div class="col-lg-6 col-md-6 col-sm-6">Coluna 2</div>
+            <div class="col-sm-6">Coluna 1</div>
+            <div class="col-sm-6">Coluna 2</div>
         </div>
 
         <div class="answer relationship-answers" ng-repeat="alt in currentActivity.data.column1 track by $index">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-sm-6">
                     {{ $index+1 }}. {{ alt }}
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-sm-6">
                     <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="col-sm-4">
                             <select ng-model="answer.given[$index]"
                                     name="unit-{{currentUnitId}}-alt-{{$index}}"
-                                    class="form-control"
+                                    class="form-control text-center"
                                     id="numberbox-{{$index}}"
                                     ng-options="n for n in possibleAnswers">
                             </select>
                         </div>
-                        <div class="col-lg-9 col-md-9 col-sm-9">
+                        <div class="col-sm-8">
                             <label for="numberbox-{{$index}}">
                                 {{ currentActivity.data.column2[$index] }}
                             </label>
