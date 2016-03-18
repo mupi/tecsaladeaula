@@ -267,12 +267,52 @@ wrapper-course-intro
                     <!-- END COURSE-VIDEO -->
                 {% endif %}
 
+                <!-- COURSE TUITION FOR PHONES ONLY -->
+                    <section class="tuition visible-xs">
+                        <div class="page-header-double"><h3>Inscrição</h3></div>
+                        <div class="row">
+                            <div class="col-sm-7 col-md-7 col-xs-12">
+                                {% if course.tuition != 0 %}
+                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% else %}
+                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="col-sm-5 col-md-5 col-xs-12">
+                                {% if not user_is_enrolled %}
+                                    {% if user_enroll_is_pending %}
+                                        <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+
+                                    {% else %}
+                                        <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
+                                    {% endif %}
+                                {% else %}
+                                    {% if course.has_started %}
+                                        <a href="{% url "resume_course" course.slug %}" class="btn btn-lg btn-success uppercase">{% trans "Go to course" %}</a>
+                                    {% else %}
+                                        <div class="has-tooltip js-login-required uppercase"
+                                              href="#"
+                                              data-toggle="tooltip"
+                                              data-placement="bottom"
+                                              data-original-title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}."
+                                              title="{% blocktrans with start_date=course.start_date|date:"d/m/Y" %} This course starts on {{ start_date }} and you are already subscribed{% endblocktrans %}.">
+                                            <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Go to course" %}</button>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            <div>
+
+                        </div>
+                    </section>
+                <!-- END COURSE TUITION FOR PHONES ONLY -->
+
                 <!-- COURSE-INFO -->
                 <section class="course-info">
                     <!-- ROW -->
                     <div class="row">
                         <!-- COURSE-ABSTRACT - VISIBLE ONLY FOR PHONES -->
-                        <div class="hidden-lg hidden-md hidden-sm visible-xs col-xs-12">
+                        <div class="visible-xs col-xs-12">
                             <!-- ABSTRACT -->
                             <div class="page-header-double">
                                 <h3 class="top"><i ng-class="{'blink-text-danger':errors.abstract}" class="fa fa-angle-double-right"></i> {% trans 'Abstract' %}</h3>
@@ -324,21 +364,12 @@ wrapper-course-intro
                 </section>
                 <!-- END COURSE-INFO -->
 
-                <!-- COURSE-SUMMARY - VISIBLE ONLY FOR PHONES -->
-                <section class="summary hidden-lg hidden-md hidden-sm visible-xs row">
-                    <div class="col-xs-12">
-                        <!-- COURSE-INSTRUCTORS -->
-                        {%  include '_course_authors_inline.html' %}
-                    </div>
-                </section>
-                <!-- END COURSE-SUMMARY - VISIBLE ONLY FOR PHONES -->
-
             </div>
 
-            <div class="col-md-7 col-sm-8 hidden-xs">
+            <div class="col-md-7 col-sm-8">
 
                 <!-- COURSE TUITION -->
-                    <section class="tuition">
+                    <section class="tuition hidden-xs">
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
@@ -378,7 +409,7 @@ wrapper-course-intro
                 <!-- END COURSE TUITION -->
 
                 <!-- COURSE-SUMMARY -->
-                <section class="summary">
+                <section class="summary hidden-xs">
                     <!-- START DATE -->
                     {% if in_admin %}
                     <div class="page-header-double">
