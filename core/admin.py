@@ -2,7 +2,8 @@
 from django.contrib import admin
 from django.forms import Textarea
 from activities.admin import ModelAdmin
-from .models import *
+from django.db import models
+from .models import Class, Course, CourseProfessor, CourseStudent, Lesson, ProfessorMessage, StudentProgress, Unit, Video
 
 
 class LessonInline(admin.TabularInline):
