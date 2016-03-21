@@ -12,6 +12,7 @@
                 window.onPlayerStateChange.call($scope.currentUnit, event);
                 if (event.data === YT.PlayerState.ENDED) {
                     $scope.nextStep();
+                    mixpanel.track("Watched whole video");
                     if(!$scope.$$phase) {
                         $scope.$apply();
                     }

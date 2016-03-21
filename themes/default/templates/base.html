@@ -122,6 +122,7 @@
             var $modal = $("#login-modal");
             var $next = $modal.find('input[name=next]');
             $('a.js-login-required').click(function(e){
+                mixpanel.track("Opened sign in modal");
                 $next.val($(this).attr('href'));
                 $modal.modal();
                 return false;

@@ -437,16 +437,16 @@
                     location.reload();
                 });
                 Enroll.save({id: course_id}, function success(data) {
-                    $scope.registration_number = data.registration_number;
-                    if ($scope.course.tuition != 0){
-                        $('#modal-subscribe-success').modal('show');
-                    } else {
-                        if ($scope.course.has_started){
-                            $window.location.href = '/course/' + $scope.course.slug + '/resume';
-                        } else {
-                            location.reload();
-                        }
-                    }
+                  $scope.registration_number = data.registration_number;
+                  if ($scope.course.tuition != 0){
+                      $('#modal-subscribe-success').modal('show');
+                  } else {
+                      if ($scope.course.has_started){
+                          $window.location.href = '/course/' + $scope.course.slug + '/resume';
+                      } else {
+                          location.reload();
+                      }
+                  }
                 });
             };
 
