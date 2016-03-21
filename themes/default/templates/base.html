@@ -56,6 +56,10 @@
                 resize_activation_wrapper();
                 wrapper_min_height();
 
+                mixpanel.track_forms("#form-sign-up-page", "Sign up");
+                mixpanel.track_forms("#form-sign-up", "Sign up");
+                mixpanel.track_forms("#form-sign-in", "Sign in");
+
                 $('#start-intro').click(function(){
                     startIntro();
                 });

@@ -437,6 +437,9 @@
                     location.reload();
                 });
                 Enroll.save({id: course_id}, function success(data) {
+                  mixpanel.track("Subscribed a Course", {
+                    "Tuition": $scope.course.tuition
+                  });
                   $scope.registration_number = data.registration_number;
                   if ($scope.course.tuition != 0){
                       $('#modal-subscribe-success').modal('show');
