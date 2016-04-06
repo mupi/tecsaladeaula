@@ -37,6 +37,7 @@ EMAIL_HOST = 'tecsaladeaula.com.br'
 DEFAULT_FROM_EMAIL = 'contato@mupi.me'
 CONTACT_RECIPIENT_LIST = ['contato@mupi.me', ]
 EMAIL_SUPPORT = 'suporte@mupi.me'
+EMAIL_ACTIVITIES = 'atividades@mupi.me'
 
 TERMS_ACCEPTANCE_REQUIRED = True
 

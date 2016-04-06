@@ -1,0 +1,8 @@
+Olá {{ username }}, tudo bem?
+
+Vimos que você finalizou o curso {{ course_name }}!
+Por favor, responda este email nos contando o que você achou sobre o curso: pontos positivos e negativos. Assim conseguiremos melhorá-lo e torná-lo cada vez mais útil.
+
+Grande abraço,
+Naira
+Equipe Mupi
