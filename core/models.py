@@ -332,8 +332,8 @@ class CourseStudent(models.Model):
             if units_len:
                 units_done_len = self.units_done_by_lesson(lesson).count()
                 lesson_progress['progress'] = 100 * units_done_len / units_len
-                if(lesson_progress['progress'] == 100)
-                     send_mail('Parabéns por finalizar o curso! O que você achou?', get_template('core/email/email_user_when_course_finished.txt').render(Context({'username': student.username, 'course_name': self.name})), settings.EMAIL_ACTIVITIES, [student.email])
+                if lesson_progress['progress'] == 100:
+                    send_mail('Parabéns por finalizar o curso! O que você achou?', get_template('core/email/email_user_when_course_finished.txt').render(Context({'username': student.username, 'course_name': self.name})), settings.EMAIL_ACTIVITIES, [student.email])
                 lesson_progress['finish'] = self.get_lesson_finish_time(lesson)
             else:
                 lesson_progress['progress'] = 0
