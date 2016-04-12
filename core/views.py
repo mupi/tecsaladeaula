@@ -14,6 +14,9 @@ from django.contrib.flatpages.models import FlatPage
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.utils import timezone
+from django.core.mail import send_mail
+from django.template import Template, Context
+from django.template.loader import get_template
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import filters
@@ -391,12 +394,13 @@ class LessonDetailView(LoginRequiredMixin, DetailView):
         context = super(LessonDetailView, self).get_context_data(**kwargs)
         unit_content_type = ContentType.objects.get_for_model(Unit)
         course = self.object.course
+        user = self.request.user
         lessons = list(course.public_lessons)
         if lessons and self.object != lessons[-1]:
             index = lessons.index(self.object)
-            context['next_url'] = reverse_lazy('lesson',
-                                               args=[course.slug,
-                                                     lessons[index + 1].slug])
+            context['next_url'] = reverse_lazy('lesson', args=[course.slug, lessons[index + 1].slug])
+        else: 
+            send_mail('Parabéns por finalizar o curso! O que você achou?', get_template('core/email/email_user_when_course_finished.txt').render(Context({'username': user.username, 'course_name': course.name})), settings.EMAIL_ACTIVITIES, [user.email])
         context['unit_content_type_id'] = unit_content_type.id
         return context
 
