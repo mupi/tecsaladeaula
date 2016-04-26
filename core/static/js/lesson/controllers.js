@@ -110,6 +110,8 @@
             };
 
             $scope.sendAnswer = function() {
+		mixpanel.track("Activity done");
+
                 $scope.answer.activity = $scope.currentActivity.id;
                 $scope.answer.$update({activityId: $scope.answer.activity}).then(function(answer){
                     console.log(answer, answer.correct);
