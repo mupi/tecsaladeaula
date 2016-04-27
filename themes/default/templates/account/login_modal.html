@@ -53,6 +53,7 @@
                       </div>
                     </div>
                   </div>
+                  <input type="hidden" name="next" />
                 </form>
               </div>
             </div>
@@ -60,7 +61,9 @@
 
           <div class="col-sm-6 col-xs-12">
             <div class="bottom-xs left-xs right-xs top-xs">
+
               <h3 class="bottom-xs"><i class="fa fa-angle-double-right"></i> {% trans 'Sign Up' %}</h3>
+
               <div class="bottom-xs left-xs right-xs top-xs">
                 <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
                   <div class="form-group">
