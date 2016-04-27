@@ -1,28 +1,21 @@
 {% load timtec_markdown %}
-        <nav class="lesson-units hidden-xs">
-            <div class="btn-group" id="lesson-list-dropdown">
-                <button type="button" class="btn btn-sm btn-default">{{ lesson.name }}</button>
-                <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu">
-                    {% for list_lesson in lesson.course.public_lessons %}
-                        <li><a href="{% url 'lesson' list_lesson.course.slug list_lesson.slug %}">{{ list_lesson.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
+
+        <nav class="btn-group lesson-units hidden-xs" id="lesson-list-dropdown">
+            <button type="button" class="btn btn-default text-right dropdown-toggle" data-toggle="dropdown">
+                {{ lesson.name }} <i class="fa fa-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu">
+                {% for list_lesson in lesson.course.public_lessons %}
+                    <li><a href="{% url 'lesson' list_lesson.course.slug list_lesson.slug %}">{{ list_lesson.name }}</a></li>
+                {% endfor %}
+            </ul>
         </nav>
 
         <nav class="course-lessons hidden-xs">
             <div class="row">
                 <div class="col-sm-8">
-                    <h1>{{ lesson.name }}</h1>
                     <div class="description">{{ lesson.desc|timtec_markdown }}</div>
                 </div>
-                <div class="col-sm-4">
-                    <a href="http://forum.tecsaladeaula.com.br" target="_blank" class="ask-a-question btn btn-danger uppercase pull-right"><i class="fa fa-comments"></i> Fazer uma pergunta</a>
-                </div>
-
             </div>
         </nav>
 

@@ -1,0 +1,126 @@
+{% load i18n %}
+{% load is_assistant_or_coordinator %}
+{% load socialaccount %}
+{% load in_group %}
+{% load static %}
+
+
+
+<nav id="main-navbar" class="navbar navbar-default navbar-fixed-top lesson-container" role="navigation">
+
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+          <span class="sr-only">{% trans 'Toggle navigation' %}</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" id="site-brand" href="/"><img src="{% static 'img/logo.png' %}" class="img-responsive site-logo"></a>
+      <h1 class="course-name bottom top">
+          <a href="{% url 'course_intro' course.slug %}">{{ course.name }}</a>
+      </h1>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <ul class="collapse navbar-collapse nav navbar-nav" id="main-navbar-collapse">
+    <li class="icon">
+      <a href="{% url 'course_intro' course.slug %}"
+      class="has-tooltip fa fa-home {% if '/intro/' in request.path %}active{% endif %}"
+      data-toggle="tooltip" data-placement="bottom" data-original-title="Página inicial do curso"></a>
+    </li>
+    <li class="icon">
+      <a href="{% url 'resume_course' course.slug %}"
+      class="has-tooltip fa fa-book {% if '/lesson/' in request.path %}active{% endif %}"
+      data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Resume course' %}"></a>
+    </li>
+    <li class="icon">
+      <a href="http://forum.tecsaladeaula.com.br" target="_blank"
+      class="has-tooltip fa fa-comments {% if '/forum/' in request.path %}active{% endif %}"
+      data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Forum' %}"></a>
+    </li>
+    <li class="icon">
+      <a href="{% url 'course_material' course.slug %}"
+      class="has-tooltip fa fa-file {% if '/material/' in request.path %}active{% endif %}"
+      data-toggle="tooltip" data-placement="bottom" data-original-title="Referências bibliográficas"></a>
+    </li>
+    <li class="icon">
+      <a href="{% url 'user_course_notes' course.slug %}"
+      class="has-tooltip fa fa-pencil-square-o {% if '/mynotes/' in request.path %}active{% endif %}"
+      data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Course notes' %}"></a>
+    </li>
+    {% if user|is_assistant_or_coordinator:course %}
+      <div class="dropdown">
+          <a class="has-tooltip fa fa-cog dropdown-toggle{% if '/messages/' in request.path or '/reports/' in request.path or '/classes/' in request.path %} active{% endif %}" data-placement="bottom" data-original-title="{% trans 'Tools' %}" id="course-tools" data-toggle="dropdown" aria-expanded="true"></a>
+          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="course-tools">
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                href="{% url 'messages' course.slug %}">{% trans 'Messages' %}</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                href="{% url 'reports' course.slug %}">{% trans 'Reports' %}</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                href="{% url 'classes' course.slug %}">{%  trans 'Classes' %}</a></li>
+          </ul>
+      </div>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        {% if user.is_superuser %}
+        <li>
+            <a class="dropdown-toggle {% if in_admin %}active{% endif %}"
+              data-toggle="dropdown" href="#">
+                {% trans 'Admin' %}
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                  <a href="{% url 'administration.home' %}">
+                    {% trans 'Home edit' %}</a>
+                </li>
+                <li>
+                  <a href="{% url 'administration.courses' %}" id="admin-link">
+                    {% trans 'Courses' %}</a>
+                </li>
+                <li>
+                  <a href="{% url 'administration.users' %}">{% trans 'Users' %}</a>
+                </li>
+            </ul>
+        </li>
+        {% elif user|in_group:'professors' %}
+            <li {% if in_admin %}class="active"{% endif %}><a href="{% url 'administration.courses' %}" id="admin-link">{% trans "Admin" %}</a></li>
+        {% endif %}
+        <li>
+            <a href="http://forum.tecsaladeaula.com.br" target="_blank">
+                Fórum
+            </a>
+        </li>
+        <li>
+            <a class="username dropdown-toggle" data-toggle="dropdown" href="#">
+                {{ user }}
+                <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'profile' %}">{% trans "Profile" %}</a></li>
+                <li><a href="{% url 'profile_edit' %}">{% trans "Edit Profile and Account Settings" %}</a></li>
+                <!-- <li><a href="">{% trans "Settings" %}</a></li> -->
+                <li class='divider'></li>
+                <li><a href="{% url 'user_courses' %}">{% trans "My Courses" %}</a></li>
+                <li><a href="{% url 'user_notes' %}">{% trans "My Notes" %}</a></li>
+                <li class='divider'></li>
+                <li><a href="{% url 'timtec_logout' %}">{% trans "Logout" %}</a></li>
+            </ul>
+        </li>
+    {% else %}
+        <li>
+            <a class="dropdown-toggle sign-in" data-toggle="dropdown" href="#">{% trans 'Sign In' %}</a>
+            {% include '_login_modal.html' %}
+        </li>
+        <li>
+            {% block header_signup_link %}
+                <a class="dropdown-toggle sign-up" data-toggle="dropdown" href="#">{% trans 'Sign Up' %}</a>
+                {% include '_signup_modal.html' %}
+            {% endblock %}
+        </li>
+    {% endif %}
+  </ul>
+
+</nav>
