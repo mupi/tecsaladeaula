@@ -137,8 +137,14 @@ $(document).ready(function() {
                             <a class="btn btn-info btn-lg text-uppercase" href="{{ next_url }}"><span>Vá para a próxima aula</span><i class="fa fa-caret-right"></i></a>
                         {% else %}
                             <p class="lead text-center">Parabéns por finalizar o curso!</p>
-                            <a class="btn btn-info btn-lg text-uppercase" href="{% url 'user_courses' %}"><span>Volte para seu painel de cursos</span><i class="fa fa-caret-right"></i></a>
-                        {% endif %}
+                            <a id="btn-end-course" class="btn btn-info btn-lg text-uppercase" href="{% url 'user_courses' %}"><span>Volte para seu painel de cursos</span><i class="fa fa-caret-right"></i></a>
+
+			    <script type="text/javascript">
+				$("#btn-end-course").show(function() {
+					mixpanel.track("Course ended"); 
+				});
+			    </script>
+			{% endif %}
                     </div>
                 </div>
             </div>
