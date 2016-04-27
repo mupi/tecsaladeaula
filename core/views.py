@@ -399,9 +399,6 @@ class LessonDetailView(LoginRequiredMixin, DetailView):
         if lessons and self.object != lessons[-1]:
             index = lessons.index(self.object)
             context['next_url'] = reverse_lazy('lesson', args=[course.slug, lessons[index + 1].slug]) 
-        else:
-            if lessons[index].unit_count > last_unit.position:
-                send_mail('Parabéns por finalizar o curso! O que você achou?', get_template('core/email/email_user_when_course_finished.txt').render(Context({'username': user.username, 'course_name': course.name})), settings.EMAIL_ACTIVITIES, [user.email])
         context['unit_content_type_id'] = unit_content_type.id
         return context
 
