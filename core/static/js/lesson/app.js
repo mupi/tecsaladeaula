@@ -14,6 +14,7 @@
         'forum',
         'notes',
         'directives.layout',
+        'angularUtils.directives.dirDisqus',
     ]);
 
 })(angular);

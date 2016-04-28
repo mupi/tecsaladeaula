@@ -11,8 +11,6 @@
 {% compressed_js 'forum' %}
 
 
-<script type="text/javascript" src="{% static 'js/introjs/lesson.js' %}"></script>
-
 {% endblock %}
 
 {% block wrapper_classes %}
@@ -89,7 +87,7 @@ $(document).ready(function() {
                 <h2>Unidades</h2>
                 <a data-placement="right"
                    title="{{unit.video.name}}"
-                   href="#/{{$index+1}}"
+                   href="#!/{{$index+1}}"
                    class="has-tooltip unit-link track" data-toggle="tooltip"
                    ng-repeat="unit in lesson.units"
                    ng-class="{watching: unit==currentUnit, done: unit.progress.complete}">
@@ -138,6 +136,7 @@ $(document).ready(function() {
                 -->
                 <div ng-class="{hidder: section!='video'}" class="video embed-responsive embed-responsive-16by9">
                     <div class="embed-responsive-item" id="youtube-player" youtube-player></div>
+
                 </div>
                 <div ng-show="section=='activity'" class="course-activity">
                     <ng:include src="activityTemplateUrl"></ng:include>
@@ -168,9 +167,27 @@ $(document).ready(function() {
 			{% endif %}
                     </div>
                 </div>
-            </div>
 
-            <!-- div ng-view></div -->
+                {% verbatim %}
+                {{ currentUnit.id }}
+                {{ currentUnit.title }}
+
+                var cunit = /#!\/(\d+)/.extract(document.location.hash, 1);
+                console.log($scope);
+                $scope.disqusConfig = {
+                    disqus_shortname: 'tecsaladeaula',
+                    disqus_identifier: cunit,
+                    disqus_url: window.location.href,
+                    disqus_title: $scope.section
+                };
+
+                <div class="row">
+                    <dir-disqus
+                      config="disqusConfig">
+                    </dir-disqus>
+                </div>
+                {% endverbatim %}
+
 
             <!-- NOTES -->
             <div class="notes-tool" id="student-notes">
