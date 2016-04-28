@@ -3,6 +3,12 @@
 
     var app = angular.module('lesson.controllers', []);
 
+    // configure existing services inside initialization blocks.
+    app.config(['$locationProvider', function($locationProvider) {
+      // Configure existing providers
+      $locationProvider.hashPrefix('!');
+    }]);
+
     app.controller('MainCtrl', ['$scope', 'LessonData', 'Answer', 'Progress', '$location', 'youtubePlayerApi', 'resolveActivityTemplate',
         function ($scope, LessonData, Answer, Progress, $location, youtubePlayerApi, resolveActivityTemplate) {
 
@@ -23,6 +29,7 @@
 
             $scope.selectUnit = function(unit) {
                 $scope.currentUnit = unit;
+
                 if(unit.video) {
                     $scope.section = 'video';
                     $scope.play(unit.video.youtube_id);
@@ -33,7 +40,8 @@
             };
 
             $scope.locationChange = function(unitIndex) {
-                $location.path('/' + unitIndex);
+              console.log('mudou location');
+              $location.path('/' + unitIndex);
             };
 
             $scope.nextUnit = function() {
@@ -179,11 +187,24 @@
                 $scope.play();
 
                 $scope.$on('$locationChangeSuccess', function (event, newLoc, oldLoc){
-                   index = /#\/(\d+)/.extract(document.location.hash, 1);
+                   index = /#!\/(\d+)/.extract(document.location.hash, 1);
                    index = parseInt(index, 10) - 1 || 0;
                    $scope.selectUnit(lesson.units[index]);
                 });
             });
+
+            var cunit = /#!\/(\d+)/.extract(document.location.hash, 1);
+            console.log($scope.lesson);
+            console.log($scope.currentUnit);
+            $scope.disqusConfig = {
+                disqus_shortname: 'tecsaladeaula',
+                disqus_identifier: cunit,
+                disqus_url: window.location.href,
+                disqus_title: $scope.section
+            };
+
+            // console.log($scope.disqusConfig);
+
         }
     ]);
 
