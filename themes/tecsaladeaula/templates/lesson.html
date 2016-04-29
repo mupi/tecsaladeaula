@@ -117,11 +117,13 @@ $(document).ready(function() {
 
             <div class="activity-column col-sm-8 col-sm-offset-4">
 
-              <div class="nav-complete col-sm-8">
-                <button ng-show="section=='video'" class="btn col-sm-6 pull-right"
+              <div ng-show="section=='video'" class="nav-complete col-sm-8">
+                <button class="btn col-sm-6 pull-right"
                   ng-click="nextStep()">Completar e continuar <i class="fa fa-check-square-o"></i></button>
-                <button class="col-sm-6 btn pull-right" ng-if="answer.correct"
-                  ng-click="nextStep()">Completar e continuar <i class="fa fa-check-square-o"></i></button>
+              </div>
+              <div ng-if="answer.correct" class="nav-complete col-sm-8">
+                <button class="col-sm-6 btn pull-right"
+                  ng-click="nextStep()">Próxima unidade <i class="fa fa fa-chevron-right"></i></button>
               </div>
               <!-- SIDENOTES -->
               <div ng-show="currentUnit.side_notes" class="side-notes">
