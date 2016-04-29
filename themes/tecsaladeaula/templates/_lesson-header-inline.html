@@ -35,11 +35,6 @@
       data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Resume course' %}"></a>
     </li>
     <li class="icon">
-      <a href="http://forum.tecsaladeaula.com.br" target="_blank"
-      class="has-tooltip fa fa-comments {% if '/forum/' in request.path %}active{% endif %}"
-      data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Forum' %}"></a>
-    </li>
-    <li class="icon">
       <a href="{% url 'course_material' course.slug %}"
       class="has-tooltip fa fa-file {% if '/material/' in request.path %}active{% endif %}"
       data-toggle="tooltip" data-placement="bottom" data-original-title="Referências bibliográficas"></a>
@@ -88,11 +83,6 @@
         {% elif user|in_group:'professors' %}
             <li {% if in_admin %}class="active"{% endif %}><a href="{% url 'administration.courses' %}" id="admin-link">{% trans "Admin" %}</a></li>
         {% endif %}
-        <li>
-            <a href="http://forum.tecsaladeaula.com.br" target="_blank">
-                Fórum
-            </a>
-        </li>
         <li>
             <a class="username dropdown-toggle" data-toggle="dropdown" href="#">
                 {{ user }}
