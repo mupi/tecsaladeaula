@@ -68,11 +68,32 @@
 }
 .notes-tool{
   background-color: #fff;
+  border: 2px solid #e5e5e5;
   position: fixed;
-  right: 0;
+  right: -280px;
   top:20%;
   padding: 20px;
-  display: none;
+  transition: right 0.5s ease;
+  width: 300px;
+  &:hover{
+    right: 0;
+  }
+  .btn-notes{
+    background-color: @brand-primary;
+    box-shadow: -1px 1px 4px 0px rgba(50, 50, 50, 0.75);
+    color: darken(@brand-primary,40%);;
+    font-size: 1.5em;
+    position: absolute;
+    left: -32px;
+    height: 60px;
+    width: 30px;
+    padding-left: 6px;
+    text-align: center;
+    top: 10%;
+    &:hover{
+      background-color: darken(@brand-primary,10%);
+    }
+  }
 }
 .nav-complete{
   background-color: #ddd;
@@ -90,6 +111,7 @@
     }
   }
 }
+
 #course-content
 {
   .units-menu
@@ -154,6 +176,14 @@
         border-left: 1px solid #ccc;
         padding-left: 10px;
       }
+    }
+  }
+  .notes {
+    textarea{
+      height: 200px;
+    }
+    .message{
+      max-width: 100%;
     }
   }
 }

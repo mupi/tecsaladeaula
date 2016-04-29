@@ -177,6 +177,9 @@ $(document).ready(function() {
 
             <!-- NOTES -->
             <div class="notes-tool" id="student-notes">
+                <button id="notes-toggle" class="btn btn-notes">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
                 <h3 class="top">{% trans 'My Annotations' %}</h3>
                 <div class="tab-content">
                     {% include "_notes_inline.html" %}
