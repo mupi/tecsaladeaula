@@ -208,7 +208,7 @@ class ResumeCourseView(LoginRequiredMixin, RedirectView):
             course_student, _ = CourseStudent.objects.get_or_create(user=self.request.user, course=course)
             last_unit = course_student.resume_next_unit()
             url = reverse_lazy('lesson', args=[course.slug, last_unit.lesson.slug])
-            return url + '#' + str(last_unit.position + 1)
+            return url + '#!' + str(last_unit.position + 1)
         else:
             return reverse_lazy('accept_terms')
 
