@@ -67,14 +67,16 @@
   padding-top: 50px;
 }
 .notes-tool{
+  @media (min-width: @screen-sm-min) {
+    border: 2px solid #e5e5e5;
+    position: fixed;
+    right: -280px;
+    top:20%;
+    width: 300px;
+  }
   background-color: #fff;
-  border: 2px solid #e5e5e5;
-  position: fixed;
-  right: -280px;
-  top:20%;
   padding: 20px;
   transition: right 0.5s ease;
-  width: 300px;
   &:hover{
     right: 0;
   }
@@ -96,11 +98,13 @@
   }
 }
 .nav-complete{
+  @media (min-width: @screen-sm-min) {
+    position: fixed;
+    right: 0;
+    top: 50px;
+    z-index: 1;
+  }
   background-color: #ddd;
-  position: fixed;
-  right: 0;
-  top: 50px;
-  z-index: 1;
   .btn{
     background-color: #5DAB71;
     color: #fff;

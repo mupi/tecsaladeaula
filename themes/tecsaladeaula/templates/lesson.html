@@ -117,14 +117,6 @@ $(document).ready(function() {
 
             <div class="activity-column col-sm-8 col-sm-offset-4">
 
-              <div ng-show="section=='video'" class="nav-complete col-sm-8">
-                <button class="btn col-sm-6 pull-right"
-                  ng-click="nextStep()">Completar e continuar <i class="fa fa-check-square-o"></i></button>
-              </div>
-              <div ng-if="answer.correct" class="nav-complete col-sm-8">
-                <button class="col-sm-6 btn pull-right"
-                  ng-click="nextStep()">Próxima unidade <i class="fa fa fa-chevron-right"></i></button>
-              </div>
               <!-- SIDENOTES -->
               <div ng-show="currentUnit.side_notes" class="side-notes">
                   <h3>Orientações</h3>
@@ -163,15 +155,18 @@ $(document).ready(function() {
                     </div>
                 </div>
 
-                {% verbatim %}
-                <div class="row">
-                    <dir-disqus config="disqusConfig"></dir-disqus>
+                <div ng-show="section=='video'" class="nav-complete col-sm-8">
+                  <button class="btn col-sm-6 pull-right"
+                    ng-click="nextStep()">Completar e continuar <i class="fa fa-check-square-o"></i></button>
                 </div>
-                {% endverbatim %}
+                <div ng-if="answer.correct" class="nav-complete col-sm-8">
+                  <button class="col-sm-6 btn pull-right"
+                    ng-click="nextStep()">Próxima unidade <i class="fa fa fa-chevron-right"></i></button>
+                </div>
 
             <!-- NOTES -->
             <div class="notes-tool" id="student-notes">
-                <button id="notes-toggle" class="btn btn-notes">
+                <button id="notes-toggle" class="btn btn-notes hidden-xs">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <h3 class="top">{% trans 'My Annotations' %}</h3>
@@ -180,6 +175,10 @@ $(document).ready(function() {
                 </div>
             </div>
             <!-- END NOTES -->
+
+            <div class="row">
+                <dir-disqus config="disqusConfig"></dir-disqus>
+            </div>
         </div>
         <!-- END ROW -->
 
