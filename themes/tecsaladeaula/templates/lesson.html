@@ -148,7 +148,6 @@ $(document).ready(function() {
                         </div>
                         <div class="panel-body" ng-bind-html="currentActivity.comment|markdown"></div>
                     </div>
-
                 </div>
                 <div ng-show="section=='end'" class="next-lesson">
                     <div class="centered">
@@ -169,25 +168,10 @@ $(document).ready(function() {
                 </div>
 
                 {% verbatim %}
-                {{ currentUnit.id }}
-                {{ currentUnit.title }}
-
-                var cunit = /#!\/(\d+)/.extract(document.location.hash, 1);
-                console.log($scope);
-                $scope.disqusConfig = {
-                    disqus_shortname: 'tecsaladeaula',
-                    disqus_identifier: cunit,
-                    disqus_url: window.location.href,
-                    disqus_title: $scope.section
-                };
-
                 <div class="row">
-                    <dir-disqus
-                      config="disqusConfig">
-                    </dir-disqus>
+                    <dir-disqus config="disqusConfig"></dir-disqus>
                 </div>
                 {% endverbatim %}
-
 
             <!-- NOTES -->
             <div class="notes-tool" id="student-notes">

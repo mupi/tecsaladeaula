@@ -37,10 +37,11 @@
                     $scope.section = 'activity';
                 }
                 $scope.selectActivity(0);
+
+                $scope.updatedisqusConfig($scope.currentUnit.id, $scope.currentUnit.title);
             };
 
             $scope.locationChange = function(unitIndex) {
-              console.log('mudou location');
               $location.path('/' + unitIndex);
             };
 
@@ -189,24 +190,29 @@
                 $scope.play();
 
                 $scope.$on('$locationChangeSuccess', function (event, newLoc, oldLoc){
+
                    index = /#!\/(\d+)/.extract(document.location.hash, 1);
                    index = parseInt(index, 10) - 1 || 0;
                    $scope.selectUnit(lesson.units[index]);
                 });
             });
 
-            var cunit = /#!\/(\d+)/.extract(document.location.hash, 1);
-            console.log($scope.lesson);
-            console.log($scope.currentUnit);
+            var c_unit = /#!\/(\d+)/.extract(document.location.hash, 1) + 1
             $scope.disqusConfig = {
-                disqus_shortname: 'tecsaladeaula',
-                disqus_identifier: cunit,
-                disqus_url: window.location.href,
-                disqus_title: $scope.section
+              disqus_shortname: 'tecsaladeaula',
+              disqus_identifier: c_unit,
+              disqus_url: window.location.href,
+              disqus_title: 'Mupi - Tecnologia para Sala de Aula'
             };
 
-            // console.log($scope.disqusConfig);
-
+            $scope.updatedisqusConfig = function(unit, title) {
+              $scope.disqusConfig = {
+                disqus_shortname: 'tecsaladeaula',
+                disqus_identifier: unit,
+                disqus_url: window.location.href,
+                disqus_title: title
+              };
+            };
         }
     ]);
 
