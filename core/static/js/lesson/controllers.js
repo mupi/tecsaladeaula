@@ -17,7 +17,14 @@
             youtubePlayerApi.events.onStateChange = function(event){
                 window.onPlayerStateChange.call($scope.currentUnit, event);
                 if (event.data === YT.PlayerState.ENDED) {
-                    $scope.nextStep();
+                    if(angular.isArray($scope.currentUnit.activities) &&
+                        $scope.currentUnit.activities.length > 0) {
+                        $scope.section = 'activity';
+                    } else {
+                        progress = Progress.complete($scope.currentUnit.id);
+                        $scope.currentUnit.progress = progress;
+                        // $scope.nextUnit();
+                    }
                     mixpanel.track("Watched whole video");
                     if(!$scope.$$phase) {
                         $scope.$apply();
