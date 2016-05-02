@@ -4,6 +4,7 @@
 {% load compressed %}
 {% load staticfiles %}
 {% load timtec_markdown %}
+{% load return_next_lesson %}
 
 {% block js %}
 {{ block.super }}
@@ -96,11 +97,22 @@ $(document).ready(function() {
                        <i class="fa fa-play-circle" ng-hide="unit.activities"></i>
                        <i class="fa fa-file-text-o" ng-show="unit.activities"></i>
                 </a>
+                {% endverbatim %}
+                {% if lesson.course.public_lessons|return_next_name:lesson.position %}
+                <a href="{% url 'lesson' lesson.course.slug lesson.course.public_lessons|return_next_slug:lesson.position %}"
+                  class="btn btn-next-lesson" title="{{ lesson.course.public_lessons|return_next_name:lesson.position }}">
+                  Próxima aula <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+                {% else %}
+                <p class="text-muted">
+                  <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                  Esta é a última aula do curso.</span>
+                {% endif %}
                 <!-- END UNITS -->
             </div>
           </div>
             <!-- END UNITS NAVIGATION FOR TABLET AND DESKTOP -->
-
+            {% verbatim %}
             <!-- UNITS NAVIGATION FOR PHONES -->
             <div class="col-xs-12 visible-xs">
                 <p>
@@ -158,6 +170,7 @@ $(document).ready(function() {
                     <h3><i class="fa fa-globe" aria-hidden="true"></i> Para expandir</h3>
                     <div ng-bind-html="currentUnit.side_notes"></div>
                 </div>
+
                 <!-- END SIDENOTES -->
 
                 <div ng-show="section=='video'" class="nav-complete col-sm-8">
