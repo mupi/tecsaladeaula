@@ -2,10 +2,11 @@ from django import template
 
 register = template.Library()
 
+
 @register.filter
 def return_next_slug(l, i):
     try:
-        lesson = l[i+1]
+        lesson = l[i + 1]
         return lesson.slug
     except:
         return None
@@ -14,7 +15,7 @@ def return_next_slug(l, i):
 @register.filter
 def return_next_name(l, i):
     try:
-        lesson = l[i+1]
+        lesson = l[i + 1]
         return lesson.name
     except:
         return None
