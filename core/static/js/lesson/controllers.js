@@ -202,11 +202,21 @@
                 });
             });
 
-            var c_unit = /#!\/(\d+)/.extract(document.location.hash, 1) + 1
+
+            $scope.lesson_url = function(){
+              $scope.c_unit = /#!\/(\d+)/.extract(document.location.hash, 1) + 1;
+              if (!($scope.c_unit)){
+                return window.location.href + '#!/1'
+              } else {
+                return window.location.href;
+              }
+            }
+
+            $scope.lesson_url();
             $scope.disqusConfig = {
               disqus_shortname: 'tecsaladeaula',
-              disqus_identifier: c_unit,
-              disqus_url: window.location.href,
+              disqus_identifier: $scope.c_unit,
+              disqus_url: $scope.lesson_url(),
               disqus_title: 'Mupi - Tecnologia para Sala de Aula'
             };
 
@@ -214,7 +224,7 @@
               $scope.disqusConfig = {
                 disqus_shortname: 'tecsaladeaula',
                 disqus_identifier: unit,
-                disqus_url: window.location.href,
+                disqus_url: $scope.lesson_url(),
                 disqus_title: title
               };
             };
