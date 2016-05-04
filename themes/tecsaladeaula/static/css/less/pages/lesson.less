@@ -75,11 +75,25 @@
   .unit{
     display: block;
   }
-  .btn-next-lesson{
-    width: 100%;
-    background-color: #6597d8;
-    font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    color: #fff;
+  .nav-lessons{
+    .btn-nav-lesson{
+      background-color: #6597d8;
+      display: inline-block;
+      float: left;
+      width: 50%;
+      font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #fff;
+      border-radius: 0;
+      &:first-of-type{
+        border-right: 1px solid #ccc;
+      }
+      &:last-of-type{
+        border-right: 1px solid #ccc;
+      }
+      &:hover{
+        background-color: darken(#6597d8, 10%);
+      }
+    }
   }
 }
 .activity-column{
@@ -209,4 +223,7 @@
       max-width: 100%;
     }
   }
+}
+.phone-nav{
+  z-index: 1;
 }
