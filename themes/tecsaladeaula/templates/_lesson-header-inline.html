@@ -45,6 +45,7 @@
       data-toggle="tooltip" data-placement="bottom" data-original-title="{%  trans 'Course notes' %}"></a>
     </li>
     {% if user|is_assistant_or_coordinator:course %}
+    <li class="icon">
       <div class="dropdown">
           <a class="has-tooltip fa fa-cog dropdown-toggle{% if '/messages/' in request.path or '/reports/' in request.path or '/classes/' in request.path %} active{% endif %}" data-placement="bottom" data-original-title="{% trans 'Tools' %}" id="course-tools" data-toggle="dropdown" aria-expanded="true"></a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="course-tools">
@@ -56,6 +57,7 @@
                 href="{% url 'classes' course.slug %}">{%  trans 'Classes' %}</a></li>
           </ul>
       </div>
+    </li>
     {% endif %}
 
     {% if user.is_authenticated %}
