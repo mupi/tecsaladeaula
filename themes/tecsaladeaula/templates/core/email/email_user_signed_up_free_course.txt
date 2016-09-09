@@ -3,7 +3,6 @@ Oi {{ username }},
 Você se inscreveu em nosso curso gratuito {{ course_name }}. Trazemos aqui as boas vindas e algumas dicas úteis:
 
 - Para entender melhor o funcionamento do curso e da plataforma, acesse Como funcionam o cursos Mupi (http://tecsaladeaula.com.br/course/conhecendo-a-nossa-plataforma/intro/).
-- Registre-se em nosso fórum (http://forum.tecsaladeaula.com.br/) para conhecer outros educadores que também estudam com a gente!
 - Convide outros educadores para realizar este curso junto com você clicando aqui (http://tecsaladeaula.com.br/course/tecnologia-e-educacao-o-mundo-esta-sempre-mudando/intro/).
 
 Por fim, como é um curso online, organize seu tempo para dedicar-se às aulas e ter um bom aproveitamento :)
