@@ -47,6 +47,8 @@
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 0;
+}
+.lesson-sidebar, .lesson-sidebar-riw{
   p{
     padding: 10px;
   }
@@ -215,6 +217,45 @@
       }
     }
   }
+  .units-riw
+  {
+    padding: 0;
+    .unit-link {
+      background: #eee;
+      color: #222;
+      cursor: pointer;
+      display: inline-block;
+      font-family: 'Raleway', 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.9em;
+      height: auto;
+      line-height: 2.5em;
+      border-bottom: 1px solid #ccc;
+      padding: 0px 30px 0px 5px;
+      position: relative;
+      text-align: left;
+      &:hover, &.watching, &.done.watching{
+        background-color: #CCD8C8;
+        color: darken(#CCD8C8, 40%);;
+        text-decoration: none;
+      }
+      &.done{
+        background-color: #ddd;
+        color: #aaa;
+        text-decoration: line-through;
+      }
+      &.done:hover{
+        background-color: #ccc;
+      }
+      i{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+      }
+      .nav-lessons{
+
+      }
+    }
+  }
   .notes {
     textarea{
       height: 200px;
@@ -226,4 +267,21 @@
 }
 .phone-nav{
   z-index: 1;
+}
+.riw{
+  .activity-column{
+    padding: 0;
+  }
+  .question{
+    margin-top: 10px;
+  }
+  .nav-complete{
+    position: static;
+    background: transparent;
+    width: 100%;
+    .btn{
+      width: auto;
+      font-size: 1em;
+    }
+  }
 }

@@ -1,0 +1,207 @@
+{% load i18n %}
+{% load compressed %}
+{% load staticfiles %}
+{% load timtec_markdown %}
+{% load return_next_and_prev_lesson %}
+
+{% block content %}
+
+<script type="text/javascript">
+window.lessonId = {{ lesson.pk }};
+// Content type id for object type core.Unit used by django generic relations.
+window.unit_content_type_id = {{ unit_content_type_id }};
+
+$(document).ready(function() {
+    $(".nav-tabs a").click(function(e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    $('a.unit').tooltip();
+
+    // startIntro();
+});
+</script>
+
+<!-- COURSE -->
+<div id="course" class="course-lesson" ng-app="lesson">
+
+    <!-- HEADER -->
+    {% include "_lesson-header-inline.html"  with course=lesson.course %}
+    <!-- END HEADER -->
+
+    <!-- COURSE CONTENT -->
+    <section id="course-content" class="container-fluid">
+
+      <!-- LESSON NAVIGATION FOR PHONE -->
+      <p class="visible-xs">
+          <select onchange="document.location=this.value" class="form-control">
+              <option>{{lesson.name}}</option>
+              {% for list_lesson in lesson.course.public_lessons %}
+                  {% if list_lesson.name != lesson.name %}
+                      <option value="{% url 'lesson' list_lesson.course.slug list_lesson.slug %}">{{ list_lesson.name }}</option>
+                  {% endif %}
+              {% endfor %}
+          </select>
+      </p>
+      <!-- END LESSON NAVIGATION FOR PHONE -->
+
+        <!-- ROW -->
+        <div ng-controller="MainCtrl" class="row">
+
+          <div class="lesson-sidebar col-sm-4">
+            <nav class="btn-group lesson-units-nav hidden-xs" id="lesson-list-dropdown">
+                <button type="button" class="btn text-right dropdown-toggle" data-toggle="dropdown">
+                    {{ lesson.name }} <i class="fa fa-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    {% for list_lesson in lesson.course.public_lessons %}
+                        <li><a href="{% url 'lesson' list_lesson.course.slug list_lesson.slug %}">{{ list_lesson.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <nav class="course-lessons hidden-xs">
+              <div class="row">
+                  <div class="col-sm-12">
+                      <div class="description">{{ lesson.desc|timtec_markdown }}</div>
+                  </div>
+              </div>
+            </nav>
+            {% verbatim %}
+            <!-- UNITS NAVIGATION FOR TABLET AND DESKTOP -->
+            <div class="units-menu hidden-xs">
+                <!-- UNITS -->
+                <h2>Unidades</h2>
+                <a data-placement="right"
+                   title="{{unit.video.name}}"
+                   href="#!/{{$index+1}}"
+                   class="has-tooltip unit-link track" data-toggle="tooltip"
+                   ng-repeat="unit in lesson.units"
+                   ng-class="{watching: unit==currentUnit, done: unit.progress.complete}">
+                       <span class="position" ng-bind="unit.position+1"></span>
+                       {{unit.title}}
+                       <i class="fa fa-play-circle" ng-hide="unit.activities"></i>
+                       <i class="fa fa-file-text-o" ng-show="unit.activities"></i>
+                </a>
+                {% endverbatim %}
+                <div class="nav-lessons clearfix">
+                  {% if lesson.course.public_lessons|return_prev_name:lesson.position %}
+                  <a href="{% url 'lesson' lesson.course.slug lesson.course.public_lessons|return_prev_slug:lesson.position %}"
+                    class="btn btn-nav-lesson" title="{{ lesson.course.public_lessons|return_prev_name:lesson.position}}}">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i> Aula anterior
+                  </a>
+                  {% else %}
+                  <button class="btn btn-nav-lesson" type="button" disabled="disabled">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i> Aula anterior
+                  </button>
+                  {% endif %}
+                  {% if lesson.course.public_lessons|return_next_name:lesson.position %}
+                  <a href="{% url 'lesson' lesson.course.slug lesson.course.public_lessons|return_next_slug:lesson.position %}"
+                    class="btn btn-nav-lesson" title="{{ lesson.course.public_lessons|return_next_name:lesson.position }}">
+                    Próxima aula <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                  </a>
+                  {% else %}
+                  <span class="text-muted">
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                    Esta é a última aula do curso.</span>
+                  {% endif %}
+                </div>
+                <!-- END UNITS -->
+            </div>
+          </div>
+            <!-- END UNITS NAVIGATION FOR TABLET AND DESKTOP -->
+            {% verbatim %}
+            <!-- UNITS NAVIGATION FOR PHONES -->
+            <div class="col-xs-12 visible-xs phone-nav">
+                <p>
+                    <select ng-model="selectedIndex" ng-change="locationChange(selectedIndex)" class="form-control">
+                        <option ng-repeat="unit in lesson.units"
+                                ng-value="$index+1"
+                                ng-selected="unit==currentUnit"
+                                value="{{$index+1}}">{% endverbatim %}{% trans 'Unit' %}{% verbatim %} {{ unit.position + 1 }}</option>
+                    </select>
+                </p>
+            </div>
+            <!-- END UNITS NAVIGATION FOR PHONES -->
+            {% endverbatim %}
+
+            <div class="activity-column col-sm-8 col-sm-offset-4">
+
+                <!--
+                this class exists to circunvent a flash + youtube api error
+                in which if the video div is really hidden the api breaks
+                -->
+                <div ng-class="{hidder: section!='video'}" class="video embed-responsive embed-responsive-16by9">
+                    <div class="embed-responsive-item" id="youtube-player" youtube-player></div>
+
+                </div>
+                <div ng-show="section=='activity'" class="course-activity">
+                    <ng:include src="activityTemplateUrl"></ng:include>
+                </div>
+                <div ng-show="section=='comment'" class="comment">
+                    <div class="panel panel-default" style="min-height: 368px;">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">{% trans 'Professor comment' %}</h2>
+                        </div>
+                        <div class="panel-body" ng-bind-html="currentActivity.comment|markdown"></div>
+                    </div>
+                </div>
+                <div ng-show="section=='end'" class="next-lesson">
+                    <div class="centered">
+                        {% if next_url %}
+                            <p class="lead text-center">Você completou esta aula.</p>
+                            <a class="btn btn-info btn-lg text-uppercase" href="{{ next_url }}"><span>Vá para a próxima aula</span><i class="fa fa-caret-right"></i></a>
+                        {% else %}
+                            <p class="lead text-center">Parabéns por finalizar o curso!</p>
+                            <a id="btn-end-course" class="btn btn-info btn-lg text-uppercase" href="{% url 'user_courses' %}"><span>Volte para seu painel de cursos</span><i class="fa fa-caret-right"></i></a>
+
+                  			    <script type="text/javascript">
+                      				$("#btn-end-course").show(function() {
+                      					mixpanel.track("Course ended");
+                      				});
+                  			    </script>
+                  			{% endif %}
+                    </div>
+                </div>
+                <!-- SIDENOTES -->
+                <div ng-show="currentUnit.side_notes">
+                    <h3><i class="fa fa-globe" aria-hidden="true"></i> Para expandir</h3>
+                    <div ng-bind-html="currentUnit.side_notes"></div>
+                </div>
+
+                <!-- END SIDENOTES -->
+
+                <div ng-show="section=='video'" class="nav-complete col-sm-8">
+                  <button class="btn col-sm-6 pull-right"
+                    ng-click="nextStep()">Marcar como visto <i class="fa fa-check-square-o"></i></button>
+                </div>
+                <div ng-if="answer.correct" class="nav-complete col-sm-8">
+                  <button class="col-sm-6 btn pull-right"
+                    ng-click="nextStep()">Próxima unidade <i class="fa fa fa-chevron-right"></i></button>
+                </div>
+
+            <!-- NOTES -->
+            <div class="notes-tool" id="student-notes">
+                <button id="notes-toggle" class="btn btn-notes hidden-xs">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <h3 class="top">{% trans 'My Annotations' %}</h3>
+                <div class="tab-content">
+                    {% include "_notes_inline.html" %}
+                </div>
+            </div>
+            <!-- END NOTES -->
+
+            <div class="row">
+                <dir-disqus config="disqusConfig"></dir-disqus>
+            </div>
+        </div>
+        <!-- END ROW -->
+
+        </div>
+    </section>
+    <!-- END COURSE CONTENT -->
+</div>
+<!-- END COURSE -->
+
+{% endblock %}
