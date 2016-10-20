@@ -102,8 +102,6 @@ $(document).ready(function() {
                    ng-repeat="unit in lesson.units"
                    ng-class="{watching: unit==currentUnit, done: unit.progress.complete}">
                        {{unit.title}}
-                       <i class="fa fa-play-circle" ng-hide="unit.activities"></i>
-                       <i class="fa fa-file-text-o" ng-show="unit.activities"></i>
                 </a>
                 {% endverbatim %}
                 <!-- END UNITS -->
