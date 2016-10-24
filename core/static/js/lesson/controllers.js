@@ -85,7 +85,6 @@
                 if($scope.currentUnit.activities && $scope.currentUnit.activities.length) {
                     $scope.currentActivity = $scope.currentUnit.activities[index];
                     $scope.activityTemplateUrl = resolveActivityTemplate($scope.currentActivity.type);
-                    console.log($scope.activityTemplateUrl);
                     ga("send", "event", "activity", "select", $scope.currentActivity.id);
 
                     $scope.answer = Answer.get({activityId: $scope.currentActivity.id}, function(answer) {

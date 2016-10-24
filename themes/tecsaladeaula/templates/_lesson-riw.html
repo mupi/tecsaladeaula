@@ -130,9 +130,17 @@ $(document).ready(function() {
               this class exists to circunvent a flash + youtube api error
               in which if the video div is really hidden the api breaks
               -->
+              <div class="panel-heading clearfix">
+                  <span ng-if="currentUnit.activities.length > 1" ng-repeat="activity in currentUnit.activities">
+                      <button class="btn btn-default"
+                          ng-class="{'btn-info':currentActivity==activity}"
+                          ng-click="selectActivity($index)"
+                          ng-bind="$index+1"></button>
+                      &nbsp;
+                  </span>
+              </div>
               <div ng-class="{hidder: section!='video'}" class="video embed-responsive embed-responsive-16by9">
                   <div class="embed-responsive-item" id="youtube-player" youtube-player></div>
-
               </div>
               <div ng-show="section=='activity'" class="course-activity">
                   <ng:include src="activityTemplateUrl"></ng:include>
