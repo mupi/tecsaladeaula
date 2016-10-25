@@ -121,11 +121,14 @@
                 } else {
                     $scope.currentActivity = null;
                     $scope.activityTemplateUrl = null;
+                };
+                if ($scope.section == 'comment'){
+                  $scope.section = 'activity';
                 }
             };
 
             $scope.sendAnswer = function() {
-		mixpanel.track("Activity done");
+		            mixpanel.track("Activity done");
 
                 $scope.answer.activity = $scope.currentActivity.id;
                 $scope.answer.$update({activityId: $scope.answer.activity}).then(function(answer){
