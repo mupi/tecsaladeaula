@@ -1,7 +1,7 @@
 (function(angular){
     'use strict';
 
-    var app = angular.module('lesson.controllers', []);
+    var app = angular.module('lesson.controllers', ['ngSanitize']);
 
     // configure existing services inside initialization blocks.
     app.config(['$locationProvider', function($locationProvider) {
@@ -9,8 +9,8 @@
       $locationProvider.hashPrefix('!');
     }]);
 
-    app.controller('MainCtrl', ['$scope', 'LessonData', 'Answer', 'Progress', '$location', 'youtubePlayerApi', 'resolveActivityTemplate',
-        function ($scope, LessonData, Answer, Progress, $location, youtubePlayerApi, resolveActivityTemplate) {
+    app.controller('MainCtrl', ['$scope', '$sce', 'LessonData', 'Answer', 'Progress', '$location', 'youtubePlayerApi', 'resolveActivityTemplate',
+        function ($scope, $sce, LessonData, Answer, Progress, $location, youtubePlayerApi, resolveActivityTemplate) {
 
             window.ga = window.ga || function(){};
 
@@ -232,6 +232,10 @@
                 disqus_title: title
               };
             };
+
+            $scope.get_as_safe_html = function(html_content) {
+              return $sce.trustAsHtml(html_content);
+            }
         }
     ]);
 
