@@ -63,7 +63,7 @@ class Answer(models.Model):
 
     def is_correct(self):
 
-        if self.activity.type in ['html5', 'markdown', 'php']:
+        if self.activity.type in ['html5', 'markdown', 'php', 'text']:
             return True
 
         if type(self.given) is list and type(self.activity.expected) is list:
@@ -106,7 +106,8 @@ class Answer(models.Model):
             try:
                 ans = Answer.objects.filter(activity=activity).order_by('-timestamp')[:1].get()
             except Answer.DoesNotExist:
-                correct = False
+                if activity.type != 'text':
+                    correct = False
                 break
             print ans
             correct = ans.is_correct()
