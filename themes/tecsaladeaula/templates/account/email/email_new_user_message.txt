@@ -1,6 +1,1 @@
-Um novo usuário se cadastrou!
-Data: {{ date }}
-Horário: {{ time }}
-Nome: {{ username }}
-email: {{ email }}
-
+{{ email }}
