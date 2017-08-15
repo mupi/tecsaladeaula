@@ -18,7 +18,7 @@ TIMTEC_THEME = 'tecsaladeaula'  # don't forget to re run collectstatic if you ch
 SOUTH_AUTO_FREEZE_APP = True
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+# TEMPLATE_DEBUG = DEBUG
 
 SITE_ID = 1
 SITE_HOME = ''
@@ -563,14 +563,14 @@ TEMPLATE_DIRS = (
     os.path.join(THEMES_DIR, 'default', 'templates'),
 )
 
-if DEBUG:
-    MIDDLEWARE_CLASSES += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
-    INSTALLED_APPS += (
-        'debug_toolbar',
-    )
-    INTERNAL_IPS = ('127.0.0.1', )
-
-# Fix debug toolbar issue: https://github.com/django-debug-toolbar/django-debug-toolbar/issues/521
+# if DEBUG:
+#     MIDDLEWARE_CLASSES += (
+#         'debug_toolbar.middleware.DebugToolbarMiddleware',
+#     )
+#     INSTALLED_APPS += (
+#         'debug_toolbar',
+#     )
+#     INTERNAL_IPS = ('127.0.0.1', )
+#
+# # Fix debug toolbar issue: https://github.com/django-debug-toolbar/django-debug-toolbar/issues/521
 # DEBUG_TOOLBAR_PATCH_SETTINGS = False
