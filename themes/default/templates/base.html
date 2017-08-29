@@ -115,6 +115,7 @@
 
 {% if user.is_authenticated %}
     <script type="text/javascript">
+    $('a.js-login-required').attr('href', '#');
     ga('set', 'dimension1', '{{ user.id }}');
     ga('set', 'dimension2', '{{ user.get_user_type }}');
     ga('set', 'dimension3', '{{ user.is_pilot }}');

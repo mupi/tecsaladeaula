@@ -282,12 +282,12 @@ wrapper-course-intro
                             <div class="col-sm-5 col-md-5 col-xs-12">
                                 {% if not user_is_enrolled %}
                                     {% if user_enroll_is_pending %}
-                                        <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+                                        <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
                                     {% else %}
                                         {% if course.name == "Leia em Inglês" %}
                                             <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
                                         {% else %}
-                                            <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
+                                            <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
                                         {% endif %}
                                     {% endif %}
                                 {% else %}
@@ -386,12 +386,12 @@ wrapper-course-intro
                             <div class="col-sm-5 col-md-5 col-xs-12">
                                 {% if not user_is_enrolled %}
                                     {% if user_enroll_is_pending %}
-                                        <a href="#" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+                                        <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
                                     {% else %}
                                         {% if course.name == "Leia em Inglês" %}
                                             <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
                                         {% else %}
-                                            <a href="#" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
+                                            <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
                                         {% endif %}
                                     {% endif %}
                                 {% else %}

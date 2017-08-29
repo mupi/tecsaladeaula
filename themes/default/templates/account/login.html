@@ -39,7 +39,9 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="next" value="{{ next }}" />
+        {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
         <hr/>
         <!-- <div class="row">
             <div class="col-lg-7 col-lg-offset-4 col-md-7 col-md-offset-4 col-sm-7 col-sm-offset-4 textleft clearfix">
@@ -97,7 +99,9 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="next" value="{{ next }}" />
+                {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
                 <!--
                 <hr/>
                 <div class="textcenter">
