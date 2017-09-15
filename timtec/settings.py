@@ -468,6 +468,8 @@ INSTALLED_APPS = (
     'notes',
     'reports',
     'core',
+    # Joca
+    'joca',
     # django-metron
     'metron',
     # allauth

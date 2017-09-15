@@ -139,6 +139,8 @@ urlpatterns = patterns(
 
     url(r'^markdown/', include('django_markdown.urls')),
 
+    # Jornal do Joca
+    url(r'joca/', include('joca.urls')),
 )
 
 if settings.TWITTER_USER != '':
