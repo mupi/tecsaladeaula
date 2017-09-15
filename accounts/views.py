@@ -8,6 +8,7 @@ from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import TimtecUserSerializer, TimtecUserAdminSerializer
+from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
 from rest_framework import viewsets
@@ -15,6 +16,8 @@ from rest_framework import filters
 from rest_framework import generics
 
 from core.permissions import IsAdmin
+
+from .forms import SignupForm
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -162,3 +165,8 @@ class AcceptTermsView(FormView):
         if next_url:
             context['next_url'] = next_url
         return context
+
+class SignupView(SignupView):
+    template_name = 'account/signup.html'
+    form_class = SignupForm
+    view_name = 'signup_view'

@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
 
+from allauth.account.forms import SignupForm
+
 User = get_user_model()
 
 
@@ -39,7 +41,7 @@ class ProfileEditForm(forms.ModelForm):
         return super(ProfileEditForm, self).save(commit=commit)
 
 
-class AcceptTermsForm(forms.Form):
+class AcceptTermsForm(SignupForm):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)
 
     def clean_accept_terms(self):
