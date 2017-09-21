@@ -2,71 +2,115 @@
 {% load i18n %}
 
 {% block account_content %}
-  <h1 class="text-center">
-    {% trans "Sign Up" %} gratuitamente!
-  </h1>
-  <div class="col-lg-4 col-sm-4">
-    <img class="img-responsive" src="/static/img/joca_logo.png" />
+  <div class="row">
+    <center>
+      <div class="col-sm-12 col-xs-12">
+        <img class="img-responsive" src="/static/img/joca_logo.png" />
+        <h1 class="text-center">
+            Bem vindo ao curso do Jornal Joca!
+        </h1>
+      </div>
+    </center>
   </div>
-  <form class="col-lg-8 col-sm-8" onclick="event.stopPropagation()" method="post" action="{% url 'joca_signup' %}" id="form-sign-up-page" class="form-horizontal">
-    {% csrf_token %}
 
-    <input name="username" type="hidden" value=" " class="form-control" placeholder="{% trans 'Username' %}">
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <div class="panel left-xs right-xs top-xs">
+        <div class="panel-heading left-xs right-xs">
+          <h3 class="bottom-xs top-xs"><i class="fa fa-angle-double-right"></i> {% trans 'Sign In' %}</h3>
+        </div>
 
-    {% with errors=form.email.errors %}
-      <div class="form-group{{ errors|yesno:' has-error,' }}">
-        <label class="col-lg-2 col-sm-2 control-label">{% trans "E-mail" %}</label>
-        <div class="col-lg-10 col-sm-10">
-          <p>
-            <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insert your e-mail' %}">
-          </p>
-          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+        <div class="panel-body bottom-xs left-xs right-xs top-xs">
+          <form class="form-horizontal" method="post" action="{% url 'account_login' %}">{% csrf_token %}
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12">{% trans 'Login' %}</label>
+              <div class="col-lg-9 col-xs-12">
+                <input name="login" type="text" class="form-control"
+                value="{{form.login.value}}" placeholder="{% trans 'E-mail or username' %}"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 col-xs-12">{% trans 'Password' %}</label>
+              <div class="col-md-9 col-xs-12">
+                <input name="password" type="password" class="form-control" placeholder="{% trans 'Password' %}">
+              </div>
+            </div>
+            <div class="submit">
+              <div class="row">
+                <div class="col-md-5 col-md-offset-3 col-sm-7 col-xs-12">
+                  <a href="{% url 'account_reset_password' %}">{% trans 'Forgot my password' %}</a>
+                </div>
+                <div class="col-md-4 col-sm-5 col-xs-12 textright">
+                  <button class="btn btn-success col-xs-12 text-uppercase">{% trans 'Sign In' %}</button>
+                </div>
+              </div>
+            </div>
+            {% if next %}
+              <input type="hidden" name="next" value="{{ next }}" />
+            {% endif %}
+          </form>
         </div>
       </div>
-    {% endwith %}
-
-    {% with errors=form.password1.errors %}
-      <div class="form-group{% if errors or form.non_field_errors %} has-error{% endif %}">
-        <label class="col-lg-2 col-sm-2 control-label">{% trans "Password" %}</label>
-        <div class="col-lg-10 col-sm-10">
-          <p>
-            <input name="password1" type="password" class="form-control" placeholder="{% trans 'Really strong password' %}">
-          </p>
-          <input name="password2" type="password" class="form-control" placeholder="{% trans 'Password confirmation' %}">
-          {% for error in errors %}<small>{{error}}</small>{% endfor %}
-          {% for error in form.non_field_errors %}<small>{{error}}</small>{% endfor %}
-        </div>
     </div>
-    {% endwith %}
 
-    {% if terms_required %}
-    {% with errors=form.accept_terms.errors %}
-      <div class="form-group{{ errors|yesno:' has-error,' }}">
-        <div class="col-lg-offset-2 col-sm-offset-2 col-lg-10 col-sm-10 textleft">
-          <span class="checkbox-wrapper"><input name="accept_terms" id="accept_terms" type="checkbox" {% if form.accept_terms.value %}checked=""{% endif %}></span>
-          {% url 'flatpage' url='/terms' as terms_url %}
-          <label for="accept_terms" class="terms">{% blocktrans %}I agree to the <a href="{{ terms_url }}" target="_blank">Terms of Use</a>{% endblocktrans %}</label>
-          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+    <div class="col-sm-6 col-xs-12">
+      <div class="panel left-xs right-xs top-xs">
+        <div class="panel-heading left-xs right-xs">
+          <h3 class="bottom-xs"><i class="fa fa-angle-double-right"></i> {% trans 'Sign Up' %}</h3>
+        </div>
+
+        <div class="panel-body bottom-xs left-xs right-xs top-xs">
+          <form onclick="event.stopPropagation()" method="post" action="{% url 'joca_signup' %}" class="form-horizontal">{% csrf_token %}
+
+            <input name="username" type="hidden" value=" ">
+
+            <div class="form-group{% if form.errors %} has-error{% endif %}">
+              <label class="col-md-3 col-xs-12">{% trans 'E-mail' %}</label>
+              <div class="col-md-9 col-xs-12">
+                <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insert your e-mail' %}">
+                {% for error in form.email.errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group{% if form.errors %} has-error{% endif %}">
+              <label class="col-md-3 col-xs-12">{% trans 'Password' %}</label>
+              <div class="col-md-9 col-xs-12">
+                <p><input name="password1" type="password" class="form-control" placeholder="{% trans 'Really strong password' %}"></p>
+                <input name="password2" type="password" class="form-control" placeholder="{% trans 'Password confirmation' %}">
+                {% for error in form.password.errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% if terms_required %}
+            <div class="form-group">
+              <div class="col-xs-12">
+                <span class="checkbox-wrapper"><input name="accept_terms" id="accept_terms" type="checkbox"></span>
+                {% url 'flatpage' url='/terms' as terms_url %}
+                <label for="accept_terms" class="terms">{% blocktrans %}I agree to the <a href="{{ terms_url }}" target="_blank">Terms of Use</a>{% endblocktrans %}</label>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="submit textright">
+              <div class="row">
+                <div class="col-lg-4 col-lg-offset-8 col-md-5 col-md-offset-7 col-sm-7 col-sm-offset-5 col-xs-12 textright">
+                  <button class="btn btn-success col-xs-12 text-uppercase">{% trans 'Sign Up' %}</button>
+                </div>
+              </div>
+            </div>
+            {% if next %}
+              <input type="hidden" name="next" value="{{ next }}" />
+            {% endif %}
+          </form>
         </div>
       </div>
-    {% endwith %}
-    {% endif %}
-
-    <div class="submit textright">
-      <button class="btn btn-success">{% trans "Sign Up" %}</button>
     </div>
+  </div>
 
-    <!-- <div class="row">
-        <div class="col-xs-12">
-            <hr/>
-            <p class="bottom textcenter">
-                {% load socialaccount %}
-                <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-info"><i class="fa fa-facebook-square"></i> Conectar com sua conta do Facebook</a>
-            </p>
-          </div>
-      </div> -->
-    {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
-  </form>
 {% endblock %}
