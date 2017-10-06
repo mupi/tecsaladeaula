@@ -62,4 +62,4 @@ class SignupForm(AcceptTermsForm):
 
         user.accepted_terms = self.cleaned_data['accept_terms']
         user.save()
-        send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
+        # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
