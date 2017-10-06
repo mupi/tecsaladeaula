@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load compressed %}
+
+{% block js %}
+    {{ block.super }}
+    {% compressed_js 'course_material' %}
+{% endblock %}
+
+{% block wrapper_classes %}
+wrapper-course-lesson
+{% endblock %}
+
+{% block content %}
+
+<script>
+	window.course_id = {{ course.pk }};
+</script>
+
+<!-- CONTAINER -->
+<div id="course" class="course-material" ng-app="courseMaterial">
+  <!-- ACTIONS -->
+  <div class="actions-menu actions-menu-message" ng-hide="alert.hidden" fixed-bar>
+      <div class="container">
+          <div class="actions-buttons">
+          </div>
+          {% include 'administration/_alert.html' %}
+      </div>
+  </div>
+  <!-- END ACTIONS -->
+
+  <!-- MAIN CONTENT -->
+  <section id="course-content" class="container">
+      <header class="secondary-header">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Lista de alunos no curso do Joca</h1>
+          </div>
+        </div>
+      </header>
+      <div>
+        <p> Gerar lista de alunos matriculados no curso do Joca e de onde vieram. Separados por um filtro de início e fim do período de cadastro. </p>
+      </div>
+			<form method="POST" action="{% url 'administration.new_students_joca' %}">
+				{% csrf_token %}
+        <label class="col-lg-3 col-sm-3 control-label"> Início </label>
+        <div class="col-lg-9 col-sm-9">
+          <input name="date_init" id="date_init" value={{ init }} placeholder="dd/mm/yyyy">
+            {% if error_init %}<small>{{error_init}}</small>{% endif %}
+        </div>
+
+        <label class="col-lg-3 col-sm-3 control-label"> Fim </label>
+        <div class="col-lg-9 col-sm-9">
+          <input name="date_end" id="date_end" value={{ end }} placeholder="dd/mm/yyyy">
+            {% if error_end %}<small>{{error_end}}</small>{% endif %}
+        </div>
+
+
+				<input type="submit" value="Gerar Lista">
+			</form>
+  </section>
+  <!-- END MAIN CONTENT-->
+</div>
+<!-- END CONTAINER -->
+{% endblock %}

@@ -13,7 +13,7 @@ import re
 
 
 class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
-    USERNAME_REGEXP = re.compile('^[\w.+-]+$')
+    USERNAME_REGEXP = re.compile('^[\w.+-@]+$')
     username = models.CharField(
         _('Username'), max_length=30, unique=True,
         help_text=_('Required. 30 characters or fewer. Letters, numbers and '

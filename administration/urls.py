@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required as lr
 from forum.views import AdminCourseForumView
 from course_material.views import CourseMaterialAdminView
 from .views import (AdminView, CourseAdminView, CourseCreateView,
-                    ExportCourseView, ImportCourseView, UserAdminView,)
+                    ExportCourseView, ImportCourseView, UserAdminView,
+                    NewStudentsJocaView, )
 
 urlpatterns = patterns(
     '',
@@ -45,4 +46,6 @@ urlpatterns = patterns(
 
     url(r'^course/(?P<course_id>[1-9][0-9]*)/reports/$', CourseAdminView.as_view(template_name="stats.html"), name="administration.reports"),
 
+    # # JocaUser
+    url(r'^new_students_joca/$', NewStudentsJocaView.as_view(template_name="joca-user.html"), name='administration.new_students_joca'),
 )

@@ -468,6 +468,8 @@ INSTALLED_APPS = (
     'notes',
     'reports',
     'core',
+    # Joca
+    'joca',
     # django-metron
     'metron',
     # allauth
@@ -501,7 +503,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_EMAIL_SUBJECT_PREFIX = "[tecsaladeaula] "
-ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.SignupForm'
+# ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.SignupForm'
 SOCIALACCOUNT_EMAIL_VERIFICATION = False
 
 TWITTER_CONSUMER_KEY = ''

@@ -20,9 +20,16 @@ from core.models import Course, CourseProfessor
 from course_material.models import File as TimtecFile
 from .serializer import CourseExportSerializer, CourseImportSerializer
 
+from accounts.models import TimtecUser
+from django.utils import timezone
+from datetime import timedelta, time, datetime
+from core.models import CourseStudent
+from joca.models import JocaUser
+
 import tarfile
 import StringIO
 import os
+import csv
 
 
 User = get_user_model()
@@ -256,3 +263,76 @@ class ImportCourseView(APIView):
                              })
         else:
             return Response({'error': 'invalid_file'})
+
+
+class NewStudentsJocaView(AdminView):
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(NewStudentsJocaView, self).dispatch(
+            request, *args, **kwargs)
+
+        if not (request.user.is_superuser or self.object.get_professor_role(request.user) == 'coordinator'):
+            if self.raise_exception:  # *and* if an exception was desired
+                raise PermissionDenied  # return a forbidden response.
+
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super(NewStudentsJocaView, self).get_context_data(**kwargs)
+
+        one_week = timezone.now() - timedelta(days = 7)
+        if 'init' not in context:
+            context['init'] = one_week.strftime("%d/%m/%Y")
+        if 'end' not in context:
+            context['end'] = timezone.now().strftime("%d/%m/%Y")
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        date_init = request.POST["date_init"]
+        date_end = request.POST["date_end"]
+        context = self.get_context_data(**kwargs)
+        context['init'] = date_init
+        context['end'] = date_end
+
+        try:
+            date_init = datetime.strptime(date_init, "%d/%m/%Y").date()
+            times = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            date_init = datetime.combine(date_init, times)
+            print date_init
+        except:
+            context['error_init'] = 'Data de início em formato incorreto'
+            return self.render_to_response(context)
+
+        try:
+            date_end = datetime.strptime(date_end, "%d/%m/%Y").date()
+            times = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            date_end = datetime.combine(date_end, times)
+            print date_end
+        except:
+            context['error_end'] = 'Date de fim em formato incorreto'
+            return self.render_to_response(context)
+
+        if date_init > date_end:
+            context['error_init'] = 'Data de início deve ser menor ou igual a date de fim'
+            return self.render_to_response(context)
+
+
+        students = [ cs.user for cs in CourseStudent.objects.filter(course__id=11, created_at__gt=date_init, created_at__lt=date_end) ]
+        joca_students = [ ju.user for ju in JocaUser.objects.filter(user__in=students)]
+
+        new_students = [ s for s in students if s not in joca_students]
+        new_joca_students = [s for s in students if s in joca_students]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Email', 'Joca'])
+        for student in new_students:
+            writer.writerow([student.email, 'N'])
+        for student in new_joca_students:
+            writer.writerow([student.email, 'S'])
+
+        return response

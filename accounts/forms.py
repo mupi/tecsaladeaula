@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
 
+from allauth.account.forms import SignupForm
+
 User = get_user_model()
 
 
@@ -39,7 +41,7 @@ class ProfileEditForm(forms.ModelForm):
         return super(ProfileEditForm, self).save(commit=commit)
 
 
-class AcceptTermsForm(forms.Form):
+class AcceptTermsForm(SignupForm):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)
 
     def clean_accept_terms(self):
@@ -60,4 +62,4 @@ class SignupForm(AcceptTermsForm):
 
         user.accepted_terms = self.cleaned_data['accept_terms']
         user.save()
-        send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
+        # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])

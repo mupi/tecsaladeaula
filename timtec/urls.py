@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from accounts.views import (ProfileEditView, ProfileView, UserSearchView,
                             TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView,
-                            AcceptTermsView)
+                            AcceptTermsView, SignupView)
 
 from core.views import (CourseView, GenericCourseView, CourseViewSet,
                         CourseProfessorViewSet, EnrollCourseView, HomeView,
@@ -127,6 +127,7 @@ urlpatterns = patterns(
     url(r'^profile/(?P<username>[\w.+-]+)?/?$', ProfileView.as_view(), name="profile"),
 
     # The django-allauth
+    url(r'^accounts/signup', SignupView.as_view(), name='signup'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^api/user_search/?$', UserSearchView.as_view(), name='user_search'),
     url(r'^api/student_search/?$', StudentSearchView.as_view(), name='student_search'),
@@ -138,6 +139,8 @@ urlpatterns = patterns(
 
     url(r'^markdown/', include('django_markdown.urls')),
 
+    # Jornal do Joca
+    url(r'joca/', include('joca.urls')),
 )
 
 if settings.TWITTER_USER != '':
