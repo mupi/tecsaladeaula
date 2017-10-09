@@ -41,7 +41,7 @@ class ProfileEditForm(forms.ModelForm):
         return super(ProfileEditForm, self).save(commit=commit)
 
 
-class AcceptTermsForm(SignupForm):
+class AcceptTermsForm(forms.Form):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)
 
     def clean_accept_terms(self):
@@ -52,14 +52,13 @@ class AcceptTermsForm(SignupForm):
         return self.cleaned_data['accept_terms']
 
 
-class SignupForm(AcceptTermsForm):
+class SignupForm(SignupForm, AcceptTermsForm):
 
-    def signup(self, request, user):
-        username = self.cleaned_data['username']
-        email = self.cleaned_data['email']
-
-        now = datetime.datetime.now()
+    def save(self, request):
+        user = super(SignupForm, self).save(request)
 
         user.accepted_terms = self.cleaned_data['accept_terms']
         user.save()
+
+        return user
         # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
