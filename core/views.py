@@ -622,7 +622,7 @@ class FlatpageView(View):
 
         from django.contrib.flatpages.views import flatpage, render_flatpage
 
-        if not request.user.is_superuser or FlatPage.objects.filter(url='url', sites=settings.SITE_ID).exists():
+        if FlatPage.objects.filter(url=url, sites=settings.SITE_ID).exists():
             return flatpage(request, url)
         else:
             f = FlatPage(url=url)
