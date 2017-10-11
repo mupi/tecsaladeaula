@@ -622,11 +622,12 @@ class FlatpageView(View):
 
         from django.contrib.flatpages.views import flatpage, render_flatpage
 
-        if not request.user.is_superuser or FlatPage.objects.filter(url='url', sites=settings.SITE_ID).exists():
-            return flatpage(request, url)
-        else:
-            f = FlatPage(url=url)
-            return render_flatpage(request, f)
+        fp = get_object_or_404(FlatPage, url=url, sites=settings.SITE_ID)
+        # if FlatPage.objects.filter(url=url, sites=settings.SITE_ID).exists():
+        return flatpage(request, url)
+        # else:
+        #     f = FlatPage(url=url)
+        #     return render_flatpage(request, f)
 
 
 class FlatpageViewSet(viewsets.ModelViewSet):
