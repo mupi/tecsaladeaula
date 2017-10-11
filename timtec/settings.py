@@ -565,6 +565,9 @@ TEMPLATE_DIRS = (
     os.path.join(THEMES_DIR, 'default', 'templates'),
 )
 
+MARKDOWN_EDITOR_SETTINGS = {'previewInWindow': 'width=800, height=600, resizable=yes, scrollbars=yes'}
+MARKDOWN_STYLE='/static/css/main.css'
+
 # if DEBUG:
 #     MIDDLEWARE_CLASSES += (
 #         'debug_toolbar.middleware.DebugToolbarMiddleware',
