@@ -1,5 +1,5 @@
 <div class="question textleft">
-    <h1 class="top">{{ currentActivity.data.question }}</h1>
+  <span ng-bind-html="get_as_safe_html(currentActivity.data.question)"></span>
 </div>
 <div class="answers trueorfalse-answers">
     <div class="row">

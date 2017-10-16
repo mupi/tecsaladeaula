@@ -78,7 +78,8 @@ $(document).ready(function() {
                    class="has-tooltip unit-link track" data-toggle="tooltip"
                    ng-repeat="unit in lesson.units"
                    ng-class="{watching: unit==currentUnit, done: unit.progress.complete}">
-                       <span class="position" ng-bind="unit.position+1"></span>
+                       <!-- <span class="position" ng-bind="unit.position+1"></span> -->
+                       <span class="position"> </span>
                        {{unit.title}}
                        <i class="fa fa-play-circle" ng-hide="unit.activities"></i>
                        <i class="fa fa-file-text-o" ng-show="unit.activities"></i>
@@ -118,7 +119,8 @@ $(document).ready(function() {
                         <option ng-repeat="unit in lesson.units"
                                 ng-value="$index+1"
                                 ng-selected="unit==currentUnit"
-                                value="{{$index+1}}">{% endverbatim %}{% trans 'Unit' %}{% verbatim %} {{ unit.position + 1 }}</option>
+                                value="{{$index+1}}">{{unit.title}}</option>
+                                <!-- value="{{$index+1}}">{% endverbatim %}{% trans 'Unit' %}{% verbatim %} {{ unit.position + 1 }}</option> -->
                     </select>
                 </p>
             </div>

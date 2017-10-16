@@ -566,7 +566,7 @@ TEMPLATE_DIRS = (
 )
 
 MARKDOWN_EDITOR_SETTINGS = {'previewInWindow': 'width=800, height=600, resizable=yes, scrollbars=yes'}
-MARKDOWN_STYLE='/static/css/main.css'
+MARKDOWN_STYLE='css/main.css'
 
 # if DEBUG:
 #     MIDDLEWARE_CLASSES += (
