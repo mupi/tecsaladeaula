@@ -22,7 +22,7 @@
 
             $scope.play = function(youtube_id) {
                 youtubePlayerApi.loadPlayer().then(function(player){
-                    if(player.getVideoData().video_id === youtube_id) return;
+                    if(player.getVideoData && player.getVideoData().video_id === youtube_id) return;
                     player.cueVideoById(youtube_id);
                 });
             };
