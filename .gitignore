@@ -58,6 +58,8 @@ settings_local.py
 /themes/*/static/css/main-admin.css
 /.cache
 /node_modules
+/bower_components
+.sass-cache
 
 # Vagrant
 .vagrant
@@ -67,3 +69,5 @@ settings_local.py
 
 *.psqlc
 *.log
+
+/bkps
