@@ -1,0 +1,134 @@
+[
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Polivalente"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Português / Língua Portuguesa"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Redação e Literatura"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Matemática"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Estudos Sociais"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "História"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Geografia"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Ciências"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Ciências"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Biologia"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Física"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Química"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Sociologia"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Filosofia"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Língua Estrangeira - Inglês"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Língua Estrangeira - Espanhol"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Língua Estrangeira - Outras"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Artes"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Ensino Religioso"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Educação Física"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Informática"
+    }
+  },
+  {
+    "model": "accounts.discipline",
+    "fields": {
+      "name": "Outras"
+    }
+  }
+]

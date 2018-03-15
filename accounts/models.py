@@ -93,14 +93,53 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
                 pass
 
 
+
+#populated by fixture
+class State (models.Model):
+    name = models.CharField(max_length=50)
+    uf = models.CharField(max_length=2,primary_key=True)
+    uf_code = models.CharField(max_length=5)
+
+#populated by fixture
+class City (models.Model):
+    code = models.CharField(max_length=20)
+    name = models.CharField(max_length=80)
+    uf = models.ForeignKey(State, on_delete=models.CASCADE)
+
+
+#populated by fixture
+class Discipline (models.Model):
+    name = models.CharField(max_length=200, unique=True,primary_key=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+class School (models.Model):
+    name = models.CharField(max_length=200)
+    school_type = models.CharField(max_length=30, blank=True, null=True)  #private or public
+    city = models.ForeignKey(City, blank=True, null=True)
+    education_degree = models.CharField(max_length=50, blank=True, null=True)
+
+#populated by fixture
+class EducationDegree (models.Model):
+    name = models.CharField(max_length=70,primary_key=True)
+
 class TimtecUser(AbstractTimtecUser):
     """
     Timtec customized user.
 
     Username, password and email are required. Other fields are optional.
     """
-
+    business_email = models.EmailField(blank=True, null=True)
     email = models.EmailField(_('Email address'), blank=False, unique=True)
+    level_of_education_taught = models.ManyToManyField(EducationDegree, blank=True, null=True)
+    school = models.ManyToManyField(School, blank=True, null=True)
+    disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
+    city = City
+    state = models.CharField(max_length=50, blank=True, null=True)
+    job_title = models.CharField(max_length=70, blank=True, null=True)
 
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'

@@ -1,0 +1,38 @@
+[
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Ensino Infantil"
+    }
+  },
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Ensino Fundamental 1"
+    }
+  },
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Ensino Fundamental 2"
+    }
+  },
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Ensino Médio"
+    }
+  },
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Ensino Superior"
+    }
+  },
+  {
+    "model": "accounts.educationdegree",
+    "fields": {
+      "name": "Outro"
+    }
+  }
+]
