@@ -1,4 +1,4 @@
-Oi {{ username }},
+Oi {{ name }},
 
 Você se inscreveu em nosso curso gratuito {{ course_name }}.
 
