@@ -22,8 +22,8 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
             validators.RegexValidator(USERNAME_REGEXP, _('Enter a valid username.'), 'invalid')
         ])
 
-    first_name = models.CharField(_('First name'), max_length=30, blank=True)
-    last_name = models.CharField(_('Last name'), max_length=30, blank=True)
+    first_name = models.CharField(_('First name'), max_length=60, blank=True)
+    last_name = models.CharField(_('Last name'), max_length=60, blank=True)
     is_staff = models.BooleanField(_('Staff status'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
