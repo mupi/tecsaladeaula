@@ -97,7 +97,13 @@ wrapper-course-lesson
                             <li ng-repeat="user in users_reports">
                                 <div class="row">
                                 {% verbatim %}
-                                    <div class="col-md-3 col-sm-4 col-xs-10"><strong>{{ user.name || user.username }}<br>({{ user.email }})</strong></div>
+                                    <div class="col-md-3 col-sm-4 col-xs-10">
+
+                                        <strong>
+                                            <div ng-hide="user.name == null">{{ user.name || user.username }}<br></div>
+                                            ({{ user.email }})
+                                        </strong>
+                                    </div>
                                     <div class="col-lg-1 col-xs-2 textright">{{ user.course_progress }}%</div>
                                     <div class="col-md-2 col-sm-3 hidden-xs">
                                         <div class="progress">
