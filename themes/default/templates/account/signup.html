@@ -1,5 +1,7 @@
 {% extends 'account/base.html' %}
 {% load i18n %}
+{% load staticfiles%}
+
 
 <!-- TABLET AND DESKTOP -->
 {% block account_content %}
@@ -7,12 +9,12 @@
         <i class="fa fa-smile-o"></i><br/>
         {% trans "Sign Up" %}!
     </h1>
-    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
-        {% with errors=form.username.errors %}
+    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
+        {% with errors=form.fullname.errors %}
         <div class="form-group{{ errors|yesno:' has-error,' }}">
-            <label class="col-lg-4 col-sm-4 control-label">{% trans "Username" %}</label>
+            <label class="col-lg-4 col-sm-4 control-label">{% trans "Full Name" %}</label>
             <div class="col-lg-8 col-sm-8">
-                <input name="username" type="text" value="{{form.username.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Username' %}">
+                <input name="fullname" type="text" value="{{form.fullname.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Full Name' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -53,6 +55,8 @@
 		{% endwith %}
     	{% endif %}
 
+    <input type="hidden" name="username">
+
         <div class="submit textright">
             <button class="btn btn-success">{% trans "Sign Up" %}</button>
         </div>
@@ -81,12 +85,12 @@
             </h1>
         </div>
     </div>
-    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
-        {% with errors=form.username.errors %}
+    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
+        {% with errors=form.fullname.errors %}
         <div class="form-group{{ errors|yesno:' has-error,' }}">
-            <label class="col-xs-12 control-label">{% trans "Username" %}</label>
+            <label class="col-xs-12 control-label">{% trans "Full Name" %}</label>
             <div class="col-xs-12">
-                <input name="username" type="text" value="{{form.username.value}}" class="form-control" placeholder="{% trans 'Username' %}">
+                <input name="fullname" type="text" value="{{form.fullname.value}}" class="form-control" placeholder="{% trans 'Full Name' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -126,6 +130,8 @@
 		{% endwith %}
     	{% endif %}
 
+        <input type="hidden" name="username">
+
         <div class="submit">
             <button class="btn btn-success btn-lg col-xs-12">{% trans "Sign Up" %}</button>
         </div>
@@ -138,6 +144,40 @@
             </p>
         </div>
 
+
     </form>
+{#<script type="text/javascript">#}
+{#    $(document).ready(function(){#}
+{#    hashCode = function(s) {#}
+{#        var h = 0, l = s.length, i = 0;#}
+{#        if (l > 0)#}
+{#            while (i < l)#}
+{#                h = (h << 5) - h + s.charCodeAt(i++) | 0#}
+{#        return h;#}
+{#    }#}
+{##}
+{#    update_user_hashcode = function(username_input,email_input){#}
+{#        $(username_input).val(hashCode(email_input.value));#}
+{#    }#}
+{##}
+{#     $(".form-sign-up").each(function(){#}
+{#        var username_field = $(this).find("input[name='username']")#}
+{#        var email_field= $(this).find("input[name='email']") ;#}
+{#        update_user_hashcode(username_field,email_field);#}
+{#        $(email_field).change(function () {#}
+{#            var parent_form = $(this).parents("form")[0]#}
+{#            var inner_username = $(parent_form).filter("input[name='username']")#}
+{#            update_user_hashcode(inner_username,this)#}
+{#        })#}
+{#    })#}
+{##}
+{##}
+{#    update_user_hashcode(username_field,email)#}
+{##}
+{#})#}
+{#    </script>#}
+<script type="text/javascript" src="{% static 'js/signup_emailhash_tousername.js' %}" charset="utf-8"></script>
 {% endblock %}
+
+
 <!-- END MOBILE -->
