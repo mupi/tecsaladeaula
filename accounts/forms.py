@@ -53,12 +53,31 @@ class AcceptTermsForm(forms.Form):
 
 
 class SignupForm(SignupForm, AcceptTermsForm):
+    fullname = forms.CharField(label=_("Nome Completo"),initial=False,required=True)
+
+    def extract_first_name(self,name):
+        names = name.split(" ")
+        return names[0]
+
+    def extract_last_name(self, name):
+        names = name.split(" ")
+        if len(names) > 1:
+            return " ".join(names[1:])
+        else:
+            return ""
+
+    def clean_full_name(self):
+        data  = self.cleaned_data['fullname']
+        if not data.strip():
+            raise forms.ValidationError(_('You Must fill your complete name'))
+        return data
 
     def save(self, request):
         user = super(SignupForm, self).save(request)
-
+        name = self.cleaned_data['fullname']
         user.accepted_terms = self.cleaned_data['accept_terms']
+        user.first_name = self.extract_first_name(name)
+        user.last_name = self.extract_last_name(name)
         user.save()
-
         return user
         # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
