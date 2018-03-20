@@ -991,7 +991,7 @@ msgstr "Selecione um professor"
 #: themes/default/templates/administration/permissions.html:96
 #: themes/default/templates/administration/users.html:76
 msgid "Full name"
-msgstr "Nome"
+msgstr "Nome Completo"
 
 #: themes/default/templates/class_edit.html:104
 #: themes/default/templates/classes.html:37
