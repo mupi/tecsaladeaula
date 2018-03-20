@@ -5,10 +5,10 @@
     <form method="post" action="{% url 'account_login' %}" id="form-sign-in" class="navbar-form form-horizontal">{% csrf_token %}
 
         <div class="form-group {% if form.errors %}has-error{% endif %}">
-            <label class="col-sm-5 col-xs-12 control-label">{% trans 'Username' %}</label>
+            <label class="col-sm-5 col-xs-12 control-label">{% trans 'E-mail' %}</label>
             <div class="col-sm-7 col-xs-12">
                 <input name="login" type="text" class="form-control"
-                       value="{{form.login.value}}" placeholder="{% trans 'E-mail or username' %}"/>
+                       value="{{form.login.value}}" placeholder="{% trans 'E-mail' %}"/>
                 {% for error in form.login.errors %}
                 <small>{{error}}</small>
                 {% endfor %}
@@ -36,11 +36,6 @@
                 <button class="btn btn-success">{% trans 'Sign In' %} <i class="fa fa-sign-in"></i></button>
             </div>
         </div>
-        <div class="divider"></div>
-        <div class="row">
-            <p class="bottom textcenter">
-                <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-info"><i class="fa fa-facebook-square"></i> {% trans 'Connect with Facebook' %}</a>
-            </p>
-        </div>
+
     </form>
 </div>
