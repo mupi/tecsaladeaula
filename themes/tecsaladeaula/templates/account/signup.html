@@ -73,37 +73,7 @@
 
     </form>
 
-
-{#    <script type="text/javascript">#}
-{#    $(document).ready(function(){#}
-{#    hashCode = function(s) {#}
-{#        var h = 0, l = s.length, i = 0;#}
-{#        if (l > 0)#}
-{#            while (i < l)#}
-{#                h = (h << 5) - h + s.charCodeAt(i++) | 0#}
-{#        return h;#}
-{#    }#}
-{##}
-{#    update_user_hashcode = function(username_input,email_input){#}
-{#        $(username_input).val(hashCode(email_input.value));#}
-{#    }#}
-{##}
-{#     $(".form-sign-up").each(function(){#}
-{#        var username_field = $(this).find("input[name='username']")#}
-{#        var email_field= $(this).find("input[name='email']") ;#}
-{#        update_user_hashcode(username_field,email_field);#}
-{#        $(email_field).change(function () {#}
-{#            var parent_form = $(this).parents("form")[0]#}
-{#            var inner_username = $(parent_form).filter("input[name='username']")#}
-{#            update_user_hashcode(inner_username,this)#}
-{#        })#}
-{#    })#}
-{##}
-{##}
-{#    update_user_hashcode(username_field,email)#}
-{##}
-{#    </script>#}
-<script type="text/javascript" src="{% static 'js/signup_emailhash_tousername.js' %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'js/signup_email_tousername.js' %}" charset="utf-8"></script>
 
 
 
