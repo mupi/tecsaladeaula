@@ -115,16 +115,15 @@ class Discipline (models.Model):
         return self.name
 
 
+#populated by fixture
+class EducationDegree (models.Model):
+    name = models.CharField(max_length=70,primary_key=True)
 
 class School (models.Model):
     name = models.CharField(max_length=200)
     school_type = models.CharField(max_length=30, blank=True, null=True)  #private or public
     city = models.ForeignKey(City, blank=True, null=True)
-    education_degree = models.CharField(max_length=50, blank=True, null=True)
-
-#populated by fixture
-class EducationDegree (models.Model):
-    name = models.CharField(max_length=70,primary_key=True)
+    education_degree = models.ManyToManyField(EducationDegree, blank=True, null=True)
 
 class TimtecUser(AbstractTimtecUser):
     """
@@ -138,7 +137,7 @@ class TimtecUser(AbstractTimtecUser):
     school = models.ManyToManyField(School, blank=True, null=True)
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
     city = City
-    state = models.CharField(max_length=50, blank=True, null=True)
+
     job_title = models.CharField(max_length=70, blank=True, null=True)
 
     class Meta(AbstractTimtecUser.Meta):
