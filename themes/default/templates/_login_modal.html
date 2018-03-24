@@ -1,11 +1,11 @@
 {% load i18n %}
 {% load socialaccount %}
-
+<!-- PR - basic - Login Modal-->
 <div class="dropdown-menu">
     <form method="post" action="{% url 'account_login' %}" id="form-sign-in" class="navbar-form form-horizontal">{% csrf_token %}
 
         <div class="form-group {% if form.errors %}has-error{% endif %}">
-            <label class="col-sm-5 col-xs-12 control-label">{% trans 'E-mail' %}</label>
+            <label class="col-sm-3 col-xs-12 control-label">{% trans 'E-mail' %}</label>
             <div class="col-sm-7 col-xs-12">
                 <input name="login" type="text" class="form-control"
                        value="{{form.login.value}}" placeholder="{% trans 'E-mail' %}"/>
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group {% if form.errors %}has-error{% endif %}">
-            <label class="col-sm-5 col-xs-12 control-label">{% trans 'Password' %}</label>
+            <label class="col-sm-3 col-xs-12 control-label">{% trans 'Password' %}</label>
             <div class="col-sm-7 col-xs-12">
                 <input name="password" type="password" class="form-control" placeholder="{% trans 'Password' %}">
                 {% for error in form.password.errors %}
@@ -29,7 +29,7 @@
         </div>
 
         <div class="submit clearfix">
-            <div class="col-xs-8">
+            <div class="col-xs-8 text-center">
                 <a href="{% url 'account_reset_password' %}">{% trans 'Forgot my password' %}</a>
             </div>
             <div class="col-xs-4 textright">

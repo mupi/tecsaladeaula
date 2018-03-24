@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-28 16:27-0300\n"
-"PO-Revision-Date: 2018-03-21 02:31-0300\n"
+"PO-Revision-Date: 2018-03-23 22:32-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -989,6 +989,12 @@ msgstr "Selecione um professor"
 #: themes/default/templates/administration/permissions.html:96
 #: themes/default/templates/administration/users.html:76
 #: themes/default/templates/profile-edit.html
+#: themes/default/templates/profile-edit.html:58
+#: themes/default/templates/ifs/signup-completion.html:14
+#: themes/if/templates/account/signup.html:14
+#: themes/ifs-colors/templates/ifs/signup-completion.html:14
+#: themes/default/templates/_signup_modal:8
+#: themes/default/templates/_signup_modal:10
 msgid "Full name"
 msgstr "Nome Completo"
 
@@ -1304,13 +1310,6 @@ msgstr "Perfil"
 #: themes/default/templates/profile-edit.html:54
 msgid "Profile Settings"
 msgstr "Configuração do Perfil"
-
-#: themes/default/templates/profile-edit.html:58
-#: themes/default/templates/ifs/signup-completion.html:14
-#: themes/if/templates/account/signup.html:14
-#: themes/ifs-colors/templates/ifs/signup-completion.html:14
-msgid "Full Name"
-msgstr "Nome Completo"
 
 #: themes/default/templates/profile-edit.html:109
 #: themes/default/templates/profile.html:54

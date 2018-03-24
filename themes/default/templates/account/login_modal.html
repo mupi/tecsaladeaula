@@ -67,7 +67,7 @@
               <div class="bottom-xs left-xs right-xs top-xs">
                 <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
                   <div class="form-group">
-                    <label class="col-md-3 col-xs-12">{% trans "Full Name" %}</label>
+                    <label class="col-md-3 col-xs-12">{% trans "Full name" %}</label>
                     <div class="col-md-9 col-xs-12">
                       <input name="fullname" type="text" class="form-control" placeholder="{% trans 'Enter your full name' %}">
                     </div>
