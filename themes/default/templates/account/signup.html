@@ -1,18 +1,20 @@
 {% extends 'account/base.html' %}
 {% load i18n %}
+{% load staticfiles%}
 
+<!-- PRS 1-->
 <!-- TABLET AND DESKTOP -->
 {% block account_content %}
     <h1>
         <i class="fa fa-smile-o"></i><br/>
         {% trans "Sign Up" %}!
     </h1>
-    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
-        {% with errors=form.username.errors %}
+    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
+        {% with errors=form.fullname.errors %}
         <div class="form-group{{ errors|yesno:' has-error,' }}">
-            <label class="col-lg-4 col-sm-4 control-label">{% trans "Username" %}</label>
+            <label class="col-lg-4 col-sm-4 control-label">{% trans "Full name" %}</label>
             <div class="col-lg-8 col-sm-8">
-                <input name="username" type="text" value="{{form.username.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Username' %}">
+                <input name="fullname" type="text" value="{{form.fullname.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Enter your full name' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -22,7 +24,7 @@
         <div class="form-group{{ errors|yesno:' has-error,' }}">
             <label class="col-lg-4 col-sm-4 control-label">{% trans "E-mail" %}</label>
             <div class="col-lg-8 col-sm-8">
-                <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="Your e-mail">
+                <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insert your e-mail' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -53,19 +55,12 @@
 		{% endwith %}
     	{% endif %}
 
+    <input type="hidden" name="username">
+
         <div class="submit textright">
             <button class="btn btn-success">{% trans "Sign Up" %}</button>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <hr/>
-                <p class="bottom textcenter">
-                    {% load socialaccount %}
-                    <a href="{% provider_login_url 'facebook' method='oauth2' %}">Facebook Connect</a>
-                </p>
-            </div>
-        </div>
     </form>
 {% endblock %}
 <!-- END TABLET AND DESKTOP -->
@@ -81,12 +76,12 @@
             </h1>
         </div>
     </div>
-    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
-        {% with errors=form.username.errors %}
+    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
+        {% with errors=form.fullname.errors %}
         <div class="form-group{{ errors|yesno:' has-error,' }}">
-            <label class="col-xs-12 control-label">{% trans "Username" %}</label>
+            <label class="col-xs-12 control-label">{% trans "Full Name" %}</label>
             <div class="col-xs-12">
-                <input name="username" type="text" value="{{form.username.value}}" class="form-control" placeholder="{% trans 'Username' %}">
+                <input name="fullname" type="text" value="{{form.fullname.value}}" class="form-control" placeholder="{% trans 'Full Name' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -126,6 +121,8 @@
 		{% endwith %}
     	{% endif %}
 
+        <input type="hidden" name="username">
+
         <div class="submit">
             <button class="btn btn-success btn-lg col-xs-12">{% trans "Sign Up" %}</button>
         </div>
@@ -138,6 +135,11 @@
             </p>
         </div>
 
+
     </form>
+
+<script type="text/javascript" src="{% static 'js/signup_email_tousername.js' %}" charset="utf-8"></script>
 {% endblock %}
+
+
 <!-- END MOBILE -->

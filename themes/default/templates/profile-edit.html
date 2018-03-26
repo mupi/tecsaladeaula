@@ -121,15 +121,6 @@ wrapper-course-lesson
                         <h3><i class="fa fa-angle-double-right"></i> {% trans "Account Settings" %}</h3>
                     </div>
 
-                    {% with errors=form.username.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Username" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <input readonly name="username" type="text" class="form-control" value="{{form.username.value}}">
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
 
                     {% with errors=form.email.errors %}
                     <div class="form-group{{ errors|yesno:" has-error,"}}">

@@ -22,10 +22,10 @@
               <div class="panel-body bottom-xs left-xs right-xs top-xs">
                 <form class="form-horizontal" method="post" action="{% url 'account_login' %}">{% csrf_token %}
                   <div class="form-group{% if form.errors %} has-error{% endif %}">
-                    <label class="col-md-3 col-xs-12">{% trans 'Login' %}</label>
+                    <label class="col-md-3 col-xs-12">{% trans 'E-mail' %}</label>
                     <div class="col-lg-9 col-xs-12">
                       <input name="login" type="text" class="form-control"
-                      value="{{form.login.value}}" placeholder="{% trans 'E-mail or username' %}"/>
+                      value="{{form.login.value}}" placeholder="{% trans 'E-mail' %}"/>
                       {% for error in form.login.errors %}
                       <small>{{error}}</small>
                       {% endfor error in %}
@@ -65,11 +65,11 @@
               <h3 class="bottom-xs"><i class="fa fa-angle-double-right"></i> {% trans 'Sign Up' %}</h3>
 
               <div class="bottom-xs left-xs right-xs top-xs">
-                <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal">{% csrf_token %}
+                <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" class="form-horizontal form-sign-up">{% csrf_token %}
                   <div class="form-group">
-                    <label class="col-md-3 col-xs-12">{% trans "Username" %}</label>
+                    <label class="col-md-3 col-xs-12">{% trans "Full name" %}</label>
                     <div class="col-md-9 col-xs-12">
-                      <input name="username" type="text" class="form-control" placeholder="{% trans 'Choose an username' %}">
+                      <input name="fullname" type="text" class="form-control" placeholder="{% trans 'Enter your full name' %}">
                     </div>
                   </div>
                   <div class="form-group">
@@ -94,7 +94,9 @@
                       <label for="accept_terms" class="terms">{% blocktrans %}I agree to the <a href="{{ terms_url }}" target="_blank">Terms of Use</a>{% endblocktrans %}</label>
                     </div>
                   </div>
-        				  {% endif %}
+        		 {% endif %}
+
+                <input type="hidden" name="username">
 
                   <div class="submit textright">
                     <div class="row">
@@ -108,8 +110,8 @@
               </div>
             </div>
           </div>
-          <div class="divider"></div>
-          <p class="textcenter">{% load socialaccount %}<a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-info text-uppercase"><i class="fa fa-facebook-square"></i> {% trans 'Facebook connect' %}</a></p>
+
+
         </div>
       </div>
     </div>

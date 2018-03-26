@@ -1,16 +1,24 @@
 {% extends 'account/base.html' %}
 {% load i18n %}
-
+{% load staticfiles%}
 {% block account_content %}
+
+<!-- PRS 1-->
     <h1 class="text-center">
         {% trans "Sign Up" %} gratuitamente!
     </h1>
-    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" id="form-sign-up-page" class="form-horizontal">{% csrf_token %}
-        {% with errors=form.username.errors %}
+    <form onclick="event.stopPropagation()" method="post" action="{% url 'account_signup' %}" id="form-sign-up-page" class="form-horizontal form-sign-up">{% csrf_token %}
+        {% with errors=form.fullname.errors %}
         <div class="form-group{{ errors|yesno:' has-error,' }}">
-            <label class="col-lg-4 col-sm-4 control-label">{% trans "Username" %}</label>
+            <label class="col-lg-4 col-sm-4 control-label">{% trans "Full name" %}</label>
             <div class="col-lg-8 col-sm-8">
-                <input name="username" type="text" value="{{form.username.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Username' %}">
+
+                {% if form.fullname.value == False %}
+                    <input name="fullname" type="text" value="" class="form-control" placeholder="{% trans 'Insira seu nome completo'%}">
+                {% else %}
+                    <input name="fullname" type="text" value="{{form.fullname.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insira seu nome completo' %}">
+                {% endif %}
+
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -20,7 +28,7 @@
         <div class="form-group{{ errors|yesno:' has-error,' }}">
             <label class="col-lg-4 col-sm-4 control-label">{% trans "E-mail" %}</label>
             <div class="col-lg-8 col-sm-8">
-                <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="Your e-mail">
+                <input name="email" type="email" value="{{form.email.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insert your e-mail' %}">
                 {% for error in errors %}<small>{{error}}</small>{% endfor %}
             </div>
         </div>
@@ -51,21 +59,21 @@
         {% endwith %}
         {% endif %}
 
+        <input type="hidden" name="username">
+
         <div class="submit textright">
             <button class="btn btn-success">{% trans "Sign Up" %}</button>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12">
-                <hr/>
-                <p class="bottom textcenter">
-                    {% load socialaccount %}
-                    <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-info"><i class="fa fa-facebook-square"></i> Conectar com sua conta do Facebook</a>
-                </p>
-            </div>
-        </div>
+      
         {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
+
     </form>
+
+<script type="text/javascript" src="{% static 'js/signup_email_tousername.js' %}" charset="utf-8"></script>
+
+
+
 {% endblock %}

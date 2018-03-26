@@ -2,26 +2,26 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 19/03/2018 - New messages were added
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-28 16:27-0300\n"
-"PO-Revision-Date: 2015-08-28 16:29-0300\n"
+"PO-Revision-Date: 2018-03-23 22:32-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.7.4\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #: accounts/adapter.py:13
 msgid "Usernames can only contain letters, digits and ./-/_."
-msgstr ""
-"Seu nome de usuário não deve conter espaço, apenas letras, números e ./-/_."
+msgstr "Seu nome de usuário não deve conter espaço, apenas letras, números e ./-/_."
 
 #: accounts/admin.py:14
 msgid "Timtec Info"
@@ -30,6 +30,10 @@ msgstr "Informações do Timtec"
 #: accounts/forms.py:11 ifs/forms.py:18
 msgid "email"
 msgstr "email"
+
+#: themes/default/templates/_signup_modal.html:13
+msgid "Enter your full name"
+msgstr "Insira seu nome completo"
 
 #: accounts/forms.py:13 ifs/forms.py:20
 #: themes/default/templates/_login_modal.html:19
@@ -65,7 +69,6 @@ msgstr "email"
 #: themes/timtec/templates/header.html:79
 #: themes/timtec/templates/header.html:81
 #: themes/timtec/templates/header.html:128
-
 msgid "Password"
 msgstr "Senha"
 
@@ -112,13 +115,11 @@ msgstr "Você deve concordar com os Termos de Uso para usar o %(site_name)s."
 #: themes/tecsaladeaula/templates/account/signup.html:78
 #: themes/timtec/templates/header.html:68
 #: themes/timtec/templates/header.html:114
-
 msgid "Username"
 msgstr "Nome de usuário"
 
 #: accounts/models.py:19
-msgid ""
-"Required. 30 characters or fewer. Letters, numbers and ./+/-/_ characters"
+msgid "Required. 30 characters or fewer. Letters, numbers and ./+/-/_ characters"
 msgstr "Obrigatório. 30 caracteres ou menos. Letras, números e . + - _"
 
 #: accounts/models.py:22
@@ -153,7 +154,7 @@ msgstr "Estrutura"
 #: themes/default/templates/profile-edit.html:79
 #: themes/default/templates/profile.html:27
 msgid "Occupation"
-msgstr "Ocupação"
+msgstr "Atuação"
 
 #: accounts/models.py:33 ifs/models.py:9
 #: themes/default/templates/profile-edit.html:89
@@ -279,7 +280,6 @@ msgstr "Video"
 #: core/models.py:31
 msgid "Videos"
 msgstr "Videos"
-
 
 #: core/models.py:42 core/models.py:309
 msgid "Assistant"
@@ -685,8 +685,7 @@ msgstr "Busque e selecione um usuário para defini-lo como professor do curso"
 #: themes/default/templates/messages.html:70
 #: themes/default/templates/administration/permissions.html:86
 msgid "Type the name, email or user name of the professor to search..."
-msgstr ""
-"Digite um nome, email ou nome de usuário do professor para pesquisar..."
+msgstr "Digite um nome, email ou nome de usuário do professor para pesquisar..."
 
 #: themes/default/templates/_course_professors_modal.html:35
 msgid "Selected user"
@@ -715,8 +714,7 @@ msgstr "Usar biografia do perfil do usuário"
 #: themes/default/templates/course.html:200
 #: themes/default/templates/course.html:264
 #: themes/default/templates/course.html:433
-#: themes/default/templates/home.html:30
-#: themes/default/templates/home.html:273
+#: themes/default/templates/home.html:30 themes/default/templates/home.html:273
 #: themes/default/templates/administration/courses.html:39
 #: themes/default/templates/administration/courses.html:69
 #: themes/default/templates/administration/lesson.html:139
@@ -908,6 +906,8 @@ msgid "E-mail"
 msgstr "Email"
 
 #: themes/default/templates/_signup_modal.html:16
+#: themes/tecsaladeaula/templates/account/signup.html:16
+#: themes/default/templates/account/signup.html:16
 #: themes/default/templates/account/login_modal.html:78
 msgid "Insert your e-mail"
 msgstr "Insira seu email"
@@ -930,9 +930,7 @@ msgstr "Confirme sua senha"
 #: themes/if/templates/account/signup.html:126
 #, python-format
 msgid "I agree to the <a href=\"%(terms_url)s\" target=\"_blank\">Terms of Use</a>"
-msgstr ""
-"Eu concordo com os <a href=\"%(terms_url)s\" target=\"_blank\">Termos de "
-"Uso</a>"
+msgstr "Eu concordo com os <a href=\"%(terms_url)s\" target=\"_blank\">Termos de Uso</a>"
 
 #: themes/default/templates/_signup_modal.html:40
 #: themes/default/templates/header.html:72
@@ -990,8 +988,15 @@ msgstr "Selecione um professor"
 #: themes/default/templates/administration/permissions.html:47
 #: themes/default/templates/administration/permissions.html:96
 #: themes/default/templates/administration/users.html:76
+#: themes/default/templates/profile-edit.html
+#: themes/default/templates/profile-edit.html:58
+#: themes/default/templates/ifs/signup-completion.html:14
+#: themes/if/templates/account/signup.html:14
+#: themes/ifs-colors/templates/ifs/signup-completion.html:14
+#: themes/default/templates/_signup_modal:8
+#: themes/default/templates/_signup_modal:10
 msgid "Full name"
-msgstr "Nome"
+msgstr "Nome Completo"
 
 #: themes/default/templates/class_edit.html:104
 #: themes/default/templates/classes.html:37
@@ -1242,8 +1247,7 @@ msgstr "Cursos em destaque"
 msgid "All courses"
 msgstr "Todos os cursos"
 
-#: themes/default/templates/home.html:254
-#: themes/timtec/templates/home.html:165
+#: themes/default/templates/home.html:254 themes/timtec/templates/home.html:165
 msgid "Edit home courses"
 msgstr "Editar cursos da home"
 
@@ -1303,12 +1307,9 @@ msgstr "Ver anotações"
 msgid "Profile Info"
 msgstr "Perfil"
 
-#: themes/default/templates/profile-edit.html:58
-#: themes/default/templates/ifs/signup-completion.html:14
-#: themes/if/templates/account/signup.html:14
-#: themes/ifs-colors/templates/ifs/signup-completion.html:14
-msgid "Full Name"
-msgstr "Nome"
+#: themes/default/templates/profile-edit.html:54
+msgid "Profile Settings"
+msgstr "Configuração do Perfil"
 
 #: themes/default/templates/profile-edit.html:109
 #: themes/default/templates/profile.html:54
@@ -1434,12 +1435,8 @@ msgstr "O registro falhou"
 #: themes/default/templates/account/email_confirm.html:12
 #: themes/default/templates/account/email_confirm.html:31
 #, python-format
-msgid ""
-"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
-"address for user %(user_display)s."
-msgstr ""
-"Por favor confirme que o endereço <a href=\"mailto:%(email)s\">%(email)s</a> "
-"é o email do usuário %(user_display)s."
+msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail address for user %(user_display)s."
+msgstr "Por favor confirme que o endereço <a href=\"mailto:%(email)s\">%(email)s</a> é o email do usuário %(user_display)s."
 
 #: themes/default/templates/account/email_confirm.html:16
 #: themes/default/templates/account/email_confirm.html:34
@@ -1449,12 +1446,8 @@ msgstr "Confirmar"
 #: themes/default/templates/account/email_confirm.html:20
 #: themes/default/templates/account/email_confirm.html:38
 #, python-format
-msgid ""
-"This e-mail confirmation link expired or is invalid.<br/>Please <a href="
-"\"%(email_url)s\">issue a new e-mail confirmation request</a>."
-msgstr ""
-"Este email de confirmação expirou ou é inválido. Por favor <a href="
-"\"%(email_url)s\">solicite uma nova confirmação de e-mail</a>."
+msgid "This e-mail confirmation link expired or is invalid.<br/>Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr "Este email de confirmação expirou ou é inválido. Por favor <a href=\"%(email_url)s\">solicite uma nova confirmação de e-mail</a>."
 
 #: themes/default/templates/account/email_confirmed.html:7
 msgid "Mission accomplished"
@@ -1486,12 +1479,8 @@ msgstr "Conectar com Facebook"
 
 #: themes/default/templates/account/password_reset.html:23
 #: themes/default/templates/account/password_reset.html:59
-msgid ""
-"Insert your e-mail so we can send you the instructions to recover your "
-"password"
-msgstr ""
-"Insira seu email para que possamos enviar-lhe instruções para recuperar sua "
-"senha"
+msgid "Insert your e-mail so we can send you the instructions to recover your password"
+msgstr "Insira seu email para que possamos enviar-lhe instruções para recuperar sua senha"
 
 #: themes/default/templates/account/password_reset.html:26
 #: themes/default/templates/account/password_reset.html:62
@@ -1518,14 +1507,8 @@ msgstr "Mudar sua senha"
 #: themes/default/templates/account/password_reset_from_key.html:15
 #: themes/default/templates/account/password_reset_from_key.html:55
 #, python-format
-msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</"
-"a>."
-msgstr ""
-"O link de solicitação de redefinição de senha é inválido, possivelmente "
-"porque já foi usado. Por favor solicite uma <a href=\"%(passwd_reset_url)s"
-"\">nova redefinição de senha</a>."
+msgid "The password reset link was invalid, possibly because it has already been used.  Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+msgstr "O link de solicitação de redefinição de senha é inválido, possivelmente porque já foi usado. Por favor solicite uma <a href=\"%(passwd_reset_url)s\">nova redefinição de senha</a>."
 
 #: themes/default/templates/account/password_reset_from_key.html:36
 #: themes/default/templates/account/password_reset_from_key.html:74
@@ -1561,25 +1544,17 @@ msgstr "Email de validação enviado"
 #: themes/default/templates/account/email/password_reset_key_message.txt:1
 #, python-format
 msgid ""
-"You're receiving this e-mail because you or someone else has requested a "
-"password for your user account at %(site_domain)s.\n"
-"It can be safely ignored if you did not request a password reset. Click the "
-"link below to reset your password.\n"
+"You're receiving this e-mail because you or someone else has requested a password for your user account at %(site_domain)s.\n"
+"It can be safely ignored if you did not request a password reset. Click the link below to reset your password.\n"
 "\n"
 "%(password_reset_url)s\n"
-"\n"
-"In case you forgot, your username is %(username)s.\n"
 "\n"
 "Thanks for using our site!\n"
 msgstr ""
-"Você está recebendo este e-mail porque você ou alguém solicitou uma "
-"redefinição de senha para sua conta no site %(site_domain)s.\n"
-"Você pode seguramente ignorar esta mensagem se você não solicitou esta "
-"redefinição de senha. Clique no link abaixo para redefinir sua senha.\n"
+"Você está recebendo este e-mail porque você ou alguém solicitou uma redefinição de senha para sua conta no site %(site_domain)s.\n"
+"Você pode seguramente ignorar esta mensagem se você não solicitou esta redefinição de senha. Clique no link abaixo para redefinir sua senha.\n"
 "\n"
 "%(password_reset_url)s\n"
-"\n"
-"Caso você tenha esquecido, seu nome de usuário é %(username)s.\n"
 "\n"
 "Obrigado por usar o TIM Tec!\n"
 
@@ -1671,12 +1646,8 @@ msgid "Unit video"
 msgstr "Vídeo da unidade"
 
 #: themes/default/templates/administration/lesson.html:188
-msgid ""
-"The text bellow will be shown to students when they correctly finish this "
-"activity."
-msgstr ""
-"O texto abaixo é um comentário que será exibido após o estudante responder "
-"corretamente a atividade."
+msgid "The text bellow will be shown to students when they correctly finish this activity."
+msgstr "O texto abaixo é um comentário que será exibido após o estudante responder corretamente a atividade."
 
 #: themes/default/templates/administration/lesson.html:197
 msgid "Unit activity"
@@ -1794,8 +1765,7 @@ msgid "Social Network Login Failure"
 msgstr "Falha ao fazer login na Rede Social"
 
 #: themes/default/templates/socialaccount/authentication_error.html:16
-msgid ""
-"An error occurred while attempting to login via your social network account."
+msgid "An error occurred while attempting to login via your social network account."
 msgstr "Aconteceu um erro ao tentar autenticar usando sua rede social"
 
 #: themes/default/templates/socialaccount/login_cancelled.html:6
@@ -1805,22 +1775,15 @@ msgstr "Autenticação cancelada"
 
 #: themes/default/templates/socialaccount/login_cancelled.html:17
 #, python-format
-msgid ""
-"You decided to cancel logging in to our site using one of your existing "
-"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
-"\">sign in</a>."
-msgstr ""
-"Você decidiu cancelar o login no nosso site usando uma conta sua existente. "
-"Se isso foi um engano volte para <a href=\"%(login_url)s\">entrar</a>."
+msgid "You decided to cancel logging in to our site using one of your existing accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s\">sign in</a>."
+msgstr "Você decidiu cancelar o login no nosso site usando uma conta sua existente. Se isso foi um engano volte para <a href=\"%(login_url)s\">entrar</a>."
 
 #: themes/default/templates/socialaccount/signup.html:11
 #, python-format
 msgid ""
 "You are about to use your %(provider_name)s account to login to\n"
 "    %(site_name)s. As a final step, please complete the following form:"
-msgstr ""
-"Você está prestes a usar a sua conta no %(provider_name)s para logar no "
-"%(site_name)s. Para concluir, complete o formulário abaixo:"
+msgstr "Você está prestes a usar a sua conta no %(provider_name)s para logar no %(site_name)s. Para concluir, complete o formulário abaixo:"
 
 #: themes/if/templates/account/login_modal.html:60
 #: themes/ifs-colors/templates/account/login_modal.html:60
@@ -1842,6 +1805,66 @@ msgstr "Espanhol"
 #: timtec/settings.py:89
 msgid "English"
 msgstr "Inglês"
+
+#: themes/default/templates/profile-edit.html:46
+msgid "Size limit 1 MB. JPG, GIF ou PNG"
+msgstr "Tamano máximo 1 MB. JPG, GIF ou PNG"
+
+#: themes/default/templates/profile-edit.html
+msgid "Confirm e-mail"
+msgstr "Confirmar email"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Main E-mail"
+msgstr "Email principal"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Additional E-mail"
+msgstr "Email alternativo"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Basic Information"
+msgstr "Dados Básicos"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Let Mupi Community knows you"
+msgstr "Permita que a comunidade Mupi te conheça!"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "State"
+msgstr "Estado"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Add school/institution"
+msgstr "Adicionar escola/instituição"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Teaching Experience"
+msgstr "Experiência Docente"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Tell us what grades do you teach?"
+msgstr "Conte para nós com quais anos você atua!"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "School(s)/Institution(s) where you work"
+msgstr "Escola(s)/Instituição(ões) em que atua"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Grade"
+msgstr "Ano / Série"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Teaching Level"
+msgstr "Nível de Ensino"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "School"
+msgstr "Escola"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Subjects / Knowledge Area"
+msgstr "Disciplinas / Área de Conhecimento"
 
 #~ msgid "Publication"
 #~ msgstr "Publicação"
@@ -1913,30 +1936,18 @@ msgstr "Inglês"
 #~ msgid "Check all"
 #~ msgstr "Marcar todas"
 
-#~ msgid ""
-#~ "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a><br>is an e-"
-#~ "mail address for user %(user_display)s."
-#~ msgstr ""
-#~ "Por favor confirme que o endereço <a href=\"mailto:%(email)s\">%(email)s</"
-#~ "a> é o email do usuário %(user_display)s."
+#~ msgid "Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a><br>is an e-mail address for user %(user_display)s."
+#~ msgstr "Por favor confirme que o endereço <a href=\"mailto:%(email)s\">%(email)s</a> é o email do usuário %(user_display)s."
 
 #~ msgid ""
 #~ "This e-mail confirmation link expired or is invalid.</p>\n"
-#~ "                <p>Please <a href=\"%(email_url)s\">issue a new e-mail "
-#~ "confirmation request</a>."
-#~ msgstr ""
-#~ "Este email de confirmação expirou ou é inválido.</h2> <p>Por favor <a "
-#~ "href=\"%(email_url)s\">solicite uma nova confirmação de e-mail</a>."
+#~ "                <p>Please <a href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+#~ msgstr "Este email de confirmação expirou ou é inválido.</h2> <p>Por favor <a href=\"%(email_url)s\">solicite uma nova confirmação de e-mail</a>."
 
 #~ msgid ""
-#~ "The password reset link was invalid,<br>possibly because it has already "
-#~ "been used.</p>\n"
-#~ "                <p>Please request a <a href=\"%(passwd_reset_url)s\">new "
-#~ "password reset</a>."
-#~ msgstr ""
-#~ "O link de solicitação de redefinição de senha é inválido, possivelmente "
-#~ "porque já foi usado. Por favor solicite uma <a href=\"%(passwd_reset_url)s"
-#~ "\">nova redefinição de senha</a>."
+#~ "The password reset link was invalid,<br>possibly because it has already been used.</p>\n"
+#~ "                <p>Please request a <a href=\"%(passwd_reset_url)s\">new password reset</a>."
+#~ msgstr "O link de solicitação de redefinição de senha é inválido, possivelmente porque já foi usado. Por favor solicite uma <a href=\"%(passwd_reset_url)s\">nova redefinição de senha</a>."
 
 #~ msgid "Delete this course"
 #~ msgstr "Apagar este curso"

@@ -22,8 +22,8 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
             validators.RegexValidator(USERNAME_REGEXP, _('Enter a valid username.'), 'invalid')
         ])
 
-    first_name = models.CharField(_('First name'), max_length=30, blank=True)
-    last_name = models.CharField(_('Last name'), max_length=30, blank=True)
+    first_name = models.CharField(_('First name'), max_length=60, blank=True)
+    last_name = models.CharField(_('Last name'), max_length=60, blank=True)
     is_staff = models.BooleanField(_('Staff status'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
@@ -115,16 +115,15 @@ class Discipline (models.Model):
         return self.name
 
 
+#populated by fixture
+class EducationDegree (models.Model):
+    name = models.CharField(max_length=70,primary_key=True)
 
 class School (models.Model):
     name = models.CharField(max_length=200)
     school_type = models.CharField(max_length=30, blank=True, null=True)  #private or public
     city = models.ForeignKey(City, blank=True, null=True)
-    education_degree = models.CharField(max_length=50, blank=True, null=True)
-
-#populated by fixture
-class EducationDegree (models.Model):
-    name = models.CharField(max_length=70,primary_key=True)
+    education_degree = models.ManyToManyField(EducationDegree, blank=True, null=True)
 
 class TimtecUser(AbstractTimtecUser):
     """
@@ -138,7 +137,7 @@ class TimtecUser(AbstractTimtecUser):
     school = models.ManyToManyField(School, blank=True, null=True)
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
     city = City
-    state = models.CharField(max_length=50, blank=True, null=True)
+
     job_title = models.CharField(max_length=70, blank=True, null=True)
 
     class Meta(AbstractTimtecUser.Meta):
