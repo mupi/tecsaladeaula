@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-28 16:27-0300\n"
-"PO-Revision-Date: 2018-03-23 22:32-0300\n"
+"PO-Revision-Date: 2018-03-26 10:38-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1861,6 +1861,10 @@ msgstr "Nível de Ensino"
 #: themes/default/templates/profile-edit.html:136
 msgid "School"
 msgstr "Escola"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "School name"
+msgstr "Nome da Escola"
 
 #: themes/default/templates/profile-edit.html:136
 msgid "Subjects / Knowledge Area"

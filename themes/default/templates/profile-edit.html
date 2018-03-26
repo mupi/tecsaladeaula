@@ -8,152 +8,420 @@ wrapper-course-lesson
 
 {% block content %}
 <div id="profile" class="container">
-    <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <fieldset>
-                    <script type="text/javascript" charset="utf-8">
-                        $(document).ready(function() {
-                            function onFileSelected(event) {
-                                var selectedFile = event.target.files[0];
-                                var reader = new FileReader();
-                                var imgtag = document.getElementById("profile-avatar");
-                                imgtag.title = selectedFile.name;
+    <div class="col-xs-12">
+        <ul class="nav nav-tabs">
+             <li class="active">
+                <a href="#profile-tab" data-toggle="tab">{% trans "Profile Settings" %}</a>
+             </li>
+             <li><a href="#account-tab" data-toggle="tab">{% trans "Account Settings" %}</a></li>
+         </ul>
+    </div>
 
-                                reader.onload = function(event) {
-                                    imgtag.src = event.target.result;
-                                };
+    <div class="tab-content">
+         <div class="tab-pane fade in active" id="profile-tab">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="row">
 
-                                reader.readAsDataURL(selectedFile);;
-                            }
 
-                            function onImgNotFound(event) {
-                                $(this).attr('src', '{% static "img/avatar-default.png" %}')
-                            }
 
-                            $("#upload-avatar").change(onFileSelected);
-
-                            $("#profile-avatar").error(onImgNotFound);
-                        });
-                    </script>
-
-                    <label for="upload-avatar" class="upload-avatar">
-                        <span><i class="fa fa-picture-o"></i> {% trans "Upload avatar" %}</span>
-                        <div class="thumbnail">
-                            <img id="profile-avatar" width="256" src="{{ form.instance.get_picture_url }}">
+                        <div class="col-sm-12 col-xs-12">
+                            <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Basic Information" %}</h3>
+                             <span>{% trans "Let Mupi Community knows you" %}<span>
                         </div>
-                    </label>
 
-                    <input type="file" name="picture" id="upload-avatar" class="hidden"/>
-                </fieldset>
-            </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <fieldset>
+                                <script type="text/javascript" charset="utf-8">
+                                    $(document).ready(function() {
+                                        function onFileSelected(event) {
+                                            var selectedFile = event.target.files[0];
+                                            var reader = new FileReader();
+                                            var imgtag = document.getElementById("profile-avatar");
+                                            imgtag.title = selectedFile.name;
 
-            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                <fieldset>
-                    <div class="page-header-double textleft top">
-                        <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Profile Info" %}</h3>
-                    </div>
+                                            reader.onload = function(event) {
+                                                imgtag.src = event.target.result;
+                                            };
 
-                    <div class="form-group">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Full Name" %}</label>
+                                            reader.readAsDataURL(selectedFile);;
+                                        }
 
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            {% with errors=form.first_name.errors %}
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left{{ errors|yesno:" has-error,"}}">
-                                <input name="first_name" type="text" class="form-control" placeholder="Primeiro nome" value="{{form.first_name.value}}">
-                                {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                        function onImgNotFound(event) {
+                                            $(this).attr('src', '{% static "img/avatar-default.png" %}')
+                                        }
+
+                                        $("#upload-avatar").change(onFileSelected);
+
+                                        $("#profile-avatar").error(onImgNotFound);
+                                    });
+                                </script>
+
+                                <label for="upload-avatar" class="upload-avatar">
+                                    <span><i class="fa fa-picture-o"></i> {% trans "Upload avatar" %}</span>
+                                    <div class="thumbnail">
+                                        <img id="profile-avatar" width="256" src="{{ form.instance.get_picture_url }}">
+                                    </div>
+                                </label>
+                                <span>{% trans "Size limit 1 MB. JPG, GIF ou PNG" %}<span>
+
+                                <input type="file" name="picture" id="upload-avatar" class="hidden"/>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Full name" %}</label>
+
+                                        {% with errors=form.first_name.errors %}
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 {{ errors|yesno:" has-error,"}}">
+                                            <input name="first_name" type="text" class="form-control" placeholder='{% trans "Enter your full name" %}' value="{{form.first_name.value}}">
+                                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                        </div>
+                                        {% endwith %}
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
+                                    <div class="form-group  custom-inputs-gray">
+                                        <div class="col-sm-6 text-left">
+                                          <!-- Multiselect Atuações -->
+                                            <select class="list-occupations" name="occupations[]" multiple="multiple">
+                                                <option value="">Professor(a)</option>
+                                                <option value="">Coordenador(a) Pedagógico(a)</option>
+                                                <option value="">Diretor(a)</option>
+                                                <option value="">Outro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <select class="form-control" name="">
+                                            <option>SP</option>
+                                            <option>RJ</option>
+                                            <option>MG</option>
+                                            <option>PE</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <select class="form-control" name="">
+                                            <option>Limeira</option>
+                                            <option>Campinas</option>
+                                            <option>Piracicaba</option>
+                                            <option>Soracava</option>
+                                            <option>Araras</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                {% with errors=form.site.errors %}
+                                <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        <input name="site" type="text" class="form-control" placeholder="Você possui algum site pessoal?" value="{{form.site.value}}">
+                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                    </div>
+                                </div>
+                                {% endwith %}
+
+                                {% with errors=form.biography.errors %}
+                                <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Bio" %}</label>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        <textarea name="biography" class="form-control" rows="7" placeholder="Escreve um pouco sobre você...">{{form.biography.value}}</textarea>
+                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                    </div>
+                                </div>
+                                {% endwith %}
+                            </fieldset>
+                        </div>
+
+                        <div class="col-sm-12 col-xs-12">
+                            <fieldset>
+                                <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "School(s)/Institution(s) where you work" %}</h3>
+                                <div class="submit textright">
+                                    <button type="submit" class="btn btn-info add-school">{% trans "Add school/institution" %}</button>
+                                </div>
+                                <br>
+                                   <section id="all-courses" class="user-list" ng-show="users_page.$resolved">
+                                        <table class="table table-list">
+                                            <tbody><tr>
+                                                <th class="">{% trans "School" %}</th>
+                                                <th class="">{% trans "Type" %}</th>
+                                                <th class="">{% trans "City" %}</th>
+                                                <th class="">{% trans "State" %}</th>
+                                                <th class="">{% trans "Teaching Level" %}</th>
+                                                <th class="text-center">{% trans "Atualizar" %}</th>
+                                                <th class="text-center">{% trans "Remover" %}</th>
+                                            </tr>
+                                            <tr class="ng-scope">
+
+                                                <td class="ng-binding">Augusto Laranja</td>
+                                                <td class="ng-binding">Privada</td>
+                                                <td class="ng-binding">Limeira</td>
+                                                <td class="ng-binding">SP</td>
+                                                <td class="ng-binding">Ensino Médio</td>
+                                                <td class="textcenter">
+                                                    <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
+                                                </td>
+                                                <td class="textcenter">
+                                                    <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
+                                                </td>
+
+                                            </tr>
+                                            <tr class="ng-scope">
+
+                                                <td class="ng-binding">Pequeno Urso</td>
+                                                <td class="ng-binding">Privada</td>
+                                                <td class="ng-binding">Limeira</td>
+                                                <td class="ng-binding">SP</td>
+                                                <td class="ng-binding">Educação Infantil</td>
+                                                <td class="textcenter">
+                                                    <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
+                                                </td>
+                                                <td class="textcenter">
+                                                    <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
+                                                </td>
+
+                                            </tr>
+                                        </tbody></table>
+                                    </section>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-sm-12 col-xs-12">
+                            <fieldset>
+                                <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Teaching Experience" %}</h3>
+                                <span>{% trans "Tell us what grades do you teach?" %}</span>
+                                <br><br>
+                                <div class="form-group">
+                                      <div class="col-sm-6">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Grade" %}</label>
+                                      <div class="form-group  custom-inputs-gray">
+                                          <div class="col-sm-6 text-left">
+                                            <!-- Multiselect Grade -->
+                                              <select class="list-grades" name="grades[]" multiple="multiple">
+                                                  <option value="">1º ano EF</option>
+                                                  <option value="">2º ano EF</option>
+                                                  <option value="">3º ano EF</option>
+                                                  <option value="">º ano EF</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                    </div>
+                                      <div class="col-sm-6">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                      <div class="form-group  custom-inputs-gray">
+                                          <div class="col-sm-6 text-left">
+                                            <!-- Multiselect Subjects -->
+                                              <select class="list-subjects" name="subjects[]" multiple="multiple">
+                                                  <option value="">Matemática</option>
+                                                  <option value="">Português</option>
+                                                  <option value="">Biologia</option>
+                                                  <option value="">Língua Estrangeira - Inglês</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      </div>
+
+                                  </div>
+                            </fieldset>
+                        </div>
+
+
+                            <div class="submit textright">
+                                <hr/>
+                                <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
                             </div>
-                            {% endwith %}
+                    </div>
+                </form>
+         </div>
+         <div class="tab-pane fade in" id="account-tab">
+             <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-offset-2 col-sm-8 col-xs-12">
+                            <fieldset>
+                                <div class="page-header-double textleft top">
+                                    <h3><i class="fa fa-angle-double-right"></i> {% trans "E-mail" %}</h3>
+                                </div>
 
-                            {% with errors=form.last_name.errors %}
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right{{ errors|yesno:" has-error,"}}">
-                                <input name="last_name" type="text" class="form-control" placeholder="Último nome" value="{{form.last_name.value}}">
-                                {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                {% with errors=form.email.errors %}
+                                <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Main E-mail" %}</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Main E-mail" %}' value="{{form.email.value}}">
+                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <button class="btn btn-info" ng-click="filter_users()">{% trans 'Confirm e-mail' %}</button>
+                                    </div>
+
+                                </div>
+                                {% endwith %}
+
+                                {% with errors=form.email.errors %}
+                                <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Additional E-mail" %}</label>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{form.email.value}}">
+                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                    </div>
+
+                                </div>
+                                {% endwith %}
+
+
+                            </fieldset>
+
+
+                            <fieldset>
+                                <div class="page-header-double textleft top">
+                                    <h3><i class="fa fa-angle-double-right"></i> {% trans "Password" %}</h3>
+                                </div>
+
+                                {% with errors=form.password2.errors %}
+                                <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Password" %}</label>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left">
+                                            <input name="password1" type="password" class="form-control" placeholder="{% trans 'New password' %}">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right">
+                                            <input name="password2" type="password" class="form-control" placeholder="{% trans 'Confirm new password' %}">
+                                        </div>
+                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                    </div>
+                                </div>
+                                {% endwith %}
+                            </fieldset>
+
+                            <div class="submit textright">
+                                <hr/>
+                                <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
                             </div>
-                            {% endwith %}
                         </div>
                     </div>
-
-                    {% with errors=form.occupation.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <input name="occupation" type="text" class="form-control" placeholder="O que você faz?" value="{{form.occupation.value}}">
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-
-                    {% with errors=form.city.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <input name="city" type="text" class="form-control" placeholder="Qual cidade você vive?" value="{{form.city.value}}">
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-
-                    {% with errors=form.site.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <input name="site" type="text" class="form-control" placeholder="Você possui algum site pessoal?" value="{{form.site.value}}">
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-
-                    {% with errors=form.biography.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Bio" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <textarea name="biography" class="form-control" rows="7" placeholder="Escreve um pouco sobre você...">{{form.biography.value}}</textarea>
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-                </fieldset>
-
-                <fieldset>
-                    <hr/>
-                    <div class="page-header-double textleft top">
-                        <h3><i class="fa fa-angle-double-right"></i> {% trans "Account Settings" %}</h3>
-                    </div>
+                </form>
+         </div>
+    </div>
 
 
-                    {% with errors=form.email.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "E-mail" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <input name="email" type="e-mail" class="form-control" placeholder="Qual o seu email?" value="{{form.email.value}}">
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-
-                    {% with errors=form.password2.errors %}
-                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Password" %}</label>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left">
-                                <input name="password1" type="password" class="form-control" placeholder="{% trans 'New password' %}">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right">
-                                <input name="password2" type="password" class="form-control" placeholder="{% trans 'Confirm new password' %}">
-                            </div>
-                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                        </div>
-                    </div>
-                    {% endwith %}
-                </fieldset>
-
-                <div class="submit textright">
-                    <hr/>
-                    <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
-                </div>
-            </div>
-        </div>
-    </form>
 </div>
+
+
+<div id="add-school-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="loginModalLabel" class="textcenter">
+          {% trans "Add school/institution" %}
+        </h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 col-xs-12">
+            <div class="panel left-xs right-xs top-xs">
+              <div class="panel-heading left-xs right-xs">
+                <h3 class="bottom-xs top-xs"></h3>
+              </div>
+
+              <div class="panel-body bottom-xs left-xs right-xs top-xs">
+                <form class="form-horizontal ng-pristine ng-valid" method="post" action=""><input type="hidden" name="csrfmiddlewaretoken" value="AkUum8jbm0m2lrYVtZTEYsOqn4HKjHVG">
+                  <div class="form-group">
+                    <label class="col-md-3 col-xs-12">{% trans "School name" %}</label>
+                    <div class="col-lg-6 col-xs-12">
+                      <input name="" type="text" class="form-control" value="" placeholder="">
+
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-3 col-xs-12">{% trans "Type" %}</label>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <select class="form-control" name="">
+                            <option>Tipo</option>
+                            <option>Pública</option>
+                            <option>Privada</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <input name="" type="text" class="form-control" value="" placeholder="Outro">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">{% trans "State" %}</label>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                          <select class="form-control" name="">
+                              <option>SP</option>
+                              <option>RJ</option>
+                              <option>MG</option>
+                              <option>PE</option>
+                          </select>
+                      </div>
+
+                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">{% trans "City" %}</label>
+                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                          <select class="form-control" name="">
+                              <option>Limeira</option>
+                              <option>Campinas</option>
+                              <option>Piracicaba</option>
+                              <option>Soracava</option>
+                              <option>Araras</option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="submit">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-5 col-xs-12 textright">
+                        <button class="btn btn-success col-xs-12 text-uppercase">{% trans "Add" %}</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            var $modal = $("#add-school-modal");
+          /*  var $next = $modal.find('input[name=next]');*/
+            $('button.add-school').click(function(e){
+                mixpanel.track("Opened sign in modal");
+              /*  $next.val($(this).attr('href'));*/
+                $modal.modal();
+                return false;
+            });
+            $('.dropdown-menu form').click(function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+   $('.list-occupations').select2();
+   $('.list-grades').select2();
+   $('.list-subjects').select2();
+  });
+</script>
+<script src="/static/js/select2.full.min.js">
+</script>
 {% endblock %}
