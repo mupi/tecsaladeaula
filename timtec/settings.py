@@ -147,6 +147,7 @@ PIPELINE_CSS = {
             'font-awesome/css/font-awesome.css',
             'select2/select2-bootstrap.min.css',
             'select2/select2.css',
+            'jquery-ui/ui/jquery-ui.css',
             'codemirror/lib/codemirror.css',
             'codemirror/addon/hint/show-hint.css',
             'codemirror/theme/monokai.css',

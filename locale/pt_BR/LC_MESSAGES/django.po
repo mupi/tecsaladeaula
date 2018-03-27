@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-08-28 16:27-0300\n"
-"PO-Revision-Date: 2018-03-26 10:38-0300\n"
+"PO-Revision-Date: 2018-03-26 16:38-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -1839,6 +1839,18 @@ msgid "Add school/institution"
 msgstr "Adicionar escola/instituição"
 
 #: themes/default/templates/profile-edit.html:136
+msgid "Add school/institution where you work"
+msgstr "Adicionar escola/instituição em que atua"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Fill out information about school/institution where you work"
+msgstr "Preencha os dados da escola/instituição onde você atua"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Search school/institution"
+msgstr "Buscar escola/instituição"
+
+#: themes/default/templates/profile-edit.html:136
 msgid "Teaching Experience"
 msgstr "Experiência Docente"
 
@@ -1857,6 +1869,10 @@ msgstr "Ano / Série"
 #: themes/default/templates/profile-edit.html:136
 msgid "Teaching Level"
 msgstr "Nível de Ensino"
+
+#: themes/default/templates/profile-edit.html:136
+msgid "Teaching Level that you teach"
+msgstr "Nível de Ensino em que atua"
 
 #: themes/default/templates/profile-edit.html:136
 msgid "School"

@@ -17,16 +17,17 @@ wrapper-course-lesson
          </ul>
     </div>
 
+    <!--Panel 1: Configuração do Profile --->
     <div class="tab-content">
          <div class="tab-pane fade in active" id="profile-tab">
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
-
-
-
                         <div class="col-sm-12 col-xs-12">
-                            <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Basic Information" %}</h3>
-                             <span>{% trans "Let Mupi Community knows you" %}<span>
+                            <div class="page-header-double textleft top">
+                              <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Basic Information" %}</h3>
+                            </div>
+                             <span>{% trans "Let Mupi Community knows you" %}</span>
+                             <br><br>
                         </div>
 
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -85,13 +86,9 @@ wrapper-course-lesson
                                 <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
                                     <div class="form-group  custom-inputs-gray">
-                                        <div class="col-sm-6 text-left">
+                                        <div class="col-sm-8 text-left">
                                           <!-- Multiselect Atuações -->
                                             <select class="list-occupations" name="occupations[]" multiple="multiple">
-                                                <option value="">Professor(a)</option>
-                                                <option value="">Coordenador(a) Pedagógico(a)</option>
-                                                <option value="">Diretor(a)</option>
-                                                <option value="">Outro</option>
                                             </select>
                                         </div>
                                     </div>
@@ -144,13 +141,15 @@ wrapper-course-lesson
 
                         <div class="col-sm-12 col-xs-12">
                             <fieldset>
-                                <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "School(s)/Institution(s) where you work" %}</h3>
+                                <div class="page-header-double textleft top">
+                                  <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "School(s)/Institution(s) where you work" %}</h3>
+                                </div>
                                 <div class="submit textright">
                                     <button type="submit" class="btn btn-info add-school">{% trans "Add school/institution" %}</button>
                                 </div>
                                 <br>
-                                   <section id="all-courses" class="user-list" ng-show="users_page.$resolved">
-                                        <table class="table table-list">
+                                   <section id="all-schools" class="user-list" ng-show="">
+                                        <table class="table table-list" id="table-list-schools">
                                             <tbody><tr>
                                                 <th class="">{% trans "School" %}</th>
                                                 <th class="">{% trans "Type" %}</th>
@@ -161,7 +160,6 @@ wrapper-course-lesson
                                                 <th class="text-center">{% trans "Remover" %}</th>
                                             </tr>
                                             <tr class="ng-scope">
-
                                                 <td class="ng-binding">Augusto Laranja</td>
                                                 <td class="ng-binding">Privada</td>
                                                 <td class="ng-binding">Limeira</td>
@@ -171,12 +169,11 @@ wrapper-course-lesson
                                                     <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
-                                                    <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>
                                                 </td>
 
                                             </tr>
                                             <tr class="ng-scope">
-
                                                 <td class="ng-binding">Pequeno Urso</td>
                                                 <td class="ng-binding">Privada</td>
                                                 <td class="ng-binding">Limeira</td>
@@ -186,7 +183,7 @@ wrapper-course-lesson
                                                     <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
-                                                    <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
+                                                    <button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>
                                                 </td>
 
                                             </tr>
@@ -194,10 +191,12 @@ wrapper-course-lesson
                                     </section>
                             </fieldset>
                         </div>
-
+                        <br>
                         <div class="col-sm-12 col-xs-12">
                             <fieldset>
-                                <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Teaching Experience" %}</h3>
+                                <div class="page-header-double textleft top">
+                                  <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Teaching Experience" %}</h3>
+                                </div>
                                 <span>{% trans "Tell us what grades do you teach?" %}</span>
                                 <br><br>
                                 <div class="form-group">
@@ -207,24 +206,16 @@ wrapper-course-lesson
                                           <div class="col-sm-6 text-left">
                                             <!-- Multiselect Grade -->
                                               <select class="list-grades" name="grades[]" multiple="multiple">
-                                                  <option value="">1º ano EF</option>
-                                                  <option value="">2º ano EF</option>
-                                                  <option value="">3º ano EF</option>
-                                                  <option value="">º ano EF</option>
                                               </select>
                                           </div>
                                       </div>
                                     </div>
                                       <div class="col-sm-6">
-                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                      <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
                                       <div class="form-group  custom-inputs-gray">
                                           <div class="col-sm-6 text-left">
                                             <!-- Multiselect Subjects -->
                                               <select class="list-subjects" name="subjects[]" multiple="multiple">
-                                                  <option value="">Matemática</option>
-                                                  <option value="">Português</option>
-                                                  <option value="">Biologia</option>
-                                                  <option value="">Língua Estrangeira - Inglês</option>
                                               </select>
                                           </div>
                                       </div>
@@ -235,13 +226,15 @@ wrapper-course-lesson
                         </div>
 
 
-                            <div class="submit textright">
+                            <div class="submit text-center">
                                 <hr/>
                                 <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
                             </div>
                     </div>
                 </form>
          </div>
+
+         <!--Panel 2: Configuração da Conta --->
          <div class="tab-pane fade in" id="account-tab">
              <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
@@ -314,7 +307,7 @@ wrapper-course-lesson
 
 </div>
 
-
+<!--Add School Modal -->
 <div id="add-school-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -329,22 +322,31 @@ wrapper-course-lesson
           <div class="col-sm-12 col-xs-12">
             <div class="panel left-xs right-xs top-xs">
               <div class="panel-heading left-xs right-xs">
-                <h3 class="bottom-xs top-xs"></h3>
+                <h4 class="bottom-xs top-xs">{% trans "Fill out information about school/institution where you work" %}</h4>
               </div>
 
               <div class="panel-body bottom-xs left-xs right-xs top-xs">
-                <form class="form-horizontal ng-pristine ng-valid" method="post" action=""><input type="hidden" name="csrfmiddlewaretoken" value="AkUum8jbm0m2lrYVtZTEYsOqn4HKjHVG">
+                <form class="form-horizontal ng-pristine ng-valid" method="post" action="">
                   <div class="form-group">
-                    <label class="col-md-3 col-xs-12">{% trans "School name" %}</label>
-                    <div class="col-lg-6 col-xs-12">
-                      <input name="" type="text" class="form-control" value="" placeholder="">
-
+                    <div class="col-lg-9 col-xs-12">
+                      <input id="search-school" name="" type="text" class="form-control" value="" placeholder="{% trans "Search school/institution" %}">
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                      <button class="btn col-xs-12">
+                          {% trans "Clear" %}
+                      </button>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="col-md-3 col-xs-12">{% trans "Type" %}</label>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <select class="form-control" name="">
+                    <label class="col-md-2 col-xs-12 control-label">{% trans "Name" %}</label>
+                    <div class="col-lg-9 col-xs-12">
+                      <input id="school-name" type="text" class="form-control" value="" placeholder="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 col-xs-12 control-label">{% trans "Type" %}</label>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <select class="form-control" id="school-type">
                             <option>Tipo</option>
                             <option>Pública</option>
                             <option>Privada</option>
@@ -357,9 +359,9 @@ wrapper-course-lesson
                   </div>
 
                   <div class="form-group">
-                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">{% trans "State" %}</label>
-                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                          <select class="form-control" name="">
+                      <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
+                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <select class="form-control" id="school-state">
                               <option>SP</option>
                               <option>RJ</option>
                               <option>MG</option>
@@ -367,9 +369,9 @@ wrapper-course-lesson
                           </select>
                       </div>
 
-                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">{% trans "City" %}</label>
+                      <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
                       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                          <select class="form-control" name="">
+                          <select class="form-control" id="school-city">
                               <option>Limeira</option>
                               <option>Campinas</option>
                               <option>Piracicaba</option>
@@ -379,10 +381,23 @@ wrapper-course-lesson
                       </div>
                   </div>
 
+                  <div class="form-group">
+                      <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <select class="form-control" id="school-teaching-level">
+                              <option>Ensino Infantil</option>
+                              <option>Ensino Fundamental I</option>
+                              <option>Ensino Fundamental II</option>
+                              <option>Ensino Médio</option>
+                              <option>Outro</option>
+                          </select>
+                      </div>
+                  </div>
+
                   <div class="submit">
                     <div class="row">
-                      <div class="col-md-4 col-sm-5 col-xs-12 textright">
-                        <button class="btn btn-success col-xs-12 text-uppercase">{% trans "Add" %}</button>
+                      <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
+                        <button class="btn btn-success col-xs-12 btn-add-school-table" data-dismiss="modal">{% trans "Add" %}</button>
                       </div>
                     </div>
                   </div>
@@ -398,13 +413,59 @@ wrapper-course-lesson
   </div>
 </div>
 
+
+
+<script>
+
+/*Load Multiple Select Value*/
+var myJSONOccupation = {
+ "1":"Professor(a)",
+ "2":"Diretor(a)",
+ "3":"Coordenador(a) Pedagógico(a)"
+}
+
+var myJSONGrades = {
+ "1":"1º ano EF",
+ "2":"2º ano EF",
+ "3":"3º ano EF",
+ "8":"8º ano EF"
+}
+
+var myJSONSubjects = {
+ "1":"Matemática",
+ "2":"Português",
+ "3":"Biologia",
+ "4": "Filosofia"
+}
+
+var $occupations = $('.list-occupations');
+  $occupations.find('option').remove();
+  $.each(myJSONOccupation,function(key, value)
+  {
+      $occupations.append('<option value=' + key + '>' + value + '</option>');
+  });
+
+
+var $grades = $('.list-grades');
+  $grades.find('option').remove();
+  $.each(myJSONGrades,function(key, value)
+  {
+      $grades.append('<option value=' + key + '>' + value + '</option>');
+  });
+
+var $subjects = $('.list-subjects');
+  $subjects.find('option').remove();
+  $.each(myJSONSubjects,function(key, value)
+  {
+      $subjects.append('<option value=' + key + '>' + value + '</option>');
+  });
+</script>
+
 <script type="text/javascript" charset="utf-8">
+/*Open Add School/Institution modal*/
         $(document).ready(function() {
             var $modal = $("#add-school-modal");
-          /*  var $next = $modal.find('input[name=next]');*/
             $('button.add-school').click(function(e){
-                mixpanel.track("Opened sign in modal");
-              /*  $next.val($(this).attr('href'));*/
                 $modal.modal();
                 return false;
             });
@@ -412,16 +473,79 @@ wrapper-course-lesson
                 e.stopPropagation();
             });
         });
-    </script>
+</script>
 
 <script type="text/javascript">
+/*Campos multivalorados*/
   $(document).ready(function() {
-
    $('.list-occupations').select2();
    $('.list-grades').select2();
    $('.list-subjects').select2();
   });
 </script>
+
+
+
+<script>
+//Remove a school/institution of the table of schools
+$(document).ready(function(){
+
+ $("#table-list-schools").on('click','.btnDelete',function(){
+       if(confirm("Está seguro de remover esta escola/instituição?")){
+         (this).closest('tr').remove();
+    }
+    else{
+        return false;
+    }
+     });
+
+});
+</script>
+
+<script>
+//Add a school/institution of the table of schools
+$(".btn-add-school-table").click(function(event) {
+  event.preventDefault();
+  var schoolName = $("#school-name").val();
+  var schoolType = $("#school-type").val();
+  var schoolState = $("#school-state").val();
+  var schoolLevel = $("#school-level").val();
+  var schoolTeachingLevel = $("#school-teaching-level").val();
+  var btnEditRow   =  '<button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>';
+  var btnDeleteRow =  '<button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>';
+
+  $('#table-list-schools tr:last').after('<tr><td>' + schoolName  +
+                                        '</td><td>' + schoolType  +
+                                        '</td><td>' + schoolState +
+                                        '</td><td>' + schoolLevel +
+                                        '</td><td>' + schoolTeachingLevel +
+                                        '</td class="text-center"><td>' + btnEditRow +
+                                        '</td class="text-center"><td>' + btnDeleteRow +
+                                        '</td></tr>');
+});
+</script>
+
+<script>
+  $( function() {
+    var availableSchools = [
+      "Escola Manuel Cônego",
+      "Escola Murilo Lemos",
+      "Colégio Portinari",
+      "Colégio Objetivo",
+      "Colégio Maple Bear",
+      "Escola Pequeno Urso"
+    ];
+    $( "#search-school" ).autocomplete({
+      source: availableSchools,
+      messages: {
+        noResults: '',
+        results: function() {}
+      }
+    });
+  } );
+</script>
+
+
 <script src="/static/js/select2.full.min.js">
 </script>
 {% endblock %}
