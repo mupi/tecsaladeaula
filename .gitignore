@@ -71,3 +71,4 @@ settings_local.py
 *.log
 
 /bkps
+.vscode
