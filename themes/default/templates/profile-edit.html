@@ -98,21 +98,18 @@ wrapper-course-lesson
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                         <select class="form-control" name="">
-                                            <option>SP</option>
-                                            <option>RJ</option>
-                                            <option>MG</option>
-                                            <option>PE</option>
+                                          {% for estado in estados %}
+                                          <option>{{estado}}</option>
+                                          {% endfor %}
                                         </select>
                                     </div>
 
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                         <select class="form-control" name="">
-                                            <option>Limeira</option>
-                                            <option>Campinas</option>
-                                            <option>Piracicaba</option>
-                                            <option>Soracava</option>
-                                            <option>Araras</option>
+                                          {% for cidade in cidades %}
+                                          <option>{{cidade}}</option>
+                                          {% endfor %}
                                         </select>
                                     </div>
                                 </div>
@@ -151,7 +148,7 @@ wrapper-course-lesson
                                    <section id="all-schools" class="user-list" ng-show="">
                                         <table class="table table-list" id="table-list-schools">
                                             <tbody><tr>
-                                                <th class="">{% trans "School" %}</th>
+                                                <th class="">{% trans "Nome" %}</th>
                                                 <th class="">{% trans "Type" %}</th>
                                                 <th class="">{% trans "City" %}</th>
                                                 <th class="">{% trans "State" %}</th>
@@ -211,14 +208,24 @@ wrapper-course-lesson
                                       </div>
                                     </div>
                                       <div class="col-sm-6">
-                                      <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
-                                      <div class="form-group  custom-inputs-gray">
-                                          <div class="col-sm-6 text-left">
-                                            <!-- Multiselect Subjects -->
-                                              <select class="list-subjects" name="subjects[]" multiple="multiple">
-                                              </select>
+                                        <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                        <div class="form-group  custom-inputs-gray">
+                                            <div class="col-sm-6 text-left">
+                                              <!-- Multiselect Subjects -->
+                                                <select class="list-subjects" name="subjects[]" multiple="multiple">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="div-other-subject">
+                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Other Subject" %}</label>
+                                          <div class="form-group  custom-inputs-gray">
+                                              <div class="col-sm-6 text-left">
+                                                <!-- Other Subject Selected-->
+                                                <input name="other-subject" type="text" class="form-control" placeholder="" value="">
+                                              </div>
                                           </div>
-                                      </div>
+                                        </div>
+
                                       </div>
 
                                   </div>
@@ -328,16 +335,6 @@ wrapper-course-lesson
               <div class="panel-body bottom-xs left-xs right-xs top-xs">
                 <form class="form-horizontal ng-pristine ng-valid" method="post" action="">
                   <div class="form-group">
-                    <div class="col-lg-9 col-xs-12">
-                      <input id="search-school" name="" type="text" class="form-control" value="" placeholder="{% trans "Search school/institution" %}">
-                    </div>
-                    <div class="col-md-2 col-xs-12">
-                      <button class="btn col-xs-12">
-                          {% trans "Clear" %}
-                      </button>
-                    </div>
-                  </div>
-                  <div class="form-group">
                     <label class="col-md-2 col-xs-12 control-label">{% trans "Name" %}</label>
                     <div class="col-lg-9 col-xs-12">
                       <input id="school-name" type="text" class="form-control" value="" placeholder="">
@@ -350,12 +347,8 @@ wrapper-course-lesson
                             <option>Tipo</option>
                             <option>Pública</option>
                             <option>Privada</option>
-                            <option>Outro</option>
                         </select>
                     </div>
-                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                        <input name="" type="text" class="form-control" value="" placeholder="Outro">
-                      </div>
                   </div>
 
                   <div class="form-group">
@@ -384,13 +377,9 @@ wrapper-course-lesson
                   <div class="form-group">
                       <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control" id="school-teaching-level">
-                              <option>Ensino Infantil</option>
-                              <option>Ensino Fundamental I</option>
-                              <option>Ensino Fundamental II</option>
-                              <option>Ensino Médio</option>
-                              <option>Outro</option>
-                          </select>
+                            <!-- Teaching Levels-->
+                            <select class="list-teaching-levels" name="teaching-levels[]" multiple="multiple" id="school-teaching-level">
+                            </select>
                       </div>
                   </div>
 
@@ -421,7 +410,8 @@ wrapper-course-lesson
 var myJSONOccupation = {
  "1":"Professor(a)",
  "2":"Diretor(a)",
- "3":"Coordenador(a) Pedagógico(a)"
+ "3":"Coordenador(a) Pedagógico(a)",
+ "4":"Outro"
 }
 
 var myJSONGrades = {
@@ -430,6 +420,15 @@ var myJSONGrades = {
  "3":"3º ano EF",
  "8":"8º ano EF"
 }
+
+
+var myJSONGTeachingLevels = {
+ "1":"Ensino Fundamental",
+ "2":"Ensino Médio",
+ "3":"Ensino Técnico",
+ "4":"Ensino Superior"
+}
+
 
 var myJSONSubjects = {
  "1":"Matemática",
@@ -459,6 +458,14 @@ var $subjects = $('.list-subjects');
   {
       $subjects.append('<option value=' + key + '>' + value + '</option>');
   });
+
+
+  var $teachingLevels = $('.list-teaching-levels');
+    $teachingLevels.find('option').remove();
+    $.each(myJSONGTeachingLevels,function(key, value)
+    {
+        $teachingLevels.append('<option value=' + key + '>' + value + '</option>');
+    });
 </script>
 
 <script type="text/javascript" charset="utf-8">
@@ -481,6 +488,7 @@ var $subjects = $('.list-subjects');
    $('.list-occupations').select2();
    $('.list-grades').select2();
    $('.list-subjects').select2();
+   $('.list-teaching-levels').select2();
   });
 </script>
 
@@ -509,7 +517,7 @@ $(".btn-add-school-table").click(function(event) {
   var schoolName = $("#school-name").val();
   var schoolType = $("#school-type").val();
   var schoolState = $("#school-state").val();
-  var schoolLevel = $("#school-level").val();
+  var schoolCity= $("#school-city").val();
   var schoolTeachingLevel = $("#school-teaching-level").val();
   var btnEditRow   =  '<button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>';
   var btnDeleteRow =  '<button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>';
@@ -517,10 +525,10 @@ $(".btn-add-school-table").click(function(event) {
   $('#table-list-schools tr:last').after('<tr><td>' + schoolName  +
                                         '</td><td>' + schoolType  +
                                         '</td><td>' + schoolState +
-                                        '</td><td>' + schoolLevel +
+                                        '</td><td>' + schoolCity +
                                         '</td><td>' + schoolTeachingLevel +
-                                        '</td class="text-center"><td>' + btnEditRow +
-                                        '</td class="text-center"><td>' + btnDeleteRow +
+                                        '</td><td class="text-center">' + btnEditRow +
+                                        '</td><td class="text-center">' + btnDeleteRow+
                                         '</td></tr>');
 });
 </script>

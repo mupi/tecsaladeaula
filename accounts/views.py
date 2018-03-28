@@ -31,6 +31,13 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        context['estados'] = ['SP', 'RJ' , 'MG']
+        return context
+
+
+
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
