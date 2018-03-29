@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
+{% load compressed %}
 {% load i18n %}
 {% load staticfiles %}
 
 {% block wrapper_classes %}
 wrapper-course-lesson
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    {% compressed_js 'reports' %}
 {% endblock %}
 
 {% block content %}
@@ -554,6 +560,6 @@ $(".btn-add-school-table").click(function(event) {
 </script>
 
 
-<script src="/static/js/select2.full.min.js">
+<!-- <script src="/static/js/select2.full.min.js"> -->
 </script>
 {% endblock %}
