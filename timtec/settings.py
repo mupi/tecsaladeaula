@@ -145,8 +145,7 @@ PIPELINE_CSS = {
     'common': {
         'source_filenames': (
             'font-awesome/css/font-awesome.css',
-            'select2/select2-bootstrap.min.css',
-            'select2/select2.css',
+            'select2/dist/css/select2.min.css',
             'jquery-ui/ui/jquery-ui.css',
             'codemirror/lib/codemirror.css',
             'codemirror/addon/hint/show-hint.css',
@@ -308,6 +307,7 @@ PIPELINE_JS = {
             'js/reports/controllers.js',
             'js/reports/services.js',
             'js/factories/timtec-models.js',
+            'select2/dist/js/select2.js',
         ),
         'output_filename': 'js/reports.js',
     },
@@ -558,6 +558,7 @@ STATICFILES_DIRS = (
     os.path.join(THEMES_DIR, TIMTEC_THEME, 'static'),
     os.path.join(THEMES_DIR, 'default', 'static'),
     os.path.join(PROJECT_ROOT, 'bower_components'),
+    os.path.join(PROJECT_ROOT, 'node_modules'),
 )
 
 TEMPLATE_DIRS = (
