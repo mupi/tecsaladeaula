@@ -30,7 +30,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
 
     picture = models.ImageField(_("Picture"), upload_to=hash_name('user-pictures', 'username'), blank=True)
     occupation = models.CharField(_('Occupation'), max_length=30, blank=True)
-    city = models.CharField(_('City'), max_length=30, blank=True)
     site = models.URLField(_('Site'), blank=True)
     biography = models.TextField(_('Biography'), blank=True)
     accepted_terms = models.BooleanField(_('Accepted terms and condition'), default=False)
@@ -102,7 +101,7 @@ class State (models.Model):
 
 #populated by fixture
 class City (models.Model):
-    code = models.CharField(max_length=20)
+    code = models.CharField(max_length=10)
     name = models.CharField(max_length=80)
     uf = models.ForeignKey(State, on_delete=models.CASCADE)
 
@@ -136,7 +135,7 @@ class TimtecUser(AbstractTimtecUser):
     level_of_education_taught = models.ManyToManyField(EducationDegree, blank=True, null=True)
     school = models.ManyToManyField(School, blank=True, null=True)
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
-    city = City
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
 
     job_title = models.CharField(max_length=70, blank=True, null=True)
 
