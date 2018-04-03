@@ -14,10 +14,15 @@ from braces.views import LoginRequiredMixin
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework import generics
+from rest_framework import permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 
 from core.permissions import IsAdmin
 
 from .forms import SignupForm
+from .models import State, City
+from .serializers import CitySerializer
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -30,13 +35,6 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileEditView, self).get_context_data(**kwargs)
-        context['estados'] = ['SP', 'RJ' , 'MG']
-        return context
-
-
 
 
 class ProfileView(LoginRequiredMixin, DetailView):
@@ -177,3 +175,16 @@ class SignupView(SignupView):
     template_name = 'account/signup.html'
     form_class = SignupForm
     view_name = 'signup_view'
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_states_view(request):
+    states = [s.uf for s in State.objects.all()]
+    return Response({"states" : states})
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_cities_view(request):
+    uf = request.QUERY_PARAMS.get('uf')
+    cities = [CitySerializer(c).data for c in City.objects.filter(uf=uf)]
+    return Response({"uf" : uf, "cities" : cities})

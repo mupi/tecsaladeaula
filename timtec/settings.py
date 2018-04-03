@@ -307,7 +307,6 @@ PIPELINE_JS = {
             'js/reports/controllers.js',
             'js/reports/services.js',
             'js/factories/timtec-models.js',
-            'select2/dist/js/select2.js',
         ),
         'output_filename': 'js/reports.js',
     },
@@ -346,6 +345,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/users_admin.js',
     },
+    'accounts' : {
+        'source_filenames': (
+            'js/accounts/app.js',
+            'js/accounts/controllers.js',
+            'js/accounts/services.js',
+            'select2/dist/js/select2.js',
+        ),
+        'output_filename': 'js/accounts.js' 
+    }
 }
 
 MOMMY_CUSTOM_FIELDS_GEN = {
