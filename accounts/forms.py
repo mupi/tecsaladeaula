@@ -12,20 +12,45 @@ from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
+from .models import School, City
+
 
 class ProfileEditForm(forms.ModelForm):
+    city = forms.CharField(required=False)
+    # email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
+    # password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
+    # password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
 
+    class Meta:
+        model = User
+        fields = ('first_name', 'picture',
+                  'occupation', 'site', 'biography',)
+
+    def clean_city(self):
+        city_code = self.cleaned_data.get('city')
+        if city_code:
+            c = City.objects.filter(code=city_code)
+            if len(c) == 0:
+                raise forms.ValidationError(_("This city does not exist"))
+        return city_code
+
+    def save(self, commit=True):
+        city_code = self.cleaned_data.get('city')
+        c = None
+        if city_code:
+            c = City.objects.get(code=city_code)
+        self.instance.city = c
+        return super(ProfileEditForm, self).save(commit=commit)
+
+
+class ProfilePasswordForm(forms.ModelForm):
     email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
     password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'picture',
-                  'occupation', 'city', 'site', 'biography',)
-
-    def clean_username(self):
-        return self.instance.username
+        fields = ('email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -40,6 +65,10 @@ class ProfileEditForm(forms.ModelForm):
             self.instance.set_password(self.cleaned_data['password1'])
         return super(ProfileEditForm, self).save(commit=commit)
 
+class SchoolAddForm(forms.ModelForm):
+
+    class Meta:
+        model = School
 
 class AcceptTermsForm(forms.Form):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)

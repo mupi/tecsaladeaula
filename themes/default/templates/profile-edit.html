@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load compressed %}
-{% load i18n %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block wrapper_classes %}
 wrapper-course-lesson
@@ -9,11 +9,11 @@ wrapper-course-lesson
 
 {% block js %}
     {{ block.super }}
-    {% compressed_js 'reports' %}
+    {% compressed_js 'accounts' %}
 {% endblock %}
 
 {% block content %}
-<div id="profile" class="container">
+<div id="profile" class="container" ng-app="accounts">
     <div class="col-xs-12">
         <ul class="nav nav-tabs">
              <li class="active">
@@ -23,10 +23,10 @@ wrapper-course-lesson
          </ul>
     </div>
 
-    <!--Panel 1: Configuração do Profile --->
+    <!--Panel 1: Configuração do Profile -->
     <div class="tab-content">
          <div class="tab-pane fade in active" id="profile-tab">
-                <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+                <form class="form-horizontal" method="post" action="/profile/edit" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
                             <div class="page-header-double textleft top">
@@ -100,23 +100,26 @@ wrapper-course-lesson
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" ng-controller="ProfileCtrl">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <select class="form-control" name="">
-                                          {% for estado in estados %}
-                                          <option>{{estado}}</option>
-                                          {% endfor %}
+                                        <select class="form-control" name="uf" id="uf_state" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                                            <option value=" "></option>
+                                            {% verbatim %}
+                                            <option ng-repeat="state in list_states" ng-selected="{{ selected_uf == state }}" value="{{state}}">{{ state }}</option>
+                                            {% endverbatim %}
                                         </select>
                                     </div>
 
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <select class="form-control" name="">
-                                          {% for cidade in cidades %}
-                                          <option>{{cidade}}</option>
-                                          {% endfor %}
-                                        </select>
+                                    <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                            <select class="form-control" name="city" id="city">
+                                                {% verbatim %}
+                                                <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_code == city.code }}" value="{{city.code}}">{{ city.name }}</option>
+                                                {% endverbatim %}
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -247,7 +250,7 @@ wrapper-course-lesson
                 </form>
          </div>
 
-         <!--Panel 2: Configuração da Conta --->
+         <!--Panel 2: Configuração da Conta -->
          <div class="tab-pane fade in" id="account-tab">
              <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
@@ -559,7 +562,4 @@ $(".btn-add-school-table").click(function(event) {
   } );
 </script>
 
-
-<!-- <script src="/static/js/select2.full.min.js"> -->
-</script>
 {% endblock %}
