@@ -7,7 +7,8 @@ from django.views.generic.detail import DetailView
 from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
-from accounts.serializers import TimtecUserSerializer, TimtecUserAdminSerializer
+from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
+                                    TimtecProfileSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -22,7 +23,6 @@ from core.permissions import IsAdmin
 
 from .forms import SignupForm
 from .models import State, City
-from .serializers import CitySerializer
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -188,3 +188,9 @@ def list_cities_view(request):
     uf = request.QUERY_PARAMS.get('uf')
     cities = [CitySerializer(c).data for c in City.objects.filter(uf=uf)]
     return Response({"uf" : uf, "cities" : cities})
+
+@api_view(['GET'])
+@permission_classes((permissions.IsAuthenticated,))
+def get_timtec_profile(request):
+    user = TimtecProfileSerializer(request.user)
+    return Response(user.data)
