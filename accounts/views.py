@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
-                                    TimtecProfileSerializer)
+                                    TimtecProfileSerializer, OccupationSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -22,7 +22,7 @@ from rest_framework.response import Response
 from core.permissions import IsAdmin
 
 from .forms import SignupForm
-from .models import State, City
+from .models import State, City, Occupation
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -178,16 +178,22 @@ class SignupView(SignupView):
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
+def list_occupations_view(request):
+    occupations = [OccupationSerializer(o).data for o in Occupation.objects.all()]
+    return Response(occupations)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
 def list_states_view(request):
     states = [s.uf for s in State.objects.all()]
-    return Response({"states" : states})
+    return Response(states)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
 def list_cities_view(request):
     uf = request.QUERY_PARAMS.get('uf')
     cities = [CitySerializer(c).data for c in City.objects.filter(uf=uf)]
-    return Response({"uf" : uf, "cities" : cities})
+    return Response(cities)
 
 @api_view(['GET'])
 @permission_classes((permissions.IsAuthenticated,))

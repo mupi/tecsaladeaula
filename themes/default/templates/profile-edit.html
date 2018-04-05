@@ -24,7 +24,7 @@ wrapper-course-lesson
     </div>
 
     <!--Panel 1: Configuração do Profile -->
-    <div class="tab-content">
+    <div class="tab-content" ng-controller="ProfileCtrl">
          <div class="tab-pane fade in active" id="profile-tab">
                 <form class="form-horizontal" method="post" action="/profile/edit" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
@@ -93,14 +93,20 @@ wrapper-course-lesson
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
                                     <div class="form-group  custom-inputs-gray">
                                         <div class="col-sm-8 text-left">
-                                          <!-- Multiselect Atuações -->
-                                            <select class="list-occupations" name="occupations[]" multiple="multiple">
-                                            </select>
+                                            <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                <ui-select-choices repeat="occupation in avaiable_occupations">
+                                                        {% verbatim %}{{occupation.name}}{% endverbatim %}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            {% verbatim %}
+                                            <input type="hidden" name="occupations" ng-repeat="occupation in occupations.selected" value="{{occupation.id}}"/>
+                                            {% endverbatim %}
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="form-group" ng-controller="ProfileCtrl">
+                                <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                         <select class="form-control" name="uf" id="uf_state" ng-model="filters_selected_uf" ng-change="filter_cities()">
@@ -116,7 +122,7 @@ wrapper-course-lesson
                                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                             <select class="form-control" name="city" id="city">
                                                 {% verbatim %}
-                                                <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_code == city.code }}" value="{{city.code}}">{{ city.name }}</option>
+                                                <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
                                                 {% endverbatim %}
                                             </select>
                                         </div>
@@ -403,8 +409,6 @@ wrapper-course-lesson
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -493,12 +497,12 @@ var $subjects = $('.list-subjects');
 
 <script type="text/javascript">
 /*Campos multivalorados*/
-  $(document).ready(function() {
-   $('.list-occupations').select2();
-   $('.list-grades').select2();
-   $('.list-subjects').select2();
-   $('.list-teaching-levels').select2();
-  });
+//   $(document).ready(function() {
+//    $('.list-occupations').select2();
+//    $('.list-grades').select2();
+//    $('.list-subjects').select2();
+//    $('.list-teaching-levels').select2();
+//   });
 </script>
 
 

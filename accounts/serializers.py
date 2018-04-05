@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import City
+from .models import City, Occupation
 
 
 class TimtecUserSerializer(serializers.ModelSerializer):
@@ -23,9 +23,15 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
 
+class OccupationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Occupation
+
 class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)
+    occupations = OccupationSerializer(many=True, required=False)
 
     class Meta:
         model = get_user_model()
-        fields = ('city',)
+        fields = ('city', 'occupations')

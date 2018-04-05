@@ -6,5 +6,8 @@
         'accounts.controllers',
         'accounts.services',
         'django',
-        'ui.bootstrap']);
+        'ui.bootstrap',        
+        'ui.select',
+        'ngSanitize'
+    ]);
 })(angular);

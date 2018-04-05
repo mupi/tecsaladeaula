@@ -12,34 +12,20 @@ from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
-from .models import School, City
+from .models import School, City, Occupation
 
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
+    def validate(self, value):
+        pass
 
 class ProfileEditForm(forms.ModelForm):
-    city = forms.CharField(required=False)
-    # email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
-    # password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
-    # password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
 
     class Meta:
         model = User
-        fields = ('first_name', 'picture',
-                  'occupation', 'site', 'biography',)
+        fields = ('first_name', 'city', 'occupations', 'picture', 'site', 'biography',)
 
-    def clean_city(self):
-        city_code = self.cleaned_data.get('city')
-        if city_code:
-            c = City.objects.filter(code=city_code)
-            if len(c) == 0:
-                raise forms.ValidationError(_("This city does not exist"))
-        return city_code
 
     def save(self, commit=True):
-        city_code = self.cleaned_data.get('city')
-        c = None
-        if city_code:
-            c = City.objects.get(code=city_code)
-        self.instance.city = c
         return super(ProfileEditForm, self).save(commit=commit)
 
 

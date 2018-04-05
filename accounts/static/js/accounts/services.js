@@ -9,6 +9,9 @@
         }).factory('States', function($resource){
             return $resource('/api/states', {}, {
             });
+        }).factory('Occupations', function($resource){
+            return $resource('/api/occupations', {}, {
+            });
         }).factory('Profile', function($resource){
             return $resource('/api/profile', {}, {
             });
