@@ -145,7 +145,7 @@ PIPELINE_CSS = {
     'common': {
         'source_filenames': (
             'font-awesome/css/font-awesome.css',
-            'select2/dist/css/select2.min.css',
+            'ui-select/dist/select.css',
             'jquery-ui/ui/jquery-ui.css',
             'codemirror/lib/codemirror.css',
             'codemirror/addon/hint/show-hint.css',
@@ -350,7 +350,7 @@ PIPELINE_JS = {
             'js/accounts/app.js',
             'js/accounts/controllers.js',
             'js/accounts/services.js',
-            'select2/dist/js/select2.js',
+            'ui-select/dist/select.js',
         ),
         'output_filename': 'js/accounts.js' 
     }
