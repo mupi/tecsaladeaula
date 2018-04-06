@@ -1,5 +1,221 @@
 [
   {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "12",
+      "name": "Acre",
+      "uf": "AC"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "27",
+      "name": "Alagoas",
+      "uf": "AL"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "16",
+      "name": "Amapá",
+      "uf": "AP"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "13",
+      "name": "Amazonas",
+      "uf": "AM"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "29",
+      "name": "Bahia",
+      "uf": "BA"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "23",
+      "name": "Ceará",
+      "uf": "CE"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "53",
+      "name": "Distrito Federal",
+      "uf": "DF"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "32",
+      "name": "Espírito Santo",
+      "uf": "ES"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "52",
+      "name": "Goiás",
+      "uf": "GO"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "21",
+      "name": "Maranhão",
+      "uf": "MA"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "51",
+      "name": "Mato Grosso",
+      "uf": "MT"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "50",
+      "name": "Mato Grosso do Sul",
+      "uf": "MS"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "31",
+      "name": "Minas Gerais",
+      "uf": "MG"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "15",
+      "name": "Pará",
+      "uf": "PA"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "25",
+      "name": "Paraíba",
+      "uf": "PB"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "41",
+      "name": "Paraná",
+      "uf": "PR"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "26",
+      "name": "Pernambuco",
+      "uf": "PE"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "22",
+      "name": "Piauí",
+      "uf": "PI"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "33",
+      "name": "Rio de Janeiro",
+      "uf": "RJ"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "24",
+      "name": "Rio Grande do Norte",
+      "uf": "RN"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "43",
+      "name": "Rio Grande do Sul",
+      "uf": "RS"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "11",
+      "name": "Rondônia",
+      "uf": "RO"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "14",
+      "name": "Roraima",
+      "uf": "RR"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "42",
+      "name": "Santa Catarina",
+      "uf": "SC"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "35",
+      "name": "São Paulo",
+      "uf": "SP"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "28",
+      "name": "Sergipe",
+      "uf": "SE"
+    }
+  },
+  {
+    "model": "accounts.state",
+    "fields": {
+      "uf_code": "17",
+      "name": "Tocantins",
+      "uf": "TO"
+    }
+  },
+  {
     "model": "accounts.city",
     "fields": {
       "code": "1100015",

@@ -2,133 +2,148 @@
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Polivalente"
+      "name": "Polivalente",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Português / Língua Portuguesa"
+      "name": "Português / Língua Portuguesa",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Redação e Literatura"
+      "name": "Redação e Literatura",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Matemática"
+      "name": "Matemática",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Estudos Sociais"
+      "name": "Estudos Sociais",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "História"
+      "name": "História",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Geografia"
+      "name": "Geografia",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Ciências"
+      "name": "Ciências",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Ciências"
+      "name": "Biologia",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Biologia"
+      "name": "Física",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Física"
+      "name": "Química",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Química"
+      "name": "Sociologia",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Sociologia"
+      "name": "Filosofia",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Filosofia"
+      "name": "Língua Estrangeira - Inglês",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Língua Estrangeira - Inglês"
+      "name": "Língua Estrangeira - Espanhol",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Língua Estrangeira - Espanhol"
+      "name": "Língua Estrangeira - Outras",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Língua Estrangeira - Outras"
+      "name": "Artes",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Artes"
+      "name": "Ensino Religioso",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Ensino Religioso"
+      "name": "Educação Física",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Educação Física"
+      "name": "Informática",
+      "visible": true
     }
   },
   {
     "model": "accounts.discipline",
     "fields": {
-      "name": "Informática"
-    }
-  },
-  {
-    "model": "accounts.discipline",
-    "fields": {
-      "name": "Outras"
+      "name": "Outras",
+      "visible": true
     }
   }
 ]

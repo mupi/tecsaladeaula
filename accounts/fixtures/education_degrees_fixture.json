@@ -1,38 +1,163 @@
 [
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Ensino Infantil"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"INF",
+          "name":"Ensino Infantil"
+      }
   },
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Ensino Fundamental 1"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"EF1",
+          "name":"Ensino Fundamental I"
+      }
   },
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Ensino Fundamental 2"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"EF2",
+          "name":"Ensino Fundamental II"
+      }
   },
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Ensino Médio"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"EM",
+          "name":"Ensino Médio"
+      }
   },
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Ensino Superior"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"SUP",
+          "name":"Ensino Superior"
+      }
   },
   {
-    "model": "accounts.educationdegree",
-    "fields": {
-      "name": "Outro"
-    }
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"EJA",
+          "name":"Ensino para Jovens e Adultos (EJA)"
+      }
+  },
+  {
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"ETP",
+          "name":"Ensino Técnico/Profissionalizante"
+      }
+  },
+  {
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"FP",
+          "name":"Formação de professores"
+      }
+  },
+  {
+      "model":"accounts.educationlevel",
+      "fields":{
+          "slug":"CUR",
+          "name":"Ensino preparatório (Cursinho)"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"INF",
+          "name":"Anos iniciais da Educação Infantil (EI)"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"INF",
+          "name":"Pré"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF1",
+          "name":"1º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF1",
+          "name":"2º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF1",
+          "name":"3º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF1",
+          "name":"4º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF1",
+          "name":"5º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF2",
+          "name":"6º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF2",
+          "name":"7º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF2",
+          "name":"8º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EF2",
+          "name":"9º ano EF"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EM",
+          "name":"1º ano EM"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EM",
+          "name":"2º ano EM"
+      }
+  },
+  {
+      "model":"accounts.educationdegree",
+      "fields":{
+          "education_level":"EM",
+          "name":"3º ano EM"
+      }
   }
 ]
