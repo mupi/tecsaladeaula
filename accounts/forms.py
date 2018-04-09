@@ -12,21 +12,42 @@ from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
-from .models import School, City, Occupation
+from .models import School, City, Occupation, Discipline
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
     def validate(self, value):
         pass
 
 class ProfileEditForm(forms.ModelForm):
+    disciplines = MultipleChoiceFieldNoValidation()
 
     class Meta:
         model = User
-        fields = ('first_name', 'city', 'occupations', 'picture', 'site', 'biography',)
-
+        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography',
+        'education_degrees')
 
     def save(self, commit=True):
-        return super(ProfileEditForm, self).save(commit=commit)
+        disciplines = self.cleaned_data.get('disciplines')
+        profile = super(ProfileEditForm, self).save(commit=False)
+        
+        saved = profile.disciplines.all()
+        saving = []
+        for d in disciplines:
+            if (not Discipline.objects.filter(name=d).exists()):
+                new_d = Discipline.objects.create(name=d)
+                new_d.save()
+                saving.append(new_d)
+            else:
+                saving.append(Discipline.objects.get(name=d))
+        to_save = [d for d in saving if d not in saved]
+        for d in to_save:
+            profile.disciplines.add(d)
+        to_remove = [d for d in saved if d not in saving]
+        for d in to_remove:
+            profile.disciplines.remove(d)
+        
+        self.save_m2m()
+        profile.save()
 
 
 class ProfilePasswordForm(forms.ModelForm):
