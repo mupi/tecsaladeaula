@@ -1,0 +1,26 @@
+[
+  {
+     "model":"accounts.occupation",
+     "fields":{
+        "name":"Professor(a)"
+     }
+  },
+  {
+     "model":"accounts.occupation",
+     "fields":{
+        "name":"Coordenador(a) Pedagógico(a)"
+     }
+  },
+  {
+     "model":"accounts.occupation",
+     "fields":{
+        "name":"Diretor(a)"
+     }
+  },
+  {
+     "model":"accounts.occupation",
+     "fields":{
+        "name":"Outro"
+     }
+  }
+]

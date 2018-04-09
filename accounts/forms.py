@@ -12,20 +12,52 @@ from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
+from .models import School, City, Occupation, Discipline
+
+class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
+    def validate(self, value):
+        pass
 
 class ProfileEditForm(forms.ModelForm):
+    disciplines = MultipleChoiceFieldNoValidation()
 
+    class Meta:
+        model = User
+        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography',
+        'education_degrees')
+
+    def save(self, commit=True):
+        disciplines = self.cleaned_data.get('disciplines')
+        profile = super(ProfileEditForm, self).save(commit=False)
+        
+        saved = profile.disciplines.all()
+        saving = []
+        for d in disciplines:
+            if (not Discipline.objects.filter(name=d).exists()):
+                new_d = Discipline.objects.create(name=d)
+                new_d.save()
+                saving.append(new_d)
+            else:
+                saving.append(Discipline.objects.get(name=d))
+        to_save = [d for d in saving if d not in saved]
+        for d in to_save:
+            profile.disciplines.add(d)
+        to_remove = [d for d in saved if d not in saving]
+        for d in to_remove:
+            profile.disciplines.remove(d)
+        
+        self.save_m2m()
+        profile.save()
+
+
+class ProfilePasswordForm(forms.ModelForm):
     email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
     password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'picture',
-                  'occupation', 'city', 'site', 'biography',)
-
-    def clean_username(self):
-        return self.instance.username
+        fields = ('email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -40,6 +72,10 @@ class ProfileEditForm(forms.ModelForm):
             self.instance.set_password(self.cleaned_data['password1'])
         return super(ProfileEditForm, self).save(commit=commit)
 
+class SchoolAddForm(forms.ModelForm):
+
+    class Meta:
+        model = School
 
 class AcceptTermsForm(forms.Form):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)

@@ -30,7 +30,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
 
     picture = models.ImageField(_("Picture"), upload_to=hash_name('user-pictures', 'username'), blank=True)
     occupation = models.CharField(_('Occupation'), max_length=30, blank=True)
-    city = models.CharField(_('City'), max_length=30, blank=True)
     site = models.URLField(_('Site'), blank=True)
     biography = models.TextField(_('Biography'), blank=True)
     accepted_terms = models.BooleanField(_('Accepted terms and condition'), default=False)
@@ -96,34 +95,46 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
 
 #populated by fixture
 class State (models.Model):
+    uf = models.CharField(max_length=2, primary_key=True)
     name = models.CharField(max_length=50)
-    uf = models.CharField(max_length=2,primary_key=True)
     uf_code = models.CharField(max_length=5)
 
 #populated by fixture
 class City (models.Model):
-    code = models.CharField(max_length=20)
+    code = models.CharField(max_length=10)
     name = models.CharField(max_length=80)
     uf = models.ForeignKey(State, on_delete=models.CASCADE)
 
+class Occupation(models.Model):
+    name = models.CharField(max_length=100)
 
 #populated by fixture
 class Discipline (models.Model):
-    name = models.CharField(max_length=200, unique=True,primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
+    visible = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
+class EducationLevel(models.Model):
+    slug = models.CharField(max_length=3, primary_key=True)
+    name = models.CharField(max_length=50)
 
-#populated by fixture
+# #populated by fixture
 class EducationDegree (models.Model):
-    name = models.CharField(max_length=70,primary_key=True)
+    name = models.CharField(max_length=50, unique=True)
+    education_level = models.ForeignKey(EducationLevel)
 
 class School (models.Model):
+    SCHOOL_TYPES = [
+        ('PU','Pública'),
+        ('PR','Privada'),
+        ('AP','Autônomo/Particular'),
+        ('OU','Outra')
+    ]
     name = models.CharField(max_length=200)
-    school_type = models.CharField(max_length=30, blank=True, null=True)  #private or public
+    school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=True, null=True)
     city = models.ForeignKey(City, blank=True, null=True)
-    education_degree = models.ManyToManyField(EducationDegree, blank=True, null=True)
 
 class TimtecUser(AbstractTimtecUser):
     """
@@ -133,12 +144,16 @@ class TimtecUser(AbstractTimtecUser):
     """
     business_email = models.EmailField(blank=True, null=True)
     email = models.EmailField(_('Email address'), blank=False, unique=True)
-    level_of_education_taught = models.ManyToManyField(EducationDegree, blank=True, null=True)
-    school = models.ManyToManyField(School, blank=True, null=True)
+    schools = models.ManyToManyField(School, blank=True, null=True)
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
-    city = City
-
-    job_title = models.CharField(max_length=70, blank=True, null=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
+    occupations = models.ManyToManyField(Occupation, blank=True, null=True)
+    education_degrees = models.ManyToManyField(EducationDegree, blank=True, null=True)
 
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'
+
+class TimtecUserSchool(models.Model):
+    professor = models.ForeignKey(TimtecUser)
+    school = models.ForeignKey(School)
+    education_degree = models.ManyToManyField(EducationDegree, blank=True, null=True)

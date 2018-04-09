@@ -145,6 +145,8 @@ PIPELINE_CSS = {
     'common': {
         'source_filenames': (
             'font-awesome/css/font-awesome.css',
+            'ui-select/dist/select.css',
+            'jquery-ui/ui/jquery-ui.css',
             'codemirror/lib/codemirror.css',
             'codemirror/addon/hint/show-hint.css',
             'codemirror/theme/monokai.css',
@@ -343,6 +345,15 @@ PIPELINE_JS = {
         ),
         'output_filename': 'js/users_admin.js',
     },
+    'accounts' : {
+        'source_filenames': (
+            'js/accounts/app.js',
+            'js/accounts/controllers.js',
+            'js/accounts/services.js',
+            'ui-select/dist/select.js',
+        ),
+        'output_filename': 'js/accounts.js' 
+    }
 }
 
 MOMMY_CUSTOM_FIELDS_GEN = {
@@ -555,6 +566,7 @@ STATICFILES_DIRS = (
     os.path.join(THEMES_DIR, TIMTEC_THEME, 'static'),
     os.path.join(THEMES_DIR, 'default', 'static'),
     os.path.join(PROJECT_ROOT, 'bower_components'),
+    os.path.join(PROJECT_ROOT, 'node_modules'),
 )
 
 TEMPLATE_DIRS = (

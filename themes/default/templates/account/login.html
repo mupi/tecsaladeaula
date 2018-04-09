@@ -7,7 +7,7 @@
         <i class="fa fa-sign-in"></i><br/>
         {% trans "Sign In" %}
     </h1>
-
+    <!-- PR Login full-->
     <form method="post" action="{% url 'account_login' %}" class="form-horizontal">{% csrf_token %}
         <div class="form-group{% if form.errors %} has-error{% endif %}">
             <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "E-mail" %}</label>

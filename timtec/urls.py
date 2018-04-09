@@ -6,7 +6,9 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from accounts.views import (ProfileEditView, ProfileView, UserSearchView,
                             TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView,
-                            AcceptTermsView, SignupView)
+                            AcceptTermsView, SignupView, list_states_view, list_cities_view,
+                            get_timtec_profile, list_occupations_view, list_educationdegrees_view,
+                            list_disciplines_view)
 
 from core.views import (CourseView, GenericCourseView, CourseViewSet,
                         CourseProfessorViewSet, EnrollCourseView, HomeView,
@@ -100,6 +102,12 @@ urlpatterns = patterns(
 
     # Services
     url(r'^api/', include(router.urls)),
+    url(r'^api/states', list_states_view, name='list_states'),
+    url(r'^api/cities', list_cities_view, name='list_cities'),
+    url(r'^api/occupations', list_occupations_view, name='list_occupations'),
+    url(r'^api/disciplines', list_disciplines_view, name='list_discipline'),
+    url(r'^api/educationdegrees', list_educationdegrees_view, name='list_educationdegrees'),
+    url(r'^api/profile', get_timtec_profile, name='get_profile'),
     # Forum
     url(r'^forum/(?P<course_slug>[-a-zA-Z0-9_]+)/$', CourseForumView.as_view(), name='forum'),
     url(r'^forum/question/(?P<slug>[-a-zA-Z0-9_]+)/$', QuestionView.as_view(), name='forum_question'),
