@@ -138,12 +138,5 @@
       "name": "Informática",
       "visible": true
     }
-  },
-  {
-    "model": "accounts.discipline",
-    "fields": {
-      "name": "Outras",
-      "visible": true
-    }
   }
 ]
