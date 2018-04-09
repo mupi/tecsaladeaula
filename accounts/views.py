@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
-                                    TimtecProfileSerializer, OccupationSerializer)
+                                    TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer, EducationDegreeSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -22,7 +22,7 @@ from rest_framework.response import Response
 from core.permissions import IsAdmin
 
 from .forms import SignupForm
-from .models import State, City, Occupation
+from .models import State, City, Occupation, Discipline, School, EducationDegree
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -187,6 +187,18 @@ def list_occupations_view(request):
 def list_states_view(request):
     states = [s.uf for s in State.objects.all()]
     return Response(states)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_disciplines_view(request):
+    disciplines = [DisciplineSerializer(d).data for d in Discipline.objects.filter(visible=True)]
+    return Response(disciplines)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_educationdegrees_view(request):
+    educationdegrees = [EducationDegreeSerializer(ed).data for ed in EducationDegree.objects.all()]
+    return Response(educationdegrees)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
