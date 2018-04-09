@@ -1,6 +1,6 @@
 Oi {{ name }},
 
-Você se inscreveu em nosso curtxtso gratuito {{ course_name }}.
+Você se inscreveu em nosso curso gratuito {{ course_name }}.
 
 Trazemos aqui as boas vindas e qualquer dúvida entre em contato conosco pelo email contato@mupi.me .
 
