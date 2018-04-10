@@ -28,7 +28,7 @@ wrapper-course-lesson
     <!-- END ACTIONS -->
     <div class="container">
         <!--  HEADER -->
-        <header>
+        <header class="main-header-user-report">
             <div class="row">
                 <div class="col-lg-6">
                     <h1>{% trans 'Users' %}</h1>
@@ -36,28 +36,124 @@ wrapper-course-lesson
             </div>
         </header>
         <!-- END HEADER -->
-        <h3>{% trans 'Users found:' %} {% verbatim %}{{ total_users_found }}{% endverbatim %}</h3>
-        <div class="filters">
-            <form role="form" class="form-inline" method="GET">
-                <div class="filter-checkbox form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="admin" ng-model="filters.admin"> {% trans 'Administrators' %}
-                        </label>
-                        <label>
-                            <input type="checkbox" name="admin" ng-model="filters.blocked"> {% trans 'Blockeds' %}
-                        </label>
+        <h3  class="main-header-user-report">{% trans 'Users found:' %} {% verbatim %}{{ total_users_found }}{% endverbatim %}</h3>
+        <div class="filters main-header-user-report">
+            <form role="form" class="form-horizontal" method="GET">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="col-sm-6 col-sx-12 without-paddings">
+                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-paddings">{% trans "State" %}</label>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 without-paddings-mobile">
+                            <select class="form-control" name="uf" id="uf_state" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                                <option value=" "></option>
+                                {% verbatim %}
+                                <option ng-repeat="state in list_states" ng-selected="{{ selected_uf == state }}" value="{{state}}">{{ state }}</option>
+                                {% endverbatim %}
+                            </select>
+                        </div>
+
+                        <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label without-paddings">{% trans "City" %}</label>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 without-paddings-mobile">
+                          <select class="form-control" name="city" id="city">
+                              {% verbatim %}
+                              <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                              {% endverbatim %}
+                          </select>
+                        </div>
                     </div>
+
+                    <div class="col-sm-6 col-sx-12 without-paddings">
+                        <label class="col-lg-3 col-md-1 col-sm-3 col-xs-12 control-label  without-paddings">{% trans "Occupation" %}</label>
+                        <div class="form-group  custom-inputs-gray">
+                            <div class="col-sm-8 text-right  without-padding-right">
+                              <div class="col-sm-8 text-left">
+                                  <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                      <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                      <ui-select-choices repeat="occupation in avaiable_occupations">
+                                              {% verbatim %}{{occupation.name}}{% endverbatim %}
+                                      </ui-select-choices>
+                                  </ui-select>
+                                  {% verbatim %}
+                                  <input type="hidden" name="occupations" ng-repeat="occupation in occupations.selected" value="{{occupation.id}}"/>
+                                  {% endverbatim %}
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+               </div>
+
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col-sm-6  without-paddings">
+                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label  without-paddings">{% trans "Grade" %}</label>
+                    <div class="form-group  custom-inputs-gray">
+                        <div class="col-sm-8 text-left without-padding-right">
+                          <!-- Multiselect Grade/Ano - Serie -->
+                            <ui-select multiple ng-model="education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                <ui-select-choices repeat="ed in avaiable_education_degrees">
+                                    {% verbatim %}{{ed.name}}{% endverbatim %}
+                                </ui-select-choices>
+                            </ui-select>
+                            {% verbatim %}
+                                <input type="hidden" name="education_degrees" ng-repeat="ed in education_degrees.selected" value="{{ed.id}}"/>
+                            {% endverbatim %}
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-sx-12 without-paddings">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label without-paddings">{% trans "Subjects" %}</label>
+                            <div class="form-group  custom-inputs-gray">
+                                <div class="col-sm-8 text-left  without-padding-right">
+                                  <!-- Multiselect Subjects -->
+                                  <ui-select multiple ng-model="disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                      <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                      <ui-select-choices repeat="discipline in avaiable_disciplines">
+                                          {% verbatim %}{{discipline.name}}{% endverbatim %}
+                                      </ui-select-choices>
+                                  </ui-select>
+                                  {% verbatim %}
+                                      <input type="hidden" name="disciplines" ng-repeat="discipline in disciplines.selected" value="{{discipline.name}}"/>
+                                  {% endverbatim %}
+                                </div>
+                            </div>
+
+                  </div>
                 </div>
-                <div class="form-group">
-                    <label class="sr-only" for="keyword">{% trans 'Keyword' %}</label>
-                    <input type="text"
-                           placeholder="{% trans 'Keyword' %}"
-                           class="form-control" id="keyword"
-                           name="keyword"
-                           ng-model="filters.keyword">
-                    <button class="btn btn-info" ng-click="filter_users()">{% trans 'Filter' %}</button>
-                </div>
+              </div>
+
+
+              <div class="row">
+                  <div class="col-sm-12">
+                    <div class="col-sm-4 col-sx-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="admin" ng-model="filters.admin"> {% trans 'Administrators' %}
+                            </label>
+                            <label>
+                                <input type="checkbox" name="admin" ng-model="filters.blocked"> {% trans 'Blockeds' %}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-sx-12 without-paddings-mobile">
+                        <label class="sr-only" for="keyword">{% trans 'E-mail or Name' %}</label>
+                        <input type="text"
+                               placeholder="{% trans 'E-mail or Name' %}"
+                               class="form-control" id="keyword"
+                               name="keyword"
+                               ng-model="filters.keyword">
+                    </div>
+                    <div class="col-sm-2 col-sx-12 without-paddings-mobile">
+                        <button class="btn btn-info" ng-click="filter_users()">{% trans 'Search' %}</button>
+                    </div>
+                    <div class="col-sm-2 col-sx-12 without-paddings-mobile">
+                        <button class="btn btn-info" ng-click=""><i class="fa fa-download"></i> Exportar</button>
+                      </div>
+                  </div>
+              </div>
             </form>
             <!-- END FORM INLINE -->
         </div>
@@ -69,32 +165,159 @@ wrapper-course-lesson
 			<p>{% trans 'No users found' %}.</p>
 		</div>
         <section id="all-courses" class="user-list" ng-show="users_page.$resolved">
-            <table class="table table-list">
-                <tr>
-{#                  <th class="username">{% trans "Username" %}</th>#}
-                    <th class="email">{% trans "Email" %}</th>
-                    <th class="fullname">{% trans "Full name" %}</th>
-                    <th class="role text-center">{% trans 'Administrator' %}</th>
-                    <th class="role text-center">{% trans 'Active' %}</th>
-                    <th class="actions">{% trans "Actions" %}</th>
-                </tr>
-                <tr ng-repeat="user in users_page">
-                {% verbatim %}
+                <ul class="header-user-list">
+                  <li>
+                    <div class="row-eq-height">
+                      <div class="col-sm-6">
+                        <div class="col-sm-2 fullname">{% trans "Full name" %}</div>
+                        <div class="col-sm-3 email">{% trans "Main E-mail" %}</div>
+                        <div class="col-sm-3 email">{% trans "Additional E-mail" %}</div>
+                        <div class="col-sm-2">{% trans "Occupation" %}</div>
+                        <div class="col-sm-2">{% trans "Grade" %}</div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="col-sm-2">{% trans "Subjects" %}</div>
+                        <div class="col-sm-2">{% trans "State" %}</div>
+                        <div class="col-sm-2">{% trans "City" %}</div>
+                        <div class="col-sm-2 role text-center">{% trans 'Administrator' %}</div>
+                        <div class="col-sm-1 role text-center">{% trans 'Active' %}</div>
+                        <div class="col-sm-1 textcenter actions">{% trans "Actions" %}</div>
+                        <div class="col-sm-2 textcenter">{% trans "More information" %}</div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <ul class="table table-list">
+                    <li ng-repeat="user in users_page">
+                        <div class="row">
+                          {% verbatim %}
+                            <div class="col-sm-6">
+                              <div class="col-sm-2">Neymar Junior</div>
+                              <div class="col-sm-3 email">{{ user.email }}</div>
+                              <div class="col-sm-3 email">{{ user.email }}</div>
+                              <div class="col-sm-2">Professor(a)</div>
+                              <div class="col-sm-2">1º ano EF, 2º ano EF</div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="col-sm-2">Matemática, Português</div>
+                              <div class="col-sm-2">SP</div>
+                              <div class="col-sm-2">Campinas</div>
+                        {% endverbatim %}
+                              <div class="col-sm-2 text-center">
+                                  <input type="checkbox" ng-model="user.is_superuser" ng-change="update_user(user)">
+                              </div>
+                              <div class="col-sm-1 text-center">
+                                  <input type="checkbox" ng-model="user.is_active" ng-change="update_user(user)">
+                              </div>
+                              <div class="col-sm-1 textcenter">
+                                  <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
+                              </div>
 
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.get_full_name }}</td>
-                    <td class="text-center">
-                        <input type="checkbox" ng-model="user.is_superuser" ng-change="update_user(user)">
-                    </td>
-                    <td class="text-center">
-                        <input type="checkbox" ng-model="user.is_active" ng-change="update_user(user)">
-                    </td>
-                    <td class="textcenter">
-                        <button class="btn btn-warning js-delete" ng-click="delete_user(user, $index)"><i class="fa fa-trash-o"></i></button>
-                    </td>
-                {% endverbatim %}
-                </tr>
-            </table>
+                              <div class="col-sm-2 textcenter">
+                                  <span class="label label-default pointer" ng-click="showLessons=!showLessons">
+                                      {% trans 'Show' %}
+                                      <i class="fa" ng-class="{'fa fa-caret-down':!showLessons,'fa fa-caret-up':showLessons}"></i>
+                                  </span>
+                              </div>
+                            </div>
+                        <div class="more-info-user col-xs-12" ng-if="showLessons">
+                            <div class="col-lg-12" ng-hide="true">
+                                <span>{% trans 'More information' %}...   <i class="loading fa fa-refresh fa-spin"></i></span>
+                            </div>
+                            <div class="row-more-info-user">
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Bio" %}</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <textarea name="biography" class="form-control margin-b10" rows="7">{{user.biography.value}}</textarea>
+                                      </div>
+                                    </div>
+
+                                    <div class="col-sm-12 col-xs-12">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Site" %}</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <input name="site" type="text" class="form-control margin-b10" value="{{user.site.value}}">
+                                      </div>
+                                    </div>
+                                    <div class="col-sm-12 col-xs-12">
+                                    <section id="all-schools" class="user-list">
+                                        <label class="col-sm-12 without-margins"> {% trans "School(s)/Institution(s) where you work" %}</label>
+                                        <table class="table table-list" id="table-list-schools">
+                                             <tbody><tr>
+                                                 <th class="">{% trans "Nome" %}</th>
+                                                 <th class="">{% trans "Type" %}</th>
+                                                 <th class="">{% trans "State" %}</th>
+                                                 <th class="">{% trans "City" %}</th>
+                                                 <th class="">{% trans "Teaching Level" %}</th>
+                                             </tr>
+                                             <tr class="ng-scope" ng-repeat="school in schools-user">
+                                                 {% verbatim %}
+                                                 <td class="ng-binding">{{school.name}}</td>
+                                                 <td class="ng-binding">{{school.type}}</td>
+                                                 <td class="ng-binding">{{school.state}}</td>
+                                                 <td class="ng-binding">{{school.city}}</td>
+                                                 <td class="ng-binding">{{school.level}}</td>
+                                                {% endverbatim %}
+                                             </tr>
+                                             <tr class="ng-scope">
+                                                 <td class="ng-binding">Augusto Laranja</td>
+                                                 <td class="ng-binding">Privada</td>
+                                                 <td class="ng-binding">Limeira</td>
+                                                 <td class="ng-binding">SP</td>
+                                                 <td class="ng-binding">Ensino Médio</td>
+                                             </tr>
+                                         </tbody></table>
+                                     </section>
+                                       </div>
+                                       <div class="col-sm-12 col-xs-12">
+                                       <section id="all-courses-enrolled" class="user-list">
+                                           <label class="col-sm-12 without-margins"> {% trans "Courses enrolled" %}</label>
+                                          <table class="table table-list" id="table-list-schools">
+                                                <tbody><tr>
+                                                    <th class="">{% trans "Course name" %}</th>
+                                                    <th class="">{% trans "Student Progress" %}</th>
+                                                </tr>
+                                                <tr class="ng-scope" ng-repeat="course in courses-user-enrolled">
+                                                    {% verbatim %}
+                                                    <td class="ng-binding">{{course.name}}</td>
+                                                    <td class="ng-binding">
+                                                      <div class="progress"  style="width:{{ course.course_progress }}%;">
+                                                        {{ course.course_progress }}% <div class="progress-bar" style="width:0%;"></div>
+                                                      </div>
+                                                    </td>
+                                                    {% endverbatim %}
+                                                </tr>
+                                                <tr class="ng-scope">
+                                                    <td class="ng-binding">COMO FORMAR O CIDADÃO CRÍTICO E ATIVO DO SÉCULO 21</td>
+                                                    <td class="ng-binding">
+                                                      <div class="progress">
+                                                          50%<div class="progress-bar" style="width:50%;"></div>
+                                                      </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="ng-scope">
+                                                    <td class="ng-binding">COMO UTILIZAR O TWITTER EM SALA DE AULA</td>
+                                                    <td class="ng-binding">
+                                                      <div class="progress">
+                                                          20%<div class="progress-bar" style="width:20%;"></div>
+                                                      </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                          </table>
+                                        </section>
+                                          </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                      </div>
+                    </li>
+
+
+                </ul>
         </section>
         <pagination total-items="total_users_found"
                     items-per-page="50"
@@ -111,5 +334,77 @@ wrapper-course-lesson
     </div>
 
 </section>
+
+
 <!-- END COURSES -->
+
+
+<script>
+/*1. Scripts*/
+/*Load Multiple Select Value*/
+var myJSONOccupation = {
+ "1":"Professor(a)",
+ "2":"Diretor(a)",
+ "3":"Coordenador(a) Pedagógico(a)",
+ "4":"Outro"
+}
+
+var myJSONGrades = {
+ "1":"1º ano EF",
+ "2":"2º ano EF",
+ "3":"3º ano EF",
+ "8":"8º ano EF"
+}
+
+
+var myJSONGTeachingLevels = {
+ "1":"Ensino Fundamental",
+ "2":"Ensino Médio",
+ "3":"Ensino Técnico",
+ "4":"Ensino Superior"
+}
+
+
+var myJSONSubjects = {
+ "1":"Matemática",
+ "2":"Português",
+ "3":"Biologia",
+ "4": "Filosofia",
+ "5": "Outra"
+}
+
+var $occupations = $('.list-occupations');
+  $occupations.find('option').remove();
+  $.each(myJSONOccupation,function(key, value)
+  {
+      $occupations.append('<option value=' + key + '>' + value + '</option>');
+  });
+
+
+var $grades = $('.list-grades');
+  $grades.find('option').remove();
+  $.each(myJSONGrades,function(key, value)
+  {
+      $grades.append('<option value=' + key + '>' + value + '</option>');
+  });
+
+var $subjects = $('.list-subjects');
+  $subjects.find('option').remove();
+  $.each(myJSONSubjects,function(key, value)
+  {
+      $subjects.append('<option value=' + key + '>' + value + '</option>');
+  });
+
+
+  var $teachingLevels = $('.list-teaching-levels');
+    $teachingLevels.find('option').remove();
+    $.each(myJSONGTeachingLevels,function(key, value)
+    {
+        $teachingLevels.append('<option value=' + key + '>' + value + '</option>');
+    });
+</script>
+
+
+
+</script>
 {% endblock %}

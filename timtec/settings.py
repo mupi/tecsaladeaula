@@ -342,6 +342,7 @@ PIPELINE_JS = {
             'js/factories/timtec-models.js',
             'js/directives/fixedBar.js',
             'js/directives/alertPopup.js',
+            'ui-select/dist/select.js'
         ),
         'output_filename': 'js/users_admin.js',
     },
@@ -352,7 +353,7 @@ PIPELINE_JS = {
             'js/accounts/services.js',
             'ui-select/dist/select.js',
         ),
-        'output_filename': 'js/accounts.js' 
+        'output_filename': 'js/accounts.js'
     }
 }
 
