@@ -13,17 +13,16 @@ from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerial
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
-from rest_framework import viewsets
-from rest_framework import filters
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import viewsets, filters, generics, permissions, mixins, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from core.permissions import IsAdmin
 
 from .forms import SignupForm
-from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel
+from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
+from .serializers import SchoolSerializer, TimtecUserSchoolSerializer
+import json
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -37,6 +36,24 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
+class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = TimtecUserSchool.objects.all()
+    serializer_class = TimtecUserSchoolSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.DATA
+        data['professor'] = self.request.user.id
+        serializer = self.get_serializer(data=request.DATA, files=request.FILES)
+
+        if serializer.is_valid():
+            self.pre_save(serializer.object)
+            self.object = serializer.save(force_insert=True)
+            self.post_save(self.object, created=True)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED,
+                            headers=headers)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()

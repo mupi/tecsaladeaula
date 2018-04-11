@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
-from accounts.views import (ProfileEditView, ProfileView, UserSearchView,
+from accounts.views import (ProfileEditView, ProfileView, TimtecUserSchoolViewSet, UserSearchView,
                             TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView,
                             AcceptTermsView, SignupView, list_states_view, list_cities_view,
                             get_timtec_profile, list_occupations_view, list_educationdegrees_view,
@@ -64,6 +64,7 @@ router.register(r'lessons_user_progress', UserCourseLessonsStats)
 router.register(r'course_stats', CourseStatsByLessonViewSet)
 router.register(r'course_classes', ClassViewSet)
 router.register(r'flatpage', FlatpageViewSet)
+router.register(r'schools', TimtecUserSchoolViewSet)
 
 router.register(r'enroll', EnrollCourseAPIView)
 
