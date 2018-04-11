@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import City, Occupation, Discipline, EducationDegree, EducationLevel
+from .models import City, Occupation, Discipline, EducationDegree, EducationLevel, School, TimtecUserSchool
 
 
 class TimtecUserSerializer(serializers.ModelSerializer):
@@ -43,12 +43,24 @@ class EducationLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationLevel
 
+class SchoolSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = School
+
+class TimtecUserSchoolSerializer(serializers.ModelSerializer):
+    school = SchoolSerializer(required=True)
+
+    class Meta:
+        model = TimtecUserSchool
+
 class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)
     occupations = OccupationSerializer(many=True, required=False)
     disciplines = DisciplineSerializer(many=True, required=False)
     education_degrees = EducationDegreeSerializer(required=False, many=True)
+    schools = TimtecUserSchoolSerializer(source='timtecuserschool_set', many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('city', 'occupations', 'disciplines', 'education_degrees')
+        fields = ('city', 'occupations', 'disciplines', 'education_degrees', 'schools')
