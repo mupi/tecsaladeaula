@@ -132,9 +132,9 @@ class School (models.Model):
         ('AP','Autônomo/Particular'),
         ('OU','Outra')
     ]
-    name = models.CharField(max_length=200)
-    school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=True, null=True)
-    city = models.ForeignKey(City, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=False, null=False)
+    school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=False, null=False)
+    city = models.ForeignKey(City, blank=False, null=False)
 
 class TimtecUser(AbstractTimtecUser):
     """
