@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import City, Occupation, Discipline, EducationDegree
+from .models import City, Occupation, Discipline, EducationDegree, EducationLevel
 
 
 class TimtecUserSerializer(serializers.ModelSerializer):
@@ -37,6 +37,11 @@ class EducationDegreeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EducationDegree
+
+class EducationLevelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EducationLevel
 
 class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)

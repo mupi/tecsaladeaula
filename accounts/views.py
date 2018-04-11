@@ -8,7 +8,8 @@ from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
-                                    TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer, EducationDegreeSerializer)
+                                    TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer,
+                                    EducationDegreeSerializer, EducationLevelSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -22,7 +23,7 @@ from rest_framework.response import Response
 from core.permissions import IsAdmin
 
 from .forms import SignupForm
-from .models import State, City, Occupation, Discipline, School, EducationDegree
+from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -184,12 +185,6 @@ def list_occupations_view(request):
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
-def list_states_view(request):
-    states = [s.uf for s in State.objects.all()]
-    return Response(states)
-
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
 def list_disciplines_view(request):
     disciplines = [DisciplineSerializer(d).data for d in Discipline.objects.filter(visible=True)]
     return Response(disciplines)
@@ -199,6 +194,24 @@ def list_disciplines_view(request):
 def list_educationdegrees_view(request):
     educationdegrees = [EducationDegreeSerializer(ed).data for ed in EducationDegree.objects.all()]
     return Response(educationdegrees)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_educationlevels_view(request):
+    educationlevels = [EducationLevelSerializer(el).data for el in EducationLevel.objects.all()]
+    return Response(educationlevels)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_schooltypes_view(request):
+    schooltypes = [{'value': st[0], 'name': st[1]} for st in School.SCHOOL_TYPES]
+    return Response(schooltypes)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_states_view(request):
+    states = [s.uf for s in State.objects.all()]
+    return Response(states)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
