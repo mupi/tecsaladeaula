@@ -160,7 +160,7 @@ wrapper-course-lesson
                                     <button type="button" class="btn btn-info add-school">{% trans "Add school/institution" %}</button>
                                 </div>
                                 <br>
-                                   <section id="all-schools" class="user-list" ng-show="">
+                                   <section id="all-schools" class="user-list">
                                         <table class="table table-list" id="table-list-schools">
                                             <tbody><tr>
                                                 <th class="">{% trans "Nome" %}</th>
@@ -339,86 +339,86 @@ wrapper-course-lesson
          </div>
     </div>
 
-
-</div>
-
-<!--Add School Modal -->
-<div id="add-school-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="loginModalLabel" class="textcenter">
-          {% trans "Add school/institution" %}
-        </h3>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-sm-12 col-xs-12">
-            <div class="panel left-xs right-xs top-xs">
-              <div class="panel-heading left-xs right-xs">
-                <h4 class="bottom-xs top-xs">{% trans "Fill out information about school/institution where you work" %}</h4>
-              </div>
-
-              <div class="panel-body bottom-xs left-xs right-xs top-xs">
-                <form class="form-horizontal ng-pristine ng-valid" method="post" action="">
-                  <div class="form-group">
-                    <label class="col-md-2 col-xs-12 control-label">{% trans "Name" %}</label>
-                    <div class="col-lg-9 col-xs-12">
-                      <input id="school-name" type="text" class="form-control" value="" placeholder="">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-md-2 col-xs-12 control-label">{% trans "Type" %}</label>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <select class="form-control" id="school-type">
-                            <option>Tipo</option>
-                            <option>Pública</option>
-                            <option>Privada</option>
-                        </select>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                      <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
-                      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                          <select class="form-control" id="school-state">
-                              <option>SP</option>
-                              <option>RJ</option>
-                              <option>MG</option>
-                              <option>PE</option>
-                          </select>
+    <!--Add School Modal -->
+    <div id="add-school-modal" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+      <div class="modal-content" ng-controller="SchoolCtrl">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="loginModalLabel" class="textcenter">
+            {% trans "Add school/institution" %}
+          </h3>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+              <div class="panel left-xs right-xs top-xs">
+                <div class="panel-heading left-xs right-xs">
+                  <h4 class="bottom-xs top-xs">{% trans "Fill out information about school/institution where you work" %}</h4>
+                </div>
+  
+                <div class="panel-body bottom-xs left-xs right-xs top-xs">
+                  <form class="form-horizontal ng-pristine ng-valid" ng-submit="addSchoolForm()">
+                    <div class="form-group">
+                      <label class="col-md-2 col-xs-12 control-label">{% trans "Name" %}</label>
+                      <div class="col-lg-9 col-xs-12">
+                        <input ng-model="form.name" type="text" class="form-control">
                       </div>
-
-                      <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
-                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                          <select class="form-control" id="school-city">
-                              <option>Limeira</option>
-                              <option>Campinas</option>
-                              <option>Piracicaba</option>
-                              <option>Soracava</option>
-                              <option>Araras</option>
-                          </select>
-                      </div>
-                  </div>
-
-                  <div class="form-group">
-                      <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 col-xs-12 control-label">{% trans "Type" %}</label>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <!-- Teaching Levels-->
-                            <select class="list-teaching-levels" name="teaching-levels[]" multiple="multiple" id="school-teaching-level">
-                            </select>
-                      </div>
-                  </div>
-
-                  <div class="submit">
-                    <div class="row">
-                      <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
-                        <button class="btn btn-success col-xs-12 btn-add-school-table" data-dismiss="modal">{% trans "Add" %}</button>
+                        <select class="form-control" ng-model="form.school_type" name="school_types">
+                            {% verbatim %}
+                            <option ng-repeat="st in schooltypes" value="{{st.value}}">{{ st.name }}</option>
+                            {% endverbatim %}
+                        </select>
                       </div>
                     </div>
-                  </div>
-                </form>
+  
+                    <div class="form-group">
+                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                          <select class="form-control" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                              <option value=" "></option>
+                              {% verbatim %}
+                              <option ng-repeat="state in list_states" value="{{state}}">{{ state }}</option>
+                              {% endverbatim %}
+                          </select>
+                        </div>
+  
+                        <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                          <select class="form-control" ng-model="form.city">
+                              {% verbatim %}
+                              <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                              {% endverbatim %}
+                          </select>
+                        </div>
+                    </div>
+  
+                    <div class="form-group">
+                        <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <!-- Teaching Levels-->
+                            <ui-select multiple ng-model="education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                <ui-select-choices repeat="el in avaiable_education_levels">
+                                    {% verbatim %}{{el.name}}{% endverbatim %}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+  
+                    <div class="submit">
+                      <div class="row">
+                        <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
+                          <button type="submit" class="btn btn-success col-xs-12 btn-add-school-table">{% trans "Add" %}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
@@ -426,7 +426,10 @@ wrapper-course-lesson
       </div>
     </div>
   </div>
+
 </div>
+
+
 
 
 
@@ -539,7 +542,7 @@ $(document).ready(function(){
 <script>
 //Add a school/institution of the table of schools
 $(".btn-add-school-table").click(function(event) {
-  event.preventDefault();
+//   event.preventDefault();
   var schoolName = $("#school-name").val();
   var schoolType = $("#school-type").val();
   var schoolState = $("#school-state").val();
@@ -577,6 +580,6 @@ $(".btn-add-school-table").click(function(event) {
       }
     });
   } );
+  
 </script>
-
 {% endblock %}
