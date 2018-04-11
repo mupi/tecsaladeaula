@@ -144,7 +144,7 @@ class TimtecUser(AbstractTimtecUser):
     """
     business_email = models.EmailField(blank=True, null=True)
     email = models.EmailField(_('Email address'), blank=False, unique=True)
-    schools = models.ManyToManyField(School, blank=True, null=True)
+    schools = models.ManyToManyField(School, through='TimtecUserSchool', blank=True, null=True)
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     occupations = models.ManyToManyField(Occupation, blank=True, null=True)
@@ -156,4 +156,4 @@ class TimtecUser(AbstractTimtecUser):
 class TimtecUserSchool(models.Model):
     professor = models.ForeignKey(TimtecUser)
     school = models.ForeignKey(School)
-    education_degree = models.ManyToManyField(EducationDegree, blank=True, null=True)
+    education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
