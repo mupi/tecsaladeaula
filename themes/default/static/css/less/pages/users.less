@@ -1,11 +1,129 @@
 // USERS ADMIN
+// 2/04  - Rules novas foram adiciones para users.html
+// 10/04 - Rules novas para users.html após de colocar os filtros
 // ********************************************************************* //
 #users {
+
+    select#uf_state {
+        padding: 0px;
+    }
+
+    .ui-select-multiple.ui-select-bootstrap {
+    min-height: 30px;
+    }
+
+
+    .main-header-user-report{
+      width: 970px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .row-more-info-user table{
+      border: 1px solid #eeeeee;
+    }
+    .container{
+        @media screen and (min-width: 1200px) {
+            width: 85%;
+        }
+
+        @media screen and (min-width: 992px) {
+          width: 85%;
+        }
+
+        @media screen and (min-width: 768px) {
+            width:85%;
+        }
+    }
+
+    .more-info-user{
+      margin-top: 15px;
+      margin-bottom: 15px;
+      padding-top: 20px;
+    }
+
+    .more-info-user .row-more-info-user{
+      width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid #eeeeee;
+      padding: 15px;
+    }
+
+    .more-info-user .margin-b10,.margin-b10{
+          margin-bottom: 10px;
+
+    }
+     .user-list{
+          /* overflow-x: auto;*/
+           font-size: 13px;
+     }
+
+     .user-list .email{
+          font-size: 12px;
+     }
+
+     .header-user-list .col-sm-6{
+          border-bottom: 1px solid #eeeeee;
+          margin-bottom: 10px;
+     }
+
+      ul li {
+          list-style: none;
+      }
+
+      ul {
+          margin-left: 0px;
+          padding-left: 0px;
+      }
+
+      .without-margins{
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+
+
     .filters {
+
+        padding: 15px 10px 10px 10px;
+        .row{
+              margin-bottom: 5px;
+        }
+
+        .select2-container {
+
+                width: 100% !important;
+
+        }
+
+        .without-paddings-mobile{
+            @media screen and (max-width: 600px) {
+              padding-left: 0px;
+              padding-right: 0px;
+            }
+        }
+
+        .without-padding-right{
+            @media screen and (min-width: 600px) {
+              padding-right: 0px;
+            }
+        }
+
+        .without-paddings{
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+
+
+
+        .checkbox input[type="checkbox"] {
+          position: relative;
+        }
+
         .form-group {
             margin-bottom: 0;
             @media screen and (min-width: 600px) {
-                display: inline-block;
+                /*display: inline-block;*/
                 vertical-align: middle;
             }
         }
@@ -29,10 +147,15 @@
         }
         #keyword {
             display: inline-block;
-            width: auto;
+            width: 100%;
+            margin-bottom: 5px;
             @media screen and (min-width: 600px) {
                 margin-right: 15px;
             }
+        }
+
+        button.btn.btn-info {
+            width: 100%;
         }
     }
 }
