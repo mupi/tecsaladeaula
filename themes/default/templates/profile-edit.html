@@ -358,7 +358,7 @@ wrapper-course-lesson
                 </div>
   
                 <div class="panel-body bottom-xs left-xs right-xs top-xs">
-                  <form class="form-horizontal ng-pristine ng-valid" ng-submit="addSchoolForm()">
+                  <form class="form-horizontal ng-pristine ng-valid" id="school-form" ng-submit="addSchoolForm()">
                     <div class="form-group">
                       <label class="col-md-2 col-xs-12 control-label">{% trans "Name" %}</label>
                       <div class="col-lg-9 col-xs-12">
@@ -380,7 +380,6 @@ wrapper-course-lesson
                         <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                           <select class="form-control" ng-model="filters_selected_uf" ng-change="filter_cities()">
-                              <option value=" "></option>
                               {% verbatim %}
                               <option ng-repeat="state in list_states" value="{{state}}">{{ state }}</option>
                               {% endverbatim %}
@@ -409,11 +408,15 @@ wrapper-course-lesson
                             </ui-select>
                         </div>
                     </div>
+
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="has_errors">
+                        <small>Por favor, preencha todos os campos</small>
+                    </div>
   
                     <div class="submit">
                       <div class="row">
                         <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
-                          <button type="submit" class="btn btn-success col-xs-12 btn-add-school-table">{% trans "Add" %}</button>
+                          <button type="submit" id="btn-add-school-table" class="btn btn-success col-xs-12">{% trans "Add" %}</button>
                         </div>
                       </div>
                     </div>

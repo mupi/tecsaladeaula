@@ -53,20 +53,32 @@
                     
                     $scope.other_discipline = null;
                 }
+
+                $scope.reload_schools = function(){
+
+                }
         }]);
 
         app.controller('SchoolCtrl', ['$scope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'SchoolTypes',
         function ($scope, $http, $location, $sce, $window, Cities, States, EducationLevels, SchoolTypes) {
             
+            $scope.has_errors = false;
             $scope.form = {};
+            
             $scope.education_levels = {};
+            $scope.list_states = [];
             $scope.education_levels.selected = [];
             $scope.avaiable_education_levels = EducationLevels.query();
-            $scope.schooltypes = SchoolTypes.query();
+
+            SchoolTypes.query(function(schooltypes){
+                $scope.schooltypes = schooltypes;
+                $scope.form.school_type = schooltypes[0].value;
+            });
 
             States.query(function(states){
                 $scope.list_states = states;
                 $scope.filters_selected_uf = states[0];
+                $scope.filter_cities();
             });
             
 
@@ -78,10 +90,19 @@
             }
 
             $scope.addSchoolForm = function() {
+                $("#btn-add-school-table").prop('disabled', true);
+
                 var education_levels = [];
                 $scope.education_levels.selected.forEach(function(el){
                     education_levels.push(el.slug);
                 });
+
+                if (education_levels.length == 0){
+                    $scope.has_errors = true;
+                    $("#btn-add-school-table").prop('disabled', false);
+                    return;
+                }
+
                 var parameter = JSON.stringify(
                 {  
                     "school": {   
@@ -100,11 +121,17 @@
                     }
                 })
                 .success(function(data, status, headers, config) {
+                    $scope.form.name = "";
+                    $scope.has_errors = false;
+                    $scope.education_levels.selected = [];
                     $("#add-school-modal").modal('toggle');
+                    $("#btn-add-school-table").prop('disabled', false);
                   })
                 .error(function(data, status, headers, config){
-                    //do anything when errors...
+                    $scope.has_errors = true;
+                    $("#btn-add-school-table").prop('disabled', false);
                 });
+                
               }
     }]);
 })(angular);
