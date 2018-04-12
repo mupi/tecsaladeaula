@@ -184,7 +184,7 @@ wrapper-course-lesson
                                                     <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
-                                                    <button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>
+                                                    <button type="button" class="btn btn-warning" ng-click="remove_school(school_info.school.id)"><i class="fa fa-trash-o"></i></button>
                                                 </td>
                                                 {% endverbatim %}
                                             </tr>
@@ -515,19 +515,19 @@ var $subjects = $('.list-subjects');
 
 <script>
 //Remove a school/institution of the table of schools
-$(document).ready(function(){
+// $(document).ready(function(){
 
- $("#table-list-schools").on('click','.btnDelete',function(){
-       if(confirm("Está seguro de remover esta escola/instituição?")){
-         (this).closest('tr').remove();
-    }
-    else{
-        return false;
-    }
-     });
+//  $("#table-list-schools").on('click','.btnDelete',function(){
+//        if(confirm("Está seguro de remover esta escola/instituição?")){
+//          (this).closest('tr').remove();
+//     }
+//     else{
+//         return false;
+//     }
+//      });
 
-});
-</script>
+// });
+// </script>
 
 <script>
 //Add a school/institution of the table of schools

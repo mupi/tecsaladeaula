@@ -28,7 +28,7 @@
             return $resource('/api/userschools', {}, {
             });
         }).factory('Schools', function($resource){
-            return $resource('/api/schools', {}, {
+            return $resource('/api/schools/:id', { id : '@id'}, {
             });
         }).factory('Profile', function($resource){
             return $resource('/api/profile', {}, {

@@ -5,7 +5,7 @@
     var app = angular.module('accounts.controllers', []);
 
     app.controller('ProfileCtrl', ['$scope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'Schools', 'Profile',
-            function ($scope, $location, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, Schools, Profile) {
+            function ($scope, $rootScope, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, Schools, Profile) {
                 
                 $scope.occupations = {};
                 $scope.disciplines = {};
@@ -20,22 +20,25 @@
                     $scope.filters_selected_uf = states[0];
                 });
 
-                Profile.get(function(profile){
-                    if (profile.city != null){
-                        $scope.selected_city_id = profile.city.id;
-                        $scope.selected_uf = profile.city.uf;
-                        $scope.filters_selected_uf = $scope.selected_uf;
+                var loadProfile = function(){
+                    Profile.get(function(profile){
+                        if (profile.city != null){
+                            $scope.selected_city_id = profile.city.id;
+                            $scope.selected_uf = profile.city.uf;
+                            $scope.filters_selected_uf = $scope.selected_uf;
 
-                        Cities.query({uf : $scope.selected_uf}, function(cities){
-                            $scope.list_cities = cities;
-                        });
-                    }
-                    $scope.occupations.selected = profile.occupations;
-                    $scope.disciplines.selected = profile.disciplines;
-                    $scope.education_degrees.selected = profile.education_degrees;
+                            Cities.query({uf : $scope.selected_uf}, function(cities){
+                                $scope.list_cities = cities;
+                            });
+                        }
+                        $scope.occupations.selected = profile.occupations;
+                        $scope.disciplines.selected = profile.disciplines;
+                        $scope.education_degrees.selected = profile.education_degrees;
 
-                    $scope.school_infos = profile.schools;
-                });
+                        $scope.school_infos = profile.schools;
+                    })
+                };
+                loadProfile();
 
                 $scope.filter_cities = function(){
                     Cities.query({uf : $scope.filters_selected_uf}, function(cities){
@@ -58,16 +61,20 @@
 
                 $scope.remove_school = function(id){
                     if(confirm("Está seguro de remover esta escola/instituição?")){
+                        Schools.get({id:id}, function(school){
+                            school.$delete()
+                            .then(function(res) {
+                                loadProfile();
+                            });
+                        });
                     }
                 }
-                
-                $scope.reload_schools = function(){
 
-                }
+                $scope.$on('reloadProfile', loadProfile);
         }]);
 
-        app.controller('SchoolCtrl', ['$scope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'UserSchools', 'SchoolTypes',
-        function ($scope, $http, $location, $sce, $window, Cities, States, EducationLevels, UserSchools, SchoolTypes) {
+        app.controller('SchoolCtrl', ['$scope', '$rootScope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'UserSchools', 'SchoolTypes',
+        function ($scope, $rootScope, $http, $location, $sce, $window, Cities, States, EducationLevels, UserSchools, SchoolTypes) {
             
             $scope.has_errors = false;
             $scope.form = {};
@@ -123,7 +130,9 @@
                     $scope.form.name = "";
                     $scope.has_errors = false;
                     $scope.education_levels.selected = [];
+                    $rootScope.$broadcast('reloadProfile');
                     $("#add-school-modal").modal('toggle');
+                    $
                   })
                 .catch(function(req){
                     $scope.has_errors = true;
