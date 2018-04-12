@@ -25,10 +25,7 @@
             return $resource('/api/schooltypes', {}, {
             });
         }).factory('UserSchools', function($resource){
-            return $resource('/api/userschools', {}, {
-            });
-        }).factory('Schools', function($resource){
-            return $resource('/api/schools/:id', { id : '@id'}, {
+            return $resource('/api/userschools/:id', { id : '@id'}, {
             });
         }).factory('Profile', function($resource){
             return $resource('/api/profile', {}, {

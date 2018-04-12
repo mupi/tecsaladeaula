@@ -4,8 +4,8 @@
     /* Controllers */
     var app = angular.module('accounts.controllers', []);
 
-    app.controller('ProfileCtrl', ['$scope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'Schools', 'Profile',
-            function ($scope, $rootScope, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, Schools, Profile) {
+    app.controller('ProfileCtrl', ['$scope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'UserSchools', 'Profile',
+            function ($scope, $rootScope, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, UserSchools, Profile) {
                 
                 $scope.occupations = {};
                 $scope.disciplines = {};
@@ -61,7 +61,7 @@
 
                 $scope.remove_school = function(id){
                     if(confirm("Está seguro de remover esta escola/instituição?")){
-                        Schools.get({id:id}, function(school){
+                        UserSchools.get({id:id}, function(school){
                             school.$delete()
                             .then(function(res) {
                                 loadProfile();

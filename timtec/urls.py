@@ -65,7 +65,6 @@ router.register(r'course_stats', CourseStatsByLessonViewSet)
 router.register(r'course_classes', ClassViewSet)
 router.register(r'flatpage', FlatpageViewSet)
 router.register(r'userschools', TimtecUserSchoolViewSet)
-router.register(r'schools', TimtecUserSchoolViewSet)
 
 router.register(r'enroll', EnrollCourseAPIView)
 
