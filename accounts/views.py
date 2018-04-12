@@ -9,7 +9,7 @@ from django.db.models import Q
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
                                     TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer,
-                                    EducationDegreeSerializer, EducationLevelSerializer)
+                                    EducationDegreeSerializer, EducationLevelSerializer, SchoolSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -54,6 +54,10 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
                             headers=headers)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
