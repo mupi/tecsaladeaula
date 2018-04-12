@@ -171,33 +171,22 @@ wrapper-course-lesson
                                                 <th class="text-center">{% trans "Atualizar" %}</th>
                                                 <th class="text-center">{% trans "Remover" %}</th>
                                             </tr>
-                                            <tr class="ng-scope">
-                                                <td class="ng-binding">Augusto Laranja</td>
-                                                <td class="ng-binding">Privada</td>
-                                                <td class="ng-binding">Limeira</td>
-                                                <td class="ng-binding">SP</td>
-                                                <td class="ng-binding">Ensino Médio</td>
+                                            <tr class="ng-scope" ng-repeat="school_info in school_infos">
+                                                {% verbatim %}
+                                                <td class="ng-binding">{{school_info.school.name}}</td>
+                                                <td class="ng-binding">{{school_info.school.school_type}}</td>
+                                                <td class="ng-binding">{{school_info.school.city.name}}</td>  
+                                                <td class="ng-binding">{{school_info.school.city.uf}}</td>
+                                                <td class="ng-binding">
+                                                    <span ng-repeat="el in school_info.education_levels">{{el.name}}<br></span>
+                                                </td>
                                                 <td class="textcenter">
                                                     <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
                                                     <button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>
                                                 </td>
-
-                                            </tr>
-                                            <tr class="ng-scope">
-                                                <td class="ng-binding">Pequeno Urso</td>
-                                                <td class="ng-binding">Privada</td>
-                                                <td class="ng-binding">Limeira</td>
-                                                <td class="ng-binding">SP</td>
-                                                <td class="ng-binding">Educação Infantil</td>
-                                                <td class="textcenter">
-                                                    <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
-                                                </td>
-                                                <td class="textcenter">
-                                                    <button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>
-                                                </td>
-
+                                                {% endverbatim %}
                                             </tr>
                                         </tbody></table>
                                     </section>
@@ -259,12 +248,10 @@ wrapper-course-lesson
                                   </div>
                             </fieldset>
                         </div>
-
-
-                            <div class="submit text-center">
-                                <hr/>
-                                <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
-                            </div>
+                        <div class="submit text-center">
+                            <hr/>
+                            <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
+                        </div>
                     </div>
                 </form>
          </div>

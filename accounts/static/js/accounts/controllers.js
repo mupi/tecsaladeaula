@@ -33,6 +33,8 @@
                     $scope.occupations.selected = profile.occupations;
                     $scope.disciplines.selected = profile.disciplines;
                     $scope.education_degrees.selected = profile.education_degrees;
+
+                    $scope.school_infos = profile.schools;
                 });
 
                 $scope.filter_cities = function(){
