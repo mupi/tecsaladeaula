@@ -20,6 +20,7 @@ from rest_framework.response import Response
 from core.permissions import IsAdmin
 
 from .forms import SignupForm, ProfilePasswordForm
+from .permissions import IsProfessorOrReadOnly
 from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
 from .serializers import SchoolSerializer, TimtecUserSchoolSerializer
 import json
@@ -65,6 +66,7 @@ class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
 class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     queryset = TimtecUserSchool.objects.all()
     serializer_class = TimtecUserSchoolSerializer
+    permission_classes = (IsProfessorOrReadOnly, )
 
     def create(self, request, *args, **kwargs):
         data = request.DATA
@@ -80,6 +82,11 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
                             headers=headers)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        response = super(TimtecUserSchoolViewSet, self).destroy(request, pk)
+        School.objects.get(id = pk).delete()
+        return response
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
@@ -223,6 +230,7 @@ class SignupView(SignupView):
 class SchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     queryset = School.objects.all()
     serializer_class = SchoolSerializer
+    permission_classes = (IsProfessorOrReadOnly, )
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
