@@ -24,6 +24,12 @@
         }).factory('SchoolTypes', function($resource){
             return $resource('/api/schooltypes', {}, {
             });
+        }).factory('UserSchools', function($resource){
+            return $resource('/api/userschools', {}, {
+            });
+        }).factory('Schools', function($resource){
+            return $resource('/api/schools', {}, {
+            });
         }).factory('Profile', function($resource){
             return $resource('/api/profile', {}, {
             });

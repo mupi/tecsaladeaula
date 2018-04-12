@@ -4,8 +4,8 @@
     /* Controllers */
     var app = angular.module('accounts.controllers', []);
 
-    app.controller('ProfileCtrl', ['$scope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'Profile',
-            function ($scope, $location, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, Profile) {
+    app.controller('ProfileCtrl', ['$scope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'Schools', 'Profile',
+            function ($scope, $location, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, Schools, Profile) {
                 
                 $scope.occupations = {};
                 $scope.disciplines = {};
@@ -56,13 +56,18 @@
                     $scope.other_discipline = null;
                 }
 
+                $scope.remove_school = function(id){
+                    if(confirm("Está seguro de remover esta escola/instituição?")){
+                    }
+                }
+                
                 $scope.reload_schools = function(){
 
                 }
         }]);
 
-        app.controller('SchoolCtrl', ['$scope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'SchoolTypes',
-        function ($scope, $http, $location, $sce, $window, Cities, States, EducationLevels, SchoolTypes) {
+        app.controller('SchoolCtrl', ['$scope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'UserSchools', 'SchoolTypes',
+        function ($scope, $http, $location, $sce, $window, Cities, States, EducationLevels, UserSchools, SchoolTypes) {
             
             $scope.has_errors = false;
             $scope.form = {};
@@ -105,32 +110,25 @@
                     return;
                 }
 
-                var parameter = JSON.stringify(
-                {  
-                    "school": {   
-                        name:           $scope.form.name,
-                        school_type:    $scope.form.school_type,
-                        city:           $scope.form.city
-                    },
-                    "education_levels": education_levels
-                });
+                var school_profile = new UserSchools();
+                school_profile.school = {};
+                school_profile.school.name = $scope.form.name;
+                school_profile.school.school_type = $scope.form.school_type;
+                school_profile.school.city = $scope.form.city;
+                school_profile.education_levels = education_levels;
 
-                $http({
-                    method  : 'POST',
-                    url     : '/api/schools',
-                    data    : parameter,
-                    headers : { 'Content-Type': 'application/json'
-                    }
-                })
-                .success(function(data, status, headers, config) {
+
+                school_profile.$save()
+                .then(function(res) {
                     $scope.form.name = "";
                     $scope.has_errors = false;
                     $scope.education_levels.selected = [];
                     $("#add-school-modal").modal('toggle');
-                    $("#btn-add-school-table").prop('disabled', false);
                   })
-                .error(function(data, status, headers, config){
+                .catch(function(req){
                     $scope.has_errors = true;
+                })
+                .finally(function(){
                     $("#btn-add-school-table").prop('disabled', false);
                 });
                 
