@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
-from accounts.views import (ProfileEditView, ProfileView, TimtecUserSchoolViewSet, UserSearchView,
+from accounts.views import (ProfileEditView, ProfileEmailPasswordEditView, ProfileView, TimtecUserSchoolViewSet, UserSearchView,
                             TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView, SchoolViewSet,
                             AcceptTermsView, SignupView, list_states_view, list_cities_view,
                             get_timtec_profile, list_occupations_view, list_educationdegrees_view,
@@ -65,7 +65,7 @@ router.register(r'course_stats', CourseStatsByLessonViewSet)
 router.register(r'course_classes', ClassViewSet)
 router.register(r'flatpage', FlatpageViewSet)
 router.register(r'userschools', TimtecUserSchoolViewSet)
-router.register(r'schools', SchoolViewSet)
+router.register(r'schools', TimtecUserSchoolViewSet)
 
 router.register(r'enroll', EnrollCourseAPIView)
 
@@ -136,6 +136,7 @@ urlpatterns = patterns(
     url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='timtec_logout'),
 
     url(r'^profile/edit/?$', ProfileEditView.as_view(), name="profile_edit"),
+    url(r'^profile/edit/account?$', ProfileEmailPasswordEditView.as_view(), name="profile_edit_account"),
     url(r'^profile/(?P<username>[\w.+-]+)?/?$', ProfileView.as_view(), name="profile"),
 
     # The django-allauth

@@ -16,16 +16,18 @@ wrapper-course-lesson
 <div id="profile" class="container" ng-app="accounts">
     <div class="col-xs-12">
         <ul class="nav nav-tabs">
-             <li class="active">
+             <li {% if not account_pane %}class="active" {% endif %}>
                 <a href="#profile-tab" data-toggle="tab">{% trans "Profile Settings" %}</a>
              </li>
-             <li><a href="#account-tab" data-toggle="tab">{% trans "Account Settings" %}</a></li>
+             <li {% if account_pane %}class="active" {% endif %}>
+                <a href="#account-tab" data-toggle="tab">{% trans "Account Settings" %}</a>
+            </li>
          </ul>
     </div>
 
     <!--Panel 1: Configuração do Profile -->
     <div class="tab-content" ng-controller="ProfileCtrl">
-         <div class="tab-pane fade in active" id="profile-tab">
+         <div class="tab-pane fade in {% if not account_pane %}active{% endif %}" id="profile-tab">
                 <form class="form-horizontal" method="post" action="/profile/edit" enctype="multipart/form-data">{% csrf_token %}
                     <div class="row">
                         <div class="col-sm-12 col-xs-12">
@@ -257,8 +259,8 @@ wrapper-course-lesson
          </div>
 
          <!--Panel 2: Configuração da Conta -->
-         <div class="tab-pane fade in" id="account-tab">
-             <form class="form-horizontal" method="post" enctype="multipart/form-data">{% csrf_token %}
+         <div class="tab-pane fade in {% if account_pane %}active{% endif %}" id="account-tab">
+             <form class="form-horizontal" method="post" action="/profile/edit/account">{% csrf_token %}
                     <div class="row">
                         <div class="col-md-offset-2 col-sm-8 col-xs-12">
                             <fieldset>
@@ -270,7 +272,7 @@ wrapper-course-lesson
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Main E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Main E-mail" %}' value="{{form.email.value}}">
+                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Main E-mail" %}' value="{{form_email_password.email.value}}">
                                         {% for error in errors %}<small>{{error}}</small>{% endfor %}
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -280,11 +282,11 @@ wrapper-course-lesson
                                 </div>
                                 {% endwith %}
 
-                                {% with errors=form.email.errors %}
+                                {% with errors=form.business_email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Additional E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{form.email.value}}">
+                                        <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{form_email_password.business_email.value}}">
                                         {% for error in errors %}<small>{{error}}</small>{% endfor %}
                                     </div>
 

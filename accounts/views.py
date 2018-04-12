@@ -19,7 +19,7 @@ from rest_framework.response import Response
 
 from core.permissions import IsAdmin
 
-from .forms import SignupForm
+from .forms import SignupForm, ProfilePasswordForm
 from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
 from .serializers import SchoolSerializer, TimtecUserSchoolSerializer
 import json
@@ -35,6 +35,32 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        data = {'email' : self.request.user.email, 'business_email': self.request.user.business_email}
+        form  = ProfilePasswordForm(initial=data)
+        context['form_email_password'] = form
+        return context
+
+class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    form_class = ProfilePasswordForm
+    template_name = 'profile-edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEmailPasswordEditView, self).get_context_data(**kwargs)
+        data = {'email' : self.request.user.email, 'business_email': self.request.user.business_email}
+        form  = ProfilePasswordForm(initial=data)
+        context['form_email_password'] = form
+        context['account_pane'] = True
+        return context
 
 class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     queryset = TimtecUserSchool.objects.all()
@@ -54,10 +80,6 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
                             headers=headers)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class SchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
-    queryset = School.objects.all()
-    serializer_class = SchoolSerializer
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
@@ -197,6 +219,10 @@ class SignupView(SignupView):
     template_name = 'account/signup.html'
     form_class = SignupForm
     view_name = 'signup_view'
+
+class SchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
