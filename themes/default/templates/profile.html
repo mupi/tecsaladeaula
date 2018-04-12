@@ -1,13 +1,21 @@
-{% extends 'base.html' %}
-{% load i18n %}
+{% extends "base.html" %}
+{% load compressed %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block wrapper_classes %}
 wrapper-course-lesson
 {% endblock %}
 
+{% block js %}
+    {{ block.super }}
+    {% compressed_js 'accounts' %}
+{% endblock %}
+
 {% block content %}
-<div id="profile" class="container">
+
+<!-- Profile 2018 -->
+<div id="profile" class="container" ng-app="accounts"  ng-controller="ProfileCtrl">
     <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <div class="thumbnail">
@@ -19,24 +27,33 @@ wrapper-course-lesson
         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
             <fieldset>
                 <div class="page-header-double textleft top">
-                    <h3 class="top"><i class="fa fa-angle-double-right"></i> {{profile_user.first_name}} {{profile_user.last_name}}</h3>
+                    <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Basic Information" %}</h3>
                 </div>
+
 
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <strong>{% trans "Full name" %}</strong>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                        <p>{{profile_user.first_name}} {{profile_user.last_name}}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" >
                         <strong>{% trans "Occupation" %}</strong>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                        <p>{{profile_user.occupation}}</p>
-                    </div>
-                </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+                        <p class="occupations-not-edit">
+                          <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                              <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                              <ui-select-choices repeat="occupation in avaiable_occupations">
+                                      {% verbatim %}{{occupation.name}}{% endverbatim %}
+                              </ui-select-choices>
+                          </ui-select>
 
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <strong>{% trans "City" %}</strong>
-                    </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                        <p>{{profile_user.city}}</p>
+                        </p>
                     </div>
                 </div>
 
@@ -59,6 +76,7 @@ wrapper-course-lesson
                 </div>
             </fieldset>
         </div>
+
     </div>
 </div>
 {% endblock %}
