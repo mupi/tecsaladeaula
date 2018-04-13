@@ -183,10 +183,12 @@ wrapper-course-lesson
                         <div class="row">
                           {% verbatim %}
                             <div class="col-sm-6">
-                              <div class="col-sm-2">Neymar Junior</div>
+                              <div class="col-sm-2">{{user.first_name}} {{user.last_name}}</div>
                               <div class="col-sm-3 email">{{ user.email }}</div>
-                              <div class="col-sm-3 email">{{ user.email }}</div>
-                              <div class="col-sm-2">Professor(a)</div>
+                              <div class="col-sm-3 email">{{ user.business_email }}</div>
+                              <div class="col-sm-2">
+                                  {{ user.occupations }}
+                              </div>
                               <div class="col-sm-2">1º ano EF, 2º ano EF</div>
                             </div>
                             <div class="col-sm-6">
@@ -220,14 +222,14 @@ wrapper-course-lesson
                                     <div class="col-sm-12 col-xs-12">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Bio" %}</label>
                                       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                          <textarea name="biography" class="form-control margin-b10" rows="7">{{user.biography.value}}</textarea>
+                                          <textarea name="biography" class="form-control margin-b10" rows="7">{{user.biography}}</textarea>
                                       </div>
                                     </div>
 
                                     <div class="col-sm-12 col-xs-12">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Site" %}</label>
                                       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                          <input name="site" type="text" class="form-control margin-b10" value="{{user.site.value}}">
+                                          <input name="site" type="text" class="form-control margin-b10" value="{{user.site}}">
                                       </div>
                                     </div>
                                     <div class="col-sm-12 col-xs-12">
@@ -241,7 +243,7 @@ wrapper-course-lesson
                                                  <th class="">{% trans "City" %}</th>
                                                  <th class="">{% trans "Teaching Level" %}</th>
                                              </tr>
-                                             <tr class="ng-scope" ng-repeat="school in schools-user">
+                                             <tr class="ng-scope" ng-repeat="school in user.schools">
                                                  {% verbatim %}
                                                  <td class="ng-binding">{{school.name}}</td>
                                                  <td class="ng-binding">{{school.type}}</td>
@@ -268,7 +270,7 @@ wrapper-course-lesson
                                                     <th class="">{% trans "Course name" %}</th>
                                                     <th class="">{% trans "Student Progress" %}</th>
                                                 </tr>
-                                                <tr class="ng-scope" ng-repeat="course in courses-user-enrolled">
+                                                <tr class="ng-scope" ng-repeat="course in user.courses">
                                                     {% verbatim %}
                                                     <td class="ng-binding">{{course.name}}</td>
                                                     <td class="ng-binding">

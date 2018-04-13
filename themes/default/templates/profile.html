@@ -47,7 +47,7 @@ wrapper-course-lesson
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
                         <p class="occupations-not-edit">
                           <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                              <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                              <ui-select-match>{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                               <ui-select-choices repeat="occupation in avaiable_occupations">
                                       {% verbatim %}{{occupation.name}}{% endverbatim %}
                               </ui-select-choices>
