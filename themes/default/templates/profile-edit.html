@@ -159,7 +159,7 @@ wrapper-course-lesson
                                   <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "School(s)/Institution(s) where you work" %}</h3>
                                 </div>
                                 <div class="submit textright">
-                                    <button type="button" class="btn btn-info add-school">{% trans "Add school/institution" %}</button>
+                                    <button type="button" ng-click="school_form_modal(-1)" class="btn btn-info add-school">{% trans "Add school/institution" %}</button>
                                 </div>
                                 <br>
                                    <section id="all-schools" class="user-list">
@@ -176,14 +176,14 @@ wrapper-course-lesson
                                             <tr class="ng-scope" ng-repeat="school_info in school_infos">
                                                 {% verbatim %}
                                                 <td class="ng-binding">{{school_info.school.name}}</td>
-                                                <td class="ng-binding">{{school_info.school.school_type}}</td>
+                                                <td class="ng-binding">{{school_info.school.school_type_complete}}</td>
                                                 <td class="ng-binding">{{school_info.school.city.name}}</td>  
                                                 <td class="ng-binding">{{school_info.school.city.uf}}</td>
                                                 <td class="ng-binding">
                                                     <span ng-repeat="el in school_info.education_levels">{{el.name}}<br></span>
                                                 </td>
                                                 <td class="textcenter">
-                                                    <button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>
+                                                    <button type="button" class="btn btn-warning" ng-click="school_form_modal(school_info.id)"><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
                                                     <button type="button" class="btn btn-warning" ng-click="remove_school(school_info.school.id)"><i class="fa fa-trash-o"></i></button>
@@ -334,8 +334,11 @@ wrapper-course-lesson
       <div class="modal-content" ng-controller="SchoolCtrl">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h3 id="loginModalLabel" class="textcenter">
+          <h3 id="loginModalLabel" class="textcenter" ng-show="(form.id < 0)">
             {% trans "Add school/institution" %}
+          </h3>
+          <h3 id="loginModalLabel" class="textcenter" ng-show="form.id > 0">
+            {% trans "Edit school/institution" %}
           </h3>
         </div>
         <div class="modal-body">
@@ -405,7 +408,7 @@ wrapper-course-lesson
                     <div class="submit">
                       <div class="row">
                         <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
-                          <button type="submit" id="btn-add-school-table" class="btn btn-success col-xs-12">{% trans "Add" %}</button>
+                          <button type="submit" id="btn-add-school-table" class="btn btn-success col-xs-12">{% trans "Save" %}</button>
                         </div>
                       </div>
                     </div>
