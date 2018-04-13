@@ -155,17 +155,6 @@
             }
 
             var school_form_modal = function(event, id){
-                $scope.form.name = "";
-                $scope.has_errors = false;
-                $scope.education_levels.selected = [];
-                $scope.filters_selected_uf = $scope.list_states[0];
-                $scope.filter_cities = function(){
-                    Cities.query({uf : $scope.filters_selected_uf}, function(cities){
-                        $scope.list_cities = cities;
-                        $scope.form.city = cities[0].id;
-                    });
-                }
-
                 $("#add-school-modal").modal();
                 $scope.form.id = id;
                 if (id > 0){
@@ -181,6 +170,18 @@
                         $scope.education_levels.selected = user_school.education_levels;
                         console.log(user_school);
                     });
+                } else {
+                    $scope.form.name = "";
+                    $scope.has_errors = false;
+                    $scope.form.school_type = $scope.schooltypes[0].value;
+                    $scope.education_levels.selected = [];
+                    $scope.filters_selected_uf = $scope.list_states[0];
+                    $scope.filter_cities = function(){
+                        Cities.query({uf : $scope.filters_selected_uf}, function(cities){
+                            $scope.list_cities = cities;
+                            $scope.form.city = cities[0].id;
+                        });
+                    }
                 }
             }
 
