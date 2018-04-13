@@ -189,12 +189,12 @@ wrapper-course-lesson
                               <div class="col-sm-2">
                                   {{ user.occupations }}
                               </div>
-                              <div class="col-sm-2">1º ano EF, 2º ano EF</div>
+                              <div class="col-sm-2">{{ user.grades }}</div>
                             </div>
                             <div class="col-sm-6">
-                              <div class="col-sm-2">Matemática, Português</div>
-                              <div class="col-sm-2">SP</div>
-                              <div class="col-sm-2">Campinas</div>
+                              <div class="col-sm-2">{{ user.disciplines }}</div>
+                              <div class="col-sm-2">{{ user.state }}</div>
+                              <div class="col-sm-2">{{ user.city }}</div>
                         {% endverbatim %}
                               <div class="col-sm-2 text-center">
                                   <input type="checkbox" ng-model="user.is_superuser" ng-change="update_user(user)">
