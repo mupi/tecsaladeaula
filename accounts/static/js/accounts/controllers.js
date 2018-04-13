@@ -122,7 +122,8 @@
                 var user_school = new UserSchools();
 
                 user_school.school = {};
-                user_school.id = $scope.form.id;
+                if ($scope.form.id > 0)
+                    user_school.id = $scope.form.id;
                 user_school.school.name = $scope.form.name;
                 user_school.school.school_type = $scope.form.school_type;
                 user_school.school.city = $scope.form.city;
@@ -157,6 +158,13 @@
                 $scope.form.name = "";
                 $scope.has_errors = false;
                 $scope.education_levels.selected = [];
+                $scope.filters_selected_uf = $scope.list_states[0];
+                $scope.filter_cities = function(){
+                    Cities.query({uf : $scope.filters_selected_uf}, function(cities){
+                        $scope.list_cities = cities;
+                        $scope.form.city = cities[0].id;
+                    });
+                }
 
                 $("#add-school-modal").modal();
                 $scope.form.id = id;
