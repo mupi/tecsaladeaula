@@ -13,7 +13,7 @@ from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerial
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
-from rest_framework import viewsets, filters, generics, permissions, mixins, status
+from rest_framework import viewsets, filters, generics, permissions, mixins, status, serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
@@ -22,7 +22,7 @@ from core.permissions import IsAdmin
 from .forms import SignupForm, ProfilePasswordForm
 from .permissions import IsProfessorOrReadOnly
 from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
-from .serializers import SchoolSerializer, TimtecUserSchoolSerializer
+from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecUserSchoolCompleteSerializer
 import json
 
 
@@ -83,9 +83,16 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action == 'retrieve':
+            return TimtecUserSchoolCompleteSerializer
+        return TimtecUserSchoolSerializer
+
     def destroy(self, request, pk=None):
+        school = TimtecUserSchool.objects.get(id = pk).school
         response = super(TimtecUserSchoolViewSet, self).destroy(request, pk)
-        School.objects.get(id = pk).delete()
+        school.delete()
         return response
 
 class ProfileView(LoginRequiredMixin, DetailView):
