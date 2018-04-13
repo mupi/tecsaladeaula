@@ -8,6 +8,8 @@
         'django',
         //'timtec-models',
         'directive.fixedBar',
-        'directive.alertPopup'
+        'directive.alertPopup',
+        'ui.select',
+        'ngSanitize'
     ]);
 })(angular);
