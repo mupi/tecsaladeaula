@@ -15,6 +15,7 @@
             var error_delete_user_msg = 'Erro ao apagar usuário.';
 
             /*ini 1*/
+            $scope.filters = {};
             $scope.occupations = [];
             $scope.disciplines = [];
             $scope.education_degrees = [];
@@ -24,35 +25,39 @@
             $scope.avaiable_education_degrees = EducationDegrees.query();
 
             States.query(function(states){
-                $scope.list_states = states;
-                $scope.filters_selected_uf = states[0];
+                $scope.list_states = [" "];
+                $scope.list_states.push.apply($scope.list_states, states);
+                $scope.filters.selected_uf = " ";
             });
 
 
             $scope.filter_cities = function(){
-                Cities.query({uf : $scope.filters_selected_uf}, function(cities){
-                    $scope.list_cities = cities;
-                    $scope.selected_city_id = null;
+                Cities.query({uf : $scope.filters.selected_uf}, function(cities){
+                    $scope.list_cities = [{name: " ", value: " "}];
+                    $scope.list_cities.push.apply($scope.list_cities, cities);
+                    $scope.selected_city_id = " ";
                 });
             }
 
             /*fin 1*/
 
-            $scope.total_users_found = parseInt($window.total_users_found, 10);
-
-            $scope.users_page = UserAdmin.query({page: 1});
-
-            $scope.filters = {};
+            UserAdmin.get({page: 1}, function(users_page){
+                $scope.total_users_found = users_page.count;
+                $scope.users_page = users_page;
+            });
 
             $scope.filter_users = function() {
-                $scope.users_page = UserAdmin.query($scope.filters, function(users_page) {
+                UserAdmin.get($scope.filters, function(users_page) {
                     $scope.filtered = true;
-                    $scope.total_users_found = users_page.length;
+                    $scope.total_users_found = users_page.count;
+                    $scope.users_page = users_page;
                 });
             };
 
             $scope.page_changed = function() {
-                $scope.users_page = UserAdmin.query({page: $scope.current_page});
+                UserAdmin.get({page: $scope.current_page}, function(users_page){
+                    $scope.users_page = users_page;
+                });
             };
 
             $scope.update_user = function(user) {

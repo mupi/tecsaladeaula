@@ -121,12 +121,10 @@ class TimtecUserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TimtecUserAdminViewSet(viewsets.ModelViewSet):
     model = get_user_model()
-    # lookup_field = 'id'
-    # filter_backends = (filters.OrderingFilter,)
     permission_classes = (IsAdmin, )
     serializer_class = TimtecUserAdminSerializer
-    ordering = ('first_name', 'username',)
-    # search_fields = ('first_name', 'last_name', 'username', 'email')
+    paginate_by_param = 'page_size'
+    paginate_by = 50
 
     def get_queryset(self):
         page = self.request.QUERY_PARAMS.get('page')
@@ -135,29 +133,17 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
         blocked = self.request.QUERY_PARAMS.get('blocked')
         queryset = super(TimtecUserAdminViewSet, self).get_queryset().order_by('username')
 
-        if keyword:
-            queryset = queryset.filter(Q(first_name__icontains=keyword) |
-                                       Q(last_name__icontains=keyword) |
-                                       Q(username__icontains=keyword) |
-                                       Q(email__icontains=keyword))
-
         if admin == 'true':
             queryset = queryset.filter(is_superuser=True)
 
         if blocked == 'true':
             queryset = queryset.filter(is_active=False)
 
-        if page:
-            paginator = Paginator(queryset, 50)
-            try:
-                queryset = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                queryset = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999),
-                # deliver last page of results.
-                queryset = paginator.page(paginator.num_pages)
+        if keyword:
+            queryset = queryset.filter(Q(first_name__icontains=keyword) |
+                                       Q(last_name__icontains=keyword) |
+                                       Q(username__icontains=keyword) |
+                                       Q(email__icontains=keyword))
 
         return queryset
 
