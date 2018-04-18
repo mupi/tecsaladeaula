@@ -93,15 +93,15 @@ wrapper-course-lesson
 
                                 <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
-                                        <div class="col-sm-9 text-left">
-                                            <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                    <div class="col-sm-9 text-left">
+                                            <ui-select multiple ng-model="form.occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                 <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                 <ui-select-choices repeat="occupation in avaiable_occupations">
                                                         {% verbatim %}{{occupation.name}}{% endverbatim %}
                                                 </ui-select-choices>
                                             </ui-select>
                                             {% verbatim %}
-                                            <input type="hidden" name="occupations" ng-repeat="occupation in occupations.selected" value="{{occupation.id}}"/>
+                                            <input type="hidden" name="occupations" ng-repeat="occupation in form.occupations.selected" value="{{occupation.id}}"/>
                                             {% endverbatim %}
                                         </div>
                                 </div>
@@ -109,19 +109,19 @@ wrapper-course-lesson
                                 <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <select class="form-control" name="uf" id="uf_state" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                                        <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
                                             <option value=" "></option>
                                             {% verbatim %}
-                                            <option ng-repeat="state in list_states" ng-selected="{{ selected_uf == state }}" value="{{state}}">{{ state }}</option>
+                                            <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
                                             {% endverbatim %}
                                         </select>
                                     </div>
 
                                     <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <select class="form-control" name="city" id="city">
+                                            <select class="form-control" name="city" id="city" ng-model="form.city_id">
                                                 {% verbatim %}
-                                                <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                                                <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
                                                 {% endverbatim %}
                                             </select>
                                     </div>
@@ -203,14 +203,14 @@ wrapper-course-lesson
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Grade" %}</label>
                                       <div class="form-group  custom-inputs-gray">
                                           <div class="col-sm-6 text-left">
-                                                <ui-select multiple ng-model="education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select multiple ng-model="form.education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                     <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                     <ui-select-choices repeat="ed in avaiable_education_degrees">
                                                         {% verbatim %}{{ed.name}}{% endverbatim %}
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 {% verbatim %}
-                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in education_degrees.selected" value="{{ed.id}}"/>
+                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in form.education_degrees.selected" value="{{ed.id}}"/>
                                                 {% endverbatim %}
                                           </div>
                                       </div>
@@ -219,14 +219,14 @@ wrapper-course-lesson
                                         <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
                                         <div class="form-group  custom-inputs-gray">
                                             <div class="col-sm-6 text-left">
-                                                <ui-select multiple ng-model="disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                     <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                     <ui-select-choices repeat="discipline in avaiable_disciplines">
                                                         {% verbatim %}{{discipline.name}}{% endverbatim %}
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 {% verbatim %}
-                                                    <input type="hidden" name="disciplines" ng-repeat="discipline in disciplines.selected" value="{{discipline.name}}"/>
+                                                    <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
                                                 {% endverbatim %}
                                             </div>
                                         </div>
@@ -235,7 +235,7 @@ wrapper-course-lesson
                                           <div class="form-group  custom-inputs-gray">
                                               <div class="col-sm-6 text-left">
                                                 <!-- Other Subject Selected-->
-                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="other_discipline">
+                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
                                                 <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
                                               </div>
                                           </div>
@@ -358,7 +358,7 @@ wrapper-course-lesson
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" ng-model="form.school_type" name="school_types">
                             {% verbatim %}
-                            <option ng-repeat="st in schooltypes" value="{{st.value}}">{{ st.name }}</option>
+                            <option ng-repeat="st in list_schooltypes" value="{{st.value}}">{{ st.name }}</option>
                             {% endverbatim %}
                         </select>
                       </div>
@@ -367,18 +367,18 @@ wrapper-course-lesson
                     <div class="form-group">
                         <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                          <select class="form-control" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                          <select class="form-control" ng-model="form.uf" ng-change="filter_cities()">
                               {% verbatim %}
-                              <option ng-repeat="state in list_states" value="{{state}}">{{ state }}</option>
+                              <option ng-repeat="uf in list_ufs" value="{{ uf }}">{{ uf }}</option>
                               {% endverbatim %}
                           </select>
                         </div>
 
                         <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control" ng-model="form.city">
+                          <select class="form-control" ng-model="form.city_id">
                               {% verbatim %}
-                              <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                              <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
                               {% endverbatim %}
                           </select>
                         </div>
@@ -388,7 +388,7 @@ wrapper-course-lesson
                         <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <!-- Teaching Levels-->
-                            <ui-select multiple ng-model="education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                            <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                 <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                 <ui-select-choices repeat="el in avaiable_education_levels">
                                     {% verbatim %}{{el.name}}{% endverbatim %}
@@ -397,7 +397,7 @@ wrapper-course-lesson
                         </div>
                     </div>
 
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="has_errors">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="form.has_errors">
                         <small>Por favor, preencha todos os campos</small>
                     </div>
 
