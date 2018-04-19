@@ -179,14 +179,24 @@ wrapper-course-lesson
                               <div class="col-sm-3 email">{{ user.email }}</div>
                               <div class="col-sm-3 email">{{ user.business_email }}</div>
                               <div class="col-sm-2">
-                                  {{ user.occupations }}
+                                <p>
+                                    <span ng-repeat="occupation in user.occupations">{{occupation.name}}<br></span>
+                                </p>
                               </div>
-                              <div class="col-sm-2">{{ user.grades }}</div>
+                              <div class="col-sm-2">
+                                <p>
+                                    <span ng-repeat="ed in user.education_degrees">{{ed.name}}<br></span>
+                                </p>
+                              </div>
                             </div>
                             <div class="col-sm-6">
-                              <div class="col-sm-2">{{ user.disciplines }}</div>
-                              <div class="col-sm-2">{{ user.state }}</div>
-                              <div class="col-sm-2">{{ user.city }}</div>
+                              <div class="col-sm-2">
+                                <p>
+                                    <span ng-repeat="discipline in user.disciplines">{{discipline.name}}<br></span>
+                                </p>
+                              </div>
+                              <div class="col-sm-2">{{ user.city.uf }}</div>
+                              <div class="col-sm-2">{{ user.city.name }}</div>
                         {% endverbatim %}
                               <div class="col-sm-2 text-center">
                                   <input type="checkbox" ng-model="user.is_superuser" ng-change="update_user(user)">
@@ -235,21 +245,18 @@ wrapper-course-lesson
                                                  <th class="">{% trans "City" %}</th>
                                                  <th class="">{% trans "Teaching Level" %}</th>
                                              </tr>
-                                             <tr class="ng-scope" ng-repeat="school in user.schools">
+                                             <tr class="ng-scope" ng-repeat="school_data in user.schools">
                                                  {% verbatim %}
-                                                 <td class="ng-binding">{{school.name}}</td>
-                                                 <td class="ng-binding">{{school.type}}</td>
-                                                 <td class="ng-binding">{{school.state}}</td>
-                                                 <td class="ng-binding">{{school.city}}</td>
-                                                 <td class="ng-binding">{{school.level}}</td>
+                                                 <td class="ng-binding">{{ school_data.school.name}}</td>
+                                                 <td class="ng-binding">{{ school_data.school.school_type_complete}}</td>
+                                                 <td class="ng-binding">{{ school_data.school.city.uf}}</td>
+                                                 <td class="ng-binding">{{ school_data.school.city.name}}</td>
+                                                 <td class="ng-binding">
+                                                    <p>
+                                                        <span ng-repeat="el in school_data.education_levels">{{el.name}}<br></span>
+                                                    </p>
+                                                 </td>
                                                 {% endverbatim %}
-                                             </tr>
-                                             <tr class="ng-scope">
-                                                 <td class="ng-binding">Augusto Laranja</td>
-                                                 <td class="ng-binding">Privada</td>
-                                                 <td class="ng-binding">Limeira</td>
-                                                 <td class="ng-binding">SP</td>
-                                                 <td class="ng-binding">Ensino Médio</td>
                                              </tr>
                                          </tbody></table>
                                      </section>
@@ -262,36 +269,20 @@ wrapper-course-lesson
                                                     <th class="">{% trans "Course name" %}</th>
                                                     <th class="">{% trans "Student Progress" %}</th>
                                                 </tr>
+                                                {% verbatim %}
                                                 <tr class="ng-scope" ng-repeat="course in user.courses">
-                                                    {% verbatim %}
-                                                    <td class="ng-binding">{{course.name}}</td>
-                                                    <td class="ng-binding">
-                                                      <div class="progress"  style="width:{{ course.course_progress }}%;">
-                                                        {{ course.course_progress }}% <div class="progress-bar" style="width:0%;"></div>
-                                                      </div>
-                                                    </td>
-                                                    {% endverbatim %}
-                                                </tr>
-                                                <tr class="ng-scope">
-                                                    <td class="ng-binding">COMO FORMAR O CIDADÃO CRÍTICO E ATIVO DO SÉCULO 21</td>
+                                                    <td class="ng-binding">{{course.name }}</td>
                                                     <td class="ng-binding">
                                                       <div class="progress">
-                                                          50%<div class="progress-bar" style="width:50%;"></div>
+                                                        {{ course.course_progress }}% <div class="progress-bar" style="width:{{ course.course_progress }}%;"></div>
                                                       </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="ng-scope">
-                                                    <td class="ng-binding">COMO UTILIZAR O TWITTER EM SALA DE AULA</td>
-                                                    <td class="ng-binding">
-                                                      <div class="progress">
-                                                          20%<div class="progress-bar" style="width:20%;"></div>
-                                                      </div>
-                                                    </td>
-                                                </tr>
+                                                {% endverbatim %}
                                             </tbody>
                                           </table>
                                         </section>
-                                          </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
