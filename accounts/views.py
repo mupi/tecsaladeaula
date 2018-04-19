@@ -22,7 +22,7 @@ from core.permissions import IsAdmin
 from .forms import SignupForm, ProfilePasswordForm
 from .permissions import IsProfessorOrReadOnly
 from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
-from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecUserSchoolCompleteSerializer
+from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecProfileSchoolSerializer
 import json
 
 
@@ -86,7 +86,7 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     def get_serializer_class(self):
         print(self.action)
         if self.action == 'retrieve':
-            return TimtecUserSchoolCompleteSerializer
+            return TimtecProfileSchoolSerializer
         return TimtecUserSchoolSerializer
 
     def destroy(self, request, pk=None):
