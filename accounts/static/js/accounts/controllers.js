@@ -42,7 +42,7 @@
                 load_profile();
 
                 $scope.filter_cities = function(){
-                    Cities.query({uf : $scope.form.id}, function(cities){
+                    Cities.query({uf : $scope.form.uf}, function(cities){
                         $scope.list_cities = cities;
                         $scope.form.city_id = cities[0].id;
                     });
@@ -116,7 +116,7 @@
                 });
 
                 if (education_levels.length == 0){
-                    $scope.has_errors = true;
+                    $scope.form.has_errors = true;
                     $("#btn-add-school-table").prop('disabled', false);
                     return;
                 }
