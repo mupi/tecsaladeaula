@@ -103,7 +103,7 @@ class TimtecUserAdminSerializer(TimtecUserSerializer):
     class Meta:
         model = get_user_model()
         fields =    ('id', 'username', 'name', 'email', 'business_email', 'is_active', 'is_superuser', 'first_name', 'city',
-                    'occupations', 'disciplines', 'education_degrees', 'schools', 'courses')
+                    'occupations', 'disciplines', 'education_degrees', 'schools', 'courses', 'site', 'biography')
 
     def get_courses(self, obj):
         course_students = CourseStudent.objects.filter(user=obj.id)

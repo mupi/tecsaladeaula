@@ -222,16 +222,20 @@ wrapper-course-lesson
                             <div class="row-more-info-user">
                                 <div class="row">
                                     <div class="col-sm-12 col-xs-12">
-                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Bio" %}</label>
+                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Bio" %}</label>
                                       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                          <p name="biography" class="margin-b10" rows="7">{{user.biography}}</p>
+                                        {% verbatim %}
+                                        <p name="biography" class="margin-b10" rows="7">{{user.biography}}</p>
+                                        {% endverbatim %}
                                       </div>
                                     </div>
 
                                     <div class="col-sm-12 col-xs-12">
-                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-margins">{% trans "Site" %}</label>
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label withou without-margins">{% trans "Site" %}</label>
                                       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                          <p name="site" type="text" class="margin-b10" value="{{user.site}}"></p>
+                                          {% verbatim %}
+                                          <p name="site" type="text" class="margin-b10">{{user.site}}</p>
+                                          {% endverbatim %}
                                       </div>
                                     </div>
                                     <div class="col-sm-12 col-xs-12">
