@@ -42,19 +42,15 @@ wrapper-course-lesson
                     <div class="col-sm-6 col-xs-12 without-paddings">
                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label without-paddings">{% trans "State" %}</label>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 without-paddings-mobile">
-                            <select class="form-control" name="uf" id="uf_state" ng-model="filters.selected_uf" ng-change="filter_cities()">
-                                {% verbatim %}
-                                <option ng-repeat="state in list_states" value="{{state}}">{{ state }}</option>
-                                {% endverbatim %}
+                            <select class="form-control" name="uf" id="uf_state" ng-model="filters.uf" ng-options="uf for uf in list_ufs" ng-change="filter_cities()">
+                                <option value=""></option>
                             </select>
                         </div>
 
                         <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label without-paddings">{% trans "City" %}</label>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 without-paddings-mobile">
-                          <select class="form-control" name="filters.city" id="city">
-                                {% verbatim %}
-                                <option ng-repeat="city in list_cities" value="{{ city.id }}">{{ city.name }}</option>
-                                {% endverbatim %}
+                          <select class="form-control" ng-model="filters.city" id="city" ng-options="city.id as city.name for city in list_cities">
+                                <option value=""></option>
                           </select>
                         </div>
                     </div>
@@ -134,7 +130,7 @@ wrapper-course-lesson
                                ng-model="filters.keyword">
                     </div>
                     <div class="col-sm-2 col-sx-12 without-paddings-mobile">
-                        <button class="btn btn-info" ng-click="filter_users()">{% trans 'Search' %}</button>
+                        <button class="btn btn-info" ng-click="reset_filter()">{% trans 'Search' %}</button>
                     </div>
                     <div class="col-sm-2 col-sx-12 without-paddings-mobile">
                         <button class="btn btn-info" ng-click=""><i class="fa fa-download"></i> Exportar</button>
@@ -310,8 +306,8 @@ wrapper-course-lesson
         </section>
         <pagination total-items="total_users_found"
                     items-per-page="50"
-                    ng-model="current_page"
-                    ng-change="page_changed()"
+                    ng-model="filters.page"
+                    ng-change="filter_users()"
                     max-size="5"
                     boundary-links="true"
                     previous-text="{% trans 'Previous' %}"
