@@ -24,7 +24,11 @@
             $scope.education_degrees.selected = [];
 
             $scope.avaiable_occupations = Occupations.query();
-            $scope.avaiable_disciplines = Disciplines.query();
+            Disciplines.query(function(disciplines){
+                $scope.avaiable_disciplines = disciplines;
+                $scope.avaiable_disciplines.push({'name': 'Outras', 'id': -1});
+            });
+            
             $scope.avaiable_education_degrees = EducationDegrees.query();
 
             States.query(function(ufs){
