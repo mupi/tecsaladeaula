@@ -93,41 +93,37 @@ wrapper-course-lesson
 
                                 <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
-                                    <div class="form-group  custom-inputs-gray">
-                                        <div class="col-sm-8 text-left">
-                                            <ui-select multiple ng-model="occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                    <div class="col-sm-9 text-left">
+                                            <ui-select multiple ng-model="form.occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                 <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                 <ui-select-choices repeat="occupation in avaiable_occupations">
                                                         {% verbatim %}{{occupation.name}}{% endverbatim %}
                                                 </ui-select-choices>
                                             </ui-select>
                                             {% verbatim %}
-                                            <input type="hidden" name="occupations" ng-repeat="occupation in occupations.selected" value="{{occupation.id}}"/>
+                                            <input type="hidden" name="occupations" ng-repeat="occupation in form.occupations.selected" value="{{occupation.id}}"/>
                                             {% endverbatim %}
                                         </div>
-                                    </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <select class="form-control" name="uf" id="uf_state" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                                        <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
                                             <option value=" "></option>
                                             {% verbatim %}
-                                            <option ng-repeat="state in list_states" ng-selected="{{ selected_uf == state }}" value="{{state}}">{{ state }}</option>
+                                            <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
                                             {% endverbatim %}
                                         </select>
                                     </div>
 
-                                    <div class="form-group{{ errors|yesno:" has-error,"}}">
-                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "City" %}</label>
-                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                            <select class="form-control" name="city" id="city">
+                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <select class="form-control" name="city" id="city" ng-model="form.city_id">
                                                 {% verbatim %}
-                                                <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                                                <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
                                                 {% endverbatim %}
                                             </select>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -167,8 +163,8 @@ wrapper-course-lesson
                                             <tbody><tr>
                                                 <th class="">{% trans "Nome" %}</th>
                                                 <th class="">{% trans "Type" %}</th>
-                                                <th class="">{% trans "City" %}</th>
                                                 <th class="">{% trans "State" %}</th>
+                                                <th class="">{% trans "City" %}</th>
                                                 <th class="">{% trans "Teaching Level" %}</th>
                                                 <th class="text-center">{% trans "Atualizar" %}</th>
                                                 <th class="text-center">{% trans "Remover" %}</th>
@@ -177,8 +173,8 @@ wrapper-course-lesson
                                                 {% verbatim %}
                                                 <td class="ng-binding">{{school_info.school.name}}</td>
                                                 <td class="ng-binding">{{school_info.school.school_type_complete}}</td>
-                                                <td class="ng-binding">{{school_info.school.city.name}}</td>  
                                                 <td class="ng-binding">{{school_info.school.city.uf}}</td>
+                                                <td class="ng-binding">{{school_info.school.city.name}}</td>
                                                 <td class="ng-binding">
                                                     <span ng-repeat="el in school_info.education_levels">{{el.name}}<br></span>
                                                 </td>
@@ -207,14 +203,14 @@ wrapper-course-lesson
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Grade" %}</label>
                                       <div class="form-group  custom-inputs-gray">
                                           <div class="col-sm-6 text-left">
-                                                <ui-select multiple ng-model="education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select multiple ng-model="form.education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                     <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                     <ui-select-choices repeat="ed in avaiable_education_degrees">
                                                         {% verbatim %}{{ed.name}}{% endverbatim %}
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 {% verbatim %}
-                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in education_degrees.selected" value="{{ed.id}}"/>
+                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in form.education_degrees.selected" value="{{ed.id}}"/>
                                                 {% endverbatim %}
                                           </div>
                                       </div>
@@ -223,14 +219,14 @@ wrapper-course-lesson
                                         <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
                                         <div class="form-group  custom-inputs-gray">
                                             <div class="col-sm-6 text-left">
-                                                <ui-select multiple ng-model="disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                                     <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                                     <ui-select-choices repeat="discipline in avaiable_disciplines">
                                                         {% verbatim %}{{discipline.name}}{% endverbatim %}
                                                     </ui-select-choices>
                                                 </ui-select>
                                                 {% verbatim %}
-                                                    <input type="hidden" name="disciplines" ng-repeat="discipline in disciplines.selected" value="{{discipline.name}}"/>
+                                                    <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
                                                 {% endverbatim %}
                                             </div>
                                         </div>
@@ -239,7 +235,7 @@ wrapper-course-lesson
                                           <div class="form-group  custom-inputs-gray">
                                               <div class="col-sm-6 text-left">
                                                 <!-- Other Subject Selected-->
-                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="other_discipline">
+                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
                                                 <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
                                               </div>
                                           </div>
@@ -268,19 +264,12 @@ wrapper-course-lesson
                                     <h3><i class="fa fa-angle-double-right"></i> {% trans "E-mail" %}</h3>
                                 </div>
 
-                                {% with errors=form.email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Main E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Main E-mail" %}' value="{{form_email_password.email.value}}">
-                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                        <span name="email" class="form-control">{{user.email}}</span>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <button class="btn btn-info" ng-click="filter_users()">{% trans 'Confirm e-mail' %}</button>
-                                    </div>
-
                                 </div>
-                                {% endwith %}
 
                                 {% with errors=form.business_email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
@@ -348,7 +337,7 @@ wrapper-course-lesson
                 <div class="panel-heading left-xs right-xs">
                   <h4 class="bottom-xs top-xs">{% trans "Fill out information about school/institution where you work" %}</h4>
                 </div>
-  
+
                 <div class="panel-body bottom-xs left-xs right-xs top-xs">
                   <form class="form-horizontal ng-pristine ng-valid" id="school-form" ng-submit="addSchoolForm()">
                     <div class="form-group">
@@ -362,37 +351,37 @@ wrapper-course-lesson
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <select class="form-control" ng-model="form.school_type" name="school_types">
                             {% verbatim %}
-                            <option ng-repeat="st in schooltypes" value="{{st.value}}">{{ st.name }}</option>
+                            <option ng-repeat="st in list_schooltypes" value="{{st.value}}">{{ st.name }}</option>
                             {% endverbatim %}
                         </select>
                       </div>
                     </div>
-  
+
                     <div class="form-group">
                         <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                          <select class="form-control" ng-model="filters_selected_uf" ng-change="filter_cities()">
+                          <select class="form-control" ng-model="form.uf" ng-change="filter_cities()">
                               {% verbatim %}
-                              <option ng-repeat="state in list_states" value="{{state}}">{{ state }}</option>
+                              <option ng-repeat="uf in list_ufs" value="{{ uf }}">{{ uf }}</option>
                               {% endverbatim %}
                           </select>
                         </div>
-  
+
                         <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                          <select class="form-control" ng-model="form.city">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                          <select class="form-control" ng-model="form.city_id">
                               {% verbatim %}
-                              <option ng-repeat="city in list_cities" ng-selected="{{ selected_city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                              <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
                               {% endverbatim %}
                           </select>
                         </div>
                     </div>
-  
+
                     <div class="form-group">
                         <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <!-- Teaching Levels-->
-                            <ui-select multiple ng-model="education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                            <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
                                 <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
                                 <ui-select-choices repeat="el in avaiable_education_levels">
                                     {% verbatim %}{{el.name}}{% endverbatim %}
@@ -401,10 +390,10 @@ wrapper-course-lesson
                         </div>
                     </div>
 
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="has_errors">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="form.has_errors">
                         <small>Por favor, preencha todos os campos</small>
                     </div>
-  
+
                     <div class="submit">
                       <div class="row">
                         <div class="col-md-offset-4 col-md-3 col-xs-12 text-center">
@@ -421,160 +410,5 @@ wrapper-course-lesson
       </div>
     </div>
   </div>
-
 </div>
-
-
-
-
-
-<script>
-
-/*Load Multiple Select Value*/
-var myJSONOccupation = {
- "1":"Professor(a)",
- "2":"Diretor(a)",
- "3":"Coordenador(a) Pedagógico(a)",
- "4":"Outro"
-}
-
-var myJSONGrades = {
- "1":"1º ano EF",
- "2":"2º ano EF",
- "3":"3º ano EF",
- "8":"8º ano EF"
-}
-
-
-var myJSONGTeachingLevels = {
- "1":"Ensino Fundamental",
- "2":"Ensino Médio",
- "3":"Ensino Técnico",
- "4":"Ensino Superior"
-}
-
-
-var myJSONSubjects = {
- "1":"Matemática",
- "2":"Português",
- "3":"Biologia",
- "4": "Filosofia"
-}
-
-var $occupations = $('.list-occupations');
-  $occupations.find('option').remove();
-  $.each(myJSONOccupation,function(key, value)
-  {
-      $occupations.append('<option value=' + key + '>' + value + '</option>');
-  });
-
-
-var $grades = $('.list-grades');
-  $grades.find('option').remove();
-  $.each(myJSONGrades,function(key, value)
-  {
-      $grades.append('<option value=' + key + '>' + value + '</option>');
-  });
-
-var $subjects = $('.list-subjects');
-  $subjects.find('option').remove();
-  $.each(myJSONSubjects,function(key, value)
-  {
-      $subjects.append('<option value=' + key + '>' + value + '</option>');
-  });
-
-
-  var $teachingLevels = $('.list-teaching-levels');
-    $teachingLevels.find('option').remove();
-    $.each(myJSONGTeachingLevels,function(key, value)
-    {
-        $teachingLevels.append('<option value=' + key + '>' + value + '</option>');
-    });
-</script>
-
-<script type="text/javascript" charset="utf-8">
-/*Open Add School/Institution modal*/
-        $(document).ready(function() {
-            var $modal = $("#add-school-modal");
-            $('button.add-school').click(function(e){
-                $modal.modal();
-                return false;
-            });
-            $('.dropdown-menu form').click(function(e) {
-                e.stopPropagation();
-            });
-        });
-</script>
-
-<script type="text/javascript">
-/*Campos multivalorados*/
-//   $(document).ready(function() {
-//    $('.list-occupations').select2();
-//    $('.list-grades').select2();
-//    $('.list-subjects').select2();
-//    $('.list-teaching-levels').select2();
-//   });
-</script>
-
-
-
-<script>
-//Remove a school/institution of the table of schools
-// $(document).ready(function(){
-
-//  $("#table-list-schools").on('click','.btnDelete',function(){
-//        if(confirm("Está seguro de remover esta escola/instituição?")){
-//          (this).closest('tr').remove();
-//     }
-//     else{
-//         return false;
-//     }
-//      });
-
-// });
-// </script>
-
-<script>
-//Add a school/institution of the table of schools
-$(".btn-add-school-table").click(function(event) {
-//   event.preventDefault();
-  var schoolName = $("#school-name").val();
-  var schoolType = $("#school-type").val();
-  var schoolState = $("#school-state").val();
-  var schoolCity= $("#school-city").val();
-  var schoolTeachingLevel = $("#school-teaching-level").val();
-  var btnEditRow   =  '<button class="btn btn-warning" ng-click=""><i class="fa fa-pencil-square-o"></i></button>';
-  var btnDeleteRow =  '<button class="btn btn-warning btnDelete" ng-click=""><i class="fa fa-trash-o"></i></button>';
-
-  $('#table-list-schools tr:last').after('<tr><td>' + schoolName  +
-                                        '</td><td>' + schoolType  +
-                                        '</td><td>' + schoolState +
-                                        '</td><td>' + schoolCity +
-                                        '</td><td>' + schoolTeachingLevel +
-                                        '</td><td class="text-center">' + btnEditRow +
-                                        '</td><td class="text-center">' + btnDeleteRow+
-                                        '</td></tr>');
-});
-</script>
-
-<script>
-  $( function() {
-    var availableSchools = [
-      "Escola Manuel Cônego",
-      "Escola Murilo Lemos",
-      "Colégio Portinari",
-      "Colégio Objetivo",
-      "Colégio Maple Bear",
-      "Escola Pequeno Urso"
-    ];
-    $( "#search-school" ).autocomplete({
-      source: availableSchools,
-      messages: {
-        noResults: '',
-        results: function() {}
-      }
-    });
-  } );
-  
-</script>
 {% endblock %}
