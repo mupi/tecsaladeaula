@@ -264,19 +264,12 @@ wrapper-course-lesson
                                     <h3><i class="fa fa-angle-double-right"></i> {% trans "E-mail" %}</h3>
                                 </div>
 
-                                {% with errors=form.email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Main E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="email" type="e-mail" class="form-control" placeholder='{% trans "Main E-mail" %}' value="{{form_email_password.email.value}}">
-                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                        <span name="email" class="form-control">{{form_email_password.email.value}}</span>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <button class="btn btn-info" ng-click="filter_users()">{% trans 'Confirm e-mail' %}</button>
-                                    </div>
-
                                 </div>
-                                {% endwith %}
 
                                 {% with errors=form.business_email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
