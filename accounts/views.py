@@ -127,10 +127,15 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
     paginate_by = 50
 
     def get_queryset(self):
-        page = self.request.QUERY_PARAMS.get('page')
-        keyword = self.request.QUERY_PARAMS.get('keyword')
-        admin = self.request.QUERY_PARAMS.get('admin')
-        blocked = self.request.QUERY_PARAMS.get('blocked')
+        page = self.request.GET.get('page')
+        keyword = self.request.GET.get('keyword')
+        admin = self.request.GET.get('admin')
+        blocked = self.request.GET.get('blocked')
+        uf = self.request.GET.get('uf')
+        city = self.request.GET.get('city')
+        education_degrees = self.request.GET.getlist('education_degrees')
+        occupations = self.request.GET.getlist('occupations')
+        disciplines = self.request.GET.getlist('disciplines')
         queryset = super(TimtecUserAdminViewSet, self).get_queryset().order_by('username')
 
         if admin == 'true':
@@ -144,6 +149,20 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
                                        Q(last_name__icontains=keyword) |
                                        Q(username__icontains=keyword) |
                                        Q(email__icontains=keyword))
+        if occupations:
+            queryset = queryset.filter(occupations__in=occupations).distinct()
+
+        if disciplines:
+            queryset = queryset.filter(disciplines__in=disciplines).distinct()
+
+        if education_degrees:
+            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
+
+        if uf:
+            queryset = queryset.filter(city__uf=uf)
+        if city:
+            queryset = queryset.filter(city__id=city)
+
 
         return queryset
 
