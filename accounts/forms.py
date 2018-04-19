@@ -51,13 +51,14 @@ class ProfileEditForm(forms.ModelForm):
 
 
 class ProfilePasswordForm(forms.ModelForm):
-    email = forms.RegexField(label=_("email"), max_length=75, regex=r"^[\w.@+-]+$")
-    password1 = forms.CharField(widget=forms.PasswordInput, label=_("Password"), required=False)
-    password2 = forms.CharField(widget=forms.PasswordInput, label=_("Password (again)"), required=False)
+    # email = forms.RegexField(max_length=75, regex=r"^[\w.@+-]+$")
+    business_email = forms.RegexField(max_length=75, regex=r"^[\w.@+-]+$", required=False)
+    password1 = forms.CharField(widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('business_email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -70,7 +71,7 @@ class ProfilePasswordForm(forms.ModelForm):
     def save(self, commit=True):
         if self.cleaned_data['password1']:
             self.instance.set_password(self.cleaned_data['password1'])
-        return super(ProfileEditForm, self).save(commit=commit)
+        return super(ProfilePasswordForm, self).save(commit=commit)
 
 class SchoolAddForm(forms.ModelForm):
 

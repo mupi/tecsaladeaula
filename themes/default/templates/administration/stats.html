@@ -69,6 +69,10 @@ wrapper-course-lesson
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-sm-12"></div>
+                </div>
                 <!-- END ROW -->
             </form>
             <!-- END FORM INLINE -->
@@ -106,7 +110,6 @@ wrapper-course-lesson
                                 <div class="col-sm-2 fullname">{% trans "Full name" %}</div>
                                 <div class="col-sm-1">{% trans "Progress" %}</div>
                                 <div class="col-sm-3 email">{% trans "Main E-mail" %}</div>
-                                <div class="col-sm-3 email">{% trans "Additional E-mail" %}</div>
                                 <div class="col-sm-1">{% trans "Occupation" %}</div>
                                 <div class="col-sm-2">{% trans "Grade" %}</div>
                               </div>
@@ -124,14 +127,13 @@ wrapper-course-lesson
                                   <div class="row">
                                     {% verbatim %}
                                     <div class="col-sm-8">
-                                      <div class="col-sm-2">Thiago Silva Santos</div>
+                                      <div class="col-sm-2">{{user.first_name}} {{user.last_name}}</div>
                                       <div class="col-sm-1 hidden-xs">
                                           <div class="progress">
                                               <div class="progress-bar" style="width:{{ user.course_progress }}%;display:none;">{{ user.course_progress }}%</div>
                                               <div class="progress-bar" style="width:80%;">80%</div>
                                           </div>
                                       </div>
-                                      <div class="col-sm-3 email">{{ user.email }}</div>
                                       <div class="col-sm-3 email">{{ user.email }}</div>
                                       <div class="col-sm-1">Professor(a)</div>
                                       <div class="col-sm-2">1º ano EF, 2º ano EF</div>

@@ -4,11 +4,11 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 
 from django.views.generic import TemplateView
-from accounts.views import (ProfileEditView, ProfileView, UserSearchView,
-                            TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView,
+from accounts.views import (ProfileEditView, ProfileEmailPasswordEditView, ProfileView, TimtecUserSchoolViewSet, UserSearchView,
+                            TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView, SchoolViewSet,
                             AcceptTermsView, SignupView, list_states_view, list_cities_view,
                             get_timtec_profile, list_occupations_view, list_educationdegrees_view,
-                            list_disciplines_view)
+                            list_disciplines_view, list_educationlevels_view, list_schooltypes_view)
 
 from core.views import (CourseView, GenericCourseView, CourseViewSet,
                         CourseProfessorViewSet, EnrollCourseView, HomeView,
@@ -64,6 +64,7 @@ router.register(r'lessons_user_progress', UserCourseLessonsStats)
 router.register(r'course_stats', CourseStatsByLessonViewSet)
 router.register(r'course_classes', ClassViewSet)
 router.register(r'flatpage', FlatpageViewSet)
+router.register(r'userschools', TimtecUserSchoolViewSet)
 
 router.register(r'enroll', EnrollCourseAPIView)
 
@@ -107,6 +108,8 @@ urlpatterns = patterns(
     url(r'^api/occupations', list_occupations_view, name='list_occupations'),
     url(r'^api/disciplines', list_disciplines_view, name='list_discipline'),
     url(r'^api/educationdegrees', list_educationdegrees_view, name='list_educationdegrees'),
+    url(r'^api/educationlevels', list_educationlevels_view, name='list_educationlevels'),
+    url(r'^api/schooltypes', list_schooltypes_view, name='list_schooltypes'),
     url(r'^api/profile', get_timtec_profile, name='get_profile'),
     # Forum
     url(r'^forum/(?P<course_slug>[-a-zA-Z0-9_]+)/$', CourseForumView.as_view(), name='forum'),
@@ -132,6 +135,7 @@ urlpatterns = patterns(
     url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='timtec_logout'),
 
     url(r'^profile/edit/?$', ProfileEditView.as_view(), name="profile_edit"),
+    url(r'^profile/edit/account?$', ProfileEmailPasswordEditView.as_view(), name="profile_edit_account"),
     url(r'^profile/(?P<username>[\w.+-]+)?/?$', ProfileView.as_view(), name="profile"),
 
     # The django-allauth

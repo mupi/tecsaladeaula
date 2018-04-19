@@ -18,6 +18,18 @@
         }).factory('Disciplines', function($resource){
             return $resource('/api/disciplines', {}, {
             });
+        }).factory('EducationLevels', function($resource){
+            return $resource('/api/educationlevels', {}, {
+            });
+        }).factory('SchoolTypes', function($resource){
+            return $resource('/api/schooltypes', {}, {
+            });
+        }).factory('UserSchools', function($resource){
+            return $resource('/api/userschools/:id', { id : '@id'}, {
+                update : {
+                    method: 'PATCH'
+                }
+            });
         }).factory('Profile', function($resource){
             return $resource('/api/profile', {}, {
             });

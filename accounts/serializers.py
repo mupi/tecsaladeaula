@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import City, Occupation, Discipline, EducationDegree
+from .models import City, Occupation, Discipline, EducationDegree, EducationLevel, School, TimtecUserSchool
 
 
 class TimtecUserSerializer(serializers.ModelSerializer):
@@ -38,12 +38,55 @@ class EducationDegreeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EducationDegree
 
+class EducationLevelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = EducationLevel
+
+class SchoolSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = School
+
+class SchoolCompleteSerializer(serializers.ModelSerializer):
+    city = CitySerializer(required=True)
+    school_type_complete = serializers.SerializerMethodField('get_school_type_complete')
+
+    class Meta:
+        model = School
+
+    def get_school_type_complete(self, obj):
+        return obj.get_school_type_display()
+
+class TimtecUserSchoolSerializer(serializers.ModelSerializer):
+    school = SchoolSerializer(required=True)
+
+    class Meta:
+        model = TimtecUserSchool
+
+
+class TimtecUserSchoolCompleteSerializer(serializers.ModelSerializer):
+    school = SchoolCompleteSerializer(required=True)
+    education_levels = EducationLevelSerializer(many=True, required=True)
+
+    class Meta:
+        model = TimtecUserSchool
+
+
+class TimtecProfileSchoolSerializer(serializers.ModelSerializer):
+    school = SchoolCompleteSerializer(required=True)
+    education_levels = EducationLevelSerializer(many=True, required=True)
+
+    class Meta:
+        model = TimtecUserSchool
+
 class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)
     occupations = OccupationSerializer(many=True, required=False)
     disciplines = DisciplineSerializer(many=True, required=False)
     education_degrees = EducationDegreeSerializer(required=False, many=True)
+    schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('city', 'occupations', 'disciplines', 'education_degrees')
+        fields = ('city', 'occupations', 'disciplines', 'education_degrees', 'schools')

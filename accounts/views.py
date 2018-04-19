@@ -8,21 +8,22 @@ from django.db.models import Q
 
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
-                                    TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer, EducationDegreeSerializer)
+                                    TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer,
+                                    EducationDegreeSerializer, EducationLevelSerializer, SchoolSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
-from rest_framework import viewsets
-from rest_framework import filters
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import viewsets, filters, generics, permissions, mixins, status, serializers
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from core.permissions import IsAdmin
 
-from .forms import SignupForm
-from .models import State, City, Occupation, Discipline, School, EducationDegree
+from .forms import SignupForm, ProfilePasswordForm
+from .permissions import IsProfessorOrReadOnly
+from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
+from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecUserSchoolCompleteSerializer
+import json
 
 
 class ProfileEditView(LoginRequiredMixin, UpdateView):
@@ -36,6 +37,66 @@ class ProfileEditView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return self.request.user
 
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        data = {'email' : self.request.user.email, 'business_email': self.request.user.business_email}
+        form  = ProfilePasswordForm(initial=data)
+        context['form_email_password'] = form
+        return context
+
+class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    form_class = ProfilePasswordForm
+    template_name = 'profile-edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile')
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileEmailPasswordEditView, self).get_context_data(**kwargs)
+        form = ProfileEditForm(instance=self.request.user)
+        context['form'] = form
+
+        pass_data = {'business_email': self.request.user.business_email}
+        pass_form  = ProfilePasswordForm(initial=pass_data)
+        context['form_email_password'] = pass_form
+        context['account_pane'] = True
+        return context
+
+class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = TimtecUserSchool.objects.all()
+    serializer_class = TimtecUserSchoolSerializer
+    permission_classes = (IsProfessorOrReadOnly, )
+
+    def create(self, request, *args, **kwargs):
+        data = request.DATA
+        data['professor'] = self.request.user.id
+        serializer = self.get_serializer(data=request.DATA, files=request.FILES)
+
+        if serializer.is_valid():
+            self.pre_save(serializer.object)
+            self.object = serializer.save(force_insert=True)
+            self.post_save(self.object, created=True)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED,
+                            headers=headers)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action == 'retrieve':
+            return TimtecUserSchoolCompleteSerializer
+        return TimtecUserSchoolSerializer
+
+    def destroy(self, request, pk=None):
+        school = TimtecUserSchool.objects.get(id = pk).school
+        response = super(TimtecUserSchoolViewSet, self).destroy(request, pk)
+        school.delete()
+        return response
 
 class ProfileView(LoginRequiredMixin, DetailView):
     model = get_user_model()
@@ -176,17 +237,16 @@ class SignupView(SignupView):
     form_class = SignupForm
     view_name = 'signup_view'
 
+class SchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
+    queryset = School.objects.all()
+    serializer_class = SchoolSerializer
+    permission_classes = (IsProfessorOrReadOnly, )
+
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
 def list_occupations_view(request):
     occupations = [OccupationSerializer(o).data for o in Occupation.objects.all()]
     return Response(occupations)
-
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def list_states_view(request):
-    states = [s.uf for s in State.objects.all()]
-    return Response(states)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
@@ -199,6 +259,24 @@ def list_disciplines_view(request):
 def list_educationdegrees_view(request):
     educationdegrees = [EducationDegreeSerializer(ed).data for ed in EducationDegree.objects.all()]
     return Response(educationdegrees)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_educationlevels_view(request):
+    educationlevels = [EducationLevelSerializer(el).data for el in EducationLevel.objects.all()]
+    return Response(educationlevels)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_schooltypes_view(request):
+    schooltypes = [{'value': st[0], 'name': st[1]} for st in School.SCHOOL_TYPES]
+    return Response(schooltypes)
+
+@api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
+def list_states_view(request):
+    states = [s.uf for s in State.objects.all()]
+    return Response(states)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
