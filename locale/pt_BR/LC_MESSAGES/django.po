@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-13 10:54-0300\n"
-"PO-Revision-Date: 2018-03-28 12:46-0300\n"
+"PO-Revision-Date: 2018-04-19 12:28-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -445,6 +445,11 @@ msgstr "Aula"
 #: themes/tecsaladeaula/templates/course.html:570
 msgid "Lessons"
 msgstr "Aulas"
+
+#: themes/default/templates/administration/stats.html:77
+msgid "Last access"
+msgstr "Último acesso"
+
 
 #: core/models.py:549 forum/models.py:11
 msgid "Title"
@@ -1130,6 +1135,10 @@ msgid "Class name"
 msgstr "Nome da turma"
 
 #: themes/default/templates/classes.html:36
+#: themes/default/templates/administration/stats.html:76
+msgid "E-mail or name"
+msgstr "Email ou nome"
+
 #: themes/default/templates/administration/stats.html:76
 msgid "Students"
 msgstr "Estudantes"
@@ -2005,6 +2014,14 @@ msgstr "Carregando relatórios de estudantes"
 #: themes/default/templates/administration/stats.html:87
 msgid "Students progress"
 msgstr "Progresso do estudante"
+
+#: themes/default/templates/administration/stats.html:87
+msgid "Progress"
+msgstr "Progresso"
+
+#: themes/default/templates/administration/stats.html:87
+msgid "Disciplines"
+msgstr "Disciplinas"
 
 #: themes/default/templates/administration/stats.html:88
 msgid "Total number of students"

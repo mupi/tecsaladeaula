@@ -3,6 +3,15 @@
 // ********************************************************************* //
 #stats {
 
+  .padding-left-3px{
+    @media screen and (min-width: 768px) {
+          padding-left: 3px;
+    }
+  }
+  .without-paddings-rl{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
 
   .main-header-users-by-course-report{
     width: 970px;
@@ -14,6 +23,16 @@
         margin-bottom: 10px;
 
   }
+
+  .filters{
+      .row {
+      margin-bottom: 5px;
+      }
+      #filter-class{
+            margin-left: 0px;
+      }
+  }
+
 
   .container{
       @media screen and (min-width: 1200px) {
@@ -50,6 +69,7 @@
         width: 1000px;
         margin-left: auto;
         margin-right: auto;
+        margin-top:5px;
         border: 1px solid #eeeeee;
         padding: 15px;
       }
@@ -60,7 +80,8 @@
       }
 
       ul.header-user-list li{
-          border-bottom: 1px solid @gray-lighter;
+          //border-bottom: 1px solid @gray-lighter;
+          border: none !important;
       }
 
        ul.students {
@@ -77,6 +98,7 @@
             /*border-top: 1px solid @gray-lighter;*/
             margin-top: 10px;
             padding-top: 10px;
+            border-top: 1px solid #eeeeee;
           }
           .progress {
             background: @gray-lighter;

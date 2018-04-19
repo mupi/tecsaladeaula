@@ -43,32 +43,89 @@ wrapper-course-lesson
         <!-- FILTERS ABRIL 2018 -->
         <div class="filters main-header-users-by-course-report">
             <!--  FORM INLINE -->
-            <form class="form-inline">
+            <form class="form-horizontal">
                 <!-- ROW -->
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="col-sm-8">
-                          <label for="filter-class"> {% trans "Filter classes" %}:
-                              <select class="form-control" id="filter-class" ng-model="filters.selected_class" ng-change="filter_stats()">
-                                  <optgroup label="Liste por:">
-                                      <option ng-if="my_classes.length" value="my_classes">Minhas turmas</option>
-                                      <option value="all" ng-if="current_user_role == 'coordinator'">Todas as turmas deste curso</option>
-                                      <option value="others_classes" ng-if="current_user_role == 'coordinator' && others_classes.length">Turmas dos outros professores</option>
-                                  </optgroup>
-                                  <optgroup ng-if="others_classes.length || my_classes.length " label="Ou escolha uma turma:">
-                                      {% verbatim %}
-                                      <option ng-repeat="klass in my_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
-                                      <option ng-repeat="klass in others_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
-                                      {% endverbatim %}
-                                  </optgroup>
-                              </select>
-                          </label>
+                        <div class="col-sm-6 col-xs-12">
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 without-paddings-rl">
+                                <label class="control-label">{% trans "Filter classes" %}</label>
+                              </div>
+                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 padding-left-3px">
+                                <select class="form-control" id="filter-class" ng-model="filters.selected_class">
+                                    <optgroup label="Liste por:">
+                                        <option ng-if="my_classes.length" value="my_classes">Minhas turmas</option>
+                                        <option value="all" ng-if="current_user_role == 'coordinator'">Todas as turmas deste curso</option>
+                                        <option value="others_classes" ng-if="current_user_role == 'coordinator' && others_classes.length">Turmas dos outros professores</option>
+                                    </optgroup>
+                                    <optgroup ng-if="others_classes.length || my_classes.length " label="Ou escolha uma turma:">
+                                        {% verbatim %}
+                                        <option ng-repeat="klass in my_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
+                                        <option ng-repeat="klass in others_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
+                                        {% endverbatim %}
+                                    </optgroup>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-sm-4 textright">
-                          <button class="btn btn-info" ng-click=""><i class="fa fa-download"></i> Exportar</button>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="col-lg-4 col-sm-4 col-xs-12 text-right">
+                              <label class="control-label">{% trans "Student" %}</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-xs-12 text-left without-paddings-rl">
+                              <input type="text" placeholder="{% trans "E-mail or name" %}" class="form-control ng-pristine ng-valid" id="keyword" name="keyword" ng-model="filters.keyword">
+                            </div>
                         </div>
-                    </div>
                 </div>
+
+                <div class="row">
+                <div class="col-sm-8">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 without-paddings-rl">
+                      <label class="control-label">{% trans "Date joined"%}</label>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 without-paddings-rl">
+                      <!-- Date range example -->
+                          <div class="col-xs-6 without-paddings-rl">
+                            <input type="text" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="de" bs-datepicker>
+                          </div>
+                          <div class="col-xs-6 without-paddings-rl">
+                            <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="até" bs-datepicker>
+                          </div>
+                    </div>
+
+                </div>
+                  <div class="col-sm-4">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right">
+                        <label class="control-label">% {% trans "Progress" %}</label>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 without-paddings-rl">
+                        <select class="form-control" id="filter-class">
+                                <option value="">0%</option>
+                                <option value="">< 50%</option>
+                                <option value="">>= 50%</option>
+                                <option value="">>= 80%</option>
+                        </select>
+                      </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-6">
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 without-paddings-rl">
+                        <label class="control-label">Dias Inatividade</label>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-left-3px">
+                        <input type="number" class="form-control ng-pristine ng-valid">
+                      </div>
+                  </div>
+                  <div class="col-sm-2 col-sx-12 without-paddings-rl">
+                  </div>
+                  <div class="col-sm-2 col-sx-12 without-paddings-rl">
+                        <button class="btn btn-info" ng-click="filter_users()">Pesquisar</button>
+                  </div>
+                  <div class="col-sm-2 col-sx-12 without-paddings-rl">
+                        <button class="btn btn-info" ng-click=""><i class="fa fa-download"></i> Exportar</button>
+                      </div>
+                  </div>
                 <!-- END ROW -->
             </form>
             <!-- END FORM INLINE -->
@@ -103,15 +160,16 @@ wrapper-course-lesson
                           <li>
                             <div class="row-eq-height">
                               <div class="col-sm-8">
-                                <div class="col-sm-2 fullname">{% trans "Full name" %}</div>
+                                <div class="col-sm-3 fullname">{% trans "Full name" %}</div>
                                 <div class="col-sm-1">{% trans "Progress" %}</div>
+                                <div class="col-sm-1">{% trans "Date joined"%}</div>
+                                <div class="col-sm-1">{% trans "Last access"%}</div>
                                 <div class="col-sm-3 email">{% trans "Main E-mail" %}</div>
-                                <div class="col-sm-3 email">{% trans "Additional E-mail" %}</div>
                                 <div class="col-sm-1">{% trans "Occupation" %}</div>
                                 <div class="col-sm-2">{% trans "Grade" %}</div>
                               </div>
                               <div class="col-sm-4">
-                                <div class="col-sm-4">{% trans "Subjects" %}</div>
+                                <div class="col-sm-4">{% trans "Disciplines" %}</div>
                                 <div class="col-sm-2">{% trans "State" %}</div>
                                 <div class="col-sm-3">{% trans "City" %}</div>
                                 <div class="col-sm-3 textcenter"></div>
@@ -124,14 +182,15 @@ wrapper-course-lesson
                                   <div class="row">
                                     {% verbatim %}
                                     <div class="col-sm-8">
-                                      <div class="col-sm-2">Thiago Silva Santos</div>
+                                      <div class="col-sm-3">{{user.first_name}} {{user.last_name}}</div>
                                       <div class="col-sm-1 hidden-xs">
                                           <div class="progress">
                                               <div class="progress-bar" style="width:{{ user.course_progress }}%;display:none;">{{ user.course_progress }}%</div>
                                               <div class="progress-bar" style="width:80%;">80%</div>
                                           </div>
                                       </div>
-                                      <div class="col-sm-3 email">{{ user.email }}</div>
+                                      <div class="col-sm-1">20/12/2017</div>
+                                      <div class="col-sm-1">10/04/2018</div>
                                       <div class="col-sm-3 email">{{ user.email }}</div>
                                       <div class="col-sm-1">Professor(a)</div>
                                       <div class="col-sm-2">1º ano EF, 2º ano EF</div>
