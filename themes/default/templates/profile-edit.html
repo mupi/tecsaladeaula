@@ -37,116 +37,117 @@ wrapper-course-lesson
                              <span>{% trans "Let Mupi Community knows you" %}</span>
                              <br><br>
                         </div>
+                        <div class="col-sm-12 col-xs-12">
+                          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                              <fieldset class="margin-b10">
+                                  <script type="text/javascript" charset="utf-8">
+                                      $(document).ready(function() {
+                                          function onFileSelected(event) {
+                                              var selectedFile = event.target.files[0];
+                                              var reader = new FileReader();
+                                              var imgtag = document.getElementById("profile-avatar");
+                                              imgtag.title = selectedFile.name;
 
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <fieldset>
-                                <script type="text/javascript" charset="utf-8">
-                                    $(document).ready(function() {
-                                        function onFileSelected(event) {
-                                            var selectedFile = event.target.files[0];
-                                            var reader = new FileReader();
-                                            var imgtag = document.getElementById("profile-avatar");
-                                            imgtag.title = selectedFile.name;
+                                              reader.onload = function(event) {
+                                                  imgtag.src = event.target.result;
+                                              };
 
-                                            reader.onload = function(event) {
-                                                imgtag.src = event.target.result;
-                                            };
+                                              reader.readAsDataURL(selectedFile);;
+                                          }
 
-                                            reader.readAsDataURL(selectedFile);;
-                                        }
+                                          function onImgNotFound(event) {
+                                              $(this).attr('src', '{% static "img/avatar-default.png" %}')
+                                          }
 
-                                        function onImgNotFound(event) {
-                                            $(this).attr('src', '{% static "img/avatar-default.png" %}')
-                                        }
+                                          $("#upload-avatar").change(onFileSelected);
 
-                                        $("#upload-avatar").change(onFileSelected);
+                                          $("#profile-avatar").error(onImgNotFound);
+                                      });
+                                  </script>
 
-                                        $("#profile-avatar").error(onImgNotFound);
-                                    });
-                                </script>
+                                  <label for="upload-avatar" class="upload-avatar">
+                                      <span><i class="fa fa-picture-o"></i> {% trans "Upload avatar" %}</span>
+                                      <div class="thumbnail">
+                                          <img id="profile-avatar" width="256" src="{{ form.instance.get_picture_url }}">
+                                      </div>
+                                  </label>
+                                  <span>{% trans "Size limit 1 MB. JPG, GIF ou PNG" %}<span>
 
-                                <label for="upload-avatar" class="upload-avatar">
-                                    <span><i class="fa fa-picture-o"></i> {% trans "Upload avatar" %}</span>
-                                    <div class="thumbnail">
-                                        <img id="profile-avatar" width="256" src="{{ form.instance.get_picture_url }}">
-                                    </div>
-                                </label>
-                                <span>{% trans "Size limit 1 MB. JPG, GIF ou PNG" %}<span>
+                                  <input type="file" name="picture" id="upload-avatar" class="hidden"/>
+                              </fieldset>
+                          </div>
 
-                                <input type="file" name="picture" id="upload-avatar" class="hidden"/>
-                            </fieldset>
-                        </div>
+                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                              <fieldset>
+                                  <div class="form-group">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Full name" %}</label>
 
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                            <fieldset>
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Full name" %}</label>
-
-                                        {% with errors=form.first_name.errors %}
-                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 {{ errors|yesno:" has-error,"}}">
-                                            <input name="first_name" type="text" class="form-control" placeholder='{% trans "Enter your full name" %}' value="{{form.first_name.value}}">
-                                            {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                                        </div>
-                                        {% endwith %}
-                                </div>
+                                          {% with errors=form.first_name.errors %}
+                                          <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 {{ errors|yesno:" has-error,"}}">
+                                              <input name="first_name" type="text" class="form-control" placeholder='{% trans "Enter your full name" %}' value="{{form.first_name.value}}">
+                                              {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                          </div>
+                                          {% endwith %}
+                                  </div>
 
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
-                                    <div class="col-sm-9 text-left">
-                                            <ui-select multiple ng-model="form.occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                <ui-select-choices repeat="occupation in avaiable_occupations">
-                                                        {% verbatim %}{{occupation.name}}{% endverbatim %}
-                                                </ui-select-choices>
-                                            </ui-select>
-                                            {% verbatim %}
-                                            <input type="hidden" name="occupations" ng-repeat="occupation in form.occupations.selected" value="{{occupation.id}}"/>
-                                            {% endverbatim %}
-                                        </div>
-                                </div>
+                                  <div class="form-group">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Occupation" %}</label>
+                                      <div class="col-sm-9 text-left">
+                                              <ui-select multiple ng-model="form.occupations.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                  <ui-select-match placeholder="Selecione ocupações...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                  <ui-select-choices repeat="occupation in avaiable_occupations">
+                                                          {% verbatim %}{{occupation.name}}{% endverbatim %}
+                                                  </ui-select-choices>
+                                              </ui-select>
+                                              {% verbatim %}
+                                              <input type="hidden" name="occupations" ng-repeat="occupation in form.occupations.selected" value="{{occupation.id}}"/>
+                                              {% endverbatim %}
+                                          </div>
+                                  </div>
 
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                        <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
-                                            <option value=" "></option>
-                                            {% verbatim %}
-                                            <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
-                                            {% endverbatim %}
-                                        </select>
-                                    </div>
+                                  <div class="form-group">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
+                                      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                          <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
+                                              <option value=" "></option>
+                                              {% verbatim %}
+                                              <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
+                                              {% endverbatim %}
+                                          </select>
+                                      </div>
 
-                                    <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                            <select class="form-control" name="city" id="city" ng-model="form.city_id">
-                                                {% verbatim %}
-                                                <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
-                                                {% endverbatim %}
-                                            </select>
-                                    </div>
-                                </div>
+                                      <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
+                                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                              <select class="form-control" name="city" id="city" ng-model="form.city_id">
+                                                  {% verbatim %}
+                                                  <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
+                                                  {% endverbatim %}
+                                              </select>
+                                      </div>
+                                  </div>
 
-                                {% with errors=form.site.errors %}
-                                <div class="form-group{{ errors|yesno:" has-error,"}}">
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                        <input name="site" type="text" class="form-control" placeholder="Você possui algum site pessoal?" value="{{form.site.value}}">
-                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                                    </div>
-                                </div>
-                                {% endwith %}
+                                  {% with errors=form.site.errors %}
+                                  <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <input name="site" type="text" class="form-control" placeholder="Você possui algum site pessoal?" value="{{form.site.value}}">
+                                          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                      </div>
+                                  </div>
+                                  {% endwith %}
 
-                                {% with errors=form.biography.errors %}
-                                <div class="form-group{{ errors|yesno:" has-error,"}}">
-                                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Bio" %}</label>
-                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                        <textarea name="biography" class="form-control" rows="7" placeholder="Escreve um pouco sobre você...">{{form.biography.value}}</textarea>
-                                        {% for error in errors %}<small>{{error}}</small>{% endfor %}
-                                    </div>
-                                </div>
-                                {% endwith %}
-                            </fieldset>
+                                  {% with errors=form.biography.errors %}
+                                  <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Bio" %}</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <textarea name="biography" class="form-control" rows="7" placeholder="Escreve um pouco sobre você...">{{form.biography.value}}</textarea>
+                                          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                      </div>
+                                  </div>
+                                  {% endwith %}
+                              </fieldset>
+                          </div>
                         </div>
 
                         <div class="col-sm-12 col-xs-12">
