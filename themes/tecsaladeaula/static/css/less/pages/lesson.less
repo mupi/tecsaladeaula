@@ -1,3 +1,52 @@
+/*
+2018/04/20 OCULTAR MENU DE UNIDADES DE AULAS
+*/
+
+/*MENU LATERAL 20180423*/
+.btn-show-hide-menu{
+    background-color: #ea8e62;
+    box-shadow: -1px 1px 4px 0px rgba(50, 50, 50, 0.75);
+    color: #712f0f;
+    font-size: 1.5em;
+    position: absolute;
+    padding-left: 6px;
+    text-align: center;
+    top: 0%;
+    right: -38px;
+}
+
+body.mini-navbar .navbar-static-side {
+    width: 70px;
+}
+
+/*esta classe vai dentro do LI , no span*/
+body.mini-navbar .nav-label, body.mini-navbar .units-menu a,
+body.mini-navbar .lesson-units-nav ,
+body.mini-navbar nav.course-lessons {
+    display: none !important;
+}
+
+.pace-done .navbar-static-side, .pace-done .nav-header, .pace-done li.active,
+.pace-done #page-wrapper, .pace-done .footer {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+
+.navbar-static-side {
+  @media (min-width: 768px){
+    z-index: 101;
+    position: absolute;
+    width: 620px;
+    }
+}
+
+
+/*FIN */
+
+
 .side-notes{
   h3{
     margin-top: 0;
@@ -44,10 +93,12 @@
   position: fixed;
   height: 100%;
   margin-left: -15px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+/*  overflow-y: scroll;
+  overflow-x: hidden;*/ /*commented 20180423*/
   padding: 0;
+  z-index: 99999;
 }
+
 .lesson-sidebar, .lesson-sidebar-riw{
   p{
     padding: 10px;
@@ -107,6 +158,7 @@
 .activity-column{
   padding-top: 50px;
 }
+
 .notes-tool{
   @media (min-width: @screen-sm-min) {
     border: 2px solid #e5e5e5;

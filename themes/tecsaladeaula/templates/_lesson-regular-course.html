@@ -48,12 +48,15 @@ $(document).ready(function() {
         <!-- ROW -->
         <div ng-controller="MainCtrl" class="row">
 
-          <div class="lesson-sidebar col-sm-4">
+          <div class="navbar-static-side lesson-sidebar col-sm-4">
+              <div class="navbar-header btn-show-hide-menu">
+                <button class="navbar-minimalize minimalize-styl-2 btn btn-primary"><i class="fa fa-bars"></i> </button>
+              </div>
             <nav class="btn-group lesson-units-nav hidden-xs" id="lesson-list-dropdown">
                 <button type="button" class="btn text-right dropdown-toggle" data-toggle="dropdown">
                     {{ lesson.name }} <i class="fa fa-chevron-down"></i>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" id="side-menu">
                     {% for list_lesson in lesson.course.public_lessons %}
                         <li><a href="{% url 'lesson' list_lesson.course.slug list_lesson.slug %}">{{ list_lesson.name }}</a></li>
                     {% endfor %}
@@ -205,5 +208,32 @@ $(document).ready(function() {
     <!-- END COURSE CONTENT -->
 </div>
 <!-- END COURSE -->
+<script mini-navbar>
+$(document).ready(function(){
+  $("body").addClass('pace-done');
+});
 
+$('.navbar-minimalize:not(.binded)').addClass("binded").click(function () {
+    $("body").toggleClass("mini-navbar");
+    SmoothlyMenu();
+})
+
+
+window.SmoothlyMenu = function() {
+    if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
+        console.log("primeiro if");
+        // Hide menu in order to smoothly turn on when maximize menu
+      //  $('.lesson-sidebar').hide();
+        // For smoothly turn on menu
+        setTimeout(
+            function () {
+                $('#lesson-sidebar').fadeIn(500);
+            }, 100);
+    }  else {
+        // Remove all inline style from jquery fadeIn function to reset menu state
+          console.log("terceiro if");
+        $('#side-menu').removeAttr('style');
+    }
+};
+</script>
 {% endblock %}
