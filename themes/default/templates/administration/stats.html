@@ -46,34 +46,14 @@ wrapper-course-lesson
             <form class="form-horizontal">
                 <!-- ROW -->
                 <div class="row">
-                        <div class="col-sm-6 col-xs-12">
-                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 without-paddings-rl">
-                                <label class="control-label">{% trans "Filter classes" %}</label>
-                              </div>
-                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 padding-left-3px">
-                                <select class="form-control" id="filter-class" ng-model="filters.selected_class">
-                                    <optgroup label="Liste por:">
-                                        <option ng-if="my_classes.length" value="my_classes">Minhas turmas</option>
-                                        <option value="all" ng-if="current_user_role == 'coordinator'">Todas as turmas deste curso</option>
-                                        <option value="others_classes" ng-if="current_user_role == 'coordinator' && others_classes.length">Turmas dos outros professores</option>
-                                    </optgroup>
-                                    <optgroup ng-if="others_classes.length || my_classes.length " label="Ou escolha uma turma:">
-                                        {% verbatim %}
-                                        <option ng-repeat="klass in my_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
-                                        <option ng-repeat="klass in others_classes" id="{{klass.id}}" value="{{klass.id}}">{{ klass.name }}</option>
-                                        {% endverbatim %}
-                                    </optgroup>
-                                </select>
-                            </div>
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="col-lg-2 col-sm-2 col-xs-12 without-paddings-rl">
+                            <label class="control-label">{% trans "Student" %}</label>
                         </div>
-                        <div class="col-sm-6 col-xs-12">
-                            <div class="col-lg-4 col-sm-4 col-xs-12 text-right">
-                              <label class="control-label">{% trans "Student" %}</label>
-                            </div>
-                            <div class="col-lg-8 col-sm-8 col-xs-12 text-left without-paddings-rl">
-                              <input type="text" placeholder="{% trans "E-mail or name" %}" class="form-control ng-pristine ng-valid" id="keyword" name="keyword" ng-model="filters.keyword">
-                            </div>
+                        <div class="col-lg-10 col-sm-10 col-xs-12 without-paddings-rl">
+                            <input type="text" placeholder="{% trans "E-mail or name" %}" class="form-control ng-pristine ng-valid" id="keyword" name="keyword" ng-model="filters.keyword">
                         </div>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -150,11 +130,7 @@ wrapper-course-lesson
                                 <h3>{% trans 'Students progress' %}</h3>
                                 <h4>{% trans 'Total number of students' %}: {% verbatim %}{{ users_reports.length }}{% endverbatim %}</h4   >
                             </div>
-                            <!--
-                            <div class="col-sm-4 textright">
-                                <input type="text" placeholder="{% blocktrans %}Search student{% endblocktrans %}" class="form-control search-filter">
-                            </div>
-                            -->
+
                         </div>
                         <ul class="students header-user-list">
                           <li>
@@ -178,30 +154,33 @@ wrapper-course-lesson
                           </li>
                         </ul>
                         <ul class="students" ng-show="users_reports.$resolved">
-                            <li ng-repeat="user in users_reports">
+                            <li ng-repeat="user_data in users_reports">
                                   <div class="row">
-                                    {% verbatim %}
                                     <div class="col-sm-8">
-                                      <div class="col-sm-3">{{user.first_name}} {{user.last_name}}</div>
+                                      {% verbatim %}
+                                      <div class="col-sm-3">{{user_data.user.first_name}}</div>
                                       <div class="col-sm-1 hidden-xs">
                                           <div class="progress">
-                                              <div class="progress-bar" style="width:{{ user.course_progress }}%;display:none;">{{ user.course_progress }}%</div>
-                                              <div class="progress-bar" style="width:80%;">80%</div>
+                                              {{ user_data.course_progress }}%
+                                              <div class="progress-bar" style="width:{{ user_data.course_progress }}%;"></div>
                                           </div>
                                       </div>
-                                      <div class="col-sm-1">20/12/2017</div>
-                                      <div class="col-sm-1">10/04/2018</div>
-                                      <div class="col-sm-3 email">{{ user.email }}</div>
-                                      <div class="col-sm-1">Professor(a)</div>
-                                      <div class="col-sm-2">1º ano EF, 2º ano EF</div>
+                                      <div class="col-sm-1">{{ user_data.created_at | date:'dd/MM/yyyy' }}</div>
+                                      <div class="col-sm-1">{{ user_data.last_access | date:'dd/MM/yyyy' }}</div>
+                                      <div class="col-sm-3 email">{{ user_data.user.email }}</div>
+                                      <div class="col-sm-1"><p ng-repeat="occupation in user_data.user.occupations">{{ occupation.name }}</p></div>
+                                      <div class="col-sm-2"><p ng-repeat="ed in user_data.user.education_degrees">{{ ed.name }}</p></div>
+                                      {% endverbatim %}
                                     </div>
-                                    {% endverbatim %}
+                                    
                                     <div class="col-sm-4">
-                                        <div class="col-sm-4">Matemática, Português</div>
-                                        <div class="col-sm-2">SP</div>
-                                        <div class="col-sm-3">Campinas</div>
+                                        {% verbatim %}
+                                        <div class="col-sm-4"><p ng-repeat="discipline in user_data.user.disciplines">{{ discipline.name }}</p></div>
+                                        <div class="col-sm-2">{{ user_data.user.city.uf }}</div>
+                                        <div class="col-sm-3">{{ user_data.user.city.name }}</div>
+                                        {% endverbatim %}
                                         <div class="col-md-3 col-sm-3 col-xs-12 textright">
-                                            <span class="label label-default pointer" ng-click="show_user_progress_details(user);showLessons=!showLessons">
+                                            <span class="label label-default pointer" ng-click="show_user_progress_details(user_data);showLessons=!showLessons">
                                                 {% trans 'Show lessons' %}
                                                 <i class="fa" ng-class="{'fa fa-caret-down':!showLessons,'fa fa-caret-up':showLessons}"></i>
                                             </span>
@@ -224,11 +203,6 @@ wrapper-course-lesson
                                                           <div class="progress-bar" style="width:{{ lesson.progress }}%;"></div>
                                                       </div>
                                                   </div>
-                                                  <!--<div class="col-lg-5">
-                                                      <span>0 perguntas no fórum</span>
-                                                      <span>0 respostas no fórum</span>
-                                                      <span>0 anotações</span>
-                                                  </div>-->
 
                                               {% endverbatim %}
                                           </div>
@@ -260,11 +234,6 @@ wrapper-course-lesson
                                             <div class="progress-bar" style="width:{{ lesson.progress }}%;"></div>
                                         </div>
                                     </div>
-                                    <!--<div class="col-lg-5">
-                                        <span>0 perguntas no fórum</span>
-                                        <span>0 respostas no fórum</span>
-                                        <span>0 anotações</span>
-                                    </div>-->
                                 </div>
                                 {% endverbatim %}
                             </li>
