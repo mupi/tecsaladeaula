@@ -48,6 +48,7 @@ class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
         model = School
 
+
 class SchoolCompleteSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=True)
     school_type_complete = serializers.SerializerMethodField('get_school_type_complete')
@@ -73,20 +74,13 @@ class TimtecUserSchoolCompleteSerializer(serializers.ModelSerializer):
         model = TimtecUserSchool
 
 
-class TimtecProfileSchoolSerializer(serializers.ModelSerializer):
-    school = SchoolCompleteSerializer(required=True)
-    education_levels = EducationLevelSerializer(many=True, required=True)
-
-    class Meta:
-        model = TimtecUserSchool
-
 class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)
     occupations = OccupationSerializer(many=True, required=False)
     disciplines = DisciplineSerializer(many=True, required=False)
     education_degrees = EducationDegreeSerializer(required=False, many=True)
-    schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True)
+    schools = TimtecUserSchoolCompleteSerializer(source='timtecuserschool_set', many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('city', 'occupations', 'disciplines', 'education_degrees', 'schools')
+        fields = ('first_name', 'city', 'occupations', 'disciplines', 'education_degrees', 'schools')
