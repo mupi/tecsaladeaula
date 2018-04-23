@@ -76,11 +76,12 @@ class ExportUsersView(View):
         first = True
         string_from_array = ''
         for o in array.all():
+            print o.name
             if first:
                 first = False
-                string_from_array = ''.join((string_from_array, o.name)).encode('utf-8')
+                string_from_array = ''.join((string_from_array, o.name.encode('utf-8')))
             else:
-                string_from_array = '|'.join((string_from_array, o.name)).encode('utf-8')
+                string_from_array = '|'.join((string_from_array, o.name.encode('utf-8')))
         return string_from_array
 
     def get(self, request, *args, **kwargs):
@@ -108,14 +109,16 @@ class ExportUsersView(View):
             if(u.is_active):
                 ativo = 'S'
             occupations = self.generate_string_from_array(u.occupations)
+            education = self.generate_string_from_array(u.education_degrees)
+            disciplines = self.generate_string_from_array(u.disciplines)
             print occupations
             writer.writerow([
                 u.first_name + ' ' + u.last_name,
                 u.email,
                 u.business_email,
                 occupations,
-                u.education_degrees,
-                u.disciplines,
+                education,
+                disciplines,
                 u.city.uf.name,
                 u.city.name,
                 adm,
