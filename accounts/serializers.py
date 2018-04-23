@@ -73,11 +73,11 @@ class TimtecProfileSerializer(serializers.ModelSerializer):
     occupations = OccupationSerializer(many=True, required=False)
     disciplines = DisciplineSerializer(many=True, required=False)
     education_degrees = EducationDegreeSerializer(required=False, many=True)
-    schools = TimtecUserSchoolCompleteSerializer(source='timtecuserschool_set', many=True)
+    schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('first_name', 'city', 'occupations', 'disciplines', 'education_degrees', 'schools')
+        fields = ('first_name', 'email', 'city', 'occupations', 'disciplines', 'education_degrees', 'schools')
 
 class CourseProgressSerializer(serializers.ModelSerializer):
     course_progress = serializers.SerializerMethodField('get_course_progress')
