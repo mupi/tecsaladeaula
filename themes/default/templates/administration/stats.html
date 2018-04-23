@@ -128,7 +128,7 @@ wrapper-course-lesson
                         <div class="row" ng-show="users_reports.$resolved">
                             <div class="col-sm-8  margin-b10">
                                 <h3>{% trans 'Students progress' %}</h3>
-                                <h4>{% trans 'Total number of students' %}: {% verbatim %}{{ users_reports.length }}{% endverbatim %}</h4   >
+                                <h4>{% trans 'Total number of students' %}: {% verbatim %}{{ users_reports.count }}{% endverbatim %}</h4   >
                             </div>
 
                         </div>
@@ -154,7 +154,7 @@ wrapper-course-lesson
                           </li>
                         </ul>
                         <ul class="students" ng-show="users_reports.$resolved">
-                            <li ng-repeat="user_data in users_reports">
+                            <li ng-repeat="user_data in users_reports.results">
                                   <div class="row">
                                     <div class="col-sm-8">
                                       {% verbatim %}
@@ -241,22 +241,21 @@ wrapper-course-lesson
                         </div>
                     </div>
                 </div>
+                <pagination
+                    total-items="users_reports.count"
+                    items-per-page="50"
+                    ng-model="filters.page"
+                    ng-change="filter_stats()"
+                    max-size="5"
+                    boundary-links="true"
+                    previous-text="{% trans 'Previous' %}"
+                    next-text="{% trans 'Next' %}"
+                    first-text="{% trans 'First' %}"
+                    last-text="{% trans 'Last' %}">
+                </pagination>
             </div>
         </section>
     </section>
-    <!--Deveria incluir pagination -->
-    <pagination total-items="total_users_found"
-                items-per-page="50"
-                ng-model="current_page"
-                ng-change="page_changed()"
-                max-size="5"
-                boundary-links="true"
-                previous-text="{% trans 'Previous' %}"
-                next-text="{% trans 'Next' %}"
-                first-text="{% trans 'First' %}"
-                last-text="{% trans 'Last' %}"
-              ng-hide="filtered">
-    </pagination>
 </div>
 
 
