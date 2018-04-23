@@ -68,7 +68,61 @@ class UserAdminView(AdminView):
     def get_context_data(self, **kwargs):
         context = super(UserAdminView, self).get_context_data(**kwargs)
         context['total_users_number'] = User.objects.count()
+        print context
         return context
+
+class ExportUsersView(View):
+    def generate_string_from_array(self, array):
+        first = True
+        string_from_array = ''
+        for o in array.all():
+            if first:
+                first = False
+                string_from_array = ''.join((string_from_array, o.name)).encode('utf-8')
+            else:
+                string_from_array = '|'.join((string_from_array, o.name)).encode('utf-8')
+        return string_from_array
+
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'Nome',
+            'Email',
+            'Email Adicional',
+            'Ocupação',
+            'Ano/Série',
+            'Disciplinas',
+            'Estado',
+            'Cidade',
+            'Administrador',
+            'Ativo',
+        ])
+        for u in User.objects.all():
+            adm = 'N'
+            ativo = 'N'
+            if(u.is_staff):
+                adm = 'S'
+            if(u.is_active):
+                ativo = 'S'
+            occupations = self.generate_string_from_array(u.occupations)
+            print occupations
+            writer.writerow([
+                u.first_name + ' ' + u.last_name,
+                u.email,
+                u.business_email,
+                occupations,
+                u.education_degrees,
+                u.disciplines,
+                u.city.uf.name,
+                u.city.name,
+                adm,
+                ativo,
+            ])
+
+        return response
 
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):

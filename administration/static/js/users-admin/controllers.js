@@ -79,6 +79,11 @@
                 $scope.filter_users();
             };
 
+            $scope.export_csv = function() {
+                console.log('export csv');
+                $window.open('/admin/users/export');
+            };
+
             $scope.update_user = function(user) {
                 UserAdmin.get({user_id: user.id}, function(u){
                     u.is_active = user.is_active;
