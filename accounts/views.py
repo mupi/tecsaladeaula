@@ -22,7 +22,7 @@ from core.permissions import IsAdmin
 from .forms import SignupForm, ProfilePasswordForm
 from .permissions import IsProfessorOrReadOnly
 from .models import State, City, Occupation, Discipline, School, EducationDegree, EducationLevel, TimtecUserSchool
-from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecUserSchoolCompleteSerializer
+from .serializers import SchoolSerializer, TimtecUserSchoolSerializer, TimtecProfileSchoolSerializer
 import json
 
 
@@ -57,9 +57,12 @@ class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileEmailPasswordEditView, self).get_context_data(**kwargs)
-        data = {'email' : self.request.user.email, 'business_email': self.request.user.business_email}
-        form  = ProfilePasswordForm(initial=data)
-        context['form_email_password'] = form
+        form = ProfileEditForm(instance=self.request.user)
+        context['form'] = form
+
+        pass_data = {'business_email': self.request.user.business_email}
+        pass_form  = ProfilePasswordForm(initial=pass_data)
+        context['form_email_password'] = pass_form
         context['account_pane'] = True
         return context
 
@@ -86,7 +89,7 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     def get_serializer_class(self):
         print(self.action)
         if self.action == 'retrieve':
-            return TimtecUserSchoolCompleteSerializer
+            return TimtecProfileSchoolSerializer
         return TimtecUserSchoolSerializer
 
     def destroy(self, request, pk=None):
@@ -121,25 +124,22 @@ class TimtecUserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TimtecUserAdminViewSet(viewsets.ModelViewSet):
     model = get_user_model()
-    # lookup_field = 'id'
-    # filter_backends = (filters.OrderingFilter,)
     permission_classes = (IsAdmin, )
     serializer_class = TimtecUserAdminSerializer
-    ordering = ('first_name', 'username',)
-    # search_fields = ('first_name', 'last_name', 'username', 'email')
+    paginate_by_param = 'page_size'
+    paginate_by = 50
 
     def get_queryset(self):
-        page = self.request.QUERY_PARAMS.get('page')
-        keyword = self.request.QUERY_PARAMS.get('keyword')
-        admin = self.request.QUERY_PARAMS.get('admin')
-        blocked = self.request.QUERY_PARAMS.get('blocked')
+        page = self.request.GET.get('page')
+        keyword = self.request.GET.get('keyword')
+        admin = self.request.GET.get('admin')
+        blocked = self.request.GET.get('blocked')
+        uf = self.request.GET.get('uf')
+        city = self.request.GET.get('city')
+        education_degrees = self.request.GET.getlist('education_degrees')
+        occupations = self.request.GET.getlist('occupations')
+        disciplines = self.request.GET.getlist('disciplines')
         queryset = super(TimtecUserAdminViewSet, self).get_queryset().order_by('username')
-
-        if keyword:
-            queryset = queryset.filter(Q(first_name__icontains=keyword) |
-                                       Q(last_name__icontains=keyword) |
-                                       Q(username__icontains=keyword) |
-                                       Q(email__icontains=keyword))
 
         if admin == 'true':
             queryset = queryset.filter(is_superuser=True)
@@ -147,17 +147,29 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
         if blocked == 'true':
             queryset = queryset.filter(is_active=False)
 
-        if page:
-            paginator = Paginator(queryset, 50)
-            try:
-                queryset = paginator.page(page)
-            except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
-                queryset = paginator.page(1)
-            except EmptyPage:
-                # If page is out of range (e.g. 9999),
-                # deliver last page of results.
-                queryset = paginator.page(paginator.num_pages)
+        if keyword:
+            queryset = queryset.filter(Q(first_name__icontains=keyword) |
+                                       Q(last_name__icontains=keyword) |
+                                       Q(username__icontains=keyword) |
+                                       Q(email__icontains=keyword))
+        if occupations:
+            queryset = queryset.filter(occupations__in=occupations).distinct()
+
+        if disciplines:
+            if disciplines.index('-1') >= 0:
+                other_disciplines = Discipline.objects.filter(visible=False)
+                for d in other_disciplines:
+                    disciplines.append(d.id)
+            queryset = queryset.filter(disciplines__in=disciplines).distinct()
+
+        if education_degrees:
+            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
+
+        if uf:
+            queryset = queryset.filter(city__uf=uf)
+        if city:
+            queryset = queryset.filter(city__id=city)
+
 
         return queryset
 

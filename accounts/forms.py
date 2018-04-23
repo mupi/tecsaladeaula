@@ -51,14 +51,14 @@ class ProfileEditForm(forms.ModelForm):
 
 
 class ProfilePasswordForm(forms.ModelForm):
-    email = forms.RegexField(max_length=75, regex=r"^[\w.@+-]+$")
+    # email = forms.RegexField(max_length=75, regex=r"^[\w.@+-]+$")
     business_email = forms.RegexField(max_length=75, regex=r"^[\w.@+-]+$", required=False)
     password1 = forms.CharField(widget=forms.PasswordInput, required=False)
     password2 = forms.CharField(widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User
-        fields = ('email','business_email')
+        fields = ('business_email',)
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')

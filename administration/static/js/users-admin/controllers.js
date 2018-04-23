@@ -15,58 +15,88 @@
             var error_delete_user_msg = 'Erro ao apagar usuário.';
 
             /*ini 1*/
-            $scope.occupations = [];
-            $scope.disciplines = [];
-            $scope.education_degrees = [];
+            $scope.filters = {};
+            $scope.occupations = {};
+            $scope.disciplines = {};
+            $scope.education_degrees = {};
+            $scope.occupations.selected = [];
+            $scope.disciplines.selected = [];
+            $scope.education_degrees.selected = [];
 
             $scope.avaiable_occupations = Occupations.query();
-            $scope.avaiable_disciplines = Disciplines.query();
+            Disciplines.query(function(disciplines){
+                $scope.avaiable_disciplines = disciplines;
+                $scope.avaiable_disciplines.push({'name': 'Outras', 'id': -1});
+            });
+            
             $scope.avaiable_education_degrees = EducationDegrees.query();
 
-            States.query(function(states){
-                $scope.list_states = states;
-                $scope.filters_selected_uf = states[0];
+            States.query(function(ufs){
+                $scope.list_ufs = ufs;
+                $scope.filters.uf = "";
             });
 
 
             $scope.filter_cities = function(){
-                Cities.query({uf : $scope.filters_selected_uf}, function(cities){
+                Cities.query({uf : $scope.filters.uf}, function(cities){
                     $scope.list_cities = cities;
-                    $scope.selected_city_id = null;
+                    $scope.filters.city = "";
                 });
             }
 
             /*fin 1*/
 
-            $scope.total_users_found = parseInt($window.total_users_found, 10);
-
-            $scope.users_page = UserAdmin.query({page: 1});
-
-            $scope.filters = {};
+            UserAdmin.get({page: 1}, function(users_page){
+                $scope.total_users_found = users_page.count;
+                $scope.users_page = users_page;
+            });
 
             $scope.filter_users = function() {
-                $scope.users_page = UserAdmin.query($scope.filters, function(users_page) {
+                $scope.filters.occupations = [];
+                $scope.occupations.selected.forEach(function(el){
+                    $scope.filters.occupations.push(el.id);
+                });
+
+                $scope.filters.education_degrees = [];
+                $scope.education_degrees.selected.forEach(function(el){
+                    $scope.filters.education_degrees.push(el.id);
+                });
+
+                $scope.filters.disciplines = [];
+                $scope.disciplines.selected.forEach(function(el){
+                    $scope.filters.disciplines.push(el.id);
+                });
+                
+                UserAdmin.get($scope.filters, function(users_page) {
                     $scope.filtered = true;
-                    $scope.total_users_found = users_page.length;
+                    $scope.total_users_found = users_page.count;
+                    $scope.users_page = users_page;
                 });
             };
 
-            $scope.page_changed = function() {
-                $scope.users_page = UserAdmin.query({page: $scope.current_page});
+            $scope.reset_filter = function() {
+                $scope.filters.page = 1;
+                $scope.filter_users();
             };
 
             $scope.update_user = function(user) {
-                user.$update({user_id: user.id}, function() {
-                    $scope.alert.success(success_save_msg);
-                }, function() {
-                    $scope.alert.error(error_save_msg);
+                UserAdmin.get({user_id: user.id}, function(u){
+                    u.is_active = user.is_active;
+                    u.is_superuser = user.is_superuser;
+                    u.$update({user_id: user.id})
+                    .then(function(res) {
+                        $scope.alert.success(success_save_msg);
+                    })
+                    .catch(function(req){
+                        $scope.alert.error(error_save_msg);
+                    })
                 });
             };
 
             $scope.delete_user = function(user, index) {
                 if (confirm(confirm_delete_user_msg)) {
-                    user.$remove({user_id: user.id}, function() {
-                        $scope.users_page.splice(index, 1);
+                    UserAdmin.remove({user_id: user.id}, function() {
+                        $scope.page_changed();
                         $scope.alert.success(success_delete_user_msg);
                     }, function() {
                         $scope.alert.error(error_delete_user_msg);

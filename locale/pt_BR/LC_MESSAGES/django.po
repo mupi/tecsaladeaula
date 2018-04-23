@@ -79,7 +79,7 @@ msgstr "Sobrenome"
 msgid "Staff status"
 msgstr "Situação"
 
-#: accounts/models.py:28 themes/default/templates/administration/users.html:78
+#: accounts/models.py:28 themes/default/templates/administration/users.html:160
 msgid "Active"
 msgstr "Ativo"
 
@@ -93,12 +93,16 @@ msgstr "Estrutura"
 
 #: accounts/models.py:32 core/forms.py:15
 #: themes/default/templates/profile-edit.html:95
-#: themes/default/templates/profile.html:27
+#: themes/default/templates/profile.html:45
+#: themes/default/templates/administration/stats.html:113
+#: themes/default/templates/administration/users.html:59
+#: themes/default/templates/administration/users.html:152
 msgid "Occupation"
 msgstr "Atuação"
 
-#: accounts/models.py:33 themes/default/templates/profile-edit.html:136
-#: themes/default/templates/profile.html:45
+#: accounts/models.py:33 themes/default/templates/profile-edit.html:132
+#: themes/default/templates/profile.html:56
+#: themes/default/templates/administration/users.html:228
 msgid "Site"
 msgstr "Página"
 
@@ -124,8 +128,9 @@ msgstr "usuários"
 msgid "Email address"
 msgstr "Endereço de Email"
 
-#: activities/models.py:26 themes/default/templates/profile-edit.html:169
-#: themes/default/templates/profile-edit.html:361
+#: activities/models.py:26 themes/default/templates/profile-edit.html:165
+#: themes/default/templates/profile-edit.html:350
+#: themes/default/templates/administration/users.html:241
 msgid "Type"
 msgstr "Tipo"
 
@@ -188,7 +193,7 @@ msgstr "Assunto"
 #: themes/default/templates/_course_authors_inline.html:19
 #: themes/default/templates/_course_authors_inline.html:42
 #: themes/default/templates/_course_professors_modal.html:69
-#: themes/default/templates/profile-edit.html:355
+#: themes/default/templates/profile-edit.html:344
 #: themes/default/templates/administration/courses.html:126
 #: themes/tecsaladeaula/templates/_course_authors_inline.html:19
 #: themes/tecsaladeaula/templates/_course_authors_inline.html:42
@@ -200,7 +205,6 @@ msgstr "Nome"
 #: themes/default/templates/messages.html:81
 #: themes/default/templates/administration/permissions.html:48
 #: themes/default/templates/administration/permissions.html:97
-#: themes/default/templates/administration/users.html:75
 msgid "Email"
 msgstr "Email"
 
@@ -440,7 +444,7 @@ msgstr "Aula"
 
 #: core/models.py:513 themes/default/templates/course.html:380
 #: themes/default/templates/course.html:491
-#: themes/default/templates/administration/stats.html:77
+#: themes/default/templates/administration/stats.html:86
 #: themes/tecsaladeaula/templates/course.html:458
 #: themes/tecsaladeaula/templates/course.html:570
 msgid "Lessons"
@@ -463,7 +467,7 @@ msgstr "Anotações"
 msgid "Units"
 msgstr "Unidades"
 
-#: core/models.py:575
+#: core/models.py:575 themes/default/templates/administration/users.html:268
 msgid "Student Progress"
 msgstr "Progresso do Estudante"
 
@@ -507,8 +511,8 @@ msgstr "email"
 #: ifs/forms.py:20 themes/default/templates/_login_modal.html:19
 #: themes/default/templates/_login_modal.html:21
 #: themes/default/templates/_signup_modal.html:23
-#: themes/default/templates/profile-edit.html:302
-#: themes/default/templates/profile-edit.html:307
+#: themes/default/templates/profile-edit.html:291
+#: themes/default/templates/profile-edit.html:296
 #: themes/default/templates/account/email_confirmed.html:18
 #: themes/default/templates/account/email_confirmed.html:20
 #: themes/default/templates/account/login.html:23
@@ -546,10 +550,13 @@ msgstr "Senha (novamente)"
 msgid "Accept "
 msgstr "Aceitar"
 
-#: ifs/models.py:9 themes/default/templates/profile-edit.html:123
-#: themes/default/templates/profile-edit.html:170
-#: themes/default/templates/profile-edit.html:381
-#: themes/default/templates/profile.html:36
+#: ifs/models.py:9 themes/default/templates/profile-edit.html:120
+#: themes/default/templates/profile-edit.html:167
+#: themes/default/templates/profile-edit.html:370
+#: themes/default/templates/administration/stats.html:119
+#: themes/default/templates/administration/users.html:50
+#: themes/default/templates/administration/users.html:158
+#: themes/default/templates/administration/users.html:243
 #: themes/default/templates/ifs/signup-completion.html:59
 #: themes/if/templates/account/signup.html:70
 #: themes/ifs-colors/templates/ifs/signup-completion.html:59
@@ -594,6 +601,7 @@ msgid "Note"
 msgstr "Anotação"
 
 #: themes/default/templates/_admin_header_inline.html:10
+#: themes/default/templates/administration/users.html:267
 msgid "Course name"
 msgstr "Nome do curso"
 
@@ -715,9 +723,9 @@ msgstr "Fechar"
 #: themes/default/templates/course.html:52
 #: themes/default/templates/course.html:434
 #: themes/default/templates/home.html:31
-#: themes/default/templates/profile-edit.html:255
-#: themes/default/templates/profile-edit.html:323
-#: themes/default/templates/profile-edit.html:411
+#: themes/default/templates/profile-edit.html:251
+#: themes/default/templates/profile-edit.html:312
+#: themes/default/templates/profile-edit.html:400
 #: themes/default/templates/account/password_reset_from_key.html:32
 #: themes/default/templates/account/password_reset_from_key.html:70
 #: themes/default/templates/administration/lesson.html:37
@@ -857,7 +865,7 @@ msgid "Send"
 msgstr "Enviar"
 
 #: themes/default/templates/_forum_inline.html:68
-#: themes/default/templates/administration/stats.html:50
+#: themes/default/templates/administration/stats.html:51
 #: themes/tecsaladeaula/templates/_forum_inline.html:65
 msgid "Filter classes"
 msgstr "Filtrar por turma"
@@ -943,7 +951,7 @@ msgstr "Porque minha pergunta foi ocultada?"
 #: themes/default/templates/_login_modal.html:8
 #: themes/default/templates/_login_modal.html:11
 #: themes/default/templates/_signup_modal.html:16
-#: themes/default/templates/profile-edit.html:268
+#: themes/default/templates/profile-edit.html:264
 #: themes/default/templates/account/login.html:13
 #: themes/default/templates/account/login.html:16
 #: themes/default/templates/account/login.html:71
@@ -1006,11 +1014,13 @@ msgstr "Entrar"
 #: themes/default/templates/message.html:18
 #: themes/default/templates/messages.html:80
 #: themes/default/templates/profile-edit.html:83
+#: themes/default/templates/profile.html:36
 #: themes/default/templates/account/login_modal.html:70
 #: themes/default/templates/account/signup.html:15
 #: themes/default/templates/administration/permissions.html:47
 #: themes/default/templates/administration/permissions.html:96
-#: themes/default/templates/administration/users.html:76
+#: themes/default/templates/administration/stats.html:110
+#: themes/default/templates/administration/users.html:149
 #: themes/tecsaladeaula/templates/account/signup.html:13
 msgid "Full name"
 msgstr "Nome Completo"
@@ -1085,7 +1095,7 @@ msgstr "Aceitar os termos de uso"
 
 #: themes/default/templates/class_edit.html:31
 #: themes/default/templates/header.html:42
-#: themes/default/templates/administration/users.html:34
+#: themes/default/templates/administration/users.html:31
 #: themes/ifs-colors/templates/administration/users.html:11
 #: themes/tecsaladeaula/templates/_lesson-header-inline.html:81
 #: themes/tecsaladeaula/templates/header-lesson.html:35
@@ -1122,7 +1132,7 @@ msgstr "Selecione um professor"
 #: themes/default/templates/messages.html:83
 #: themes/default/templates/administration/permissions.html:51
 #: themes/default/templates/administration/permissions.html:99
-#: themes/default/templates/administration/users.html:79
+#: themes/default/templates/administration/users.html:161
 msgid "Actions"
 msgstr "Ações"
 
@@ -1207,7 +1217,7 @@ msgstr "tam. mínimo"
 #: themes/default/templates/course.html:159
 #: themes/default/templates/course.html:203
 #: themes/default/templates/course.html:268
-#: themes/default/templates/profile-edit.html:243
+#: themes/default/templates/profile-edit.html:239
 #: themes/default/templates/administration/lesson.html:142
 #: themes/tecsaladeaula/templates/course.html:134
 #: themes/tecsaladeaula/templates/course.html:178
@@ -1306,6 +1316,8 @@ msgid "Soon"
 msgstr "Em breve"
 
 #: themes/default/templates/courses.html:71
+#: themes/default/templates/administration/users.html:162
+#: themes/default/templates/administration/users.html:214
 #: themes/ifs-colors/templates/courses.html:90
 #: themes/tecsaladeaula/templates/courses.html:65
 msgid "More information"
@@ -1507,6 +1519,7 @@ msgid "Account Settings"
 msgstr "Configurações da conta"
 
 #: themes/default/templates/profile-edit.html:35
+#: themes/default/templates/profile.html:30
 msgid "Basic Information"
 msgstr "Dados Básicos"
 
@@ -1518,93 +1531,102 @@ msgstr "Permita que a comunidade Mupi te conheça!"
 msgid "Size limit 1 MB. JPG, GIF ou PNG"
 msgstr "Tamano máximo 1 MB. JPG, GIF ou PNG"
 
-#: themes/default/templates/profile-edit.html:112
-#: themes/default/templates/profile-edit.html:171
-#: themes/default/templates/profile-edit.html:372
+#: themes/default/templates/profile-edit.html:110
+#: themes/default/templates/profile-edit.html:166
+#: themes/default/templates/profile-edit.html:361
+#: themes/default/templates/administration/stats.html:118
+#: themes/default/templates/administration/users.html:43
+#: themes/default/templates/administration/users.html:157
+#: themes/default/templates/administration/users.html:242
 msgid "State"
 msgstr "Estado"
 
-#: themes/default/templates/profile-edit.html:146
-#: themes/default/templates/profile.html:54
+#: themes/default/templates/profile-edit.html:142
+#: themes/default/templates/profile.html:65
+#: themes/default/templates/administration/users.html:219
 msgid "Bio"
 msgstr "Biografia"
 
-#: themes/default/templates/profile-edit.html:159
+#: themes/default/templates/profile-edit.html:155
+#: themes/default/templates/administration/users.html:237
 msgid "School(s)/Institution(s) where you work"
 msgstr "Escola(s)/Instituição(ões) em que atua"
 
-#: themes/default/templates/profile-edit.html:162
-#: themes/default/templates/profile-edit.html:338
+#: themes/default/templates/profile-edit.html:158
+#: themes/default/templates/profile-edit.html:327
 msgid "Add school/institution"
 msgstr "Adicionar escola/instituição"
 
-#: themes/default/templates/profile-edit.html:168
+#: themes/default/templates/profile-edit.html:164
+#: themes/default/templates/administration/users.html:240
 msgid "Nome"
 msgstr ""
 
-#: themes/default/templates/profile-edit.html:172
+#: themes/default/templates/profile-edit.html:168
+#: themes/default/templates/administration/users.html:244
 msgid "Teaching Level"
 msgstr "Nível de Ensino"
 
-#: themes/default/templates/profile-edit.html:173
+#: themes/default/templates/profile-edit.html:169
 msgid "Atualizar"
 msgstr ""
 
-#: themes/default/templates/profile-edit.html:174
+#: themes/default/templates/profile-edit.html:170
 msgid "Remover"
 msgstr ""
 
-#: themes/default/templates/profile-edit.html:201
+#: themes/default/templates/profile-edit.html:197
 msgid "Teaching Experience"
 msgstr "Experiência Docente"
 
-#: themes/default/templates/profile-edit.html:203
+#: themes/default/templates/profile-edit.html:199
 msgid "Tell us what grades do you teach?"
 msgstr "Conte para nós com quais anos você atua!"
 
-#: themes/default/templates/profile-edit.html:207
+#: themes/default/templates/profile-edit.html:203
+#: themes/default/templates/administration/stats.html:114
+#: themes/default/templates/administration/users.html:79
+#: themes/default/templates/administration/users.html:153
 msgid "Grade"
 msgstr "Ano / Série"
 
-#: themes/default/templates/profile-edit.html:223
+#: themes/default/templates/profile-edit.html:219
 msgid "Subjects / Knowledge Area"
 msgstr "Disciplinas / Área de Conhecimento"
 
-#: themes/default/templates/profile-edit.html:238
+#: themes/default/templates/profile-edit.html:234
 msgid "Other Subject"
 msgstr "Outra"
 
-#: themes/default/templates/profile-edit.html:273
-#: themes/default/templates/profile-edit.html:275
+#: themes/default/templates/profile-edit.html:268
+#: themes/default/templates/administration/stats.html:112
+#: themes/default/templates/administration/users.html:150
 msgid "Main E-mail"
 msgstr "Email principal"
 
-#: themes/default/templates/profile-edit.html:279
-msgid "Confirm e-mail"
-msgstr "Confirmar email"
-
-#: themes/default/templates/profile-edit.html:287
-#: themes/default/templates/profile-edit.html:289
+#: themes/default/templates/profile-edit.html:276
+#: themes/default/templates/profile-edit.html:278
+#: themes/default/templates/administration/users.html:151
 msgid "Additional E-mail"
 msgstr "Email alternativo"
 
-#: themes/default/templates/profile-edit.html:310
+#: themes/default/templates/profile-edit.html:299
 msgid "New password"
 msgstr "Nova senha"
 
-#: themes/default/templates/profile-edit.html:313
+#: themes/default/templates/profile-edit.html:302
 msgid "Confirm new password"
 msgstr "Confirmar nova senha"
 
-#: themes/default/templates/profile-edit.html:341
+#: themes/default/templates/profile-edit.html:330
 msgid "Edit school/institution"
 msgstr "Editar escola/instituição"
 
-#: themes/default/templates/profile-edit.html:349
+#: themes/default/templates/profile-edit.html:338
 msgid "Fill out information about school/institution where you work"
 msgstr "Preencha os dados da escola/instituição onde você atua"
 
-#: themes/default/templates/profile-edit.html:392
+#: themes/default/templates/profile-edit.html:381
 msgid "Teaching Level that you teach"
 msgstr "Nível de Ensino em que atua"
 
@@ -1681,7 +1703,7 @@ msgstr "Carregando lista de turmas"
 
 #: themes/default/templates/user-courses.html:216
 #: themes/default/templates/administration/courses.html:156
-#: themes/default/templates/administration/stats.html:116
+#: themes/default/templates/administration/stats.html:148
 msgid "Show lessons"
 msgstr "Mostrar aulas"
 
@@ -1935,8 +1957,6 @@ msgid "All"
 msgstr "Todos"
 
 #: themes/default/templates/administration/courses.html:118
-#: themes/default/templates/administration/users.html:53
-#: themes/default/templates/administration/users.html:55
 msgid "Keyword"
 msgstr "Palavra-chave"
 
@@ -2007,11 +2027,11 @@ msgstr "Pesquisar usuário"
 msgid "Course reports"
 msgstr "Relatórios de curso"
 
-#: themes/default/templates/administration/stats.html:83
+#: themes/default/templates/administration/stats.html:93
 msgid "Loading students report"
 msgstr "Carregando relatórios de estudantes"
 
-#: themes/default/templates/administration/stats.html:87
+#: themes/default/templates/administration/stats.html:97
 msgid "Students progress"
 msgstr "Progresso do estudante"
 
@@ -2027,65 +2047,98 @@ msgstr "Disciplinas"
 msgid "Total number of students"
 msgstr "Número total de estudantes"
 
-#: themes/default/templates/administration/stats.html:92
+#: themes/default/templates/administration/stats.html:102
 msgid "Search student"
 msgstr "Estudante"
 
-#: themes/default/templates/administration/stats.html:122
+#: themes/default/templates/administration/stats.html:111
+msgid "Progress"
+msgstr "Progresso"
+
+#: themes/default/templates/administration/stats.html:117
+#, fuzzy
+msgid "Subjects"
+msgstr "Assunto"
+
+#: themes/default/templates/administration/stats.html:157
 msgid "Loading student report"
 msgstr "Carregando relatório de estudantes"
 
-#: themes/default/templates/administration/stats.html:150
+#: themes/default/templates/administration/stats.html:189
 msgid "Average student progress per class"
 msgstr "Progresso médio dos estudantes por turma"
 
-#: themes/default/templates/administration/stats.html:152
+#: themes/default/templates/administration/stats.html:191
 msgid "Loading lessons report"
 msgstr "Carregando relatórios de aulas"
 
-#: themes/default/templates/administration/users.html:39
-msgid "Users found:"
-msgstr "Usuários encontrados:"
-
-#: themes/default/templates/administration/users.html:45
-msgid "Administrators"
-msgstr "Administradores"
-
-#: themes/default/templates/administration/users.html:48
-msgid "Blockeds"
-msgstr "Bloqueados"
-
-#: themes/default/templates/administration/users.html:59
-msgid "Filter"
-msgstr "Filtro"
-
-#: themes/default/templates/administration/users.html:66
-msgid "Loading users list"
-msgstr "Carregando lista de usuários"
-
-#: themes/default/templates/administration/users.html:69
-msgid "No users found"
-msgstr "Nenhum usuário encontrado"
-
-#: themes/default/templates/administration/users.html:77
-msgid "Administrator"
-msgstr "Administrador"
-
-#: themes/default/templates/administration/users.html:105
+#: themes/default/templates/administration/stats.html:228
+#: themes/default/templates/administration/users.html:302
 msgid "Previous"
 msgstr "Anterior"
 
-#: themes/default/templates/administration/users.html:106
+#: themes/default/templates/administration/stats.html:229
+#: themes/default/templates/administration/users.html:303
 msgid "Next"
 msgstr "Proximo"
 
-#: themes/default/templates/administration/users.html:107
+#: themes/default/templates/administration/stats.html:230
+#: themes/default/templates/administration/users.html:304
 msgid "First"
 msgstr "Primeiro"
 
-#: themes/default/templates/administration/users.html:108
+#: themes/default/templates/administration/stats.html:231
+#: themes/default/templates/administration/users.html:305
 msgid "Last"
 msgstr "ùltimo"
+
+#: themes/default/templates/administration/users.html:36
+msgid "Users found:"
+msgstr "Usuários encontrados:"
+
+#: themes/default/templates/administration/users.html:91
+#: themes/default/templates/administration/users.html:156
+msgid "Disciplines"
+msgstr "Disciplinas"
+
+#: themes/default/templates/administration/users.html:111
+msgid "Administrators"
+msgstr "Administradores"
+
+#: themes/default/templates/administration/users.html:114
+msgid "Blockeds"
+msgstr "Bloqueados"
+
+#: themes/default/templates/administration/users.html:119
+#: themes/default/templates/administration/users.html:121
+#, fuzzy
+msgid "E-mail or Name"
+msgstr "Nome de usuário ou email"
+
+#: themes/default/templates/administration/users.html:127
+#, fuzzy
+msgid "Search"
+msgstr "Pesquisar usuário"
+
+#: themes/default/templates/administration/users.html:139
+msgid "Loading users list"
+msgstr "Carregando lista de usuários"
+
+#: themes/default/templates/administration/users.html:142
+msgid "No users found"
+msgstr "Nenhum usuário encontrado"
+
+#: themes/default/templates/administration/users.html:159
+msgid "Administrator"
+msgstr "Administrador"
+
+#: themes/default/templates/administration/users.html:207
+msgid "Show"
+msgstr "Mostrar"
+
+#: themes/default/templates/administration/users.html:264
+msgid "Courses enrolled"
+msgstr "Cursos Inscritos"
 
 #: themes/default/templates/flatpages/default.html:48
 msgid "Page not found. Click here to create it."
@@ -2188,6 +2241,15 @@ msgstr "Espanhol"
 #: timtec/settings.py:91
 msgid "English"
 msgstr "Inglês"
+
+#~ msgid "Last access"
+#~ msgstr "Último acesso"
+
+#~ msgid "Confirm e-mail"
+#~ msgstr "Confirmar email"
+
+#~ msgid "Filter"
+#~ msgstr "Filtro"
 
 #~ msgid "Connect with Facebook"
 #~ msgstr "Conectar ao Facebook"
