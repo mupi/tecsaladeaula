@@ -4,7 +4,7 @@ from __future__ import division
 import datetime
 
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -314,6 +314,13 @@ class CourseStudent(models.Model):
     def units_done_by_lesson(self, lesson):
         return StudentProgress.objects.exclude(complete=None)\
                                       .filter(user=self.user, unit__lesson=lesson)
+
+    def get_last_access(self):
+        ul = StudentProgress.objects.filter(Q(user=self.user) & Q(unit__in=self.course.unit_set))
+        if (len(ul) > 0):
+            return ul.latest('last_access').last_access
+        return None
+
 
     def get_lesson_finish_time(self, lesson):
         latest = StudentProgress.objects.exclude(complete=None).filter(user=self.user, unit__lesson=lesson).order_by('complete')
