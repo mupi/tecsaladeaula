@@ -212,6 +212,18 @@ wrapper-course-lesson
                                   </div>
                               </li>
                         </ul>
+                        <pagination
+                            total-items="users_reports.count"
+                            items-per-page="50"
+                            ng-model="filters.page"
+                            ng-change="filter_stats()"
+                            max-size="5"
+                            boundary-links="true"
+                            previous-text="{% trans 'Previous' %}"
+                            next-text="{% trans 'Next' %}"
+                            first-text="{% trans 'First' %}"
+                            last-text="{% trans 'Last' %}">
+                        </pagination>
                     </div>
 
                     <!-- tab de AULAS -->
@@ -242,18 +254,6 @@ wrapper-course-lesson
                         </div>
                     </div>
                 </div>
-                <pagination
-                    total-items="users_reports.count"
-                    items-per-page="50"
-                    ng-model="filters.page"
-                    ng-change="filter_stats()"
-                    max-size="5"
-                    boundary-links="true"
-                    previous-text="{% trans 'Previous' %}"
-                    next-text="{% trans 'Next' %}"
-                    first-text="{% trans 'First' %}"
-                    last-text="{% trans 'Last' %}">
-                </pagination>
             </div>
         </section>
     </section>

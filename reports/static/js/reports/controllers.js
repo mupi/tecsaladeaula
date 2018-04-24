@@ -29,7 +29,7 @@
                     else
                         $scope.filters.until_date = Date.parse($scope.until_date);
 
-                    CourseStats.query($scope.filters, function (course_stats){
+                    CourseStats.get({courseId : $scope.course_id}, function (course_stats){
                         $scope.course_stats = course_stats;
                     });
                     CourseUserReport.get($scope.filters, function (users_reports){
