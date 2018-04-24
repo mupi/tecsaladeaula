@@ -13,21 +13,31 @@
     text-align: center;
     top: 0%;
     right: -38px;
+    @media (max-width: @screen-sm-min) {
+        display: none;
+    }
+
 }
 
 body.mini-navbar .navbar-static-side {
     width: 70px;
+    background: #6597d8;
+    @media (max-width: @screen-sm-min) {
+        display: none;
+    }
 }
 
-/*esta classe vai dentro do LI , no span*/
-body.mini-navbar .nav-label, body.mini-navbar .units-menu a,
+body.mini-navbar .nav-label,
+body.mini-navbar .units-menu a,
+body.mini-navbar .units-menu .nav-lessons,
+body.mini-navbar .units-menu h2,
 body.mini-navbar .lesson-units-nav ,
 body.mini-navbar nav.course-lessons {
     display: none !important;
 }
 
 .pace-done .navbar-static-side, .pace-done .nav-header, .pace-done li.active,
-.pace-done #page-wrapper, .pace-done .footer {
+.pace-done .activity-column, .pace-done .footer {
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
@@ -39,11 +49,20 @@ body.mini-navbar nav.course-lessons {
   @media (min-width: 768px){
     z-index: 101;
     position: absolute;
-    width: 620px;
+    width: 500px;
     }
 }
 
 
+body.mini-navbar .activity-column {
+    margin: 0 0 0 70px;
+}
+
+.activity-column {
+    @media (min-width: 768px){
+      margin: 0 0 0 500px;
+    }
+}
 /*FIN */
 
 
@@ -94,7 +113,7 @@ body.mini-navbar nav.course-lessons {
   height: 100%;
   margin-left: -15px;
 /*  overflow-y: scroll;
-  overflow-x: hidden;*/ /*commented 20180423*/
+  overflow-x: hidden;*/
   padding: 0;
   z-index: 99999;
 }
@@ -196,7 +215,10 @@ body.mini-navbar nav.course-lessons {
     right: 0;
     top: 50px;
     z-index: 1;
+    width: 100%;
+    padding-left:500px;
   }
+
   background-color: #ddd;
   .btn{
     background-color: #5DAB71;
@@ -207,6 +229,10 @@ body.mini-navbar nav.course-lessons {
       background-color: darken(#5DAB71, 10%);
     }
   }
+}
+
+#course-content.container-fluid{
+  padding-right: 30px !important;
 }
 
 #course-content

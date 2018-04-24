@@ -48,7 +48,7 @@ $(document).ready(function() {
         <!-- ROW -->
         <div ng-controller="MainCtrl" class="row">
 
-          <div class="navbar-static-side lesson-sidebar col-sm-4">
+          <div class="navbar-static-side lesson-sidebar">
               <div class="navbar-header btn-show-hide-menu">
                 <button class="navbar-minimalize minimalize-styl-2 btn btn-primary"><i class="fa fa-bars"></i> </button>
               </div>
@@ -130,7 +130,7 @@ $(document).ready(function() {
             <!-- END UNITS NAVIGATION FOR PHONES -->
             {% endverbatim %}
 
-            <div class="activity-column col-sm-8 col-sm-offset-4">
+            <div class="activity-column">
 
                 <!--
                 this class exists to circunvent a flash + youtube api error
@@ -221,7 +221,6 @@ $('.navbar-minimalize:not(.binded)').addClass("binded").click(function () {
 
 window.SmoothlyMenu = function() {
     if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
-        console.log("primeiro if");
         // Hide menu in order to smoothly turn on when maximize menu
       //  $('.lesson-sidebar').hide();
         // For smoothly turn on menu
@@ -231,7 +230,6 @@ window.SmoothlyMenu = function() {
             }, 100);
     }  else {
         // Remove all inline style from jquery fadeIn function to reset menu state
-          console.log("terceiro if");
         $('#side-menu').removeAttr('style');
     }
 };
