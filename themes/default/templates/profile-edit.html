@@ -270,7 +270,11 @@ wrapper-course-lesson
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Additional E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{form_email_password.business_email.value}}">
+                                        {% if form_email_password.business_email.value == None %}
+                                            <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="">
+                                        {% else %}
+                                            <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{ form_email_password.business_email.value }}">
+                                        {% endif %}
                                         {% for error in errors %}<small>{{error}}</small>{% endfor %}
                                     </div>
 
