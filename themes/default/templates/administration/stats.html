@@ -64,10 +64,10 @@ wrapper-course-lesson
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 without-paddings-rl">
                       <!-- Date range example -->
                           <div class="col-xs-6 without-paddings-rl">
-                            <input type="text" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="de" bs-datepicker>
+                            <input type="text" class="form-control" ng-model="from_date" data-max-date="{{until_date}}" placeholder="de" bs-datepicker>
                           </div>
                           <div class="col-xs-6 without-paddings-rl">
-                            <input type="text" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="até" bs-datepicker>
+                            <input type="text" class="form-control" ng-model="until_date" data-min-date="{{from_date}}" placeholder="até" bs-datepicker>
                           </div>
                     </div>
 
@@ -77,11 +77,12 @@ wrapper-course-lesson
                         <label class="control-label">% {% trans "Progress" %}</label>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 without-paddings-rl">
-                        <select class="form-control" id="filter-class">
-                                <option value="">0%</option>
-                                <option value="">< 50%</option>
-                                <option value="">>= 50%</option>
-                                <option value="">>= 80%</option>
+                        <select class="form-control" ng-model="filters.percentage_completion" id="filter-class">
+                                <option value="0">Todos</option>
+                                <option value="1">0%</option>
+                                <option value="2">< 50%</option>
+                                <option value="3">entre 50% e 80%</option>
+                                <option value="4">>= 80%</option>
                         </select>
                       </div>
                   </div>
@@ -94,13 +95,13 @@ wrapper-course-lesson
                         <label class="control-label">Dias Inatividade</label>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-left-3px">
-                        <input type="number" class="form-control ng-pristine ng-valid">
+                        <input type="number" ng-model="filters.days_inactive" class="form-control ng-pristine ng-valid">
                       </div>
                   </div>
                   <div class="col-sm-2 col-sx-12 without-paddings-rl">
                   </div>
                   <div class="col-sm-2 col-sx-12 without-paddings-rl">
-                        <button class="btn btn-info" ng-click="filter_users()">Pesquisar</button>
+                        <button class="btn btn-info" ng-click="filter_stats()">Pesquisar</button>
                   </div>
                   <div class="col-sm-2 col-sx-12 without-paddings-rl">
                         <button class="btn btn-info" ng-click=""><i class="fa fa-download"></i> Exportar</button>

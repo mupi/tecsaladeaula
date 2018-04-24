@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from rest_framework import serializers
+from rest_framework import serializers, pagination
 from core.models import CourseStudent, Course
 
 from accounts.serializers import TimtecProfileSerializer
+
 
 
 class UserCourseStatsSerializer(serializers.ModelSerializer):
@@ -21,6 +22,9 @@ class UserCourseStatsSerializer(serializers.ModelSerializer):
     def get_last_access(self, obj):
         return obj.get_last_access()
 
+class PaginatedUserCourseStatsSerializer(pagination.PaginationSerializer):
+    class Meta:
+        object_serializer_class = UserCourseStatsSerializer
 
 class LessonUserStats(serializers.ModelSerializer):
 

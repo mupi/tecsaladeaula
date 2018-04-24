@@ -19,6 +19,16 @@
                 };
 
                 $scope.filter_stats = function(){
+                    if ($scope.from_date == null)
+                        $scope.filters.from_date = null;
+                    else
+                        $scope.filters.from_date = Date.parse($scope.from_date);
+
+                    if ($scope.until_date == null)
+                        $scope.filters.until_date = null;
+                    else
+                        $scope.filters.until_date = Date.parse($scope.until_date);
+
                     CourseStats.query($scope.filters, function (course_stats){
                         $scope.course_stats = course_stats;
                     });
