@@ -1,10 +1,11 @@
 (function (angular) {
     'use strict';
 
-    var app = angular.module('courseMaterial.controllers', ['ngCookies']);
+    var app = angular.module('courseMaterial.controllers', ['ngCookies','ngSanitize']);
 
     app.controller('CourseMaterialEditorCtrl', ['$scope', '$window', 'CourseMaterial','CourseMaterialFile',
-        function ($scope, $window, CourseMaterial, CourseMaterialFile) {
+        function ($scope,  $window, CourseMaterial, CourseMaterialFile) {
+
             $scope.courseId = $window.course_id;
 
             $scope.course_materials = CourseMaterial.query({course__id: $scope.courseId}, function (course_materials){
@@ -31,5 +32,13 @@
                     });
                 }
             };
+    }]);
+
+    app.controller('CourseMaterialShow', ['$scope','$sce', '$window',
+        function ($scope, $sce, $window) {
+            $scope.get_as_safe_html = function(html_content) {
+              return $sce.trustAsHtml(html_content);
+            }
+
     }]);
 })(angular);
