@@ -68,7 +68,6 @@ class UserAdminView(AdminView):
     def get_context_data(self, **kwargs):
         context = super(UserAdminView, self).get_context_data(**kwargs)
         context['total_users_number'] = User.objects.count()
-        print context
         return context
 
 class ExportUsersView(View):
@@ -76,7 +75,6 @@ class ExportUsersView(View):
         first = True
         string_from_array = ''
         for o in array.all():
-            print o.name
             if first:
                 first = False
                 string_from_array = ''.join((string_from_array, o.name.encode('utf-8')))
@@ -111,7 +109,6 @@ class ExportUsersView(View):
             occupations = self.generate_string_from_array(u.occupations)
             education = self.generate_string_from_array(u.education_degrees)
             disciplines = self.generate_string_from_array(u.disciplines)
-            print occupations
             writer.writerow([
                 u.first_name + ' ' + u.last_name,
                 u.email,
