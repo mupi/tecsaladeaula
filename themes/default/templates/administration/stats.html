@@ -95,7 +95,7 @@ wrapper-course-lesson
                         <label class="control-label">Dias Inatividade</label>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-left-3px">
-                        <input type="number" ng-model="filters.days_inactive" class="form-control ng-pristine ng-valid">
+                        <input type="number" ng-model="filters.days_inactive" ng-change="check_day()" class="form-control ng-pristine ng-valid">
                       </div>
                   </div>
                   <div class="col-sm-2 col-sx-12 without-paddings-rl">

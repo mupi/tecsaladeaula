@@ -9,6 +9,7 @@
                 $scope.course_id = parseInt($window.course_id, 10);
                 $scope.filters = {};
                 $scope.filters.page = 1;
+                $scope.filters.percentage_completion = 0;
                 $scope.filters.course = $scope.course_id;
 
             
@@ -17,6 +18,12 @@
                         user.lessons_stats = LessonsUserProgress.get({courseId: $scope.course_id, user: user.user.id});
                     }
                 };
+
+                $scope.check_day = function(){
+                    if ($scope.filters.days_inactive != null && $scope.filters.days_inactive <= 0){
+                        $scope.filters.days_inactive = "";
+                    }
+                }
 
                 $scope.filter_stats = function(){
                     if ($scope.from_date == null)
