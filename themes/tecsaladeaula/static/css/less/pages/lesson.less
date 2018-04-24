@@ -1,18 +1,18 @@
 /*
-2018/04/20 OCULTAR MENU DE UNIDADES DE AULAS
+2018/04/20 Menú desplegável de unidades
 */
 
-/*MENU LATERAL 20180423*/
+/*ini - menú desplegável*/
 .btn-show-hide-menu{
     background-color: #ea8e62;
     box-shadow: -1px 1px 4px 0px rgba(50, 50, 50, 0.75);
     color: #712f0f;
     font-size: 1.5em;
     position: absolute;
-    padding-left: 6px;
     text-align: center;
     top: 0%;
-    right: -38px;
+    right: 0px;
+    z-index: 99999;
     @media (max-width: @screen-sm-min) {
         display: none;
     }
@@ -20,7 +20,7 @@
 }
 
 body.mini-navbar .navbar-static-side {
-    width: 70px;
+    width: 35px;
     background: #6597d8;
     @media (max-width: @screen-sm-min) {
         display: none;
@@ -55,7 +55,7 @@ body.mini-navbar nav.course-lessons {
 
 
 body.mini-navbar .activity-column {
-    margin: 0 0 0 70px;
+    margin: 0 0 0 35px;
 }
 
 .activity-column {
@@ -63,7 +63,7 @@ body.mini-navbar .activity-column {
       margin: 0 0 0 500px;
     }
 }
-/*FIN */
+/*fin*/
 
 
 .side-notes{
@@ -112,10 +112,9 @@ body.mini-navbar .activity-column {
   position: fixed;
   height: 100%;
   margin-left: -15px;
-/*  overflow-y: scroll;
-  overflow-x: hidden;*/
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 0;
-  z-index: 99999;
 }
 
 .lesson-sidebar, .lesson-sidebar-riw{
