@@ -177,6 +177,16 @@ body.mini-navbar .activity-column {
   padding-top: 50px;
 }
 
+/*abrir as notas com clic nao hover*/
+.notes-tool.show-notes{
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+  right: 0;
+}
+
+
 .notes-tool{
   @media (min-width: @screen-sm-min) {
     border: 2px solid #e5e5e5;
@@ -188,9 +198,9 @@ body.mini-navbar .activity-column {
   background-color: #fff;
   padding: 20px;
   transition: right 0.5s ease;
-  &:hover{
+/*  &:hover{
     right: 0;
-  }
+  }*/
   .btn-notes{
     background-color: @brand-primary;
     box-shadow: -1px 1px 4px 0px rgba(50, 50, 50, 0.75);

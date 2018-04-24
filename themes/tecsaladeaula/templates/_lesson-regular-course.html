@@ -218,7 +218,6 @@ $(document).ready(function() {
         SmoothlyMenu();
     })
 
-
   window.SmoothlyMenu = function() {
       if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
           // Hide menu in order to smoothly turn on when maximize menu
@@ -230,6 +229,26 @@ $(document).ready(function() {
           // Remove all inline style from jquery fadeIn function to reset menu state
           $('#side-menu').removeAttr('style');
       }
-};
+    };
+
+
+</script>
+
+<script>
+/*abrir as notas com clic nao hover*/
+    $('#notes-toggle:not(.binded)').addClass("binded").click(function () {
+        $("#student-notes").toggleClass("show-notes");
+        SmoothlyNotes();
+    })
+
+    window.SmoothlyNotes = function() {
+        if (!$('#student-notes').hasClass('show-notes')){
+            // Hide notes in order to smoothly turn on when maximize notes
+            setTimeout(
+                function () {
+                    $('#student-notes').fadeIn(500);
+                }, 100);
+        }
+      };
 </script>
 {% endblock %}
