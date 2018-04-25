@@ -109,21 +109,16 @@ wrapper-course-lesson
                                   <div class="form-group">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                          <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
-                                              <option value=" "></option>
-                                              {% verbatim %}
-                                              <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
-                                              {% endverbatim %}
+                                          <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-options="uf for uf in list_ufs" ng-change="filter_cities()">
+                                              <option value=""></option>
                                           </select>
                                       </div>
 
                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
                                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                              <select class="form-control" name="city" id="city" ng-model="form.city_id">
-                                                  {% verbatim %}
-                                                  <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
-                                                  {% endverbatim %}
-                                              </select>
+                                            <select class="form-control" name="city" id="city" ng-model="form.city" ng-options="city as city.name for city in list_cities track by city.id">
+                                                <option value=""></option>
+                                            </select>
                                       </div>
                                   </div>
 
