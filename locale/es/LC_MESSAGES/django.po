@@ -520,7 +520,7 @@ msgstr ""
 
 #: themes/default/templates/_admin_header_inline.html:44
 msgid "Material"
-msgstr ""
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/_admin_header_inline.html:49
 #: themes/default/templates/_course-header-inline.html:23
