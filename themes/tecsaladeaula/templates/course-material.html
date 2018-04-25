@@ -83,7 +83,7 @@ wrapper-course-lesson
             {% else %}
             <div class="col-sm-9 col-lg-9" ng-controller="CourseMaterialShow">
                 <!-- mostrar referencias bibliográficas-->
-                  <span ng-bind-html="get_as_safe_html( '{{ course_material.text }}')"></span>
+                  {{course_material.text | safe}}
             </div>
             {% endif %}
 
