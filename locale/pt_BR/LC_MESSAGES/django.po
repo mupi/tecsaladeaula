@@ -468,7 +468,7 @@ msgstr "Progresso do Estudante"
 
 #: course_material/models.py:7
 msgid "Course Materials"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: course_material/models.py:8 forum/models.py:12 forum/models.py:37
 #: forum/models.py:58
@@ -612,7 +612,7 @@ msgstr "Fórum"
 
 #: themes/default/templates/_admin_header_inline.html:44
 msgid "Material"
-msgstr "Material"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/_admin_header_inline.html:49
 #: themes/default/templates/_course-header-inline.html:24
@@ -670,7 +670,7 @@ msgstr "Continuar curso"
 
 #: themes/default/templates/_course-header-inline.html:20
 msgid "Course material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/_course-header-inline.html:21
 #: themes/tecsaladeaula/templates/_course-header-inline.html:20
@@ -1148,7 +1148,7 @@ msgstr "Estudantes"
 #: themes/default/templates/administration/course-material-admin.html:41
 #: themes/default/templates/administration/course-material-admin.html:54
 msgid "Course Material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/course-notes.html:26
 msgid "Course Notes"
@@ -1913,7 +1913,7 @@ msgstr "(ou clique)"
 
 #: themes/default/templates/administration/course-material-admin.html:72
 msgid "No files in course material"
-msgstr "Nenhum arquivo no material didático"
+msgstr "Nenhum arquivo nas referências bibliográficas"
 
 #: themes/default/templates/administration/courses.html:28
 #: themes/default/templates/administration/courses.html:34
@@ -2197,7 +2197,7 @@ msgstr "Editar texto"
 #: themes/tecsaladeaula/templates/course-material.html:56
 #, fuzzy
 msgid "Edit course material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/tecsaladeaula/templates/account/signup.html:17
 #: themes/tecsaladeaula/templates/account/signup.html:19

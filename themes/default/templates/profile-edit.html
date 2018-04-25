@@ -210,19 +210,21 @@ wrapper-course-lesson
                                           </div>
                                     </div>
                                       <div class="col-sm-6">
-                                        <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left margin-b10">
-                                                <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                    <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                    <ui-select-choices repeat="discipline in avaiable_disciplines">
-                                                        {% verbatim %}{{discipline.name}}{% endverbatim %}
-                                                    </ui-select-choices>
-                                                </ui-select>
-                                                {% verbatim %}
-                                                    <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
-                                                {% endverbatim %}
+                                        <div class="row">
+                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left margin-b10">
+                                                  <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                      <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                      <ui-select-choices repeat="discipline in avaiable_disciplines">
+                                                          {% verbatim %}{{discipline.name}}{% endverbatim %}
+                                                      </ui-select-choices>
+                                                  </ui-select>
+                                                  {% verbatim %}
+                                                      <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
+                                                  {% endverbatim %}
+                                          </div>
                                         </div>
-                                        <div class="div-other-subject">
+                                        <div class="row">
                                           <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Other Subject" %}</label>
                                               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left">
                                                 <!-- Other Subject Selected-->
@@ -403,6 +405,6 @@ wrapper-course-lesson
         </div>
       </div>
     </div>
-  </div>
+  </div> <!--fin del modal -->
 </div>
 {% endblock %}
