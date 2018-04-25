@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from django.views.generic.edit import ModelFormMixin
 from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.core.files import File as DjangoFile
@@ -20,7 +21,7 @@ from core.models import Course, CourseProfessor
 from course_material.models import File as TimtecFile
 from .serializer import CourseExportSerializer, CourseImportSerializer
 
-from accounts.models import TimtecUser
+from accounts.models import TimtecUser, Discipline
 from django.utils import timezone
 from datetime import timedelta, time, datetime
 from core.models import CourseStudent
@@ -99,7 +100,47 @@ class ExportUsersView(View):
             'Administrador',
             'Ativo',
         ])
-        for u in User.objects.all():
+
+        keyword = request.GET.get('keyword')
+        admin = request.GET.get('admin')
+        blocked = request.GET.get('blocked')
+        uf = request.GET.get('uf')
+        city = request.GET.get('city')
+        education_degrees = request.GET.getlist('education_degrees')
+        occupations = request.GET.getlist('occupations')
+        disciplines = request.GET.getlist('disciplines')
+        queryset = User.objects.all()
+
+        if admin == 'true':
+            queryset = queryset.filter(is_superuser=True)
+
+        if blocked == 'true':
+            queryset = queryset.filter(is_active=False)
+
+        if keyword:
+            queryset = queryset.filter(Q(first_name__icontains=keyword) |
+                                       Q(last_name__icontains=keyword) |
+                                       Q(username__icontains=keyword) |
+                                       Q(email__icontains=keyword))
+        if occupations:
+            queryset = queryset.filter(occupations__in=occupations).distinct()
+
+        if disciplines:
+            if disciplines.index('-1') >= 0:
+                other_disciplines = Discipline.objects.filter(visible=False)
+                for d in other_disciplines:
+                    disciplines.append(d.id)
+            queryset = queryset.filter(disciplines__in=disciplines).distinct()
+
+        if education_degrees:
+            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
+
+        if uf:
+            queryset = queryset.filter(city__uf=uf)
+        if city:
+            queryset = queryset.filter(city__id=city)
+
+        for u in queryset:
             adm = 'N'
             ativo = 'N'
             if(u.is_staff):
@@ -110,14 +151,14 @@ class ExportUsersView(View):
             education = self.generate_string_from_array(u.education_degrees)
             disciplines = self.generate_string_from_array(u.disciplines)
             writer.writerow([
-                u.first_name + ' ' + u.last_name,
+                u.get_full_name().encode('utf-8'),
                 u.email,
-                u.business_email,
+                u.business_email if u.business_email is not None else "",
                 occupations,
                 education,
                 disciplines,
-                u.city.uf.name,
-                u.city.name,
+                (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
+                (u.city.name.encode('utf-8') if u.city is not None else ""),
                 adm,
                 ativo,
             ])
