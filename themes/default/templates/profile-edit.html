@@ -261,7 +261,7 @@ wrapper-course-lesson
                                     </div>
                                 </div>
 
-                                {% with errors=form.business_email.errors %}
+                                {% with errors=form_email_password.business_email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Additional E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -285,7 +285,7 @@ wrapper-course-lesson
                                     <h3><i class="fa fa-angle-double-right"></i> {% trans "Password" %}</h3>
                                 </div>
 
-                                {% with errors=form.password2.errors %}
+                                {% with errors=form_email_password.password2.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Password" %}</label>
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
