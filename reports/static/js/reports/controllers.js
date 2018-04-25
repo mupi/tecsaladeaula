@@ -12,7 +12,7 @@
                 $scope.filters.percentage_completion = 0;
                 $scope.filters.course = $scope.course_id;
 
-            
+
                 $scope.show_user_progress_details = function(user) {
                     if (user.lessons_stats === undefined) {
                         user.lessons_stats = LessonsUserProgress.get({courseId: $scope.course_id, user: user.user.id});

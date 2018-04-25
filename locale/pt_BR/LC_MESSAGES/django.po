@@ -85,7 +85,7 @@ msgstr "Ativo"
 
 #: accounts/models.py:29
 msgid "Date joined"
-msgstr "Data de inscrição"
+msgstr "Data inscrição"
 
 #: accounts/models.py:31 core/models.py:370 core/models.py:423
 msgid "Picture"
@@ -2051,9 +2051,6 @@ msgstr "Número total de estudantes"
 msgid "Search student"
 msgstr "Estudante"
 
-#: themes/default/templates/administration/stats.html:111
-msgid "Progress"
-msgstr "Progresso"
 
 #: themes/default/templates/administration/stats.html:117
 #, fuzzy
@@ -2090,16 +2087,11 @@ msgstr "Primeiro"
 #: themes/default/templates/administration/stats.html:231
 #: themes/default/templates/administration/users.html:305
 msgid "Last"
-msgstr "ùltimo"
+msgstr "Último"
 
 #: themes/default/templates/administration/users.html:36
 msgid "Users found:"
 msgstr "Usuários encontrados:"
-
-#: themes/default/templates/administration/users.html:91
-#: themes/default/templates/administration/users.html:156
-msgid "Disciplines"
-msgstr "Disciplinas"
 
 #: themes/default/templates/administration/users.html:111
 msgid "Administrators"
@@ -2241,9 +2233,6 @@ msgstr "Espanhol"
 #: timtec/settings.py:91
 msgid "English"
 msgstr "Inglês"
-
-#~ msgid "Last access"
-#~ msgstr "Último acesso"
 
 #~ msgid "Confirm e-mail"
 #~ msgstr "Confirmar email"
