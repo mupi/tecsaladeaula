@@ -16,6 +16,9 @@
 
             /*ini 1*/
             $scope.filters = {};
+            $scope.filters.occupations = [];
+            $scope.filters.disciplines = [];
+            $scope.filters.education_degrees = [];
             $scope.occupations = {};
             $scope.disciplines = {};
             $scope.education_degrees = {};
