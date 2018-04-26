@@ -16,6 +16,9 @@
 
             /*ini 1*/
             $scope.filters = {};
+            $scope.filters.occupations = [];
+            $scope.filters.disciplines = [];
+            $scope.filters.education_degrees = [];
             $scope.occupations = {};
             $scope.disciplines = {};
             $scope.education_degrees = {};
@@ -77,6 +80,34 @@
             $scope.reset_filter = function() {
                 $scope.filters.page = 1;
                 $scope.filter_users();
+            };
+
+
+
+            $scope.export_csv = function() {
+                console.log('export csv');
+                var query_string = '?';
+                if ($scope.filters.keyword)
+                    query_string += "keyword=" + $scope.filters.keyword + "&"
+                if ($scope.filters.uf)
+                    query_string += "uf=" + $scope.filters.uf + "&"
+                if ($scope.filters.city)
+                    query_string += "city=" + $scope.filters.city + "&"
+                if ($scope.filters.blocked)
+                    query_string += "blocked=" + $scope.filters.blocked + "&"
+                if ($scope.filters.admin)
+                    query_string += "admin=" + $scope.filters.admin + "&"
+                    $scope.filters.disciplines.forEach(function(discipline){
+                    query_string += "disciplines=" + discipline + "&"
+                });
+                $scope.filters.occupations.forEach(function(occupation){
+                    query_string += "occupations=" + occupation + "&"
+                });
+                $scope.filters.education_degrees.forEach(function(ed){
+                    query_string += "education_degrees=" + ed + "&"
+                });
+
+                $window.open('/admin/users/export' + query_string);
             };
 
             $scope.update_user = function(user) {

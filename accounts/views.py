@@ -153,7 +153,7 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(occupations__in=occupations).distinct()
 
         if disciplines:
-            if disciplines.index('-1') >= 0:
+            if '-1' in disciplines:
                 other_disciplines = Discipline.objects.filter(visible=False)
                 for d in other_disciplines:
                     disciplines.append(d.id)

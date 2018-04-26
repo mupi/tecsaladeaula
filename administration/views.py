@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, DetailView
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from django.views.generic.edit import ModelFormMixin
 from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse_lazy
 from django.core.files import File as DjangoFile
@@ -20,7 +21,7 @@ from core.models import Course, CourseProfessor
 from course_material.models import File as TimtecFile
 from .serializer import CourseExportSerializer, CourseImportSerializer
 
-from accounts.models import TimtecUser
+from accounts.models import TimtecUser, Discipline
 from django.utils import timezone
 from datetime import timedelta, time, datetime
 from core.models import CourseStudent
@@ -69,6 +70,142 @@ class UserAdminView(AdminView):
         context = super(UserAdminView, self).get_context_data(**kwargs)
         context['total_users_number'] = User.objects.count()
         return context
+
+class ExportUsersView(View):
+    def generate_string_from_array(self, array):
+        first = True
+        string_from_array = ''
+        for o in array.all():
+            if first:
+                first = False
+                string_from_array = ''.join((string_from_array, o.name.encode('utf-8')))
+            else:
+                string_from_array = '\n'.join((string_from_array, o.name.encode('utf-8')))
+        return string_from_array
+
+    def generate_string_for_school(self, user_schools):
+        first = True
+
+        string_for_school = ''
+        for userschool in user_schools.all():
+            s = userschool.school
+            first_el = True
+
+            education_levels = ''
+            for el in userschool.education_levels.all():
+                if first_el:
+                    first_el = False
+                    education_levels = el.name.encode('utf-8')
+                else:
+                    education_levels = education_levels + ',' + el.name.encode('utf-8')
+
+            if first:
+                first = False
+                string_for_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
+            else:
+                new_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
+                string_for_school = '\n'.join((string_for_school, new_school))
+        return string_for_school
+
+    def generate_string_for_course(self, courses):
+        first = True
+        string_for_course = ''
+        for c in courses.all():
+            if first:
+                first = False
+                string_for_course = ''.join((string_for_course, c.course.name.encode('utf-8'), ' | ', str(c.percent_progress()), '%'))
+            else:
+                string_for_course = '\n'.join((string_for_course, c.course.name.encode('utf-8') + ' | ' + str(c.percent_progress()) + '%'))
+        return string_for_course
+
+
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'Nome',
+            'Email',
+            'Email Adicional',
+            'Ocupação',
+            'Ano/Série',
+            'Disciplinas',
+            'Estado',
+            'Cidade',
+            'Escola (nome, tipo, cidade, estado, níveis de ensino)',
+            'Cursos',
+            'Administrador',
+            'Ativo',
+        ])
+
+        keyword = request.GET.get('keyword')
+        admin = request.GET.get('admin')
+        blocked = request.GET.get('blocked')
+        uf = request.GET.get('uf')
+        city = request.GET.get('city')
+        education_degrees = request.GET.getlist('education_degrees')
+        occupations = request.GET.getlist('occupations')
+        disciplines = request.GET.getlist('disciplines')
+        queryset = User.objects.all()
+
+        if admin == 'true':
+            queryset = queryset.filter(is_superuser=True)
+
+        if blocked == 'true':
+            queryset = queryset.filter(is_active=False)
+
+        if keyword:
+            queryset = queryset.filter(Q(first_name__icontains=keyword) |
+                                       Q(last_name__icontains=keyword) |
+                                       Q(username__icontains=keyword) |
+                                       Q(email__icontains=keyword))
+        if occupations:
+            queryset = queryset.filter(occupations__in=occupations).distinct()
+
+        if disciplines:
+            if '-1' in disciplines:
+                other_disciplines = Discipline.objects.filter(visible=False)
+                for d in other_disciplines:
+                    disciplines.append(d.id)
+            queryset = queryset.filter(disciplines__in=disciplines).distinct()
+
+        if education_degrees:
+            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
+
+        if uf:
+            queryset = queryset.filter(city__uf=uf)
+        if city:
+            queryset = queryset.filter(city__id=city)
+
+        for u in queryset:
+            adm = 'N'
+            ativo = 'N'
+            if(u.is_staff):
+                adm = 'S'
+            if(u.is_active):
+                ativo = 'S'
+            occupations = self.generate_string_from_array(u.occupations)
+            education = self.generate_string_from_array(u.education_degrees)
+            disciplines = self.generate_string_from_array(u.disciplines)
+            schools = self.generate_string_for_school(u.timtecuserschool_set)
+            courses = self.generate_string_for_course(u.coursestudent_set)
+            writer.writerow([
+                u.get_full_name().encode('utf-8'),
+                u.email,
+                u.business_email if u.business_email is not None else "",
+                occupations,
+                education,
+                disciplines,
+                (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
+                (u.city.name.encode('utf-8') if u.city is not None else ""),
+                schools,
+                courses,
+                adm,
+                ativo,
+            ])
+
+        return response
 
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):
