@@ -80,8 +80,32 @@ class ExportUsersView(View):
                 first = False
                 string_from_array = ''.join((string_from_array, o.name.encode('utf-8')))
             else:
-                string_from_array = '|'.join((string_from_array, o.name.encode('utf-8')))
+                string_from_array = '\n'.join((string_from_array, o.name.encode('utf-8')))
         return string_from_array
+
+    def generate_string_for_school(self, user_schools):
+        first = True
+        
+        string_for_school = ''
+        for userschool in user_schools.all():
+            school = userschool.school
+            first_el = True
+            
+            if first:
+                first = False
+                education_levels = ''
+                for el in userschool.education_levels.all():
+                    if first_el:
+                        first_el = False
+                        education_levels = el.name.encode('utf-8')
+                    else:
+                        education_levels = education_levels + ',' + el.name.encode('utf-8')
+                
+                string_for_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
+            else:
+                new_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
+                string_for_school = '\n'.join((string_for_school, new_school))
+        return string_for_school
 
     def get(self, request, *args, **kwargs):
         response = HttpResponse(content_type='text/csv')
@@ -97,6 +121,7 @@ class ExportUsersView(View):
             'Disciplinas',
             'Estado',
             'Cidade',
+            'Escola (nome, tipo, cidade, estado, níveis de ensino)',
             'Administrador',
             'Ativo',
         ])
@@ -150,6 +175,7 @@ class ExportUsersView(View):
             occupations = self.generate_string_from_array(u.occupations)
             education = self.generate_string_from_array(u.education_degrees)
             disciplines = self.generate_string_from_array(u.disciplines)
+            schools = self.generate_string_for_school(u.timtecuserschool_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 u.email,
@@ -159,6 +185,7 @@ class ExportUsersView(View):
                 disciplines,
                 (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                 (u.city.name.encode('utf-8') if u.city is not None else ""),
+                schools,
                 adm,
                 ativo,
             ])
