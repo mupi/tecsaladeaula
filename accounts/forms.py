@@ -113,8 +113,9 @@ class SignupForm(SignupForm, AcceptTermsForm):
         user = super(SignupForm, self).save(request)
         name = self.cleaned_data['fullname']
         user.accepted_terms = self.cleaned_data['accept_terms']
-        user.first_name = self.extract_first_name(name)
-        user.last_name = self.extract_last_name(name)
+        user.first_name = name
+        # user.first_name = self.extract_first_name(name)
+        # user.last_name = self.extract_last_name(name)
         user.save()
         return user
         # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])

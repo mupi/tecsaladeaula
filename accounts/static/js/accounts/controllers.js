@@ -19,14 +19,13 @@
 
                 States.query(function(ufs){
                     $scope.list_ufs = ufs;
-                    $scope.form.uf = ufs[0];
                 });
 
                 var load_profile = function(){
                     Profile.get(function(profile){
                         if (profile.city != null){
-                            $scope.form.city_id = profile.city.id;
                             $scope.form.uf = profile.city.uf;
+                            $scope.form.city = profile.city;
 
                             Cities.query({uf : $scope.form.uf}, function(cities){
                                 $scope.list_cities = cities;

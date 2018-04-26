@@ -57,12 +57,9 @@ class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileEmailPasswordEditView, self).get_context_data(**kwargs)
+        context['form_email_password'] = context['form']
         form = ProfileEditForm(instance=self.request.user)
         context['form'] = form
-
-        pass_data = {'business_email': self.request.user.business_email}
-        pass_form  = ProfilePasswordForm(initial=pass_data)
-        context['form_email_password'] = pass_form
         context['account_pane'] = True
         return context
 
