@@ -127,7 +127,7 @@
             $scope.delete_user = function(user, index) {
                 if (confirm(confirm_delete_user_msg)) {
                     UserAdmin.remove({user_id: user.id}, function() {
-                        $scope.page_changed();
+                        $scope.filter_users();
                         $scope.alert.success(success_delete_user_msg);
                     }, function() {
                         $scope.alert.error(error_delete_user_msg);
