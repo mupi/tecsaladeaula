@@ -1146,7 +1146,7 @@ msgstr "Nome da turma"
 
 #: themes/default/templates/classes.html:36
 #: themes/default/templates/administration/stats.html:76
-msgid "E-mail or name"
+msgid "Email or name"
 msgstr "Email ou nome"
 
 #: themes/default/templates/administration/stats.html:76
