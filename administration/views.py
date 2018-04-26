@@ -88,12 +88,11 @@ class ExportUsersView(View):
 
         string_for_school = ''
         for userschool in user_schools.all():
-            school = userschool.school
+            s = userschool.school
             first_el = True
 
             education_levels = ''
             for el in userschool.education_levels.all():
-                print(el)
                 if first_el:
                     first_el = False
                     education_levels = el.name.encode('utf-8')
@@ -102,11 +101,23 @@ class ExportUsersView(View):
 
             if first:
                 first = False
-                string_for_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
+                string_for_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
             else:
-                new_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
+                new_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
                 string_for_school = '\n'.join((string_for_school, new_school))
         return string_for_school
+
+    def generate_string_for_course(self, courses):
+        first = True
+        string_for_course = ''
+        for c in courses.all():
+            if first:
+                first = False
+                string_for_course = ''.join((string_for_course, c.course.name.encode('utf-8'), ' | ', str(c.percent_progress()), '%'))
+            else:
+                string_for_course = '\n'.join((string_for_course, c.course.name.encode('utf-8') + ' | ' + str(c.percent_progress()) + '%'))
+        return string_for_course
+
 
     def get(self, request, *args, **kwargs):
         response = HttpResponse(content_type='text/csv')
@@ -123,6 +134,7 @@ class ExportUsersView(View):
             'Estado',
             'Cidade',
             'Escola (nome, tipo, cidade, estado, níveis de ensino)',
+            'Cursos',
             'Administrador',
             'Ativo',
         ])
@@ -177,6 +189,7 @@ class ExportUsersView(View):
             education = self.generate_string_from_array(u.education_degrees)
             disciplines = self.generate_string_from_array(u.disciplines)
             schools = self.generate_string_for_school(u.timtecuserschool_set)
+            courses = self.generate_string_for_course(u.coursestudent_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 u.email,
@@ -187,6 +200,7 @@ class ExportUsersView(View):
                 (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                 (u.city.name.encode('utf-8') if u.city is not None else ""),
                 schools,
+                courses,
                 adm,
                 ativo,
             ])
