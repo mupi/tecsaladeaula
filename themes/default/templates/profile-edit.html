@@ -109,21 +109,16 @@ wrapper-course-lesson
                                   <div class="form-group">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "State" %}</label>
                                       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                          <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-change="filter_cities()">
-                                              <option value=" "></option>
-                                              {% verbatim %}
-                                              <option ng-repeat="uf in list_ufs" ng-selected="{{ form.uf == uf }}" value="{{ uf }}">{{ uf }}</option>
-                                              {% endverbatim %}
+                                          <select class="form-control" name="uf" id="uf_state" ng-model="form.uf" ng-options="uf for uf in list_ufs" ng-change="filter_cities()">
+                                              <option value=""></option>
                                           </select>
                                       </div>
 
                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "City" %}</label>
                                       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                              <select class="form-control" name="city" id="city" ng-model="form.city_id">
-                                                  {% verbatim %}
-                                                  <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
-                                                  {% endverbatim %}
-                                              </select>
+                                            <select class="form-control" name="city" id="city" ng-model="form.city" ng-options="city as city.name for city in list_cities track by city.id">
+                                                <option value=""></option>
+                                            </select>
                                       </div>
                                   </div>
 
@@ -268,11 +263,15 @@ wrapper-course-lesson
                                     </div>
                                 </div>
 
-                                {% with errors=form.business_email.errors %}
+                                {% with errors=form_email_password.business_email.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Additional E-mail" %}</label>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{form_email_password.business_email.value}}">
+                                        {% if form_email_password.business_email.value == None %}
+                                            <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="">
+                                        {% else %}
+                                            <input name="business_email" type="e-mail" class="form-control" placeholder='{% trans "Additional E-mail" %}' value="{{ form_email_password.business_email.value }}">
+                                        {% endif %}
                                         {% for error in errors %}<small>{{error}}</small>{% endfor %}
                                     </div>
 
@@ -288,7 +287,7 @@ wrapper-course-lesson
                                     <h3><i class="fa fa-angle-double-right"></i> {% trans "Password" %}</h3>
                                 </div>
 
-                                {% with errors=form.password2.errors %}
+                                {% with errors=form_email_password.password2.errors %}
                                 <div class="form-group{{ errors|yesno:" has-error,"}}">
                                     <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Password" %}</label>
                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">

@@ -185,6 +185,8 @@ PIPELINE_JS = {
             'angular-route/angular-route.js',
             'angular-sanitize/angular-sanitize.js',
             'angular-bootstrap/ui-bootstrap-tpls.js',
+            'angular-strap/dist/angular-strap.min.js',
+            'angular-strap/dist/angular-strap.tpl.min.js',
             'angular-gettext/dist/angular-gettext.js',
             'angular-i18n/angular-locale_pt-br.js',
             'intro.js/intro.js',
