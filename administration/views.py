@@ -85,22 +85,23 @@ class ExportUsersView(View):
 
     def generate_string_for_school(self, user_schools):
         first = True
-        
+
         string_for_school = ''
         for userschool in user_schools.all():
             school = userschool.school
             first_el = True
-            
+
+            education_levels = ''
+            for el in userschool.education_levels.all():
+                print(el)
+                if first_el:
+                    first_el = False
+                    education_levels = el.name.encode('utf-8')
+                else:
+                    education_levels = education_levels + ',' + el.name.encode('utf-8')
+
             if first:
                 first = False
-                education_levels = ''
-                for el in userschool.education_levels.all():
-                    if first_el:
-                        first_el = False
-                        education_levels = el.name.encode('utf-8')
-                    else:
-                        education_levels = education_levels + ',' + el.name.encode('utf-8')
-                
                 string_for_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
             else:
                 new_school = school.name.encode('utf-8') + '|' + school.get_school_type_display().encode('utf-8') + '|' + school.city.name.encode('utf-8') + '|' +  school.city.uf.uf.encode('utf-8') + '|' + education_levels
