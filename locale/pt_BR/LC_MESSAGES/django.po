@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-19 17:13-0300\n"
-"PO-Revision-Date: 2018-04-19 16:51-0300\n"
+"POT-Creation-Date: 2018-04-13 10:54-0300\n"
+"PO-Revision-Date: 2018-04-19 12:28-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -85,7 +85,7 @@ msgstr "Ativo"
 
 #: accounts/models.py:29
 msgid "Date joined"
-msgstr "Data de inscrição"
+msgstr "Data inscrição"
 
 #: accounts/models.py:31 core/models.py:370 core/models.py:423
 msgid "Picture"
@@ -450,6 +450,11 @@ msgstr "Aula"
 msgid "Lessons"
 msgstr "Aulas"
 
+#: themes/default/templates/administration/stats.html:77
+msgid "Last access"
+msgstr "Último acesso"
+
+
 #: core/models.py:549 forum/models.py:11
 msgid "Title"
 msgstr "Título"
@@ -468,7 +473,7 @@ msgstr "Progresso do Estudante"
 
 #: course_material/models.py:7
 msgid "Course Materials"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: course_material/models.py:8 forum/models.py:12 forum/models.py:37
 #: forum/models.py:58
@@ -612,7 +617,7 @@ msgstr "Fórum"
 
 #: themes/default/templates/_admin_header_inline.html:44
 msgid "Material"
-msgstr "Material"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/_admin_header_inline.html:49
 #: themes/default/templates/_course-header-inline.html:24
@@ -670,7 +675,7 @@ msgstr "Continuar curso"
 
 #: themes/default/templates/_course-header-inline.html:20
 msgid "Course material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/_course-header-inline.html:21
 #: themes/tecsaladeaula/templates/_course-header-inline.html:20
@@ -1140,7 +1145,11 @@ msgid "Class name"
 msgstr "Nome da turma"
 
 #: themes/default/templates/classes.html:36
-#: themes/default/templates/administration/stats.html:85
+#: themes/default/templates/administration/stats.html:76
+msgid "E-mail or name"
+msgstr "Email ou nome"
+
+#: themes/default/templates/administration/stats.html:76
 msgid "Students"
 msgstr "Estudantes"
 
@@ -1148,7 +1157,7 @@ msgstr "Estudantes"
 #: themes/default/templates/administration/course-material-admin.html:41
 #: themes/default/templates/administration/course-material-admin.html:54
 msgid "Course Material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/default/templates/course-notes.html:26
 msgid "Course Notes"
@@ -1913,7 +1922,7 @@ msgstr "(ou clique)"
 
 #: themes/default/templates/administration/course-material-admin.html:72
 msgid "No files in course material"
-msgstr "Nenhum arquivo no material didático"
+msgstr "Nenhum arquivo nas referências bibliográficas"
 
 #: themes/default/templates/administration/courses.html:28
 #: themes/default/templates/administration/courses.html:34
@@ -2026,7 +2035,15 @@ msgstr "Carregando relatórios de estudantes"
 msgid "Students progress"
 msgstr "Progresso do estudante"
 
-#: themes/default/templates/administration/stats.html:98
+#: themes/default/templates/administration/stats.html:87
+msgid "Progress"
+msgstr "Progresso"
+
+#: themes/default/templates/administration/stats.html:87
+msgid "Disciplines"
+msgstr "Disciplinas"
+
+#: themes/default/templates/administration/stats.html:88
 msgid "Total number of students"
 msgstr "Número total de estudantes"
 
@@ -2034,9 +2051,6 @@ msgstr "Número total de estudantes"
 msgid "Search student"
 msgstr "Estudante"
 
-#: themes/default/templates/administration/stats.html:111
-msgid "Progress"
-msgstr "Progresso"
 
 #: themes/default/templates/administration/stats.html:117
 #, fuzzy
@@ -2073,16 +2087,11 @@ msgstr "Primeiro"
 #: themes/default/templates/administration/stats.html:231
 #: themes/default/templates/administration/users.html:305
 msgid "Last"
-msgstr "ùltimo"
+msgstr "Último"
 
 #: themes/default/templates/administration/users.html:36
 msgid "Users found:"
 msgstr "Usuários encontrados:"
-
-#: themes/default/templates/administration/users.html:91
-#: themes/default/templates/administration/users.html:156
-msgid "Disciplines"
-msgstr "Disciplinas"
 
 #: themes/default/templates/administration/users.html:111
 msgid "Administrators"
@@ -2197,7 +2206,7 @@ msgstr "Editar texto"
 #: themes/tecsaladeaula/templates/course-material.html:56
 #, fuzzy
 msgid "Edit course material"
-msgstr "Material didático"
+msgstr "Referências bibliográficas"
 
 #: themes/tecsaladeaula/templates/account/signup.html:17
 #: themes/tecsaladeaula/templates/account/signup.html:19
@@ -2224,9 +2233,6 @@ msgstr "Espanhol"
 #: timtec/settings.py:91
 msgid "English"
 msgstr "Inglês"
-
-#~ msgid "Last access"
-#~ msgstr "Último acesso"
 
 #~ msgid "Confirm e-mail"
 #~ msgstr "Confirmar email"
