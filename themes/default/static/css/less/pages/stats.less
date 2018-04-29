@@ -1,8 +1,55 @@
 // STATS
 // 05/04/2018 Mudanças Sprint 1
+// 25/04/2018 Fix no relatório de alunosxcurso
 // ********************************************************************* //
 #stats {
+  .width100{
+    width: 100%;
+  }
 
+  input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid, textarea.ng-dirty.ng-invalid {
+    color: #b94a48;
+    border-color: #ee5f5b;
+}
+
+  .show-small-text {
+    font-size: 11px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+  .padding-input-inactivity{
+    @media screen and (min-width: 768px) {
+      padding-right: 7px;
+      padding-left: 5px;
+    }
+  }
+
+  .padding-left-3px{
+    @media screen and (min-width: 768px) {
+      padding-left: 3px;
+    }
+  }
+
+  .padding-right-7px{
+    @media screen and (min-width: 768px) {
+      padding-right: 7px;
+    }
+  }
+
+
+  .without-paddings-rl{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+
+  .without-paddings-r{
+    padding-right: 0px !important;
+  }
+
+  .without-paddings-l{
+    padding-left: 0px !important;
+  }
 
   .main-header-users-by-course-report{
     width: 970px;
@@ -14,6 +61,16 @@
         margin-bottom: 10px;
 
   }
+
+  .filters{
+      .row {
+      margin-bottom: 5px;
+      }
+      #filter-class{
+            margin-left: 0px;
+      }
+  }
+
 
   .container{
       @media screen and (min-width: 1200px) {
@@ -50,6 +107,7 @@
         width: 1000px;
         margin-left: auto;
         margin-right: auto;
+        margin-top:5px;
         border: 1px solid #eeeeee;
         padding: 15px;
       }
@@ -57,10 +115,12 @@
       ul.header-user-list{
           list-style: none;
           text-align: center;
+          font-weight: bold;
       }
 
       ul.header-user-list li{
-          border-bottom: 1px solid @gray-lighter;
+          //border-bottom: 1px solid @gray-lighter;
+          border: none !important;
       }
 
        ul.students {
@@ -77,6 +137,7 @@
             /*border-top: 1px solid @gray-lighter;*/
             margin-top: 10px;
             padding-top: 10px;
+            border-top: 1px solid #eeeeee;
           }
           .progress {
             background: @gray-lighter;

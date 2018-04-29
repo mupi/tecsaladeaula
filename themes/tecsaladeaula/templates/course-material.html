@@ -21,7 +21,7 @@ wrapper-course-lesson
     </script>
 {% endif %}
 
-<!-- CONTAINER -->
+<!-- CONTAINER Aluno-Bibliografica  -->
 <div id="course" class="course-material" ng-app="courseMaterial">
     {% if in_admin %}
         {% include "_admin_header_inline.html" with course=course %}
@@ -34,14 +34,14 @@ wrapper-course-lesson
         <header class="secondary-header">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Referências bibliográficas</h1>
+                    <h1>{% trans "Course Material" %}</h1>
                 </div>
             </div>
         </header>
 
-        <div class="row">
+        <div class="row" >
             {% if in_admin %}
-                <div class="col-sm-9 col-lg-9" ng-controller="CourseMaterialEditorCtrl">
+                <div class="col-sm-9 col-lg-9" ng-controller="CourseMaterialEditorCtrl" >
                     <p class="description">
                         <span class="description" ng-bind-html="course_material.text|markdown"></span>
                     </p>
@@ -81,9 +81,10 @@ wrapper-course-lesson
                     </div>
                 </div>
             {% else %}
-                <div class="col-sm-9 col-lg-9">
-                    <p class="description">{{ course_material.text|timtec_markdown }}</p>
-                </div>
+            <div class="col-sm-9 col-lg-9" ng-controller="CourseMaterialShow">
+                <!-- mostrar referencias bibliográficas-->
+                 {{course_material.text | safe}} 
+            </div>
             {% endif %}
 
             <!-- ASIDE -->

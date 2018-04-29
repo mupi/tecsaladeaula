@@ -19,14 +19,13 @@
 
                 States.query(function(ufs){
                     $scope.list_ufs = ufs;
-                    $scope.form.uf = ufs[0];
                 });
 
                 var load_profile = function(){
                     Profile.get(function(profile){
                         if (profile.city != null){
-                            $scope.form.city_id = profile.city.id;
                             $scope.form.uf = profile.city.uf;
+                            $scope.form.city = profile.city;
 
                             Cities.query({uf : $scope.form.uf}, function(cities){
                                 $scope.list_cities = cities;
@@ -39,6 +38,11 @@
                         $scope.school_infos = profile.schools;
                     })
                 };
+                var reload_schools = function(){
+                    Profile.get(function(profile){
+                        $scope.school_infos = profile.schools;
+                    })
+                }
                 load_profile();
 
                 $scope.filter_cities = function(){
@@ -67,13 +71,13 @@
                         UserSchools.get({id:id}, function(school){
                             school.$delete()
                             .then(function(res) {
-                                load_profile();
+                                reload_schools();
                             });
                         });
                     }
                 }
 
-                $scope.$on('reload_profile', load_profile);
+                $scope.$on('reload_schools', reload_schools);
         }]);
 
         app.controller('SchoolCtrl', ['$scope', '$rootScope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'UserSchools', 'SchoolTypes',
@@ -133,7 +137,7 @@
                 if ($scope.form.id > 0){
                     user_school.$update()
                     .then(function(res) {
-                        $rootScope.$broadcast('reload_profile');
+                        $rootScope.$broadcast('reload_schools');
                         $("#add-school-modal").modal('toggle');
                         $
                     })
@@ -143,7 +147,7 @@
                 } else {
                     user_school.$save()
                     .then(function(res) {
-                        $rootScope.$broadcast('reload_profile');
+                        $rootScope.$broadcast('reload_schools');
                         $("#add-school-modal").modal('toggle');
                         $
                     })

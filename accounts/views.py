@@ -57,12 +57,9 @@ class ProfileEmailPasswordEditView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProfileEmailPasswordEditView, self).get_context_data(**kwargs)
+        context['form_email_password'] = context['form']
         form = ProfileEditForm(instance=self.request.user)
         context['form'] = form
-
-        pass_data = {'business_email': self.request.user.business_email}
-        pass_form  = ProfilePasswordForm(initial=pass_data)
-        context['form_email_password'] = pass_form
         context['account_pane'] = True
         return context
 
@@ -156,7 +153,7 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(occupations__in=occupations).distinct()
 
         if disciplines:
-            if disciplines.index('-1') >= 0:
+            if '-1' in disciplines:
                 other_disciplines = Discipline.objects.filter(visible=False)
                 for d in other_disciplines:
                     disciplines.append(d.id)
