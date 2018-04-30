@@ -255,7 +255,7 @@ class ExportUsersByCourseView(ExportUsersView):
                 email = u.email
                 atuacao = self.generate_string_from_array(u.occupations)
                 ano_serie = self.generate_string_from_array(u.education_degrees)
-
+                disciplines = self.generate_string_from_array(u.disciplines)
                 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
@@ -265,6 +265,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     email,
                     atuacao,
                     ano_serie,
+                    disciplines,
                 ])
 
         return response
