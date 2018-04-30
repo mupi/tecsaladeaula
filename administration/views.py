@@ -212,7 +212,6 @@ class ExportUsersByCourseView(ExportUsersView):
     def get_course_student(self, courses, course_id):
         for c in courses.all():
             if(c.course.id == int(course_id)):
-                print c
                 return c
         return None
     
@@ -221,8 +220,6 @@ class ExportUsersByCourseView(ExportUsersView):
 
     def generate_string_for_progress(self, course):
         percent = course.percent_progress()
-        print '224'
-        print percent
         string_for_progress = ''
         string_for_progress = ''.join((string_for_progress, str(percent), '%'))
         return string_for_progress
@@ -249,18 +246,18 @@ class ExportUsersByCourseView(ExportUsersView):
         ])
 
         queryset = User.objects.all()
-        print queryset
         for u in queryset:
             course_student = self.get_course_student(u.coursestudent_set, course_id)
             if(course_student):
                 progress = self.generate_string_for_progress(course_student)
                 data_inscricao = self.generate_string_for_date(course_student.created_at)
-                #ultimo_acesso = course_student.get_last_access()
+                ultimo_acesso = course_student.get_last_access()
 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
                     progress,
                     data_inscricao,
+                    ultimo_acesso,
                 ])
 
         return response
