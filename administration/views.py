@@ -254,6 +254,7 @@ class ExportUsersByCourseView(ExportUsersView):
                 ultimo_acesso = course_student.get_last_access()
                 email = u.email
                 atuacao = self.generate_string_from_array(u.occupations)
+                ano_serie = self.generate_string_from_array(u.education_degrees)
 
                 
                 writer.writerow([
@@ -263,6 +264,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     ultimo_acesso,
                     email,
                     atuacao,
+                    ano_serie,
                 ])
 
         return response
