@@ -71,29 +71,6 @@ class UserAdminView(AdminView):
         context['total_users_number'] = User.objects.count()
         return context
 
-class ExportUsersByCourseView(View):
-    def get(self, request, *args, **kwargs):
-        course_id = request.GET.get('course_id')
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course_id+'.csv"'
-
-        writer = csv.writer(response)
-        writer.writerow([
-            'Nome',
-            'Email',
-            'Email Adicional',
-            'Ocupação',
-            'Ano/Série',
-            'Disciplinas',
-            'Estado',
-            'Cidade',
-            'Escola (nome, tipo, cidade, estado, níveis de ensino)',
-            'Cursos',
-            'Administrador',
-            'Ativo',
-        ])
-        return response
-
 class ExportUsersView(View):
     def generate_string_from_array(self, array):
         first = True
@@ -230,6 +207,54 @@ class ExportUsersView(View):
 
         return response
 
+class ExportUsersByCourseView(ExportUsersView):
+    
+    def get_course_student(self, courses, course_id):
+        for c in courses.all():
+            if(c.course.id == int(course_id)):
+                return c
+        return courses
+
+    def generate_string_for_progress(self, course):
+        string_for_progress = ''
+        string_for_progress = ''.join((string_for_progress, str(course.percent_progress()), '%'))
+        return string_for_progress
+
+    def get(self, request, *args, **kwargs):
+        course_id = request.GET.get('course_id')
+        course = Course.objects.all().get(id=course_id)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course.name+'.csv"'
+        
+        writer = csv.writer(response)
+        writer.writerow([
+            'Nome',
+            'Progresso',
+            'Data Inscrição',
+            'Último Acesso',
+            'Email principal',
+            'Atuação',
+            'Ano/Série',
+            'Disciplinas',
+            'Estado',
+            'Cidade',
+            'Aulas'
+        ])
+
+        queryset = User.objects.all()
+
+        for u in queryset:
+            course = self.get_course_student(u.coursestudent_set, course_id)
+            progress = self.generate_string_for_progress(course)
+
+
+            writer.writerow([
+                u.get_full_name().encode('utf-8'),
+                progress,
+                
+            ])
+
+        return response
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):
     model = Course
