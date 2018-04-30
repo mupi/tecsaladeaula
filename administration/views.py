@@ -252,12 +252,14 @@ class ExportUsersByCourseView(ExportUsersView):
                 progress = self.generate_string_for_progress(course_student)
                 data_inscricao = self.generate_string_for_date(course_student.created_at)
                 ultimo_acesso = course_student.get_last_access()
-
+                email = u.email
+                
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
                     progress,
                     data_inscricao,
                     ultimo_acesso,
+                    email,
                 ])
 
         return response
