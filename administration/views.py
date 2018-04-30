@@ -223,6 +223,17 @@ class ExportUsersByCourseView(ExportUsersView):
         string_for_progress = ''
         string_for_progress = ''.join((string_for_progress, str(percent), '%'))
         return string_for_progress
+    
+    def generate_string_for_lessons(self, lessons):
+        first = True
+        string_for_lesson = ''
+        for l in lessons:
+            if first:
+                first = False
+                string_for_lesson = ''.join((string_for_lesson, l['name'].encode('utf-8'), ' | ', str(l['progress']), '%'))
+            else:
+                string_for_lesson = '\n'.join((string_for_lesson, l['name'].encode('utf-8') + ' | ' + str(l['progress']) + '%'))
+        return string_for_lesson
 
     def get(self, request, *args, **kwargs):
         course_id = request.GET.get('course_id')
@@ -256,7 +267,8 @@ class ExportUsersByCourseView(ExportUsersView):
                 atuacao = self.generate_string_from_array(u.occupations)
                 ano_serie = self.generate_string_from_array(u.education_degrees)
                 disciplines = self.generate_string_from_array(u.disciplines)
-                
+                lessons = self.generate_string_for_lessons(course_student.percent_progress_by_lesson())
+
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
                     progress,
@@ -268,6 +280,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     disciplines,
                     (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                     (u.city.name.encode('utf-8') if u.city is not None else ""),
+                    lessons,
                 ])
 
         return response
