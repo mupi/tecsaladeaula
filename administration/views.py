@@ -266,6 +266,8 @@ class ExportUsersByCourseView(ExportUsersView):
                     atuacao,
                     ano_serie,
                     disciplines,
+                    (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
+                    (u.city.name.encode('utf-8') if u.city is not None else ""),
                 ])
 
         return response
