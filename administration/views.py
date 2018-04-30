@@ -71,6 +71,29 @@ class UserAdminView(AdminView):
         context['total_users_number'] = User.objects.count()
         return context
 
+class ExportUsersByCourseView(View):
+    def get(self, request, *args, **kwargs):
+        course_id = request.GET.get('course_id')
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course_id+'.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow([
+            'Nome',
+            'Email',
+            'Email Adicional',
+            'Ocupação',
+            'Ano/Série',
+            'Disciplinas',
+            'Estado',
+            'Cidade',
+            'Escola (nome, tipo, cidade, estado, níveis de ensino)',
+            'Cursos',
+            'Administrador',
+            'Ativo',
+        ])
+        return response
+
 class ExportUsersView(View):
     def generate_string_from_array(self, array):
         first = True

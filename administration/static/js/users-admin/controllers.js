@@ -86,11 +86,12 @@
 
             $scope.export_csv = function() {
                 console.log('export csv');
+                console.log('scope.filters', $scope.filters);
                 var query_string = '?';
                 if ($scope.filters.keyword)
                     query_string += "keyword=" + $scope.filters.keyword + "&"
                 if ($scope.filters.uf)
-                    query_string += "uf=" + $scope.filters.uf + "&"
+                    query_string += "uf=" +     $scope.filters.uf + "&"
                 if ($scope.filters.city)
                     query_string += "city=" + $scope.filters.city + "&"
                 if ($scope.filters.blocked)

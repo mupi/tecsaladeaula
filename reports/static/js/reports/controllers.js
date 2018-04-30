@@ -25,6 +25,16 @@
                     }
                 }
 
+                $scope.export_csv = function() {
+                    console.log('export_csv');
+                    var queryString = '?'
+                    if($scope.filters.course){
+                        queryString += 'course_id='+$scope.filters.course;
+                    }
+
+                    $window.open('/admin/course/users/export/' + queryString);
+                }
+
                 $scope.filter_stats = function(){
                     if ($scope.from_date == null)
                         $scope.filters.from_date = null;
