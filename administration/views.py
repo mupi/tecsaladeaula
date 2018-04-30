@@ -253,6 +253,8 @@ class ExportUsersByCourseView(ExportUsersView):
                 data_inscricao = self.generate_string_for_date(course_student.created_at)
                 ultimo_acesso = course_student.get_last_access()
                 email = u.email
+                atuacao = self.generate_string_from_array(u.occupations)
+
                 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
@@ -260,6 +262,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     data_inscricao,
                     ultimo_acesso,
                     email,
+                    atuacao,
                 ])
 
         return response
