@@ -214,6 +214,9 @@ class ExportUsersByCourseView(ExportUsersView):
             if(c.course.id == int(course_id)):
                 return c
         return courses
+    
+    def generate_string_for_date(self, date):
+        return str(date.day) + '/' + str(date.month) + '/' + str(date.year)
 
     def generate_string_for_progress(self, course):
         string_for_progress = ''
@@ -246,12 +249,12 @@ class ExportUsersByCourseView(ExportUsersView):
         for u in queryset:
             course = self.get_course_student(u.coursestudent_set, course_id)
             progress = self.generate_string_for_progress(course)
-
+            data_inscricao = self.generate_string_for_date(course.created_at)
 
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 progress,
-                
+                data_inscricao,
             ])
 
         return response
