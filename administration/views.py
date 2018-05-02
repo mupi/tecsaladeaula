@@ -237,7 +237,7 @@ class ExportUsersByCourseView(ExportUsersView):
 
     def get(self, request, *args, **kwargs):
         course_id = request.GET.get('course_id')
-        course = Course.objects.all().get(id=course_id)
+        course = Course.objects.get(id=course_id)
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course.name+'.csv"'
         
@@ -256,9 +256,56 @@ class ExportUsersByCourseView(ExportUsersView):
             'Aulas'
         ])
 
-        queryset = User.objects.all()
-        for u in queryset:
-            course_student = self.get_course_student(u.coursestudent_set, course_id)
+        queryset = CourseStudent.objects.filter(course=course_id)
+        course_id = self.request.GET.get('course_id')
+        keyword = self.request.GET.get('keyword')
+        from_date = self.request.GET.get('from_date')
+        until_date = self.request.GET.get('until_date')
+        percentage_completion = self.request.GET.get('percentage_completion')
+        days_inactive = self.request.GET.get('days_inactive')
+
+        queryset = queryset.filter(course=course_id)
+
+        if keyword:
+            queryset = queryset.filter(Q(user__first_name__icontains=keyword) |
+                                       Q(user__last_name__icontains=keyword) |
+                                       Q(user__username__icontains=keyword) |
+                                       Q(user__email__icontains=keyword))
+
+        if from_date:
+            from_date = datetime.fromtimestamp(int(from_date) / 1000)
+
+            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            from_date = datetime.combine(from_date.date(), t)
+            queryset = queryset.filter(created_at__gte=from_date)
+        if until_date:
+            until_date = datetime.fromtimestamp(int(until_date) / 1000)
+
+            t = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            until_date = datetime.combine(until_date.date(), t)
+            queryset = queryset.filter(created_at__lte=until_date)
+        
+        course_students = [cs for cs in queryset]
+        if percentage_completion:
+            if percentage_completion == '1':
+                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
+            elif percentage_completion == '2':
+                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
+            elif percentage_completion == '3':
+                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
+            elif percentage_completion == '4':
+                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
+
+        if days_inactive:
+            days_inactive = int(days_inactive)
+            from_date = datetime.now() - timedelta(days=days_inactive)
+            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            from_date = datetime.combine(from_date.date(), t)
+            course_students = [cs for cs in course_students if cs.get_last_access() == None or cs.get_last_access() <= from_date]
+
+        for course_student in course_students:
+            u = course_student.user
+            # course_student = self.get_course_student(u.coursestudent_set, course_id)
             if(course_student):
                 progress = self.generate_string_for_progress(course_student)
                 data_inscricao = self.generate_string_for_date(course_student.created_at)

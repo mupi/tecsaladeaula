@@ -27,12 +27,22 @@
 
                 $scope.export_csv = function() {
                     console.log('export_csv');
-                    var queryString = '?'
-                    if($scope.filters.course){
-                        queryString += 'course_id='+$scope.filters.course;
-                    }
 
-                    $window.open('/admin/course/users/export/' + queryString);
+                    var query_string = '?';
+                    if($scope.filters.course)
+                        query_string += 'course_id='+$scope.filters.course + "&";
+                    if ($scope.filters.keyword)
+                        query_string += "keyword=" + $scope.filters.keyword + "&"
+                    if ($scope.filters.percentage_completion)
+                        query_string += "percentage_completion=" + $scope.filters.percentage_completion + "&"
+                    if ($scope.from_date)
+                        query_string += "from_date=" + Date.parse($scope.from_date) + "&"
+                    if ($scope.until_date)
+                        query_string += "until_date=" + Date.parse($scope.until_date) + "&"
+                    if ($scope.filters.days_inactive)
+                        query_string += "days_inactive=" + $scope.filters.days_inactive + "&"
+
+                    $window.open('/admin/course/users/export/' + query_string);
                 }
 
                 $scope.filter_stats = function(){

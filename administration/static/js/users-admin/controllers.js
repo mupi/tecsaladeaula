@@ -86,7 +86,6 @@
 
             $scope.export_csv = function() {
                 console.log('export csv');
-                console.log('scope.filters', $scope.filters);
                 var query_string = '?';
                 if ($scope.filters.keyword)
                     query_string += "keyword=" + $scope.filters.keyword + "&"
@@ -98,7 +97,7 @@
                     query_string += "blocked=" + $scope.filters.blocked + "&"
                 if ($scope.filters.admin)
                     query_string += "admin=" + $scope.filters.admin + "&"
-                    $scope.filters.disciplines.forEach(function(discipline){
+                $scope.filters.disciplines.forEach(function(discipline){
                     query_string += "disciplines=" + discipline + "&"
                 });
                 $scope.filters.occupations.forEach(function(occupation){
