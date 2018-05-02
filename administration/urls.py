@@ -5,7 +5,7 @@ from forum.views import AdminCourseForumView
 from course_material.views import CourseMaterialAdminView
 from .views import (AdminView, CourseAdminView, CourseCreateView,
                     ExportCourseView, ImportCourseView, UserAdminView,
-                    NewStudentsJocaView, ExportUsersView, )
+                    NewStudentsJocaView, ExportUsersView, ExportUsersByCourseView)
 
 urlpatterns = patterns(
     '',
@@ -19,6 +19,7 @@ urlpatterns = patterns(
     # users
     url(r'^users/$', UserAdminView.as_view(template_name="users.html"), name='administration.users'),
     url(r'^users/export/$', ExportUsersView.as_view(), name='administration.export_users'),
+    url(r'^course/users/export/$', ExportUsersByCourseView.as_view(), name='administration.export_users_by_course'),
     # url(r'^users/(?P<pk>[0-9]+)/$', UserUpdateView.as_view(), name='administration.user-update'),
     # url(r'^users/(?P<pk>[0-9]+)/delete/$', UserDeleteView.as_view(), name='administration.user-delete'),
 
