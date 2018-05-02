@@ -456,7 +456,7 @@ class NewStudentsJocaView(AdminView):
             return self.render_to_response(context)
 
 
-        students = [ cs.user for cs in CourseStudent.objects.filter(course__id=11, created_at__gt=date_init, created_at__lt=date_end) ]
+        students = [ cs.user for cs in CourseStudent.objects.filter(course__id=settings.JOCA_COURSE_ID, created_at__gt=date_init, created_at__lt=date_end) ]
         joca_students = [ ju.user for ju in JocaUser.objects.filter(user__in=students)]
 
         new_students = [ s for s in students if s not in joca_students]

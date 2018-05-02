@@ -9,7 +9,7 @@
 {% block js %}
     {{ block.super }}
     {% compressed_js 'core' %}
-    <script type="text/javascript" src="/static/js/introjs/home.js"></script>
+    <!--<script type="text/javascript" src="/static/js/introjs/home.js"></script>-->
 {% endblock %}
 
 {% block wrapper_classes %}
@@ -312,11 +312,11 @@ home
                   </div>
 
                   <!-- Controls -->
-                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev">
+                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Anterior</span>
                   </a>
-                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next">
+                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Próximo</span>
                   </a>
@@ -336,75 +336,10 @@ home
 
             </div>
         </section><!-- #how-it-works -->
-        <section>
-            <div class="apoio textcenter container">
-                <div class="row">
-                    <div class="col-md-2">
-                      <h4 class="title_midia">Parceiros e apoio</h4>
-                    </div>
-                    <div class="col-md-4">
-                      <a href="http://lisbon-challenge.com/" target="_blank">
-                        <img src="{% static 'img/lclogo.png' %}" class="img-responsive">
-                      </a>
-                    </div>
-                    <div class="col-md-2 col-md-offset-1">
-                      <a href="http://atlasmedialab.com.br/parcerias/" target="_blank">
-                        <img src="{% static 'img/atlas-logo.png' %}" class="img-responsive">
-                      </a>
-                    </div>
-                    <div class="col-md-2 col-md-offset-1">
-                      <a href="http://www.salaaberta.com.br" target="_blank">
-                        <img src="{% static 'img/salaaberta.jpg' %}" class="img-responsive">
-                      </a>
-                    </div>
-                </div>
-            </div>
-        </select>
-
-        {% if in_admin %}
-            <div class="modal fade" id="modalSelectCourses">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel_courses_selection()">&times;</button>
-                    <h4 class="modal-title">{% trans 'Edit home courses' %}</h4>
-                  </div>
-                  <div class="modal-body">
-                      <div class="row">
-                        {% verbatim %}
-                        <div ng-repeat="course in all_courses">
-                            <div class="select-course col-xs-6" ng-click="selectCourse(course)" ng-class="{active: course.home_published}">
-                                <div class="course-thumb" style="background-image: url({{ course.home_thumbnail_url }});">
-                                    <span class="selected"></span>
-                                </div>
-                                <div class="course-info">
-                                    <h3>{{ course.name }}</h3>
-                                </div>
-                            </div>
-                        </div>
-                        {% endverbatim %}
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel_courses_selection()">{% trans 'Cancel' %}</button>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="apply_courses_selection()">Ok</button>
-                  </div>
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-        {% endif %}
     </div><!-- #home -->
 
 </div>
-
-<!--Start of Zopim Live Chat Script-->
-<script type="text/javascript">
-window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
-$.src='//v2.zopim.com/?2nKq0EoZuGTIzGi15KuUCCfnhuv85q3G';z.t=+new Date;$.
-type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
-</script>
-<!--End of Zopim Live Chat Script-->
-
+<!-- ManyChat -->
+<script src="//widget.manychat.com/259099920790095.js" async="async"></script>
+    
 {% endblock %}

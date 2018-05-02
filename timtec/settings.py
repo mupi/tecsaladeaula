@@ -556,6 +556,8 @@ LOGGING = {
     }
 }
 
+JOCA_COURSE_ID = 51
+
 try:
     execfile(os.path.join(SETTINGS_DIR, 'settings_local.py'))
 except IOError:
