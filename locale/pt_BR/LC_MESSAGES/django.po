@@ -110,7 +110,7 @@ msgstr "Página"
 #: themes/default/templates/_course_professors_modal.html:77
 #: themes/default/templates/_course_professors_modal.html:78
 msgid "Biography"
-msgstr "Biografia"
+msgstr "Sobre mim"
 
 #: accounts/models.py:35
 msgid "Accepted terms and condition"
@@ -789,7 +789,7 @@ msgstr "Usar nome do perfil do usuário"
 
 #: themes/default/templates/_course_professors_modal.html:79
 msgid "Use biography from user profile"
-msgstr "Usar biografia do perfil do usuário"
+msgstr "Usar 'Sobre mim' do perfil do usuário"
 
 #: themes/default/templates/_course_professors_modal.html:85
 #: themes/default/templates/_create_class_modal.html:18
@@ -1545,7 +1545,7 @@ msgstr "Estado"
 #: themes/default/templates/profile.html:65
 #: themes/default/templates/administration/users.html:219
 msgid "Bio"
-msgstr "Biografia"
+msgstr "Sobre mim"
 
 #: themes/default/templates/profile-edit.html:155
 #: themes/default/templates/administration/users.html:237
