@@ -216,6 +216,8 @@ class ExportUsersByCourseView(ExportUsersView):
         return None
     
     def generate_string_for_date(self, date):
+        if date == None:
+            return ""
         return str(date.day) + '/' + str(date.month) + '/' + str(date.year)
 
     def generate_string_for_progress(self, course):
@@ -309,7 +311,7 @@ class ExportUsersByCourseView(ExportUsersView):
             if(course_student):
                 progress = self.generate_string_for_progress(course_student)
                 data_inscricao = self.generate_string_for_date(course_student.created_at)
-                ultimo_acesso = course_student.get_last_access()
+                ultimo_acesso = self.generate_string_for_date(course_student.get_last_access())
                 email = u.email
                 atuacao = self.generate_string_from_array(u.occupations)
                 ano_serie = self.generate_string_from_array(u.education_degrees)
