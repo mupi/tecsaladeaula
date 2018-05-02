@@ -90,14 +90,14 @@
                 if ($scope.filters.keyword)
                     query_string += "keyword=" + $scope.filters.keyword + "&"
                 if ($scope.filters.uf)
-                    query_string += "uf=" + $scope.filters.uf + "&"
+                    query_string += "uf=" +     $scope.filters.uf + "&"
                 if ($scope.filters.city)
                     query_string += "city=" + $scope.filters.city + "&"
                 if ($scope.filters.blocked)
                     query_string += "blocked=" + $scope.filters.blocked + "&"
                 if ($scope.filters.admin)
                     query_string += "admin=" + $scope.filters.admin + "&"
-                    $scope.filters.disciplines.forEach(function(discipline){
+                $scope.filters.disciplines.forEach(function(discipline){
                     query_string += "disciplines=" + discipline + "&"
                 });
                 $scope.filters.occupations.forEach(function(occupation){
