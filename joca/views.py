@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 
 from core.models import Course
@@ -18,7 +19,7 @@ class JocaSignupView(SignupView):
     def get_context_data(self, **kwargs):
         context = super(JocaSignupView, self).get_context_data(**kwargs)
 
-        course = Course.objects.get(id=11)
+        course = Course.objects.get(id=settings.JOCA_COURSE_ID)
         context['next'] = reverse_lazy('course_intro', args=[course.slug])
 
         return context
@@ -30,7 +31,7 @@ class JocaSignupView(SignupView):
             else:
                 user = self.request.user
 
-            course = Course.objects.get(id=11)
+            course = Course.objects.get(id=settings.JOCA_COURSE_ID)
             if not course.is_enrolled(user):
                 course.enroll_student(user)
             return reverse_lazy('course_intro', args=[course.slug])

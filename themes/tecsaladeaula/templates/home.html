@@ -9,7 +9,7 @@
 {% block js %}
     {{ block.super }}
     {% compressed_js 'core' %}
-    <script type="text/javascript" src="/static/js/introjs/home.js"></script>
+    <!--<script type="text/javascript" src="/static/js/introjs/home.js"></script>-->
 {% endblock %}
 
 {% block wrapper_classes %}
@@ -306,11 +306,11 @@ home
                   </div>
 
                   <!-- Controls -->
-                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev">
+                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Anterior</span>
                   </a>
-                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next">
+                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Próximo</span>
                   </a>
@@ -390,15 +390,7 @@ home
     </div><!-- #home -->
 
 </div>
-
-<!--Start of Zopim Live Chat Script-->
-<script type="text/javascript">
-window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
-$.src='//v2.zopim.com/?2nKq0EoZuGTIzGi15KuUCCfnhuv85q3G';z.t=+new Date;$.
-type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
-</script>
-<!--End of Zopim Live Chat Script-->
-
+<!-- ManyChat -->
+<!-- <script src="//widget.manychat.com/259099920790095.js" async="async"></script> -->
+    
 {% endblock %}

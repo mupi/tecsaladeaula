@@ -51,6 +51,7 @@ nosetests.xml
 
 # Local configuration
 settings_local.py
+settings_production.py
 
 /static/css/main.css
 /static/css/main-admin.css
