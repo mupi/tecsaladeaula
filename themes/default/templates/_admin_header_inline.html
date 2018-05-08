@@ -34,11 +34,11 @@
                            data-original-title="{% trans 'Course' %}"
                            data-toggle="tooltip" data-placement="top">
                         </a>
-                        <a ng-href="{% url 'administration.forum' course.id %}"
+                        <!--<a ng-href="{% url 'administration.forum' course.id %}"
                            class="has-tooltip fa fa-comments{% if '/forum/' in request.path %} active{% endif %}"
                            data-original-title="{% trans 'Forum' %}"
                            data-toggle="tooltip" data-placement="top">
-                        </a>
+                        </a>-->
                         <a ng-href="{% url 'administration.course_material' course.id %}"
                            class="has-tooltip fa fa-file {% if '/material/' in request.path %} active{% endif %}"
                            data-original-title="{% trans 'Material' %}"
