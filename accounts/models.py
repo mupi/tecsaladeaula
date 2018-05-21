@@ -15,7 +15,7 @@ import re
 class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_REGEXP = re.compile('^[\w.+-@]+$')
     username = models.CharField(
-        _('Username'), max_length=30, unique=True,
+        _('Username'), max_length=100, unique=True,
         help_text=_('Required. 30 characters or fewer. Letters, numbers and '
                     './+/-/_ characters'),
         validators=[
@@ -78,8 +78,10 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
         return self.groups.filter(name='pilot_course').count() > 0
 
     def save(self, *args, **kwargs):
-
+        self.username = self.email
         is_new = self.pk is None
+
+        print(self)
 
         super(AbstractTimtecUser, self).save(*args, **kwargs)
 

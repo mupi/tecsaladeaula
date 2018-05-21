@@ -9,7 +9,7 @@
 {% block js %}
     {{ block.super }}
     {% compressed_js 'core' %}
-    <script type="text/javascript" src="/static/js/introjs/home.js"></script>
+    <!--<script type="text/javascript" src="/static/js/introjs/home.js"></script>-->
 {% endblock %}
 
 {% block wrapper_classes %}
@@ -40,9 +40,9 @@ home
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center">
-                        <h1 class="home-title">Formação continuada de professores</h1>
+                        <h1 class="home-title">TEC Sala de Aula</h1>
                         <p class="lead">
-                          Oferecemos cursos gratuitos. Faça parte você também dessa comunidade de professores de todo Brasil! </p>
+                          Cursos online sobre Educação do Século 21. Faça parte você também dessa comunidade de educadores de todo Brasil!
                         <p>
                             <a href="{% url 'courses' %}" class="btn btn-success text-uppercase">Conheça nossos cursos</a>
                         </p>
@@ -161,26 +161,21 @@ home
                           <h4 class="title_midia">Saiu na mídia</h4>
                         </div>
                         <div class="col-md-3">
-                          <a href="http://porvir.org/porfazer/curso-ensina-como-usar-ferramentas-virtuais-para-educadores" target="_blank">
+                          <a href="http://porvir.org/3-cursos-de-tecnologia-para-educadores-melhorarem-suas-aulas/" target="_blank">
                             <img src="{% static 'img/logo_porvir.png' %}" class="img-responsive">
                           </a>
                         </div>
-                        <div class="col-md-1 logo-novaescola">
-                          <a href="https://www.youtube.com/watch?v=67byn7rxG-s&t=249" target="_blank">
-                            <img src="{% static 'img/logo_nova_escola.png' %}" class="img-responsive">
+                        <div class="col-md-2 logo-novaescola"> <!-- fapesp -->
+                          <a href="http://pesquisaparainovacao.fapesp.br/aplicativo_usa_inteligencia_coletiva_para_ajudar_professores_da_educacao_basica/191" target="_blank">
+                            <img src="{% static 'img/fapesp_logo.png' %}" class="img-responsive">
+                          </a>
+                        </div>
+                        <div class="col-md-2 logo-novaescola"> <!-- IFPA -->
+                          <a href="http://ctead.ifpa.edu.br/noticias/373-entrevista-com-paula-furtado-da-escola-mupi" target="_blank">
+                            <img src="{% static 'img/ifpa_logo.png' %}" class="img-responsive">
                           </a>
                         </div>
                         <div class="col-md-2 logo-novaescola">
-                          <a href="http://rescola.com.br/curso-ensina-educadores-a-utilizar-ferramentas-gratuitas-da-web-na-sala-de-aula" target="_blank">
-                            <img src="{% static 'img/logorescola.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                        <div class="col-md-2 logo-novaescola">
-                          <a href="http://www.inova.unicamp.br/noticia/3413" target="_blank">
-                            <img src="{% static 'img/logo_inova.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                        <div class="col-md-2 logo-inova">
                           <a href="http://www.arede.inf.br/parabens-vencedores-do-premio-arede-educa-2016/" target="_blank">
                             <img src="{% static 'img/arede.png' %}" class="img-responsive">
                           </a>
@@ -193,7 +188,74 @@ home
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner" role="listbox">
 
+
                     <div class="item active">
+                        <blockquote class="testimonial">
+                            <p>
+                              <i class="fa fa-quote-left"></i>
+                              Termino o curso com a cabeça fervilhando de ideias
+                              pra colocar em prática com os meus alunos.
+                                <i class="fa fa-quote-right"></i>
+                            </p>
+                        </blockquote>
+                      <div class="carousel-caption">
+                        Érika Santos Araújo (Brasília-DF)<br/>
+                        Curso <a href="http://tecsaladeaula.com.br/course/jornal-cidadaocritico/intro/">
+                         O jornal na escola: Como formar o cidadão crítico e ativo do século 21</a>
+                      </div>
+                    </div>
+                    <div class="item">
+                      <blockquote class="testimonial">
+                          <p>
+                              <i class="fa fa-quote-left"></i>
+                                É fundamental que ensinemos os nosso alunos a
+                                pesquisar sobre a veracidade das notícias nas
+                                redes sociais. Mas o que eu destaco é: nós, adultos,
+                                sabemos fazer isso?
+                                Penso que esse curso poderia ser feito por muito
+                                mais pessoas, não apenas professores. (...)
+                                <i class="fa fa-quote-right"></i>
+                            </p>
+                        </blockquote>
+                      <div class="carousel-caption">
+                      Ana Paula Moreira (Rio Claro-SP)<br/>
+                      Curso <a href="http://tecsaladeaula.com.br/course/fake-news-voce-faz-parte-dessa-historia/intro/">
+                      Fake news: como você faz parte dessa história?</a>
+                      </div>
+                    </div>
+                    <div class="item">
+                        <blockquote class="testimonial">
+                          <p>
+                            <i class="fa fa-quote-left"></i>
+                             Melhor plataforma que já utilizei de EAD.
+                             Muito fácil e sem complicações de outras.
+                            <i class="fa fa-quote-right"></i>
+                          </p>
+                        </blockquote>
+                      <div class="carousel-caption">
+                        Marco Antonio Bourguignon (Rio de Janeiro-RJ)<br/>
+                        Curso <a href="http://tecsaladeaula.com.br/course/google-digitalize-se/intro/">
+                        Google Drive e Docs: digitalize-se</a>
+                      </div>
+                    </div>
+                    <div class="item">
+                        <blockquote class="testimonial">
+                          <p>
+                            <i class="fa fa-quote-left"></i>
+                            Gostei muito da abordagem do TEC Sala de Aula,
+                            que além de entregar conteúdo de qualidade,
+                            favorece a comunicação entre os participantes.
+                            O feedback da equipe tem sido fundamental!
+                            <i class="fa fa-quote-right"></i>
+                          </p>
+                        </blockquote>
+                      <div class="carousel-caption">
+                        Arlete Meneguette (São Paulo - SP) <br/>
+                        Curso <a href="http://tecsaladeaula.com.br/course/google-digitalize-se/intro/">
+                        Google Drive e Docs: digitalize-se</a>
+                      </div>
+                    </div>
+                    <div class="item">
                         <blockquote class="testimonial">
                             <p>
                               <i class="fa fa-quote-left"></i>
@@ -208,74 +270,6 @@ home
                         Fabiana Navarro da Silva Gomes<br/>
                         Curso <a href="http://tecsaladeaula.com.br/course/tecnologia-e-educacao-o-mundo-esta-sempre-mudando/intro/">
                         Reflexões sobre tecnologia, educação e sociedade</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                            <p>
-                              <i class="fa fa-quote-left"></i>
-                              O curso me abriu muitos caminhos assim como me
-                              propiciou novos horizontes para poder otimizar os
-                              trabalhos nesse ambiente tão rico e dinâmico que
-                              é a escola.
-                                <i class="fa fa-quote-right"></i>
-                            </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Fabiana Manzano dos S. Lago<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/tecnologia-e-educacao-o-mundo-esta-sempre-mudando/intro/">
-                        Reflexões sobre tecnologia, educação e sociedade</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <blockquote class="testimonial">
-                          <p>
-                              <i class="fa fa-quote-left"></i>
-                                Eu buscava algo que pudesse fazer parte do meu
-                                acervo de material e, neste curso, pude
-                                encontrar de maneira clara e bastante objetiva.
-                                <i class="fa fa-quote-right"></i>
-                            </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                      Luciana Vasconcelos Machado<br/>
-                      Curso <a href="http://tecsaladeaula.com.br/course/objetos-de-aprendizagem/intro/">
-                      Objetos de Aprendizagem </a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                              As aulas da plataforma vão direto ao ponto, sem
-                            perder tempo. O conhecimento ali e pronto. O lugar
-                             certo para professores como eu que tem pouco tempo,
-                             mas que reconhece a necessidade de se reciclar
-                             a todo tempo.
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Hélio Silva<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/google-news-seu-jornal-interativo-em-aula/intro/">
-                        Google News: seu jornal interativo em aula </a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                            Considero esse curso sobre a utilização de jornal
-                            interativo uma excelente proposta para ser utilizada
-                             para enriquecer as aulas de Geografia atualizando
-                             com mais rapidez os conteúdos
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Ariele Luz <br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/google-news-seu-jornal-interativo-em-aula/intro/">
-                        Google News: seu jornal interativo em aula </a>
                       </div>
                     </div>
                     <div class="item">
@@ -312,11 +306,11 @@ home
                   </div>
 
                   <!-- Controls -->
-                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev">
+                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Anterior</span>
                   </a>
-                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next">
+                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next" ng-non-bindable>
                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     <span class="sr-only">Próximo</span>
                   </a>
@@ -336,7 +330,7 @@ home
 
             </div>
         </section><!-- #how-it-works -->
-        <section>
+        <!--<section>
             <div class="apoio textcenter container">
                 <div class="row">
                     <div class="col-md-2">
@@ -359,7 +353,7 @@ home
                     </div>
                 </div>
             </div>
-        </select>
+        </section>-->
 
         {% if in_admin %}
             <div class="modal fade" id="modalSelectCourses">
@@ -396,15 +390,7 @@ home
     </div><!-- #home -->
 
 </div>
-
-<!--Start of Zopim Live Chat Script-->
-<script type="text/javascript">
-window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
-$.src='//v2.zopim.com/?2nKq0EoZuGTIzGi15KuUCCfnhuv85q3G';z.t=+new Date;$.
-type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
-</script>
-<!--End of Zopim Live Chat Script-->
-
+<!-- ManyChat -->
+<!-- <script src="//widget.manychat.com/259099920790095.js" async="async"></script> -->
+    
 {% endblock %}

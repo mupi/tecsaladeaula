@@ -90,6 +90,7 @@ class AcceptTermsForm(forms.Form):
 
 
 class SignupForm(SignupForm, AcceptTermsForm):
+    username = forms.CharField(initial=False,required=False)
     fullname = forms.CharField(label=_("Nome Completo"),initial=False,required=True)
 
     def extract_first_name(self,name):
@@ -103,8 +104,11 @@ class SignupForm(SignupForm, AcceptTermsForm):
         else:
             return ""
 
-    def clean_full_name(self):
-        data  = self.cleaned_data['fullname']
+    def validate_username(self):
+        return True
+
+    def clean_fullname(self):
+        data = self.cleaned_data['fullname']
         if not data.strip():
             raise forms.ValidationError(_('You Must fill your complete name'))
         return data
