@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
-
+from django.contrib.auth.forms import (UserCreationForm, UserChangeForm,)
 from allauth.account.forms import SignupForm
 
 User = get_user_model()
@@ -122,4 +122,23 @@ class SignupForm(SignupForm, AcceptTermsForm):
         # user.last_name = self.extract_last_name(name)
         user.save()
         return user
-        # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context({'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
+        # send_mail('Novo Usuário Cadastrado', get_template('account/email/email_new_user_message.txt').render(Context(
+            # {'date': now.strftime("%d/%m/%Y"), 'time': now.strftime("%H:%M"), 'username': username, 'email': email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
+
+class NewUserCreationForm(UserCreationForm):
+    username = forms.RegexField(label=_("Username"), max_length=100,
+    regex=r'^[\w.@+-]+$',
+    help_text=_("Required. 100 characters or fewer. Letters, digits and "
+                    "@/./+/-/_ only."),
+    error_messages={
+        'invalid': _("This value may contain only letters, numbers and "
+                        "@/./+/-/_ characters.")})
+
+class NewUserChangeForm(UserChangeForm):
+    username = forms.RegexField(label=_("Username"), max_length=100,
+    regex=r'^[\w.@+-]+$',
+    help_text=_("Required. 100 characters or fewer. Letters, digits and "
+                    "@/./+/-/_ only."),
+    error_messages={
+        'invalid': _("This value may contain only letters, numbers and "
+                        "@/./+/-/_ characters.")})
