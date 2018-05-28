@@ -358,7 +358,6 @@
     {
         "fields": {
             "biography": "",
-            "city": "",
             "date_joined": "2013-10-28T20:42:19Z",
             "email": "admin@localhost",
             "first_name": "",
@@ -385,7 +384,6 @@
     {
         "fields": {
             "biography": "",
-            "city": "",
             "date_joined": "2013-10-28T20:42:19Z",
             "email": "student@localhost",
             "first_name": "",
@@ -412,7 +410,6 @@
     {
         "fields": {
             "biography": "",
-            "city": "",
             "date_joined": "2013-10-28T20:42:19Z",
             "email": "professor@localhost",
             "first_name": "",
