@@ -106,25 +106,36 @@ class City (models.Model):
     name = models.CharField(max_length=80)
     uf = models.ForeignKey(State, on_delete=models.CASCADE)
 
+    def __unicode__(self):
+        return self.uf.uf + " " + self.name
+
 class Occupation(models.Model):
     name = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.name
 
 #populated by fixture
 class Discipline (models.Model):
     name = models.CharField(max_length=100, unique=True)
     visible = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 class EducationLevel(models.Model):
     slug = models.CharField(max_length=3, primary_key=True)
     name = models.CharField(max_length=50)
 
-# #populated by fixture
+    def __unicode__(self):
+        return self.name
+
 class EducationDegree (models.Model):
     name = models.CharField(max_length=50, unique=True)
     education_level = models.ForeignKey(EducationLevel)
+
+    def __unicode__(self):
+            return self.name
 
 class School (models.Model):
     SCHOOL_TYPES = [
@@ -136,6 +147,9 @@ class School (models.Model):
     name = models.CharField(max_length=200, blank=False, null=False)
     school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=False, null=False)
     city = models.ForeignKey(City, blank=False, null=False)
+
+    def __unicode__(self):
+        return self.name
 
 class TimtecUser(AbstractTimtecUser):
     """
@@ -158,3 +172,6 @@ class TimtecUserSchool(models.Model):
     professor = models.ForeignKey(TimtecUser)
     school = models.ForeignKey(School)
     education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
+
+    def __unicode__(self):
+        return self.professor.username + " " + self.school.name
