@@ -134,6 +134,7 @@ class ExportUsersView(View):
             'Email Adicional',
             'Ocupação',
             'Disciplinas',
+            'Niveis de ensino',
             'Estado',
             'Cidade',
             'Escola',
@@ -187,6 +188,7 @@ class ExportUsersView(View):
                 ativo = 'S'
             occupations = self.generate_string_from_array(u.occupations)
             disciplines = self.generate_string_from_array(u.disciplines)
+            education_levels = self.generate_string_from_array(u.education_levels)
             schools = self.generate_string_for_school(u.timtecuserschool_set)
             schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
             courses = self.generate_string_for_course(u.coursestudent_set)
@@ -196,6 +198,7 @@ class ExportUsersView(View):
                 u.business_email if u.business_email is not None else "",
                 occupations,
                 disciplines,
+                education_levels,
                 (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                 (u.city.name.encode('utf-8') if u.city is not None else ""),
                 schools,
@@ -250,6 +253,7 @@ class ExportUsersByCourseView(ExportUsersView):
             'Email Adicional',
             'Ocupação',
             'Disciplinas',
+            'Niveis de ensino',
             'Estado',
             'Cidade',
             'Escola',
@@ -313,6 +317,7 @@ class ExportUsersByCourseView(ExportUsersView):
             if(course_student):
                 occupations = self.generate_string_from_array(u.occupations)
                 disciplines = self.generate_string_from_array(u.disciplines)
+                education_levels = self.generate_string_from_array(u.education_levels)
                 schools = self.generate_string_for_school(u.timtecuserschool_set)
                 schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
                 progress = self.generate_string_for_progress(course_student)
@@ -326,6 +331,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     u.business_email if u.business_email is not None else "",
                     occupations,
                     disciplines,
+                    education_levels,
                     (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                     (u.city.name.encode('utf-8') if u.city is not None else ""),
                     schools,
