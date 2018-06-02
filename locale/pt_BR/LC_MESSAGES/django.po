@@ -1628,7 +1628,7 @@ msgstr "Preencha os dados da escola/instituição onde você atua"
 
 #: themes/default/templates/profile-edit.html:381
 msgid "Teaching Level that you teach"
-msgstr "Nível de Ensino em que atua"
+msgstr "Nível de Ensino"
 
 #: themes/default/templates/question-create.html:52
 msgid "Fill the question text."

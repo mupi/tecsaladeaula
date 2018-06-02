@@ -12,7 +12,7 @@ from allauth.account.forms import SignupForm
 
 User = get_user_model()
 
-from .models import School, City, Occupation, Discipline
+from .models import School, City, Occupation, Discipline, EducationLevel
 
 class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
     def validate(self, value):
@@ -20,6 +20,7 @@ class MultipleChoiceFieldNoValidation(forms.MultipleChoiceField):
 
 class ProfileEditForm(forms.ModelForm):
     disciplines = MultipleChoiceFieldNoValidation()
+    education_levels = MultipleChoiceFieldNoValidation()
 
     class Meta:
         model = User
@@ -27,23 +28,35 @@ class ProfileEditForm(forms.ModelForm):
 
     def save(self, commit=True):
         disciplines = self.cleaned_data.get('disciplines')
+        education_levels = self.cleaned_data.get('education_levels')
         profile = super(ProfileEditForm, self).save(commit=False)
         
-        saved = profile.disciplines.all()
-        saving = []
+        saved_disciplines = profile.disciplines.all()
+        saving_disciplines = []
         for d in disciplines:
             if (not Discipline.objects.filter(name=d).exists()):
                 new_d = Discipline.objects.create(name=d)
                 new_d.save()
-                saving.append(new_d)
+                saving_disciplines.append(new_d)
             else:
-                saving.append(Discipline.objects.get(name=d))
-        to_save = [d for d in saving if d not in saved]
+                saving_disciplines.append(Discipline.objects.get(name=d))
+        to_save = [d for d in saving_disciplines if d not in saved_disciplines]
         for d in to_save:
             profile.disciplines.add(d)
-        to_remove = [d for d in saved if d not in saving]
+        to_remove = [d for d in saved_disciplines if d not in saving_disciplines]
         for d in to_remove:
             profile.disciplines.remove(d)
+
+        saved_education_levels = profile.education_levels.all()
+        saving_education_levels = []
+        for el in education_levels:
+            saving_education_levels.append(EducationLevel.objects.get(slug=el))
+        to_save = [el for el in saving_education_levels if el not in saved_education_levels]
+        for el in to_save:
+            profile.education_levels.add(el)
+        to_remove = [el for el in saved_education_levels if el not in saving_education_levels]
+        for el in to_remove:
+            profile.education_levels.remove(el)
         
         self.save_m2m()
         profile.save()

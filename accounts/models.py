@@ -162,6 +162,7 @@ class TimtecUser(AbstractTimtecUser):
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     occupations = models.ManyToManyField(Occupation, blank=True, null=True)
+    education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
 
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'

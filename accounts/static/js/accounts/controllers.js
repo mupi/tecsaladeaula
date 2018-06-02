@@ -4,14 +4,17 @@
     /* Controllers */
     var app = angular.module('accounts.controllers', []);
 
-    app.controller('ProfileCtrl', ['$scope', '$rootScope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'UserSchools', 'Profile',
-            function ($scope, $rootScope, $location, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, UserSchools, Profile) {
+    app.controller('ProfileCtrl', ['$scope', '$rootScope', '$location', '$sce', '$window', 'Cities', 'States', 'Occupations', 'Disciplines', 'EducationDegrees', 'UserSchools', 'Profile', 'EducationLevels',
+            function ($scope, $rootScope, $location, $sce, $window, Cities, States, Occupations, Disciplines, EducationDegrees, UserSchools, Profile, EducationLevels) {
                 
                 $scope.form = {};
                 $scope.form.occupations = {};
                 $scope.form.disciplines = {};
                 $scope.form.disciplines.selected = [];
+                $scope.form.education_levels = {};
+                $scope.form.education_levels.selected = [];
 
+                $scope.avaiable_education_levels = EducationLevels.query();
                 $scope.avaiable_occupations = Occupations.query();
                 $scope.avaiable_disciplines = Disciplines.query();
 
@@ -31,6 +34,7 @@
                         }
                         $scope.form.occupations.selected = profile.occupations;
                         $scope.form.disciplines.selected = profile.disciplines;
+                        $scope.form.education_levels.selected = profile.education_levels;
 
                         $scope.school_infos = profile.schools;
                     })
@@ -75,52 +79,30 @@
                 }
 
                 $scope.$on('reload_schools', reload_schools);
+
+                $("#other-subject").keypress(function(event) {
+                    if (event.which == 13) {
+                        event.preventDefault();
+                        angular.element('.tab-content').scope().add_discipline();
+                        angular.element('.tab-content').scope().$apply();
+                    }
+                });
         }]);
 
-        app.controller('SchoolCtrl', ['$scope', '$rootScope', '$http', '$location', '$sce', '$window', 'Cities', 'States', 'EducationLevels', 'UserSchools', 'SchoolTypes',
-        function ($scope, $rootScope, $http, $location, $sce, $window, Cities, States, EducationLevels, UserSchools, SchoolTypes) {
+        app.controller('SchoolCtrl', ['$scope', '$rootScope', '$http', '$location', '$sce', '$window', 'UserSchools', 'SchoolTypes',
+        function ($scope, $rootScope, $http, $location, $sce, $window, UserSchools, SchoolTypes) {
             
             $scope.form = {};
             $scope.form.has_errors = false;
             
-            $scope.form.education_levels = {};
-            $scope.form.education_levels.selected = [];
-
-            $scope.list_ufs = [];
-            $scope.avaiable_education_levels = EducationLevels.query();
-
             SchoolTypes.query(function(list_schooltypes){
                 $scope.list_schooltypes = list_schooltypes;
                 $scope.form.school_type = list_schooltypes[0].value;
             });
 
-            States.query(function(ufs){
-                $scope.list_ufs = ufs;
-                $scope.form.uf = ufs[0];
-                $scope.filter_cities();
-            });
-            
-
-            $scope.filter_cities = function(){
-                Cities.query({uf : $scope.form.uf}, function(cities){
-                    $scope.list_cities = cities;
-                    $scope.form.city_id = cities[0].id;
-                });
-            }
-
             $scope.addSchoolForm = function() {
                 $("#btn-add-school-table").prop('disabled', true);
 
-                // var education_levels = [];
-                // $scope.form.education_levels.selected.forEach(function(el){
-                //     education_levels.push(el.slug);
-                // });
-
-                // if (education_levels.length == 0){
-                //     $scope.form.has_errors = true;
-                //     $("#btn-add-school-table").prop('disabled', false);
-                //     return;
-                // }
                 var user_school = new UserSchools();
 
                 user_school.school = {};
@@ -128,7 +110,6 @@
                     user_school.id = $scope.form.id;
                 user_school.school.name = $scope.form.name;
                 user_school.school.school_type = $scope.form.school_type;
-                // user_school.education_levels = education_levels;
 
                 if ($scope.form.id > 0){
                     user_school.$update()
@@ -159,13 +140,11 @@
                     UserSchools.get({id: id}, function(user_school){
                         $scope.form.name = user_school.school.name;
                         $scope.form.school_type = user_school.school.school_type;
-                        $scope.form.education_levels.selected = user_school.education_levels;
                     });
                 } else {
                     $scope.form.name = "";
                     $scope.form.has_errors = false;
                     $scope.form.school_type = $scope.list_schooltypes[0].value;
-                    $scope.form.education_levels.selected = [];
                 }
             }
 

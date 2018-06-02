@@ -122,6 +122,44 @@ wrapper-course-lesson
                                       </div>
                                   </div>
 
+                                    <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                            <!-- Teaching Levels-->
+                                            <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                <ui-select-choices repeat="el in avaiable_education_levels">
+                                                    {% verbatim %}{{el.name}}{% endverbatim %}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            {% verbatim %}
+                                                <input type="hidden" name="education_levels" ng-repeat="el in form.education_levels.selected" value="{{el.slug}}"/>
+                                            {% endverbatim %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <!-- Teaching Levels-->
+                                            <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                <ui-select-choices repeat="discipline in avaiable_disciplines">
+                                                    {% verbatim %}{{discipline.name}}{% endverbatim %}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            {% verbatim %}
+                                                <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
+                                            {% endverbatim %}
+                                        </div>
+                                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "Other Subject" %}</label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                                            <!-- Other Subject Selected-->
+                                            <input id="other-subject" name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
+                                            <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
+                                        </div>
+                                    </div>
+
                                   {% with errors=form.site.errors %}
                                   <div class="form-group{{ errors|yesno:" has-error,"}}">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
@@ -131,19 +169,6 @@ wrapper-course-lesson
                                       </div>
                                   </div>
                                   {% endwith %}
-
-                                  <!-- <div class="form-group">
-                                    <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
-                                        <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                            <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                            <ui-select-choices repeat="el in avaiable_education_levels">
-                                                {% verbatim %}{{el.name}}{% endverbatim %}
-                                            </ui-select-choices>
-                                        </ui-select>
-                                    </div>
-                                </div> -->
 
                                   {% with errors=form.biography.errors %}
                                   <div class="form-group{{ errors|yesno:" has-error,"}}">
@@ -196,43 +221,6 @@ wrapper-course-lesson
                             </fieldset>
                         </div>/
                         <br>
-                        <div class="col-sm-12 col-xs-12">
-                            <fieldset>
-                                <div class="page-header-double textleft top">
-                                  <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Teaching Experience" %}</h3>
-                                </div>
-                                <span>{% trans "Tell us what grades do you teach?" %}</span>
-                                <br><br>
-                                <div class="form-group">
-                                      <div class="col-sm-6">
-                                        <div class="row">
-                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
-                                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left margin-b10">
-                                                  <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                      <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                      <ui-select-choices repeat="discipline in avaiable_disciplines">
-                                                          {% verbatim %}{{discipline.name}}{% endverbatim %}
-                                                      </ui-select-choices>
-                                                  </ui-select>
-                                                  {% verbatim %}
-                                                      <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
-                                                  {% endverbatim %}
-                                          </div>
-                                        </div>
-                                        <div class="row">
-                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Other Subject" %}</label>
-                                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left">
-                                                <!-- Other Subject Selected-->
-                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
-                                                <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
-                                              </div>
-                                        </div>
-
-                                      </div>
-
-                                  </div>
-                            </fieldset>
-                        </div>
                         <div class="submit text-center">
                             <hr/>
                             <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
