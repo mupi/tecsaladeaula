@@ -223,16 +223,12 @@ wrapper-course-lesson
                                              <tbody><tr>
                                                  <th class="">{% trans "Nome" %}</th>
                                                  <th class="">{% trans "Type" %}</th>
-                                                 <th class="">{% trans "State" %}</th>
-                                                 <th class="">{% trans "City" %}</th>
                                                  <th class="">{% trans "Teaching Level" %}</th>
                                              </tr>
                                              <tr class="ng-scope" ng-repeat="school_data in user.schools">
                                                  {% verbatim %}
                                                  <td class="ng-binding">{{ school_data.school.name}}</td>
                                                  <td class="ng-binding">{{ school_data.school.school_type_complete}}</td>
-                                                 <td class="ng-binding">{{ school_data.school.city.uf}}</td>
-                                                 <td class="ng-binding">{{ school_data.school.city.name}}</td>
                                                  <td class="ng-binding">
                                                     <p>
                                                         <span ng-repeat="el in school_data.education_levels">{{el.name}}<br></span>

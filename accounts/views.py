@@ -84,7 +84,6 @@ class TimtecUserSchoolViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_serializer_class(self):
-        print(self.action)
         if self.action == 'retrieve':
             return TimtecProfileSchoolSerializer
         return TimtecUserSchoolSerializer

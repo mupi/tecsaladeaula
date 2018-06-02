@@ -146,7 +146,6 @@ class School (models.Model):
     ]
     name = models.CharField(max_length=200, blank=False, null=False)
     school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=False, null=False)
-    city = models.ForeignKey(City, blank=False, null=False)
 
     def __unicode__(self):
         return self.name
@@ -170,7 +169,6 @@ class TimtecUser(AbstractTimtecUser):
 class TimtecUserSchool(models.Model):
     professor = models.ForeignKey(TimtecUser)
     school = models.ForeignKey(School)
-    education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
 
     def __unicode__(self):
         return self.professor.username + " " + self.school.name

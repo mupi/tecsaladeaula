@@ -41,7 +41,6 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 
 class SchoolCompleteSerializer(serializers.ModelSerializer):
-    city = CitySerializer(required=True)
     school_type_complete = serializers.SerializerMethodField('get_school_type_complete')
 
     class Meta:
@@ -58,7 +57,6 @@ class TimtecUserSchoolSerializer(serializers.ModelSerializer):
 
 class TimtecProfileSchoolSerializer(serializers.ModelSerializer):
     school = SchoolCompleteSerializer(required=True)
-    education_levels = EducationLevelSerializer(many=True, required=True)
 
     class Meta:
         model = TimtecUserSchool
