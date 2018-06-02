@@ -29,11 +29,6 @@ class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Discipline
 
-class EducationDegreeSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = EducationDegree
-
 class EducationLevelSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -72,12 +67,11 @@ class TimtecProfileSerializer(serializers.ModelSerializer):
     city = CitySerializer(required=False)
     occupations = OccupationSerializer(many=True, required=False)
     disciplines = DisciplineSerializer(many=True, required=False)
-    education_degrees = EducationDegreeSerializer(required=False, many=True)
     schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('id','first_name', 'email', 'city', 'occupations', 'disciplines', 'education_degrees', 'schools')
+        fields = ('id','first_name', 'email', 'city', 'occupations', 'disciplines', 'schools')
 
 class CourseProgressSerializer(serializers.ModelSerializer):
     course_progress = serializers.SerializerMethodField('get_course_progress')
@@ -97,14 +91,13 @@ class TimtecUserAdminSerializer(TimtecUserSerializer):
     city = CitySerializer(read_only=True)
     occupations = OccupationSerializer(many=True, read_only=True)
     disciplines = DisciplineSerializer(many=True, read_only=True)
-    education_degrees = EducationDegreeSerializer(many=True, read_only=True)
     schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True, read_only=True)
     courses = serializers.SerializerMethodField('get_courses')
 
     class Meta:
         model = get_user_model()
         fields =    ('id', 'username', 'name', 'email', 'business_email', 'is_active', 'is_superuser', 'first_name', 'city',
-                    'occupations', 'disciplines', 'education_degrees', 'schools', 'courses', 'site', 'biography')
+                    'occupations', 'disciplines', 'schools', 'courses', 'site', 'biography')
 
     def get_courses(self, obj):
         course_students = CourseStudent.objects.filter(user=obj.id)

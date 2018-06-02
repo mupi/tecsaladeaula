@@ -76,16 +76,6 @@ wrapper-course-lesson
               <div class="row">
                 <div class="col-sm-12 col-xs-12">
                   <div class="col-sm-6  without-paddings">
-                    <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label  without-paddings">{% trans "Grade" %}</label>
-                        <div class="col-sm-9 col-xs-12 text-left">
-                          <!-- Multiselect Grade/Ano - Serie -->
-                            <ui-select multiple ng-model="education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                <ui-select-choices repeat="ed in avaiable_education_degrees">
-                                    {% verbatim %}{{ed.name}}{% endverbatim %}
-                                </ui-select-choices>
-                            </ui-select>
-                        </div>
                   </div>
                   <div class="col-sm-6 col-sx-12 without-paddings">
                         <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label without-paddings">{% trans "Disciplines" %}</label>
@@ -146,11 +136,10 @@ wrapper-course-lesson
                   <li>
                     <div class="row-eq-height">
                       <div class="col-sm-6">
-                        <div class="col-sm-2 fullname">{% trans "Full name" %}</div>
+                        <div class="col-sm-3 fullname">{% trans "Full name" %}</div>
                         <div class="col-sm-3 email">{% trans "Main E-mail" %}</div>
                         <div class="col-sm-3 email">{% trans "Additional E-mail" %}</div>
-                        <div class="col-sm-2">{% trans "Occupation" %}</div>
-                        <div class="col-sm-2">{% trans "Grade" %}</div>
+                        <div class="col-sm-3">{% trans "Occupation" %}</div>
                       </div>
                       <div class="col-sm-6">
                         <div class="col-sm-2">{% trans "Disciplines" %}</div>
@@ -169,17 +158,12 @@ wrapper-course-lesson
                         <div class="row">
                           {% verbatim %}
                             <div class="col-sm-6">
-                              <div class="col-sm-2">{{user.first_name}} {{user.last_name}}</div>
+                              <div class="col-sm-3">{{user.first_name}} {{user.last_name}}</div>
                               <div class="col-sm-3 email">{{ user.email }}</div>
                               <div class="col-sm-3 email">{{ user.business_email }}</div>
-                              <div class="col-sm-2">
+                              <div class="col-sm-3">
                                 <p>
                                     <span ng-repeat="occupation in user.occupations">{{occupation.name}}<br></span>
-                                </p>
-                              </div>
-                              <div class="col-sm-2 show-small-text">
-                                <p>
-                                    <span ng-repeat="ed in user.education_degrees">{{ed.name}}<br></span>
                                 </p>
                               </div>
                             </div>

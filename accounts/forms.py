@@ -23,8 +23,7 @@ class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography',
-        'education_degrees')
+        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography',)
 
     def save(self, commit=True):
         disciplines = self.cleaned_data.get('disciplines')

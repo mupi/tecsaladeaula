@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 from accounts.views import (ProfileEditView, ProfileEmailPasswordEditView, ProfileView, TimtecUserSchoolViewSet, UserSearchView,
                             TimtecUserViewSet, TimtecUserAdminViewSet, StudentSearchView, SchoolViewSet,
                             AcceptTermsView, SignupView, list_states_view, list_cities_view,
-                            get_timtec_profile, list_occupations_view, list_educationdegrees_view,
+                            get_timtec_profile, list_occupations_view,
                             list_disciplines_view, list_educationlevels_view, list_schooltypes_view)
 
 from core.views import (CourseView, GenericCourseView, CourseViewSet,
@@ -107,7 +107,6 @@ urlpatterns = patterns(
     url(r'^api/cities', list_cities_view, name='list_cities'),
     url(r'^api/occupations', list_occupations_view, name='list_occupations'),
     url(r'^api/disciplines', list_disciplines_view, name='list_discipline'),
-    url(r'^api/educationdegrees', list_educationdegrees_view, name='list_educationdegrees'),
     url(r'^api/educationlevels', list_educationlevels_view, name='list_educationlevels'),
     url(r'^api/schooltypes', list_schooltypes_view, name='list_schooltypes'),
     url(r'^api/profile', get_timtec_profile, name='get_profile'),

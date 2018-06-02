@@ -18,13 +18,10 @@
             $scope.filters = {};
             $scope.filters.occupations = [];
             $scope.filters.disciplines = [];
-            $scope.filters.education_degrees = [];
             $scope.occupations = {};
             $scope.disciplines = {};
-            $scope.education_degrees = {};
             $scope.occupations.selected = [];
             $scope.disciplines.selected = [];
-            $scope.education_degrees.selected = [];
 
             $scope.avaiable_occupations = Occupations.query();
             Disciplines.query(function(disciplines){
@@ -32,8 +29,6 @@
                 $scope.avaiable_disciplines.push({'name': 'Outras', 'id': -1});
             });
             
-            $scope.avaiable_education_degrees = EducationDegrees.query();
-
             States.query(function(ufs){
                 $scope.list_ufs = ufs;
                 $scope.filters.uf = "";
@@ -58,11 +53,6 @@
                 $scope.filters.occupations = [];
                 $scope.occupations.selected.forEach(function(el){
                     $scope.filters.occupations.push(el.id);
-                });
-
-                $scope.filters.education_degrees = [];
-                $scope.education_degrees.selected.forEach(function(el){
-                    $scope.filters.education_degrees.push(el.id);
                 });
 
                 $scope.filters.disciplines = [];
@@ -102,9 +92,6 @@
                 });
                 $scope.filters.occupations.forEach(function(occupation){
                     query_string += "occupations=" + occupation + "&"
-                });
-                $scope.filters.education_degrees.forEach(function(ed){
-                    query_string += "education_degrees=" + ed + "&"
                 });
 
                 $window.open('/admin/users/export' + query_string);

@@ -11,11 +11,9 @@
                 $scope.form.occupations = {};
                 $scope.form.disciplines = {};
                 $scope.form.disciplines.selected = [];
-                $scope.form.education_degrees = {};
 
                 $scope.avaiable_occupations = Occupations.query();
                 $scope.avaiable_disciplines = Disciplines.query();
-                $scope.avaiable_education_degrees = EducationDegrees.query();
 
                 States.query(function(ufs){
                     $scope.list_ufs = ufs;
@@ -33,7 +31,6 @@
                         }
                         $scope.form.occupations.selected = profile.occupations;
                         $scope.form.disciplines.selected = profile.disciplines;
-                        $scope.form.education_degrees.selected = profile.education_degrees;
 
                         $scope.school_infos = profile.schools;
                     })

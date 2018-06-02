@@ -9,7 +9,7 @@ from django.db.models import Q
 from accounts.forms import ProfileEditForm, AcceptTermsForm
 from accounts.serializers import    (TimtecUserSerializer, TimtecUserAdminSerializer, CitySerializer,
                                     TimtecProfileSerializer, OccupationSerializer, DisciplineSerializer,
-                                    EducationDegreeSerializer, EducationLevelSerializer, SchoolSerializer)
+                                    EducationLevelSerializer, SchoolSerializer)
 from allauth.account.views import SignupView
 from braces.views import LoginRequiredMixin
 
@@ -133,7 +133,6 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
         blocked = self.request.GET.get('blocked')
         uf = self.request.GET.get('uf')
         city = self.request.GET.get('city')
-        education_degrees = self.request.GET.getlist('education_degrees')
         occupations = self.request.GET.getlist('occupations')
         disciplines = self.request.GET.getlist('disciplines')
         queryset = super(TimtecUserAdminViewSet, self).get_queryset().order_by('username')
@@ -158,9 +157,6 @@ class TimtecUserAdminViewSet(viewsets.ModelViewSet):
                 for d in other_disciplines:
                     disciplines.append(d.id)
             queryset = queryset.filter(disciplines__in=disciplines).distinct()
-
-        if education_degrees:
-            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
 
         if uf:
             queryset = queryset.filter(city__uf=uf)
@@ -259,12 +255,6 @@ def list_occupations_view(request):
 def list_disciplines_view(request):
     disciplines = [DisciplineSerializer(d).data for d in Discipline.objects.filter(visible=True)]
     return Response(disciplines)
-
-@api_view(['GET'])
-@permission_classes((permissions.AllowAny,))
-def list_educationdegrees_view(request):
-    educationdegrees = [EducationDegreeSerializer(ed).data for ed in EducationDegree.objects.all()]
-    return Response(educationdegrees)
 
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))

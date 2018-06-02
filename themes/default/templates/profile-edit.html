@@ -185,7 +185,7 @@ wrapper-course-lesson
                                         </tbody></table>
                                     </section>
                             </fieldset>
-                        </div>
+                        </div>/
                         <br>
                         <div class="col-sm-12 col-xs-12">
                             <fieldset>
@@ -197,17 +197,6 @@ wrapper-course-lesson
                                 <div class="form-group">
                                       <div class="col-sm-6">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Grade" %}</label>
-                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-left margin-b10">
-                                                <ui-select multiple ng-model="form.education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                    <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                    <ui-select-choices repeat="ed in avaiable_education_degrees">
-                                                        {% verbatim %}{{ed.name}}{% endverbatim %}
-                                                    </ui-select-choices>
-                                                </ui-select>
-                                                {% verbatim %}
-                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in form.education_degrees.selected" value="{{ed.id}}"/>
-                                                {% endverbatim %}
-                                          </div>
                                     </div>
                                       <div class="col-sm-6">
                                         <div class="row">
