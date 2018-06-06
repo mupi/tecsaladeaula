@@ -122,6 +122,44 @@ wrapper-course-lesson
                                       </div>
                                   </div>
 
+                                    <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                            <!-- Teaching Levels-->
+                                            <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                <ui-select-choices repeat="el in avaiable_education_levels">
+                                                    {% verbatim %}{{el.name}}{% endverbatim %}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            {% verbatim %}
+                                                <input type="hidden" name="education_levels" ng-repeat="el in form.education_levels.selected" value="{{el.slug}}"/>
+                                            {% endverbatim %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <!-- Teaching Levels-->
+                                            <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
+                                                <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
+                                                <ui-select-choices repeat="discipline in avaiable_disciplines">
+                                                    {% verbatim %}{{discipline.name}}{% endverbatim %}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            {% verbatim %}
+                                                <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
+                                            {% endverbatim %}
+                                        </div>
+                                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "Other Subject" %}</label>
+                                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left">
+                                            <!-- Other Subject Selected-->
+                                            <input id="other-subject" name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
+                                            <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
+                                        </div>
+                                    </div>
+
                                   {% with errors=form.site.errors %}
                                   <div class="form-group{{ errors|yesno:" has-error,"}}">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Site" %}</label>
@@ -159,9 +197,7 @@ wrapper-course-lesson
                                             <tbody><tr>
                                                 <th class="">{% trans "Nome" %}</th>
                                                 <th class="">{% trans "Type" %}</th>
-                                                <th class="">{% trans "State" %}</th>
-                                                <th class="">{% trans "City" %}</th>
-                                                <th class="">{% trans "Teaching Level" %}</th>
+                                                <!-- <th class="">{% trans "Teaching Level" %}</th> -->
                                                 <th class="text-center">{% trans "Atualizar" %}</th>
                                                 <th class="text-center">{% trans "Remover" %}</th>
                                             </tr>
@@ -169,75 +205,22 @@ wrapper-course-lesson
                                                 {% verbatim %}
                                                 <td class="ng-binding">{{school_info.school.name}}</td>
                                                 <td class="ng-binding">{{school_info.school.school_type_complete}}</td>
-                                                <td class="ng-binding">{{school_info.school.city.uf}}</td>
-                                                <td class="ng-binding">{{school_info.school.city.name}}</td>
-                                                <td class="ng-binding">
+                                                <!-- <td class="ng-binding">
                                                     <span ng-repeat="el in school_info.education_levels">{{el.name}}<br></span>
-                                                </td>
+                                                </td> -->
                                                 <td class="textcenter">
                                                     <button type="button" class="btn btn-warning" ng-click="school_form_modal(school_info.id)"><i class="fa fa-pencil-square-o"></i></button>
                                                 </td>
                                                 <td class="textcenter">
-                                                    <button type="button" class="btn btn-warning" ng-click="remove_school(school_info.school.id)"><i class="fa fa-trash-o"></i></button>
+                                                    <button type="button" class="btn btn-warning" ng-click="remove_school(school_info.id)"><i class="fa fa-trash-o"></i></button>
                                                 </td>
                                                 {% endverbatim %}
                                             </tr>
                                         </tbody></table>
                                     </section>
                             </fieldset>
-                        </div>
+                        </div>/
                         <br>
-                        <div class="col-sm-12 col-xs-12">
-                            <fieldset>
-                                <div class="page-header-double textleft top">
-                                  <h3 class="top"><i class="fa fa-angle-double-right"></i> {% trans "Teaching Experience" %}</h3>
-                                </div>
-                                <span>{% trans "Tell us what grades do you teach?" %}</span>
-                                <br><br>
-                                <div class="form-group">
-                                      <div class="col-sm-6">
-                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">{% trans "Grade" %}</label>
-                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-left margin-b10">
-                                                <ui-select multiple ng-model="form.education_degrees.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                    <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                    <ui-select-choices repeat="ed in avaiable_education_degrees">
-                                                        {% verbatim %}{{ed.name}}{% endverbatim %}
-                                                    </ui-select-choices>
-                                                </ui-select>
-                                                {% verbatim %}
-                                                    <input type="hidden" name="education_degrees" ng-repeat="ed in form.education_degrees.selected" value="{{ed.id}}"/>
-                                                {% endverbatim %}
-                                          </div>
-                                    </div>
-                                      <div class="col-sm-6">
-                                        <div class="row">
-                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Subjects / Knowledge Area" %}</label>
-                                          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left margin-b10">
-                                                  <ui-select multiple ng-model="form.disciplines.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                                      <ui-select-match placeholder="Selecione opções...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                                      <ui-select-choices repeat="discipline in avaiable_disciplines">
-                                                          {% verbatim %}{{discipline.name}}{% endverbatim %}
-                                                      </ui-select-choices>
-                                                  </ui-select>
-                                                  {% verbatim %}
-                                                      <input type="hidden" name="disciplines" ng-repeat="discipline in form.disciplines.selected" value="{{discipline.name}}"/>
-                                                  {% endverbatim %}
-                                          </div>
-                                        </div>
-                                        <div class="row">
-                                          <label class="col-lg-4 col-md-4 col-sm-4 col-xs-12 control-label">{% trans "Other Subject" %}</label>
-                                              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-left">
-                                                <!-- Other Subject Selected-->
-                                                <input name="other-subject" type="text" class="form-control margin-b10" ng-model="form.other_discipline">
-                                                <input type="button" class="btn btn-info" ng-click="add_discipline()" value="{% trans "Add" %}">
-                                              </div>
-                                        </div>
-
-                                      </div>
-
-                                  </div>
-                            </fieldset>
-                        </div>
                         <div class="submit text-center">
                             <hr/>
                             <button type="submit" class="btn btn-success">{% trans "Save" %}</button>
@@ -352,40 +335,6 @@ wrapper-course-lesson
                         </select>
                       </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label">{% trans "State" %}</label>
-                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                          <select class="form-control" ng-model="form.uf" ng-change="filter_cities()">
-                              {% verbatim %}
-                              <option ng-repeat="uf in list_ufs" value="{{ uf }}">{{ uf }}</option>
-                              {% endverbatim %}
-                          </select>
-                        </div>
-
-                        <label class="col-lg-1 col-md-1 col-sm-1 col-xs-12 control-label">{% trans "City" %}</label>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                          <select class="form-control" ng-model="form.city_id">
-                              {% verbatim %}
-                              <option ng-repeat="city in list_cities" ng-selected="{{ form.city_id == city.id }}" value="{{city.id}}">{{ city.name }}</option>
-                              {% endverbatim %}
-                          </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-5 col-md-5 col-sm-5 col-xs-12 control-label">{% trans "Teaching Level that you teach" %}</label>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <!-- Teaching Levels-->
-                            <ui-select multiple ng-model="form.education_levels.selected" close-on-select="false" search-enabled="false" theme="bootstrap">
-                                <ui-select-match placeholder="Selecione níveis de estudo...">{% verbatim %} {{$item.name}} {% endverbatim %}</ui-select-match>
-                                <ui-select-choices repeat="el in avaiable_education_levels">
-                                    {% verbatim %}{{el.name}}{% endverbatim %}
-                                </ui-select-choices>
-                            </ui-select>
-                        </div>
-                    </div>
-
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 has-error" ng-show="form.has_errors">
                         <small>Por favor, preencha todos os campos</small>
                     </div>

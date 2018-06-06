@@ -89,23 +89,27 @@ class ExportUsersView(View):
         string_for_school = ''
         for userschool in user_schools.all():
             s = userschool.school
-            first_el = True
-
-            education_levels = ''
-            for el in userschool.education_levels.all():
-                if first_el:
-                    first_el = False
-                    education_levels = el.name.encode('utf-8')
-                else:
-                    education_levels = education_levels + ',' + el.name.encode('utf-8')
 
             if first:
                 first = False
-                string_for_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
+                string_for_school = s.name.encode('utf-8')
             else:
-                new_school = ' | '.join((s.name.encode('utf-8'), s.get_school_type_display().encode('utf-8'), s.city.name.encode('utf-8'), s.city.uf.uf.encode('utf-8'), education_levels))
-                string_for_school = '\n'.join((string_for_school, new_school))
+                string_for_school = '\n'.join((string_for_school, s.name.encode('utf-8')))
         return string_for_school
+
+    def generate_string_for_school_type(self, user_schools):
+        first = True
+
+        string_for_school_type = ''
+        for userschool in user_schools.all():
+            s = userschool.school
+
+            if first:
+                first = False
+                string_for_school_type = s.get_school_type_display().encode('utf-8')
+            else:
+                string_for_school_type = '\n'.join((string_for_school_type, s.get_school_type_display().encode('utf-8')))
+        return string_for_school_type
 
     def generate_string_for_course(self, courses):
         first = True
@@ -129,11 +133,12 @@ class ExportUsersView(View):
             'Email',
             'Email Adicional',
             'Ocupação',
-            'Ano/Série',
             'Disciplinas',
+            'Niveis de ensino',
             'Estado',
             'Cidade',
-            'Escola (nome, tipo, cidade, estado, níveis de ensino)',
+            'Escola',
+            'Tipo de Escola',
             'Cursos',
             'Administrador',
             'Ativo',
@@ -144,7 +149,6 @@ class ExportUsersView(View):
         blocked = request.GET.get('blocked')
         uf = request.GET.get('uf')
         city = request.GET.get('city')
-        education_degrees = request.GET.getlist('education_degrees')
         occupations = request.GET.getlist('occupations')
         disciplines = request.GET.getlist('disciplines')
         queryset = User.objects.all()
@@ -170,9 +174,6 @@ class ExportUsersView(View):
                     disciplines.append(d.id)
             queryset = queryset.filter(disciplines__in=disciplines).distinct()
 
-        if education_degrees:
-            queryset = queryset.filter(education_degrees__in=education_degrees).distinct()
-
         if uf:
             queryset = queryset.filter(city__uf=uf)
         if city:
@@ -186,20 +187,22 @@ class ExportUsersView(View):
             if(u.is_active):
                 ativo = 'S'
             occupations = self.generate_string_from_array(u.occupations)
-            education = self.generate_string_from_array(u.education_degrees)
             disciplines = self.generate_string_from_array(u.disciplines)
+            education_levels = self.generate_string_from_array(u.education_levels)
             schools = self.generate_string_for_school(u.timtecuserschool_set)
+            schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
             courses = self.generate_string_for_course(u.coursestudent_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 u.email,
                 u.business_email if u.business_email is not None else "",
                 occupations,
-                education,
                 disciplines,
+                education_levels,
                 (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                 (u.city.name.encode('utf-8') if u.city is not None else ""),
                 schools,
+                schools_types,
                 courses,
                 adm,
                 ativo,
@@ -246,15 +249,18 @@ class ExportUsersByCourseView(ExportUsersView):
         writer = csv.writer(response)
         writer.writerow([
             'Nome',
+            'Email',
+            'Email Adicional',
+            'Ocupação',
+            'Disciplinas',
+            'Niveis de ensino',
+            'Estado',
+            'Cidade',
+            'Escola',
+            'Tipo de Escola',
             'Progresso',
             'Data Inscrição',
             'Último Acesso',
-            'Email principal',
-            'Atuação',
-            'Ano/Série',
-            'Disciplinas',
-            'Estado',
-            'Cidade',
             'Aulas'
         ])
 
@@ -309,26 +315,30 @@ class ExportUsersByCourseView(ExportUsersView):
             u = course_student.user
             # course_student = self.get_course_student(u.coursestudent_set, course_id)
             if(course_student):
-                progress = self.generate_string_for_progress(course_student)
-                data_inscricao = self.generate_string_for_date(course_student.created_at)
-                ultimo_acesso = self.generate_string_for_date(course_student.get_last_access())
-                email = u.email
-                atuacao = self.generate_string_from_array(u.occupations)
-                ano_serie = self.generate_string_from_array(u.education_degrees)
+                occupations = self.generate_string_from_array(u.occupations)
                 disciplines = self.generate_string_from_array(u.disciplines)
+                education_levels = self.generate_string_from_array(u.education_levels)
+                schools = self.generate_string_for_school(u.timtecuserschool_set)
+                schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
+                progress = self.generate_string_for_progress(course_student)
+                subscribe_date = self.generate_string_for_date(course_student.created_at)
+                last_access = self.generate_string_for_date(course_student.get_last_access())
                 lessons = self.generate_string_for_lessons(course_student.percent_progress_by_lesson())
 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
-                    progress,
-                    data_inscricao,
-                    ultimo_acesso,
-                    email,
-                    atuacao,
-                    ano_serie,
+                    u.email,
+                    u.business_email if u.business_email is not None else "",
+                    occupations,
                     disciplines,
+                    education_levels,
                     (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
                     (u.city.name.encode('utf-8') if u.city is not None else ""),
+                    schools,
+                    schools_types,
+                    progress,
+                    subscribe_date,
+                    last_access,
                     lessons,
                 ])
 
