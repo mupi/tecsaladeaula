@@ -135,7 +135,7 @@ urlpatterns = patterns(
 
     url(r'^profile/edit/?$', ProfileEditView.as_view(), name="profile_edit"),
     url(r'^profile/edit/account?$', ProfileEmailPasswordEditView.as_view(), name="profile_edit_account"),
-    url(r'^profile/(?P<username>[\w.+-]+)?/?$', ProfileView.as_view(), name="profile"),
+    url(r'^profile/(?P<username>[\w.+-@]+)?/?$', ProfileView.as_view(), name="profile"),
 
     # The django-allauth
     url(r'^accounts/signup', SignupView.as_view(), name='signup'),
