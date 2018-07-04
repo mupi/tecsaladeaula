@@ -1,0 +1,10 @@
+Oi {{ name }},
+
+Você se inscreveu em nosso curso {{ course_name }}.
+
+Trazemos aqui as boas vindas e qualquer dúvida entre em contato conosco pelo email contato@mupi.me .
+
+Apenas uma dica: como é um curso online, organize seu tempo para dedicar-se às aulas e ter um bom aproveitamento :)
+
+Grande abraço,
+Equipe Mupi

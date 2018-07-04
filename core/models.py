@@ -95,6 +95,7 @@ class Course(models.Model):
     default_class = models.OneToOneField(Class, verbose_name=_('Default Class'), related_name='default_course', null=True, blank=True)
     tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
     payment_url = models.TextField(_('Payment URL'), max_length=50, blank=True, null=True)
+    private = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('Course')
@@ -136,7 +137,10 @@ class Course(models.Model):
                 CourseStudent.objects.create(course=self, user=student, status='2')
             else:
                 CourseStudent.objects.create(course=self, user=student)
-                send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_paid_course.txt').render(Context({'name': student_name, 'course_name': self.name, 'course_link': course_link})), settings.DEFAULT_FROM_EMAIL, [student.email])
+                if self.private:
+                    send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_private_course.txt').render(Context({'name': student_name, 'course_name': self.name})), settings.DEFAULT_FROM_EMAIL, [student.email])
+                else:
+                    send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_paid_course.txt').render(Context({'name': student_name, 'course_name': self.name, 'course_link': course_link})), settings.DEFAULT_FROM_EMAIL, [student.email])
 
     def is_enrolled(self, user):
         return CourseStudent.objects.filter(course=self, user=user, status=CourseStudent.STATES[1][0]).exists()
