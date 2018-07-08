@@ -274,6 +274,8 @@ wrapper-course-intro
                             <div class="col-sm-7 col-md-7 col-xs-12">
                                 {% if course.tuition != 0 %}
                                     <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                s{% elif course.private %}
+                                    <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
                                 {% else %}
                                     <p class="text-success text-uppercase lead">Curso Gratuito!</p>
                                 {% endif %}
@@ -378,6 +380,8 @@ wrapper-course-intro
                             <div class="col-sm-7 col-md-7 col-xs-12">
                                 {% if course.tuition != 0 %}
                                     <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% elif course.private %}
+                                    <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
                                 {% else %}
                                     <p class="text-success text-uppercase lead">Curso Gratuito!</p>
                                 {% endif %}
