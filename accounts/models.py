@@ -81,8 +81,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
         self.username = self.email
         is_new = self.pk is None
 
-        print(self)
-
         super(AbstractTimtecUser, self).save(*args, **kwargs)
 
         if is_new and settings.REGISTRATION_DEFAULT_GROUP_NAME:
@@ -91,7 +89,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
                 self.save()
             except models.exceptions.ObjectDoesNotExist:
                 pass
-
 
 
 #populated by fixture

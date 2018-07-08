@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import ListView
 
 from core.models import Course
 from accounts.models import TimtecUser
@@ -36,3 +37,9 @@ class SmartlabSignupView(SignupView):
         except:
             return reverse_lazy('smartlab_courses')   
 
+class CoursesView(ListView):
+    context_object_name = 'courses'
+    template_name = "courses.html"
+
+    def get_queryset(self):
+        return Course.objects.filter(id__in=settings.SMARTLAB_COURSE_ID).order_by('start_date')
