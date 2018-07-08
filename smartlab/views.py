@@ -18,8 +18,7 @@ class SmartlabSignupView(SignupView):
     def get_context_data(self, **kwargs):
         context = super(SmartlabSignupView, self).get_context_data(**kwargs)
 
-        course = Course.objects.get(id=settings.SMARTLAB_COURSE_ID)
-        context['next'] = reverse_lazy('course_intro', args=[course.slug])
+        context['next'] = reverse_lazy('smartlab_courses')
 
         return context
 
@@ -29,11 +28,11 @@ class SmartlabSignupView(SignupView):
                 user = TimtecUser.objects.get(email = self.request.POST['email'])
             else:
                 user = self.request.user
-
-            course = Course.objects.get(id=settings.SMARTLAB_COURSE_ID)
-            
-            if not course.is_enrolled(user):
-                course.enroll_student(user)
-            return reverse_lazy('course_intro', args=[course.slug])
+            for course_id in settings.SMARTLAB_COURSE_ID:
+                course = Course.objects.get(id=course_id)
+                if not course.is_enrolled(user):
+                    course.enroll_student(user)
+            return reverse_lazy('smartlab_courses')
         except:
-            return reverse_lazy('courses')
+            return reverse_lazy('smartlab_courses')   
+

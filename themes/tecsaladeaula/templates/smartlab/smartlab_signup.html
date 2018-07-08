@@ -60,9 +60,23 @@
         </div>
 
         <div class="panel-body bottom-xs left-xs right-xs top-xs">
-          <form onclick="event.stopPropagation()" method="post" action="{% url 'joca_signup' %}" class="form-horizontal">{% csrf_token %}
+          <form onclick="event.stopPropagation()" method="post" action="{% url 'smartlab_signup' %}" class="form-horizontal">{% csrf_token %}
 
             <input name="username" type="hidden" value=" ">
+
+            <div class="form-group{% if form.errors %} has-error{% endif %}">
+              <label class="col-md-3 col-xs-12">{% trans 'Full name' %}</label>
+              <div class="col-md-9 col-xs-12">
+                {% if form.fullname.value == False %}
+                    <input name="fullname" type="text" value="" class="form-control" placeholder="{% trans 'Insira seu nome completo'%}">
+                {% else %}
+                    <input name="fullname" type="text" value="{{form.fullname.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insira seu nome completo' %}">
+                {% endif %}
+                {% for error in form.fullname.errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
+              </div>
+            </div>
 
             <div class="form-group{% if form.errors %} has-error{% endif %}">
               <label class="col-md-3 col-xs-12">{% trans 'E-mail' %}</label>
@@ -77,8 +91,11 @@
               <label class="col-md-3 col-xs-12">{% trans 'Password' %}</label>
               <div class="col-md-9 col-xs-12">
                 <p><input name="password1" type="password" class="form-control" placeholder="{% trans 'Really strong password' %}"></p>
+                {% for error in form.password1.errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
                 <input name="password2" type="password" class="form-control" placeholder="{% trans 'Password confirmation' %}">
-                {% for error in form.password.errors %}
+                {% for error in form.password2.errors %}
                   <small>{{error}}</small>
                 {% endfor %}
                 {% for error in form.non_field_errors %}
@@ -88,11 +105,14 @@
             </div>
 
             {% if terms_required %}
-            <div class="form-group">
+            <div class="form-group{% if form.errors %} has-error{% endif %}">
               <div class="col-xs-12">
                 <span class="checkbox-wrapper"><input name="accept_terms" id="accept_terms" type="checkbox"></span>
                 {% url 'flatpage' url='/terms' as terms_url %}
                 <label for="accept_terms" class="terms">{% blocktrans %}I agree to the <a href="{{ terms_url }}" target="_blank">Terms of Use</a>{% endblocktrans %}</label>
+                {% for error in form.accept_terms.errors %}
+                  <small>{{error}}</small>
+                {% endfor %}
               </div>
             </div>
             {% endif %}
