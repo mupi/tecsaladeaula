@@ -40,11 +40,19 @@ wrapper-courses
                     <!-- COURSE -->
                     <div class="course{% if user|is_enrolled:course %} started{% endif %}">
                         <a href="{% url "course_intro" course.slug %}" class="course-link">
-                            {% if not course.has_started %}<span class="coming-soon-label">{% trans 'Soon' %}</span>{% endif %}
-                            {% if course.private %}
-                                <span class="exclusive-label">Exclusivo!</span>
-                            {% elif course.tuition == 0 %}
-                                <span class="free-label">Gratuito!</span>
+
+                            {% if course.right_tag %}
+                                <span class="courses-right-label">{{ course.right_tag }}</span>
+                            {% endif %}
+
+                            {% if course.left_tag %}
+                                <span class="home-left-label">{{ course.left_tag }}</span>
+                            {% else %}
+                                {% if course.private %}
+                                    <span class="home-left-label">Exclusivo!</span>
+                                {% elif course.tuition == 0 %}
+                                    <span class="free-label">Gratuito!</span>
+                                {% endif %}
                             {% endif %}
                             <div class="thumb-wrapper">
                                 <div class="mouseover"></div>
