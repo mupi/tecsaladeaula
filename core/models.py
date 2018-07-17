@@ -95,7 +95,11 @@ class Course(models.Model):
     default_class = models.OneToOneField(Class, verbose_name=_('Default Class'), related_name='default_course', null=True, blank=True)
     tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
     payment_url = models.TextField(_('Payment URL'), max_length=50, blank=True, null=True)
-    private = models.BooleanField(default=False)
+    private = models.BooleanField(_('Private'), default=False)
+    left_tag = models.CharField(_('Left Tag'), max_length=50, blank=True)
+    right_tag = models.CharField(_('Right Tag'), max_length=50, blank=True)
+    subscribe_date_limit = models.DateField(_('Subscribe date limit'), default=None, blank=True, null=True)
+    modal_text = models.TextField(_('Modal Text'), blank=True)
 
     class Meta:
         verbose_name = _('Course')
