@@ -97,12 +97,20 @@ home
                 {% for course in home_courses %}
                     <div class="block course col-md-4 col-sm-6">
                         <a href="{% url "course_intro" course.slug %}" class="course-link">
-                            {% if not course.has_started %}<span class="coming-soon-label">{% trans 'Soon' %}</span>{% endif %}
-                            {% if course.private %}
-                                <span class="exclusive-label">Exclusivo!</span>
-                            {% elif course.tuition == 0 %}
-                                <span class="free-label">Gratuito!</span>
+                            {% if course.right_tag %}
+                                <span class="home-right-tag">{{ course.right_tag }}</span>
                             {% endif %}
+
+                            {% if course.left_tag %}
+                                <span class="home-left-label">{{ course.left_tag }}</span>
+                            {% else %}
+                                {% if course.private %}
+                                    <span class="home-left-label">Exclusivo!</span>
+                                {% elif course.tuition == 0 %}
+                                    <span class="free-label">Gratuito!</span>
+                                {% endif %}
+                            {% endif %}
+                            
                             <div class="thumb-wrapper">
                                 <span class="mouseover"></span>
                                 <span class="thumb" {% if course.home_thumbnail %}style="background-image: url({{ course.home_thumbnail.url }})"{% endif %}></span>
