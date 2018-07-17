@@ -438,16 +438,11 @@
                     "Tuition": $scope.course.tuition
                   });
                   $scope.registration_number = data.registration_number;
-                  if ($scope.course.tuition != 0){
+                  if ($scope.course.tuition > 0 || $scope.course.pivate){
                     $('#modal-subscribe-success').on('hidden.bs.modal', function(){
                         location.reload();
                     });    
                     $('#modal-subscribe-success').modal('show');
-                  } else if ($scope.course.private){
-                    $('#modal-subscribe-private-success').on('hidden.bs.modal', function(){
-                        location.reload();
-                    });
-                    $('#modal-subscribe-private-success').modal('show');
                   } else {
                     if ($scope.course.has_started){
                         $window.location.href = '/course/' + $scope.course.slug + '/resume';

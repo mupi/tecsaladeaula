@@ -3,6 +3,7 @@
 <!-- SUCCESS ENROLL MODAL -->
 <div class="modal fade" id="modal-subscribe-success" tabindex="-1">
     <div class="modal-dialog">
+        {% if course.tuition > 0%}
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -11,8 +12,12 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Para concluir sua inscrição você deverá realizar o pagamento através do PagSeguro. Assim que seu pagamento for concluído, nós liberaremos o seu acesso.</p>
-                    </div>
+                        {% if course.modal_text %}
+                            {{ course.modal_text | safe }}
+                        {% else %}
+                            <p>Para concluir sua inscrição você deverá realizar o pagamento e completar seu cadastro em <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a> para validarmos sua inscrição.</p>
+                        {% endif %}
+                   </div>
                     <div class="col-sm-6">
                          <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
                         <form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
@@ -33,18 +38,12 @@
                 </div> -->
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xs-12">
-                        <p>Caso possua alguma dúvida, entre em contato conosco através do email <i>contato@mupi.me</i></p>
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- END SUCCESS ENROLL MODAL -->
-
-<!-- SUCCESS ENROLL MODAL -->
-<div class="modal fade" id="modal-subscribe-private-success" tabindex="-1">
-    <div class="modal-dialog">
+        {% else %}
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -53,7 +52,11 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Aguarde sua inscrição ser confirmada pela nossa equipe.</p>
+                        {% if course.modal_text %}
+                            {{ course.modal_text | safe }}
+                        {% else %}
+                            <p>Para concluir sua inscrição você deverá completar seu cadastro em <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a> para validarmos sua inscrição.</p>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- NEEDS FIX
@@ -65,11 +68,14 @@
                 </div> -->
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xs-12">
-                        <p>Caso possua alguma dúvida, entre em contato conosco através do email <i>contato@mupi.me</i></p>
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
                     </div>
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 <!-- END SUCCESS ENROLL MODAL -->
+
+<!-- SUCCESS ENROLL MODAL -->
