@@ -272,12 +272,16 @@ wrapper-course-intro
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
-                                {% if course.tuition != 0 %}
-                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
-                                s{% elif course.private %}
-                                    <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                {% if course.intro_text %}
+                                    <p class="text-success text-uppercase lead">{{ course.intro_text }}</p>
                                 {% else %}
-                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% if course.tuition != 0 %}
+                                        <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                    {% elif course.private %}
+                                        <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                    {% else %}
+                                        <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
@@ -378,12 +382,16 @@ wrapper-course-intro
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
-                                {% if course.tuition != 0 %}
-                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
-                                {% elif course.private %}
-                                    <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                {% if course.intro_text %}
+                                    <p class="text-success text-uppercase lead">{{ course.intro_text }}</p>
                                 {% else %}
-                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% if course.tuition != 0 %}
+                                        <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                    {% elif course.private %}
+                                        <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                    {% else %}
+                                        <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
