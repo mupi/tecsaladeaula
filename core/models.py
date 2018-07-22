@@ -131,6 +131,10 @@ class Course(models.Model):
             return
 
         now = datetime.datetime.now()
+
+        if self.subscribe_date_limit and self.subscribe_date_limit < now.date():
+            return
+
         course_link = 'http://tecsaladeaula.com.br/course/' + self.slug + '/intro/'
 
         student_name = student.get_full_name()
@@ -173,6 +177,12 @@ class Course(models.Model):
             return True
         else:
             return False
+
+    @property
+    def has_subscribe_ended(self):
+        if self.subscribe_date_limit and self.subscribe_date_limit < datetime.date.today():
+            return True
+        return False
 
     def avg_lessons_users_progress(self, classes=None):
         if classes:

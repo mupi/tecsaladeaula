@@ -287,7 +287,16 @@ wrapper-course-intro
 
                             <div class="col-sm-5 col-md-5 col-xs-12">
                                 {% if not user_is_enrolled %}
-                                    {% if user_enroll_is_pending %}
+                                    {% if course.has_subscribe_ended %}
+                                    <div class="has-tooltip js-login-required uppercase"
+                                        href="#"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-original-title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}."
+                                        title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}.">
+                                        <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Subscribe expired" %}</button>
+                                    </div>
+                                    {% elif user_enroll_is_pending %}
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
                                     {% else %}
                                         {% if course.name == "Leia em Inglês" %}
@@ -397,7 +406,16 @@ wrapper-course-intro
 
                             <div class="col-sm-5 col-md-5 col-xs-12">
                                 {% if not user_is_enrolled %}
-                                    {% if user_enroll_is_pending %}
+                                    {% if course.has_subscribe_ended %}
+                                    <div class="has-tooltip js-login-required uppercase"
+                                        href="#"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-original-title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}."
+                                        title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}.">
+                                        <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Subscribe expired" %}</button>
+                                    </div>
+                                    {% elif user_enroll_is_pending %}
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
                                     {% else %}
                                         {% if course.name == "Leia em Inglês" %}

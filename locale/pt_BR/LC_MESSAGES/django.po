@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-21 19:37-0300\n"
+"POT-Creation-Date: 2018-07-22 17:57-0300\n"
 "PO-Revision-Date: 2018-04-19 12:28-0300\n"
 "Last-Translator: Administrador TIMTec <timtectimtec@gmail.com>\n"
 "Language-Team: \n"
@@ -99,7 +99,7 @@ msgstr "Ativo"
 msgid "Date joined"
 msgstr "Data inscrição"
 
-#: accounts/models.py:31 core/models.py:390 core/models.py:443
+#: accounts/models.py:31 core/models.py:400 core/models.py:453
 msgid "Picture"
 msgstr "Estrutura"
 
@@ -118,7 +118,7 @@ msgstr "Atuação"
 msgid "Site"
 msgstr "Página"
 
-#: accounts/models.py:34 core/models.py:388 core/models.py:442
+#: accounts/models.py:34 core/models.py:398 core/models.py:452
 #: themes/default/templates/_course_professors_modal.html:77
 #: themes/default/templates/_course_professors_modal.html:78
 msgid "Biography"
@@ -154,7 +154,7 @@ msgstr "Dado"
 msgid "Expected answer"
 msgstr "Resposta esperada"
 
-#: activities/models.py:29 core/models.py:579 core/models.py:589
+#: activities/models.py:29 core/models.py:589 core/models.py:599
 #: themes/default/templates/lesson.html:92
 #: themes/default/templates/administration/lesson.html:81
 #: themes/tecsaladeaula/templates/_lesson-regular-course.html:126
@@ -178,7 +178,7 @@ msgstr "Atividade"
 msgid "Activities"
 msgstr "Atividades"
 
-#: activities/models.py:49 core/models.py:265 core/models.py:588
+#: activities/models.py:49 core/models.py:275 core/models.py:598
 #: themes/default/templates/administration/stats.html:51
 msgid "Student"
 msgstr "Estudante"
@@ -196,13 +196,13 @@ msgstr "Resposta"
 msgid "Answers"
 msgstr "Respostas"
 
-#: core/forms.py:16 core/models.py:479
+#: core/forms.py:16 core/models.py:489
 #: themes/default/templates/messages.html:55
 msgid "Subject"
 msgstr "Assunto"
 
-#: core/forms.py:17 core/models.py:78 core/models.py:391 core/models.py:444
-#: core/models.py:523 ifs/models.py:8
+#: core/forms.py:17 core/models.py:78 core/models.py:401 core/models.py:454
+#: core/models.py:533 ifs/models.py:8
 #: themes/default/templates/_course_authors_inline.html:19
 #: themes/default/templates/_course_authors_inline.html:42
 #: themes/default/templates/_course_professors_modal.html:69
@@ -221,12 +221,12 @@ msgstr "Nome"
 msgid "Email"
 msgstr "Email"
 
-#: core/forms.py:19 core/models.py:480
+#: core/forms.py:19 core/models.py:490
 #: themes/default/templates/messages.html:58
 msgid "Message"
 msgstr "Mensagem"
 
-#: core/models.py:32 core/models.py:571
+#: core/models.py:32 core/models.py:581
 #: themes/default/templates/course.html:126
 #: themes/default/templates/administration/lesson.html:94
 #: themes/tecsaladeaula/templates/course.html:101
@@ -238,12 +238,12 @@ msgstr "Video"
 msgid "Videos"
 msgstr "Videos"
 
-#: core/models.py:45 core/models.py:382
+#: core/models.py:45 core/models.py:392
 msgid "Assistant"
 msgstr "Assistente"
 
-#: core/models.py:47 core/models.py:108 core/models.py:266 core/models.py:387
-#: core/models.py:441 core/models.py:482 core/models.py:521 forum/models.py:17
+#: core/models.py:47 core/models.py:108 core/models.py:276 core/models.py:397
+#: core/models.py:451 core/models.py:492 core/models.py:531 forum/models.py:17
 #: ifs/models.py:22 themes/default/templates/_admin_header_inline.html:34
 #: themes/default/templates/ifs/signup-completion.html:117
 #: themes/default/templates/ifs/signup-completion.html:119
@@ -254,7 +254,7 @@ msgstr "Assistente"
 msgid "Course"
 msgstr "Curso"
 
-#: core/models.py:73 core/models.py:517
+#: core/models.py:73 core/models.py:527
 #: themes/default/templates/course.html:362
 #: themes/default/templates/course.html:366
 #: themes/default/templates/course.html:402
@@ -267,12 +267,12 @@ msgstr "Curso"
 #: themes/default/templates/administration/courses.html:112
 #: themes/default/templates/administration/courses.html:152
 #: themes/default/templates/administration/courses.html:198
-#: themes/tecsaladeaula/templates/course.html:484
-#: themes/tecsaladeaula/templates/course.html:495
+#: themes/tecsaladeaula/templates/course.html:501
+#: themes/tecsaladeaula/templates/course.html:512
 msgid "Draft"
 msgstr "Rascunho"
 
-#: core/models.py:74 core/models.py:518
+#: core/models.py:74 core/models.py:528
 #: themes/default/templates/course.html:359
 #: themes/default/templates/course.html:365
 #: themes/default/templates/course.html:403
@@ -285,12 +285,12 @@ msgstr "Rascunho"
 #: themes/default/templates/administration/courses.html:111
 #: themes/default/templates/administration/courses.html:153
 #: themes/default/templates/administration/courses.html:197
-#: themes/tecsaladeaula/templates/course.html:486
 #: themes/tecsaladeaula/templates/course.html:503
+#: themes/tecsaladeaula/templates/course.html:520
 msgid "Published"
 msgstr "Público"
 
-#: core/models.py:77 core/models.py:526 forum/models.py:13
+#: core/models.py:77 core/models.py:536 forum/models.py:13
 msgid "Slug"
 msgstr "Slug"
 
@@ -299,7 +299,7 @@ msgid "Intro video"
 msgstr "Vídeo introdutório"
 
 #: core/models.py:80 themes/default/templates/course.html:318
-#: themes/tecsaladeaula/templates/course.html:340
+#: themes/tecsaladeaula/templates/course.html:353
 msgid "Application"
 msgstr "Aplicação"
 
@@ -311,10 +311,10 @@ msgstr "Requisitos"
 #: themes/default/templates/course.html:305
 #: themes/default/templates/course.html:603
 #: themes/default/templates/course.html:608
-#: themes/tecsaladeaula/templates/course.html:323
-#: themes/tecsaladeaula/templates/course.html:327
-#: themes/tecsaladeaula/templates/course.html:440
-#: themes/tecsaladeaula/templates/course.html:444
+#: themes/tecsaladeaula/templates/course.html:336
+#: themes/tecsaladeaula/templates/course.html:340
+#: themes/tecsaladeaula/templates/course.html:457
+#: themes/tecsaladeaula/templates/course.html:461
 msgid "Abstract"
 msgstr "Resumo"
 
@@ -330,7 +330,7 @@ msgstr "Carga horária"
 msgid "Pronatec"
 msgstr "Pronatec"
 
-#: core/models.py:86 core/models.py:267 core/models.py:527
+#: core/models.py:86 core/models.py:277 core/models.py:537
 #: themes/default/templates/administration/courses.html:125
 msgid "Status"
 msgstr "Situação"
@@ -352,8 +352,8 @@ msgstr "Home thumbnail"
 #: core/models.py:93 themes/default/templates/course.html:588
 #: themes/default/templates/course.html:595
 #: themes/default/templates/administration/courses.html:124
-#: themes/tecsaladeaula/templates/course.html:426
-#: themes/tecsaladeaula/templates/course.html:433
+#: themes/tecsaladeaula/templates/course.html:443
+#: themes/tecsaladeaula/templates/course.html:450
 msgid "Start date"
 msgstr "Data de início"
 
@@ -416,95 +416,95 @@ msgstr "Perfil completo"
 msgid "Courses"
 msgstr "Cursos"
 
-#: core/models.py:260 themes/default/templates/user-courses.html:105
+#: core/models.py:270 themes/default/templates/user-courses.html:105
 msgid "Pending"
 msgstr "Pendente"
 
-#: core/models.py:261
+#: core/models.py:271
 msgid "OK"
 msgstr "Ok"
 
-#: core/models.py:262
+#: core/models.py:272
 #, fuzzy
 msgid "Cancelled"
 msgstr "Cancelar"
 
-#: core/models.py:268
+#: core/models.py:278
 #, fuzzy
 msgid "Created At"
 msgstr "Criar turma"
 
-#: core/models.py:381
+#: core/models.py:391
 msgid "Instructor"
 msgstr "Instrutor"
 
-#: core/models.py:383
+#: core/models.py:393
 msgid "Professor Coordinator"
 msgstr "Professor Coordenador"
 
-#: core/models.py:386 core/models.py:436 core/models.py:477
+#: core/models.py:396 core/models.py:446 core/models.py:487
 msgid "Professor"
 msgstr "Professor"
 
-#: core/models.py:389
+#: core/models.py:399
 #: themes/default/templates/administration/permissions.html:50
 msgid "Role"
 msgstr "Papel"
 
-#: core/models.py:396
+#: core/models.py:406
 msgid "Course Professor"
 msgstr "Professor do curso"
 
-#: core/models.py:397
+#: core/models.py:407
 msgid "Course Professors"
 msgstr "Professores do curso"
 
-#: core/models.py:449
+#: core/models.py:459
 msgid "Course Author"
 msgstr "Autor do Curso"
 
-#: core/models.py:450
+#: core/models.py:460
 msgid "Course Authors"
 msgstr "Autores do Curso"
 
-#: core/models.py:481
+#: core/models.py:491
 msgid "Date"
 msgstr "Data"
 
-#: core/models.py:522
+#: core/models.py:532
 msgid "Description"
 msgstr "Descrição"
 
-#: core/models.py:524 themes/default/templates/notes.html:43
+#: core/models.py:534 themes/default/templates/notes.html:43
 msgid "Notes"
 msgstr "Anotações"
 
-#: core/models.py:532 core/models.py:570 forum/models.py:18
+#: core/models.py:542 core/models.py:580 forum/models.py:18
 msgid "Lesson"
 msgstr "Aula"
 
-#: core/models.py:533 themes/default/templates/course.html:380
+#: core/models.py:543 themes/default/templates/course.html:380
 #: themes/default/templates/course.html:491
 #: themes/default/templates/administration/stats.html:122
 #: themes/default/templates/administration/stats.html:185
-#: themes/tecsaladeaula/templates/course.html:462
-#: themes/tecsaladeaula/templates/course.html:574
+#: themes/tecsaladeaula/templates/course.html:479
+#: themes/tecsaladeaula/templates/course.html:591
 msgid "Lessons"
 msgstr "Aulas"
 
-#: core/models.py:569 forum/models.py:11
+#: core/models.py:579 forum/models.py:11
 msgid "Title"
 msgstr "Título"
 
-#: core/models.py:572
+#: core/models.py:582
 msgid "Side notes"
 msgstr "Anotações"
 
-#: core/models.py:580
+#: core/models.py:590
 msgid "Units"
 msgstr "Unidades"
 
-#: core/models.py:595 themes/default/templates/administration/users.html:242
+#: core/models.py:605 themes/default/templates/administration/users.html:242
 msgid "Student Progress"
 msgstr "Progresso do Estudante"
 
@@ -772,7 +772,7 @@ msgstr "Fechar"
 #: themes/tecsaladeaula/templates/_course_authors_inline.html:28
 #: themes/tecsaladeaula/templates/course-material.html:75
 #: themes/tecsaladeaula/templates/course.html:53
-#: themes/tecsaladeaula/templates/course.html:517
+#: themes/tecsaladeaula/templates/course.html:534
 #: themes/tecsaladeaula/templates/home.html:32
 #: themes/tecsaladeaula/templates/administration/lesson.html:37
 #: themes/timtec/templates/home.html:30
@@ -843,7 +843,7 @@ msgstr "Usar 'Sobre mim' do perfil do usuário"
 #: themes/tecsaladeaula/templates/course.html:131
 #: themes/tecsaladeaula/templates/course.html:175
 #: themes/tecsaladeaula/templates/course.html:239
-#: themes/tecsaladeaula/templates/course.html:516
+#: themes/tecsaladeaula/templates/course.html:533
 #: themes/tecsaladeaula/templates/home.html:31
 #: themes/tecsaladeaula/templates/home.html:395
 #: themes/tecsaladeaula/templates/administration/lesson.html:141
@@ -1222,10 +1222,10 @@ msgstr "Exportar"
 #: themes/default/templates/course.html:92
 #: themes/default/templates/course.html:93
 #: themes/default/templates/user-courses.html:91
-#: themes/tecsaladeaula/templates/course.html:303
-#: themes/tecsaladeaula/templates/course.html:304
-#: themes/tecsaladeaula/templates/course.html:409
-#: themes/tecsaladeaula/templates/course.html:410
+#: themes/tecsaladeaula/templates/course.html:316
+#: themes/tecsaladeaula/templates/course.html:317
+#: themes/tecsaladeaula/templates/course.html:426
+#: themes/tecsaladeaula/templates/course.html:427
 #, python-format
 msgid " This course starts on %(start_date)s and you are already subscribed"
 msgstr "Este curso começa em %(start_date)s e você já se inscreveu"
@@ -1235,20 +1235,20 @@ msgstr "Este curso começa em %(start_date)s e você já se inscreveu"
 #: themes/default/templates/courses.html:67
 #: themes/default/templates/home.html:112
 #: themes/ifs-colors/templates/courses.html:86
-#: themes/tecsaladeaula/templates/course.html:297
-#: themes/tecsaladeaula/templates/course.html:305
-#: themes/tecsaladeaula/templates/course.html:403
-#: themes/tecsaladeaula/templates/course.html:411
+#: themes/tecsaladeaula/templates/course.html:310
+#: themes/tecsaladeaula/templates/course.html:318
+#: themes/tecsaladeaula/templates/course.html:420
+#: themes/tecsaladeaula/templates/course.html:428
 #: themes/tecsaladeaula/templates/courses.html:73
 #: themes/tecsaladeaula/templates/home.html:129
 msgid "Go to course"
 msgstr "Ir para o curso"
 
 #: themes/default/templates/course.html:100
-#: themes/tecsaladeaula/templates/course.html:290
-#: themes/tecsaladeaula/templates/course.html:292
-#: themes/tecsaladeaula/templates/course.html:396
-#: themes/tecsaladeaula/templates/course.html:398
+#: themes/tecsaladeaula/templates/course.html:303
+#: themes/tecsaladeaula/templates/course.html:305
+#: themes/tecsaladeaula/templates/course.html:413
+#: themes/tecsaladeaula/templates/course.html:415
 msgid "Subscribe"
 msgstr "Inscrever-se"
 
@@ -1293,19 +1293,19 @@ msgid "Why do this course?"
 msgstr "Por que fazer esse curso?"
 
 #: themes/default/templates/course.html:326
-#: themes/tecsaladeaula/templates/course.html:348
+#: themes/tecsaladeaula/templates/course.html:361
 msgid "What do I have to know?"
 msgstr "O que eu preciso saber?"
 
 #: themes/default/templates/course.html:329
-#: themes/tecsaladeaula/templates/course.html:351
+#: themes/tecsaladeaula/templates/course.html:364
 msgid "Requirements"
 msgstr "Requisitos"
 
 #: themes/default/templates/course.html:336
 #: themes/default/templates/course.html:339
-#: themes/tecsaladeaula/templates/course.html:358
-#: themes/tecsaladeaula/templates/course.html:361
+#: themes/tecsaladeaula/templates/course.html:371
+#: themes/tecsaladeaula/templates/course.html:374
 msgid "Estrutura do Curso"
 msgstr "Estrutura do Curso"
 
@@ -1315,37 +1315,37 @@ msgid "This course is"
 msgstr "Este curso é"
 
 #: themes/default/templates/course.html:384
-#: themes/tecsaladeaula/templates/course.html:466
+#: themes/tecsaladeaula/templates/course.html:483
 msgid "Organize lesson"
 msgstr "Organizar aulas"
 
 #: themes/default/templates/course.html:396
 #: themes/default/templates/course.html:451
 #: themes/default/templates/administration/lesson.html:67
-#: themes/tecsaladeaula/templates/course.html:478
-#: themes/tecsaladeaula/templates/course.html:534
+#: themes/tecsaladeaula/templates/course.html:495
+#: themes/tecsaladeaula/templates/course.html:551
 #: themes/tecsaladeaula/templates/administration/lesson.html:67
 msgid "Lesson name"
 msgstr "Nome da aula"
 
 #: themes/default/templates/course.html:416
-#: themes/tecsaladeaula/templates/course.html:485
-#: themes/tecsaladeaula/templates/course.html:499
+#: themes/tecsaladeaula/templates/course.html:502
+#: themes/tecsaladeaula/templates/course.html:516
 msgid "Listed"
 msgstr "Listado"
 
 #: themes/default/templates/course.html:472
-#: themes/tecsaladeaula/templates/course.html:555
+#: themes/tecsaladeaula/templates/course.html:572
 msgid "videos"
 msgstr "videos"
 
 #: themes/default/templates/course.html:472
-#: themes/tecsaladeaula/templates/course.html:555
+#: themes/tecsaladeaula/templates/course.html:572
 msgid "activities"
 msgstr "atividades"
 
 #: themes/default/templates/course.html:482
-#: themes/tecsaladeaula/templates/course.html:565
+#: themes/tecsaladeaula/templates/course.html:582
 msgid "Add lesson"
 msgstr "Adicionar aula"
 
@@ -2239,6 +2239,16 @@ msgstr "Editar texto"
 #, fuzzy
 msgid "Edit course material"
 msgstr "Referências bibliográficas"
+
+#: themes/tecsaladeaula/templates/course.html:295
+#: themes/tecsaladeaula/templates/course.html:296
+#, python-format
+msgid " This course subscription has ended on %(subscribe_date_limit)s "
+msgstr "As inscrições para este cursos se encerraram no dia %(subscribe_date_limit)s"
+
+#: themes/tecsaladeaula/templates/course.html:297
+msgid "Subscribe expired"
+msgstr "Inscrições encerradas"
 
 #: themes/tecsaladeaula/templates/account/signup.html:17
 #: themes/tecsaladeaula/templates/account/signup.html:19
