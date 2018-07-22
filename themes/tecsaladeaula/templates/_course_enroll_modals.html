@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 
 <!-- SUCCESS ENROLL MODAL -->
 <div class="modal fade" id="modal-subscribe-success" tabindex="-1">
@@ -79,3 +80,36 @@
 <!-- END SUCCESS ENROLL MODAL -->
 
 <!-- SUCCESS ENROLL MODAL -->
+
+<div class="modal fade" id="modal-subscribe-profile" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Complete seu cadastro para realizar a inscrição!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Para realizer a inscrição deste curso, é necessário completar o cadastro nesta página. <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a></p>
+                        Os campos necessários são:
+                        <ul>
+                            <li>Nome completo</li>
+                            <li>Atuação</li>
+                            <li>Cidade</li>
+                            <li>Sobre mim</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="{% static 'img/profile_example.png' %}" class="img-responsive">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

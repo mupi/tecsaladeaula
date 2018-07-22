@@ -92,11 +92,12 @@ class TimtecUserAdminSerializer(TimtecUserSerializer):
     disciplines = DisciplineSerializer(many=True, read_only=True)
     schools = TimtecProfileSchoolSerializer(source='timtecuserschool_set', many=True, read_only=True)
     courses = serializers.SerializerMethodField('get_courses')
+    is_profile_complete = serializers.Field()
 
     class Meta:
         model = get_user_model()
         fields =    ('id', 'username', 'name', 'email', 'business_email', 'is_active', 'is_superuser', 'first_name', 'city',
-                    'occupations', 'disciplines', 'schools', 'courses', 'site', 'biography')
+                    'occupations', 'disciplines', 'schools', 'courses', 'site', 'biography', 'is_profile_complete')
 
     def get_courses(self, obj):
         course_students = CourseStudent.objects.filter(user=obj.id)

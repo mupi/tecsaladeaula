@@ -164,6 +164,7 @@ class TimtecUser(AbstractTimtecUser):
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'
 
+    @property
     def is_profile_complete(self):
         if self.first_name and len(self.first_name) > 3 and self.occupations.count() > 0 and self.city and self.biography and len(self.biography) > 3:
             return True
