@@ -376,30 +376,27 @@ msgstr "Privado"
 
 #: core/models.py:100
 msgid "Left Tag"
-msgstr ""
+msgstr "Tag esquerda"
 
 #: core/models.py:101
 msgid "Right Tag"
-msgstr ""
+msgstr "Tag direita"
 
 #: core/models.py:102
-#, fuzzy
 msgid "Subscribe date limit"
-msgstr "Inscrever-se"
+msgstr "Data limite de inscrição"
 
 #: core/models.py:103
 msgid "Modal Text"
-msgstr ""
+msgstr "Texto modal"
 
 #: core/models.py:104
-#, fuzzy
 msgid "Intro Text"
-msgstr "Vídeo introdutório"
+msgstr "Texto página introdução"
 
 #: core/models.py:105
-#, fuzzy
 msgid "Complete Profile"
-msgstr "Perfil"
+msgstr "Perfil completo"
 
 #: core/models.py:109 themes/default/templates/courses.html:13
 #: themes/default/templates/header.html:27
@@ -421,11 +418,11 @@ msgstr "Cursos"
 
 #: core/models.py:260 themes/default/templates/user-courses.html:105
 msgid "Pending"
-msgstr ""
+msgstr "Pendente"
 
 #: core/models.py:261
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: core/models.py:262
 #, fuzzy

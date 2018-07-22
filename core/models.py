@@ -95,11 +95,14 @@ class Course(models.Model):
     default_class = models.OneToOneField(Class, verbose_name=_('Default Class'), related_name='default_course', null=True, blank=True)
     tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
     payment_url = models.TextField(_('Payment URL'), max_length=50, blank=True, null=True)
+
     private = models.BooleanField(_('Private'), default=False)
-    left_tag = models.CharField(_('Left Tag'), max_length=50, blank=True)
-    right_tag = models.CharField(_('Right Tag'), max_length=50, blank=True)
+    left_tag = models.CharField(_('Left Tag'), max_length=50, blank=True, null=True)
+    right_tag = models.CharField(_('Right Tag'), max_length=50, blank=True, null=True)
     subscribe_date_limit = models.DateField(_('Subscribe date limit'), default=None, blank=True, null=True)
-    modal_text = models.TextField(_('Modal Text'), blank=True)
+    modal_text = models.TextField(_('Modal Text'), blank=True, null=True)
+    intro_text = models.CharField(_('Intro Text'), max_length=50, blank=True, null=True)
+    complete_profile = models.BooleanField(_('Complete Profile'), default=False)
 
     class Meta:
         verbose_name = _('Course')
@@ -124,13 +127,15 @@ class Course(models.Model):
         return request.get_full_path()
 
     def enroll_student(self, student):
+        if self.complete_profile and not student.is_profile_complete:
+            return
+
         now = datetime.datetime.now()
         course_link = 'http://tecsaladeaula.com.br/course/' + self.slug + '/intro/'
 
         student_name = student.get_full_name()
         if not student_name:
             student_name = student.username
-
 
         if not Class.objects.filter(course=self, students=student).exists():
             self.default_class.students.add(student)
