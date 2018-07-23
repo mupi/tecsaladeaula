@@ -438,7 +438,7 @@
                     "Tuition": $scope.course.tuition
                   });
                   $scope.registration_number = data.registration_number;
-                  if ($scope.course.tuition > 0 || $scope.course.pivate){
+                  if ($scope.course.tuition > 0 || $scope.course.private){
                     $('#modal-subscribe-success').on('hidden.bs.modal', function(){
                         location.reload();
                     });    
