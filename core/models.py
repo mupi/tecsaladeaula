@@ -96,6 +96,14 @@ class Course(models.Model):
     tuition = models.DecimalField(_('Tuition'), decimal_places=2, max_digits=9, default=0.0)
     payment_url = models.TextField(_('Payment URL'), max_length=50, blank=True, null=True)
 
+    private = models.BooleanField(_('Private'), default=False)
+    left_tag = models.CharField(_('Left Tag'), max_length=50, blank=True, null=True)
+    right_tag = models.CharField(_('Right Tag'), max_length=50, blank=True, null=True)
+    subscribe_date_limit = models.DateField(_('Subscribe date limit'), default=None, blank=True, null=True)
+    modal_text = models.TextField(_('Modal Text'), blank=True, null=True)
+    intro_text = models.CharField(_('Intro Text'), max_length=50, blank=True, null=True)
+    complete_profile = models.BooleanField(_('Complete Profile'), default=False)
+
     class Meta:
         verbose_name = _('Course')
         verbose_name_plural = _('Courses')
@@ -119,25 +127,34 @@ class Course(models.Model):
         return request.get_full_path()
 
     def enroll_student(self, student):
+        if self.complete_profile and not student.is_profile_complete:
+            return
+
         now = datetime.datetime.now()
+
+        if self.subscribe_date_limit and self.subscribe_date_limit < now.date():
+            return
+
         course_link = 'http://tecsaladeaula.com.br/course/' + self.slug + '/intro/'
 
         student_name = student.get_full_name()
         if not student_name:
             student_name = student.username
 
-
         if not Class.objects.filter(course=self, students=student).exists():
             self.default_class.students.add(student)
             send_mail('Usuário Cadastrou-se em um Curso', get_template('core/email/email_user_signed_up_course_support.txt').render(Context({'name': student_name, 'course_name': self.name, 'datetime': now.strftime("%d/%m/%Y - %H:%M"), 'email': student.email})), settings.EMAIL_SUPPORT, [settings.EMAIL_SUPPORT])
         if not CourseStudent.objects.filter(course=self, user=student).exists():
-            if self.tuition == 0:
+            if self.tuition != 0 or self.private:
+                CourseStudent.objects.create(course=self, user=student)
+                if self.private:
+                    send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_private_course.txt').render(Context({'name': student_name, 'course_name': self.name})), settings.DEFAULT_FROM_EMAIL, [student.email])
+                else:
+                    send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_paid_course.txt').render(Context({'name': student_name, 'course_name': self.name, 'course_link': course_link})), settings.DEFAULT_FROM_EMAIL, [student.email])
+            else:
                 send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_free_course.txt').render(Context({'name': student_name, 'course_name': self.name})), settings.DEFAULT_FROM_EMAIL, [student.email])
                 CourseStudent.objects.create(course=self, user=student, status='2')
-            else:
-                CourseStudent.objects.create(course=self, user=student)
-                send_mail('Inscrição em Curso Mupi', get_template('core/email/email_user_signed_up_paid_course.txt').render(Context({'name': student_name, 'course_name': self.name, 'course_link': course_link})), settings.DEFAULT_FROM_EMAIL, [student.email])
-
+                
     def is_enrolled(self, user):
         return CourseStudent.objects.filter(course=self, user=user, status=CourseStudent.STATES[1][0]).exists()
 
@@ -160,6 +177,12 @@ class Course(models.Model):
             return True
         else:
             return False
+
+    @property
+    def has_subscribe_ended(self):
+        if self.subscribe_date_limit and self.subscribe_date_limit < datetime.date.today():
+            return True
+        return False
 
     def avg_lessons_users_progress(self, classes=None):
         if classes:

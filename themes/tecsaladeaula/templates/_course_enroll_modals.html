@@ -1,8 +1,10 @@
 {% load i18n %}
+{% load static %}
 
 <!-- SUCCESS ENROLL MODAL -->
 <div class="modal fade" id="modal-subscribe-success" tabindex="-1">
     <div class="modal-dialog">
+        {% if course.tuition > 0%}
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -11,8 +13,12 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-6">
-                        <p>Para concluir sua inscrição você deverá realizar o pagamento através do PagSeguro. Assim que seu pagamento for concluído, nós liberaremos o seu acesso.</p>
-                    </div>
+                        {% if course.modal_text %}
+                            {{ course.modal_text | safe }}
+                        {% else %}
+                            <p>Para concluir sua inscrição você deverá realizar o pagamento e completar seu cadastro em <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a> para validarmos sua inscrição.</p>
+                        {% endif %}
+                   </div>
                     <div class="col-sm-6">
                          <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
                         <form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
@@ -33,11 +39,77 @@
                 </div> -->
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-xs-12">
-                        <p>Caso possua alguma dúvida, entre em contato conosco através do email <i>contato@mupi.me</i></p>
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Falta pouco para confirmar sua inscrição!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% if course.modal_text %}
+                            {{ course.modal_text | safe }}
+                        {% else %}
+                            <p>Para concluir sua inscrição você deverá completar seu cadastro em <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a> para validarmos sua inscrição.</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- NEEDS FIX
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>O número da sua inscrição é</p>
+                        <p>{{ course.registration_number }}</p>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- END SUCCESS ENROLL MODAL -->
+
+<!-- SUCCESS ENROLL MODAL -->
+
+<div class="modal fade" id="modal-subscribe-profile" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3>Complete seu cadastro para realizar a inscrição!</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Para realizer a inscrição deste curso, é necessário completar o cadastro nesta página. <a href="{% url "profile_edit" %}">{{ request.get_host }}{% url "profile_edit" %}</a></p>
+                        Os campos necessários são:
+                        <ul>
+                            <li>Nome completo</li>
+                            <li>Atuação</li>
+                            <li>Cidade</li>
+                            <li>Sobre mim</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="{% static 'img/profile_example.png' %}" class="img-responsive">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <p>Dúvidas?! Envie um email para <i>contato@mupi.me</i></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- END SUCCESS ENROLL MODAL -->

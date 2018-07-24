@@ -116,8 +116,8 @@ class SignupForm(SignupForm, AcceptTermsForm):
         else:
             return ""
 
-    def validate_username(self):
-        return True
+    def clean_username(self):
+        return self.data['email']
 
     def clean_fullname(self):
         data = self.cleaned_data['fullname']

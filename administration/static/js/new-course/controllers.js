@@ -433,22 +433,22 @@
             };
 
             $scope.enrollUser = function(course_id) {
-                $('#modal-subscribe-success').on('hidden.bs.modal', function(){
-                    location.reload();
-                });
                 Enroll.save({id: course_id}, function success(data) {
                   mixpanel.track("Subscribed a Course", {
                     "Tuition": $scope.course.tuition
                   });
                   $scope.registration_number = data.registration_number;
-                  if ($scope.course.tuition != 0){
-                      $('#modal-subscribe-success').modal('show');
+                  if ($scope.course.tuition > 0 || $scope.course.private){
+                    $('#modal-subscribe-success').on('hidden.bs.modal', function(){
+                        location.reload();
+                    });    
+                    $('#modal-subscribe-success').modal('show');
                   } else {
-                      if ($scope.course.has_started){
-                          $window.location.href = '/course/' + $scope.course.slug + '/resume';
-                      } else {
-                          location.reload();
-                      }
+                    if ($scope.course.has_started){
+                        $window.location.href = '/course/' + $scope.course.slug + '/resume';
+                    } else {
+                        location.reload();
+                    }
                   }
                 });
             };

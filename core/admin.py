@@ -32,6 +32,8 @@ class UnitAdmin(ModelAdmin):
 
 class CourseAdmin(ModelAdmin):
     list_display = ('name', 'status', 'start_date',)
+    search_fields = ('name',)
+    ordering = ('-status', 'name')
     inlines = (LessonInline,)
 
 

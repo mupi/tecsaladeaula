@@ -81,8 +81,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
         self.username = self.email
         is_new = self.pk is None
 
-        print(self)
-
         super(AbstractTimtecUser, self).save(*args, **kwargs)
 
         if is_new and settings.REGISTRATION_DEFAULT_GROUP_NAME:
@@ -91,7 +89,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
                 self.save()
             except models.exceptions.ObjectDoesNotExist:
                 pass
-
 
 
 #populated by fixture
@@ -166,6 +163,12 @@ class TimtecUser(AbstractTimtecUser):
 
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'
+
+    @property
+    def is_profile_complete(self):
+        if self.first_name and len(self.first_name) > 3 and self.occupations.count() > 0 and self.city and self.biography and len(self.biography) > 3:
+            return True
+        return False
 
 class TimtecUserSchool(models.Model):
     professor = models.ForeignKey(TimtecUser)

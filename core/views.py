@@ -5,7 +5,7 @@ import datetime
 
 from django.core.urlresolvers import reverse_lazy
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.generic import (DetailView, ListView, DeleteView,
                                   CreateView, UpdateView)
 from django.views.generic.base import RedirectView, View, TemplateView
@@ -391,6 +391,8 @@ class LessonDetailView(LoginRequiredMixin, DetailView):
         context = super(LessonDetailView, self).get_context_data(**kwargs)
         unit_content_type = ContentType.objects.get_for_model(Unit)
         course = self.object.course
+        if not course.is_enrolled(self.request.user):
+            raise Http404
         lessons = list(course.public_lessons)
         if lessons and self.object != lessons[-1]:
             index = lessons.index(self.object)
