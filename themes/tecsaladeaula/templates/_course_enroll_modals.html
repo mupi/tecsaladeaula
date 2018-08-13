@@ -21,9 +21,9 @@
                    </div>
                     <div class="col-sm-6">
                          <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
-                        <form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox(this); return false;">
+                        <form action="https://pagseguro.uol.com.br/checkout/v2/payment.html" method="post" onsubmit="PagSeguroLightbox('{{ course.payment_url }}'); return false;">
                         <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
-                        <input type="hidden" name="itemCode" value="{{ course.payment_url }}" />
+                        <!-- <input type="hidden" name="itemCode" value="" /> -->
                         <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/209x48-pagar-assina.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
                         </form>
                         <script type="text/javascript" src="https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js"></script>
