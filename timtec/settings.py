@@ -21,8 +21,8 @@ DEBUG = True
 # TEMPLATE_DEBUG = DEBUG
 
 SITE_ID = 1
-SITE_HOME = ''
-SITE_NAME = 'Tecnologia para Sala de Aula'
+SITE_HOME = '/'
+SITE_NAME = 'Escola Mupi'
 SITE_DOMAIN = 'tecsaladeaula.com.br'
 
 ADMINS = (
