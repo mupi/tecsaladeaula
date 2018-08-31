@@ -493,6 +493,10 @@ class ProfessorMessage(models.Model):
 
     def send(self):
         bcc = [u.email for u in self.users.all()]
+
+        course_students_emails = [u.user.email for u in self.course.coursestudent_set.filter(status='2')]
+        bcc = [email for email in bcc if email in course_students_emails]
+
         try:
             et = EmailTemplate.objects.get(name='professor-message')
         except EmailTemplate.DoesNotExist:
