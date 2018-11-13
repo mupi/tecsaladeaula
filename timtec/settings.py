@@ -50,7 +50,7 @@ DATABASES = {
 
 METRON_SETTINGS = {
     "google": {
-        1: "UA-60772693-1",
+        1: "UA-129006565-2",
     },
 }
 
