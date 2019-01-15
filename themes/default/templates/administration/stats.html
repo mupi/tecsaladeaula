@@ -140,11 +140,12 @@ wrapper-course-lesson
                             <div class="row-eq-height">
                               <div class="col-sm-8">
                                 <div class="col-sm-3 fullname">{% trans "Full name" %}</div>
+                                <div class="col-sm-1">{% trans "Status" %}</div>
                                 <div class="col-sm-2">{% trans "Progress" %}</div>
                                 <div class="col-sm-1">{% trans "Date joined"%}</div>
                                 <div class="col-sm-1">{% trans "Last access"%}</div>
                                 <div class="col-sm-3 email">{% trans "Main E-mail" %}</div>
-                                <div class="col-sm-2">{% trans "Occupation" %}</div>
+                                <div class="col-sm-1">{% trans "Occupation" %}</div>
                               </div>
                               <div class="col-sm-4">
                                 <div class="col-sm-4">{% trans "Disciplines" %}</div>
@@ -155,12 +156,22 @@ wrapper-course-lesson
                             </div>
                           </li>
                         </ul>
+                        
                         <ul class="students" ng-show="users_reports.$resolved">
                             <li ng-repeat="user_data in users_reports.results">
                                   <div class="row">
                                     <div class="col-sm-8">
                                       {% verbatim %}
                                       <div class="col-sm-3">{{user_data.user.first_name}}</div>
+                                      <div class="col-sm-1" ng-if="user_data.status === '1'">
+                                        Pendente
+                                      </div>
+                                      <div class="col-sm-1" ng-if="user_data.status === '2'">
+                                        Ativo
+                                      </div>
+                                      <div class="col-sm-1" ng-if="user_data.status === '3'">
+                                        Cancelado
+                                      </div>
                                       <div class="col-sm-2 hidden-xs">
                                           <div class="progress">
 
@@ -170,7 +181,7 @@ wrapper-course-lesson
                                       <div class="col-sm-1">{{ user_data.created_at | date:'dd/MM/yyyy' }}</div>
                                       <div class="col-sm-1">{{ user_data.last_access | date:'dd/MM/yyyy' }}</div>
                                       <div class="col-sm-3 email show-small-text">{{ user_data.user.email }}</div>
-                                      <div class="col-sm-2 show-small-text"><span ng-repeat="occupation in user_data.user.occupations">{{ occupation.name }}<br></span></div>
+                                      <div class="col-sm-1 show-small-text"><span ng-repeat="occupation in user_data.user.occupations">{{ occupation.name }}<br></span></div>
                                       {% endverbatim %}
                                     </div>
 

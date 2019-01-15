@@ -251,6 +251,7 @@ class ExportUsersByCourseView(ExportUsersView):
         writer = csv.writer(response)
         writer.writerow([
             'Nome',
+            'Situação',
             'Email',
             'Email Adicional',
             'Ocupação',
@@ -318,6 +319,12 @@ class ExportUsersByCourseView(ExportUsersView):
             u = course_student.user
             # course_student = self.get_course_student(u.coursestudent_set, course_id)
             if(course_student):
+                if course_student.status == '1':
+                    status = 'Pendente'
+                elif course_student.status == '2':
+                    status = 'Ativo'
+                else:
+                    status = 'Cancelado'
                 occupations = self.generate_string_from_array(u.occupations)
                 disciplines = self.generate_string_from_array(u.disciplines)
                 education_levels = self.generate_string_from_array(u.education_levels)
@@ -330,6 +337,7 @@ class ExportUsersByCourseView(ExportUsersView):
 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
+                    status,
                     u.email,
                     u.business_email if u.business_email is not None else "",
                     occupations,
