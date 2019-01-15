@@ -14,7 +14,7 @@ class UserCourseStatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseStudent
-        fields = ('user', 'course_progress', 'created_at', 'last_access')
+        fields = ('user', 'course_progress', 'created_at', 'last_access', 'status')
 
     def get_user_progress(self, obj):
         return obj.percent_progress()
