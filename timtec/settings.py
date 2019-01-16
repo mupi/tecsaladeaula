@@ -354,6 +354,7 @@ PIPELINE_JS = {
             'js/accounts/controllers.js',
             'js/accounts/services.js',
             'ui-select/dist/select.js',
+            'angular-input-masks/releases/angular-input-masks-standalone.min.js',
         ),
         'output_filename': 'js/accounts.js'
     }
