@@ -8,6 +8,7 @@
         'django',
         'ui.bootstrap',        
         'ui.select',
-        'ngSanitize'
+        'ngSanitize',
+        'ui.utils.masks'
     ]);
 })(angular);

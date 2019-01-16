@@ -142,6 +142,33 @@ wrapper-course-lesson
                                       </div>
                                   </div>
                                   {% endwith %}
+                                  {% with errors=form.cpf.errors %}
+                                  <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">CPF</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <input name="cpf" class="form-control" ng-model="form.cpf" ui-br-cpf-mask>
+                                          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                      </div>
+                                  </div>
+                                  {% endwith %}
+                                  {% with errors=form.rg.errors %}
+                                  <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">RG</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <input name="rg" class="form-control">
+                                          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                      </div>
+                                  </div>
+                                  {% endwith %}
+                                  {% with errors=form.phone.errors %}
+                                  <div class="form-group{{ errors|yesno:" has-error,"}}">
+                                      <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">Telefone</label>
+                                      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                          <input name="phone" class="form-control" ng-model="form.phone" ui-br-phone-number>
+                                          {% for error in errors %}<small>{{error}}</small>{% endfor %}
+                                      </div>
+                                  </div>
+                                  {% endwith %}
                               </fieldset>
                           </div>
                         </div>

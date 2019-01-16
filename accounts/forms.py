@@ -24,7 +24,48 @@ class ProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography',)
+        fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography', 'cpf', 'rg', 'phone')
+
+    def clean_cpf(self):
+        cpf=self.cleaned_data['cpf']
+        cpf = cpf.replace('.', '')
+        digits = cpf.split('-')
+        soma = 0
+        all_eq = True
+        
+        if len(cpf) == 0:
+            return None
+    
+        for d in cpf.replace('-', ''):
+            if d != cpf[0]:
+                all_eq = False
+                break
+          
+        if all_eq:
+            raise forms.ValidationError(_("CPF invalido!"))      
+
+        for i in range(len(digits[0])):
+            soma = soma + (10-i) * int(digits[0][i])
+        
+        res = (soma*10)%11 
+        
+        if res %10 != int(digits[1][0]):
+             raise forms.ValidationError(_("CPF invalido!"))
+        
+        soma = 0
+            
+        for i in range(len(digits[0])):
+            soma = soma + (11-i) * int(digits[0][i])
+        
+        soma = soma + 2 * int(digits[1][0]) 
+
+        res = (soma*10)%11    
+       
+        if res  %10 != int(digits[1][1]):
+             raise forms.ValidationError(_("CPF invalido!"))
+
+        return self.cleaned_data['cpf']
+
 
     def save(self, commit=True):
         disciplines = self.cleaned_data.get('disciplines')
@@ -57,9 +98,11 @@ class ProfileEditForm(forms.ModelForm):
         to_remove = [el for el in saved_education_levels if el not in saving_education_levels]
         for el in to_remove:
             profile.education_levels.remove(el)
-        
+              
         self.save_m2m()
         profile.save()
+
+        
 
 
 class ProfilePasswordForm(forms.ModelForm):

@@ -32,6 +32,9 @@
                                 $scope.list_cities = cities;
                             });
                         }
+                        $scope.form.cpf = profile.cpf;
+                        $scope.form.rg = profile.rg;
+                        $scope.form.phone = profile.phone;
                         $scope.form.occupations.selected = profile.occupations;
                         $scope.form.disciplines.selected = profile.disciplines;
                         $scope.form.education_levels.selected = profile.education_levels;

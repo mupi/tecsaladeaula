@@ -11,7 +11,7 @@ class TimtecUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'name', 'first_name', 'last_name', 'biography', 'picture',)
+        fields = ('id', 'username', 'name', 'first_name', 'last_name', 'biography', 'picture')
 
 
 class CitySerializer(serializers.ModelSerializer):
@@ -70,7 +70,7 @@ class TimtecProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id','first_name', 'email', 'city', 'occupations', 'disciplines', 'education_levels', 'schools')
+        fields = ('id','first_name', 'email', 'city', 'occupations', 'disciplines', 'education_levels', 'schools', 'cpf', 'rg', 'phone')
 
 class CourseProgressSerializer(serializers.ModelSerializer):
     course_progress = serializers.SerializerMethodField('get_course_progress')

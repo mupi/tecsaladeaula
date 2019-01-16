@@ -160,7 +160,10 @@ class TimtecUser(AbstractTimtecUser):
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     occupations = models.ManyToManyField(Occupation, blank=True, null=True)
     education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
-
+    cpf = models.CharField(max_length=14, null=True, blank=True)
+    rg = models.CharField(max_length=12, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
+   
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'
 
