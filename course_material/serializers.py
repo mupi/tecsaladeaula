@@ -13,11 +13,3 @@ class CourseMaterialSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseMaterial
-
-
-class CourseMaterialImportExportSerializer(serializers.ModelSerializer):
-    files = FilesSerializer(many=True, required=False)
-
-    class Meta:
-        model = CourseMaterial
-        fields = ('text', 'files',)

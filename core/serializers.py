@@ -45,7 +45,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ("id", "slug", "name", "intro_video", "application", "requirement",
-                  "abstract", "structure", "workload", "pronatec", "status",
+                  "abstract", "structure", "workload", "status",
                   "thumbnail_url", "home_thumbnail_url", "home_position", "tuition",
                   "start_date", "professor_name", "home_published", "professors_names", "has_started", 
                   "private", "left_tag", "right_tag",  "subscribe_date_limit", "modal_text", "intro_text", "complete_profile",
