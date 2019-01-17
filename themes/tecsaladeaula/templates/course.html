@@ -51,6 +51,7 @@ wrapper-course-intro
                     <button class="btn btn-danger" title="{% trans 'Delete course' %}" ng-click="deleteCourse()">{% trans 'Delete' %} | <i class="fa fa-trash-o"></i></button>
                     <button class="btn btn-success" ng-click="saveCourse()">{% trans 'Save' %} | <i class="fa fa-save"></i></button>
                     <button class="btn btn-warning" ng-click="publishCourse()">{% trans 'Publish' %} | <i class="fa fa-star-o"></i></button>
+                    <button class="btn btn-primary" ng-click="export_course()">{% trans 'Export' %} | <i class="fa fa-download"></i></button>
                 </div>
                 {% include 'administration/_alert.html' %}
             </div>
@@ -561,7 +562,9 @@ wrapper-course-intro
                             <!--  COL-LG-9  -->
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                 <a {% verbatim %}href="lessons/{{lesson.id}}"{% endverbatim %} class="title" ng-bind="lesson.name">{% trans 'Lesson name' %}</a>
-                                <div ng-bind-html="lesson.desc|markdown"></div>
+                                {% if not course.riw_style %}
+                                    <div ng-bind-html="lesson.desc|markdown"></div>
+                                {% endif %}
                                 <!--  HIDDEN-XS  -->
                                 <div class="hidden-xs" ng-show="lesson.units">
                                     <table class="table units">

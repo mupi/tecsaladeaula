@@ -94,7 +94,6 @@
 
                 $scope.import_course = function () {
                     $modalInstance.close($scope.course_import_file);
-
                 };
             };
         }
