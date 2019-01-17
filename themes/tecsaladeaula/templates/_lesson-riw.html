@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load timtec_markdown %}
 {% load return_next_and_prev_lesson %}
+{% load is_enrolled %}
 
 {% block content %}
 
@@ -62,9 +63,22 @@ $(document).ready(function() {
             <nav class="course-lessons">
               <div class="row">
                   <div class="col-sm-12">
-                      {% autoescape off %}
-                      <div class="description">{{ lesson.desc }}</div>
-                      {% endautoescape %}
+                      {% if user|is_enrolled:lesson.course %}
+                        {% autoescape off %}
+                        <div class="description">{{ lesson.desc }}</div>
+                        {% endautoescape %}
+                      {% else %}
+                          <div class="alert alert-danger" role="alert">
+                            ATENÇÃO! O seu usuário encontra-se BLOQUEADO.
+                          </div>
+                          <p>
+                            Caso acredite que isso seja um engano, envie um email para
+                              <em>suporte@readinweb.org</em>
+                          </p>
+                          <p>
+                            <a href="/" class="btn btn-info">Clique aqui para retornar à página inicial</a>
+                          </p>
+                      {% endif %}
                       <div class="nav-lessons">
                         {% if lesson.course.public_lessons|return_prev_name:lesson.position %}
                         <a href="{% url 'lesson' lesson.course.slug lesson.course.public_lessons|return_prev_slug:lesson.position %}"
@@ -91,6 +105,7 @@ $(document).ready(function() {
               </div>
             </nav>
           </div>
+          {% if user|is_enrolled:lesson.course %}
             {% verbatim %}
             <!-- UNITS NAVIGATION FOR TABLET AND DESKTOP -->
             <div class="units-riw col-sm-5 hidden-xs">
@@ -106,6 +121,7 @@ $(document).ready(function() {
                 {% endverbatim %}
                 <!-- END UNITS -->
             </div>
+          {% endif %}
 
             <!-- END UNITS NAVIGATION FOR TABLET AND DESKTOP -->
             {% verbatim %}
@@ -123,7 +139,7 @@ $(document).ready(function() {
 
             <!-- END UNITS NAVIGATION FOR PHONES -->
             {% endverbatim %}
-
+            {% if user|is_enrolled:lesson.course %}
             <div class="activity-column col-sm-5">
 
               <!--
@@ -203,6 +219,7 @@ $(document).ready(function() {
                 <dir-disqus config="disqusConfig"></dir-disqus>
             </div>
         </div>
+        {% endif %}
         <!-- END ROW -->
 
         </div>

@@ -18,7 +18,7 @@ wrapper-course-lesson
 
 {% block content %}
 
-{% if lesson.course.name == "Leia em Inglês" %}
+{% if lesson.course.riw_style %}
   {% include "_lesson-riw.html"  with lesson=lesson %}
 {% else %}
   {% include "_lesson-regular-course.html"  with lesson=lesson %}
