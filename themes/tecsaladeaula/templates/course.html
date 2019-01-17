@@ -304,11 +304,7 @@ wrapper-course-intro
                                     {% elif course.complete_profile and not user.is_profile_complete %}
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-profile">Complete o cadastro</a>
                                     {% else %}
-                                        {% if course.name == "Leia em Inglês" %}
-                                            <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
-                                        {% else %}
                                             <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
-                                        {% endif %}
                                     {% endif %}
                                 {% else %}
                                     {% if course.has_started %}
@@ -429,11 +425,7 @@ wrapper-course-intro
                                     {% elif course.complete_profile and not user.is_profile_complete %} 
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-profile">Complete o cadastro</a>
                                     {% else %}
-                                        {% if course.name == "Leia em Inglês" %}
-                                            <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
-                                        {% else %}
                                             <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
-                                        {% endif %}
                                     {% endif %}
                                 {% else %}
                                     {% if course.has_started %}
@@ -630,7 +622,7 @@ wrapper-course-intro
                                             {% else %}
                                                 <span class="title">{{ lesson.name }}</span>
                                             {% endif %}
-                                            {% if lesson.course.name != "Leia em Inglês" %}
+                                            {% if not lesson.course.riw_style %}
                                               <div class="description">{{ lesson.desc|timtec_markdown }}</div>
                                             {% endif %}
                                         </p>

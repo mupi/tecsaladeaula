@@ -20,7 +20,7 @@ class UnitInline(admin.TabularInline):
 
 class LessonAdmin(ModelAdmin):
     list_display = ('name', 'course',)
-    search_fields = ('course__name',)
+    search_fields = ('course__name', 'name')
     inlines = (UnitInline,)
 
 
@@ -52,7 +52,7 @@ class VideoAdmin(ModelAdmin):
 
 class ClassAdmin(ModelAdmin):
     search_fields = ('name', 'course', 'assistant')
-    list_display = ('name', 'assistant', 'course')
+    list_display = ('name', 'course')
     filter_horizontal = ('students', )
 
 

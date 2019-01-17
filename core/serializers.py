@@ -49,7 +49,7 @@ class CourseSerializer(serializers.ModelSerializer):
                   "thumbnail_url", "home_thumbnail_url", "home_position", "tuition",
                   "start_date", "professor_name", "home_published", "professors_names", "has_started", 
                   "private", "left_tag", "right_tag",  "subscribe_date_limit", "modal_text", "intro_text", "complete_profile",
-                  "has_subscribe_ended")
+                  "has_subscribe_ended", "riw_style")
     @staticmethod
     def get_professor_name(obj):
         if obj.professors.all():

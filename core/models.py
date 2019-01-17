@@ -104,6 +104,8 @@ class Course(models.Model):
     intro_text = models.CharField(_('Intro Text'), max_length=50, blank=True, null=True)
     complete_profile = models.BooleanField(_('Complete Profile'), default=False)
 
+    riw_style = models.BooleanField(_('Riw Style'), default=False)
+
     class Meta:
         verbose_name = _('Course')
         verbose_name_plural = _('Courses')
