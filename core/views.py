@@ -17,7 +17,7 @@ from django.utils import timezone
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import filters
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from braces.views import LoginRequiredMixin
 from notes.models import Note
 
@@ -176,6 +176,7 @@ class EnrollCourseView(LoginRequiredMixin, RedirectView):
 
 
 class EnrollCourseAPIView(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     model = CourseStudent
 
     def create(self, request, **kwargs):
