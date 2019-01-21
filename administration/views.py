@@ -430,10 +430,8 @@ class ExportCourseView(views.SuperuserRequiredMixin, View):
         tar_info = tarfile.TarInfo('course.json')
         tar_info.size = json_file.len
 
-        filename = course.slug + '.tar.gz'
-
         response = HttpResponse(content_type='application/x-compressed-tar')
-        response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+        response['Content-Disposition'] = 'attachment; filename={}'.format(course.slug + '.tar.gz')
 
         course_tar_file = tarfile.open(fileobj=response, mode='w:gz')
         course_tar_file.addfile(tar_info, json_file)
@@ -460,6 +458,7 @@ class ExportCourseView(views.SuperuserRequiredMixin, View):
                 self.add_files_to_export(course_tar_file, course_material_file_path)
 
         course_tar_file.close()
+
         return response
 
 
@@ -469,9 +468,9 @@ class ImportCourseView(APIView):
     permission_classes = (permissions.IsAdminUser,)
 
     def post(self, request, *args, **kwargs):
-
         import_file = tarfile.open(fileobj=request.FILES.get('course-import-file'), mode='r:gz')
         file_names = import_file.getnames()
+
         json_file_name = [s for s in file_names if '.json' in s][0]
 
         json_file = import_file.extractfile(json_file_name)
