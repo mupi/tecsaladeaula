@@ -40,11 +40,12 @@ home
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center">
-                        <h1 class="home-title">TEC Sala de Aula</h1>
+                        <h1 class="home-title">Curso Read in Web</h1>
                         <p class="lead">
-                            Portal de formação online em Tecnologia, Educação e Cultura (TEC). Venha fazer parte dessa comunidade que hoje já conta com 3000 educadores de diferentes lugares do Brasil!
+                          Curso 100% online desenvolvido e oferecido pela UNICAMP que já atendeu mais de 5 mil alunos.
+                        </p>
                         <p>
-                            <a href="{% url 'courses' %}" class="btn btn-success text-uppercase">Conheça nossos cursos</a>
+                            INSCRIÇÕES ABERTAS! Clique no curso abaixo e em seguida em "Inscrever-se"
                         </p>
                     </div>
                 </div>
@@ -54,7 +55,7 @@ home
         <section id="courses" class="container">
 
             <header>
-                <h2 class="text-center"><strong>Comece agora</strong> Cadastre-se e vamos estudar juntos.</h2>
+                <h2 class="text-center">Se você já se matriculou, clique abaixo para acessar o curso Read in Web.</h2>
                 <div class="row">
                     {% if in_admin %}
                     <div class="col-xs-12 textright">
@@ -137,235 +138,6 @@ home
                 {% endfor %}
             </div><!-- .row -->
             {% endif %}
-
-            <div class="row">
-                <div class="see-all-courses col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-                    <a href="{% url 'courses' %}" class="btn btn-lg btn-info btn-block">{% trans "All courses" %}</a>
-                </div>
-            </div>
-        </section><!-- #courses -->
-
-        <section id="how-it-works">
-            <div class="container">
-
-                {% if in_admin %}
-                <header>
-                    {% verbatim %}
-                    <h1 ng-hide="!bottom_home_flatpages.$resolved">Curso online: Tecnologia para Sala de Aula</h1>
-                    {% endverbatim %}
-                </header>
-                <div class="highlight textcenter">
-                    <div class="col-lg-12" ng-hide="bottom_home_flatpages.$resolved">
-                        <i class="loading fa fa-refresh fa-spin"></i>
-                    </div>
-                    <modalmarkdowneditorwithtitle tabindex="2"
-                                                  on-save="save_home_text(home_bottom_intro)"
-                                                  title-model="home_bottom_intro.title"
-                                                  content="home_bottom_intro.content"
-                                                  ng-hide="!bottom_home_flatpages.$resolved">
-                    </modalmarkdowneditorwithtitle>
-                </div>
-                {% endif %}
-
-                <div class="highlight textcenter">
-                    <div class="row midia">
-                        <div class="col-md-2">
-                          <h4 class="title_midia">Saiu na mídia</h4>
-                        </div>
-                        <div class="col-md-3">
-                          <a href="http://porvir.org/3-cursos-de-tecnologia-para-educadores-melhorarem-suas-aulas/" target="_blank">
-                            <img src="{% static 'img/logo_porvir.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                        <div class="col-md-2 logo-novaescola"> <!-- fapesp -->
-                          <a href="http://pesquisaparainovacao.fapesp.br/aplicativo_usa_inteligencia_coletiva_para_ajudar_professores_da_educacao_basica/191" target="_blank">
-                            <img src="{% static 'img/fapesp_logo.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                        <div class="col-md-2 logo-novaescola"> <!-- IFPA -->
-                          <a href="http://ctead.ifpa.edu.br/noticias/373-entrevista-com-paula-furtado-da-escola-mupi" target="_blank">
-                            <img src="{% static 'img/ifpa_logo.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                        <div class="col-md-2 logo-novaescola">
-                          <a href="http://www.arede.inf.br/parabens-vencedores-do-premio-arede-educa-2016/" target="_blank">
-                            <img src="{% static 'img/arede.png' %}" class="img-responsive">
-                          </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="carousel-testimonials" class="carousel slide carousel-home" data-ride="carousel" data-interval="false">
-
-                  <!-- Wrapper for slides -->
-                  <div class="carousel-inner" role="listbox">
-
-
-                    <div class="item active">
-                        <blockquote class="testimonial">
-                            <p>
-                              <i class="fa fa-quote-left"></i>
-                              Termino o curso com a cabeça fervilhando de ideias
-                              pra colocar em prática com os meus alunos.
-                                <i class="fa fa-quote-right"></i>
-                            </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Érika Santos Araújo (Brasília-DF)<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/jornal-cidadaocritico/intro/">
-                         O jornal na escola: Como formar o cidadão crítico e ativo do século 21</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <blockquote class="testimonial">
-                          <p>
-                              <i class="fa fa-quote-left"></i>
-                                É fundamental que ensinemos os nosso alunos a
-                                pesquisar sobre a veracidade das notícias nas
-                                redes sociais. Mas o que eu destaco é: nós, adultos,
-                                sabemos fazer isso?
-                                Penso que esse curso poderia ser feito por muito
-                                mais pessoas, não apenas professores. (...)
-                                <i class="fa fa-quote-right"></i>
-                            </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                      Ana Paula Moreira (Rio Claro-SP)<br/>
-                      Curso <a href="http://tecsaladeaula.com.br/course/fake-news-voce-faz-parte-dessa-historia/intro/">
-                      Fake news: como você faz parte dessa história?</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                             Melhor plataforma que já utilizei de EAD.
-                             Muito fácil e sem complicações de outras.
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Marco Antonio Bourguignon (Rio de Janeiro-RJ)<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/google-digitalize-se/intro/">
-                        Google Drive e Docs: digitalize-se</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                            Gostei muito da abordagem do TEC Sala de Aula,
-                            que além de entregar conteúdo de qualidade,
-                            favorece a comunicação entre os participantes.
-                            O feedback da equipe tem sido fundamental!
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Arlete Meneguette (São Paulo - SP) <br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/google-digitalize-se/intro/">
-                        Google Drive e Docs: digitalize-se</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                            <p>
-                              <i class="fa fa-quote-left"></i>
-                              Sempre fiz cursos online e nunca tinha passado por
-                              uma experiência como esta. Vídeos e textos todos muito adequados.
-                              Em outros cursos sempre achei tudo muito ultrapassado.
-                              Aqui me senti sendo atualizada.
-                              <i class="fa fa-quote-right"></i>
-                            </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Fabiana Navarro da Silva Gomes<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/tecnologia-e-educacao-o-mundo-esta-sempre-mudando/intro/">
-                        Reflexões sobre tecnologia, educação e sociedade</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                            O curso é maravilhoso, informativo, objetivo e
-                            principalmente nos dá uma visão totalmente diferente
-                            sobre o uso da tecnologia em sala de aula.
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Bruno Younes<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/como-utilizar-o-twitter-em-sala-de-aula/intro/">
-                        Como utilizar o Twitter em Sala de Aula</a>
-                      </div>
-                    </div>
-                    <div class="item">
-                        <blockquote class="testimonial">
-                          <p>
-                            <i class="fa fa-quote-left"></i>
-                            Para mim foi uma descoberta e tanto sobre o
-                            pontencial do uso do Twitter na educação!
-                            <i class="fa fa-quote-right"></i>
-                          </p>
-                        </blockquote>
-                      <div class="carousel-caption">
-                        Carlos Alberto Coelho da Silva<br/>
-                        Curso <a href="http://tecsaladeaula.com.br/course/como-utilizar-o-twitter-em-sala-de-aula/intro/">
-                        Como utilizar o Twitter em Sala de Aula</a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Controls -->
-                  <a class="left carousel-control" href="#carousel-testimonials" role="button" data-slide="prev" ng-non-bindable>
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Anterior</span>
-                  </a>
-                  <a class="right carousel-control" href="#carousel-testimonials" role="button" data-slide="next" ng-non-bindable>
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Próximo</span>
-                  </a>
-
-                  <!-- Indicators -->
-                  <ol class="carousel-indicators">
-                    <li data-target="#carousel-testimonials" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="1"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="2"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="3"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="4"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="5"></li>
-                    <li data-target="#carousel-testimonials" data-slide-to="6"></li>
-                  </ol>
-
-                </div>
-
-            </div>
-        </section><!-- #how-it-works -->
-        <!--<section>
-            <div class="apoio textcenter container">
-                <div class="row">
-                    <div class="col-md-2">
-                      <h4 class="title_midia">Parceiros e apoio</h4>
-                    </div>
-                    <div class="col-md-4">
-                      <a href="http://lisbon-challenge.com/" target="_blank">
-                        <img src="{% static 'img/lclogo.png' %}" class="img-responsive">
-                      </a>
-                    </div>
-                    <div class="col-md-2 col-md-offset-1">
-                      <a href="http://atlasmedialab.com.br/parcerias/" target="_blank">
-                        <img src="{% static 'img/atlas-logo.png' %}" class="img-responsive">
-                      </a>
-                    </div>
-                    <div class="col-md-2 col-md-offset-1">
-                      <a href="http://www.salaaberta.com.br" target="_blank">
-                        <img src="{% static 'img/salaaberta.jpg' %}" class="img-responsive">
-                      </a>
-                    </div>
-                </div>
-            </div>
-        </section>-->
 
         {% if in_admin %}
             <div class="modal fade" id="modalSelectCourses">
