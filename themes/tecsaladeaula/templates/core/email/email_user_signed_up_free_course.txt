@@ -1,10 +1,8 @@
-Oi {{ name }},
+Oi {{ username }},
 
-Você se inscreveu em nosso curso {{ course_name }}. Trazemos aqui as boas vindas!
+Você se inscreveu em nosso curso {{ course_name }}.
 
-ATENÇÃO! Complete seu cadastro em http://tecsaladeaula.com.br/profile/edit antes de iniciar o curso para conhecermos você.
-
-Qualquer dúvida entre em contato conosco pelo email contato@mupi.me . Apenas uma dica: como é um curso online, organize seu tempo para dedicar-se às aulas e ter um bom aproveitamento :slightly_smiling_face:
+Qualquer dúvida entre em contato conosco pelo email contato@readinweb.com.br . Apenas uma dica: como é um curso online, organize seu tempo para dedicar-se às aulas e ter um bom aproveitamento :slightly_smiling_face:
 
 Grande abraço,
-Equipe Mupi
+Equipe Read in Web
