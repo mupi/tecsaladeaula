@@ -27,7 +27,7 @@ class ProfileEditForm(forms.ModelForm):
         fields = ('picture', 'first_name', 'occupations','city', 'site', 'biography', 'cpf', 'rg', 'phone')
 
     def clean_cpf(self):
-        cpf=self.cleaned_data['cpf']
+        cpf = self.cleaned_data['cpf']
         cpf = cpf.replace('.', '')
         digits = cpf.split('-')
         soma = 0
@@ -66,6 +66,20 @@ class ProfileEditForm(forms.ModelForm):
 
         return self.cleaned_data['cpf']
 
+    def clean_rg(self):
+        rg = self.cleaned_data['rg']
+        if len(rg) > 0 and len(rg) < 4:
+            raise forms.ValidationError(_("Insira o RG corretamente!"))
+        
+        return self.cleaned_data['rg']
+    
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if len(phone) > 0 and len(phone) < 14:
+            raise forms.ValidationError(_("Insira o telefone corretamente!"))
+        
+        return self.cleaned_data['phone']
+
 
     def save(self, commit=True):
         disciplines = self.cleaned_data.get('disciplines')
@@ -98,11 +112,10 @@ class ProfileEditForm(forms.ModelForm):
         to_remove = [el for el in saved_education_levels if el not in saving_education_levels]
         for el in to_remove:
             profile.education_levels.remove(el)
+
               
         self.save_m2m()
         profile.save()
-
-        
 
 
 class ProfilePasswordForm(forms.ModelForm):
