@@ -155,7 +155,7 @@ wrapper-course-lesson
                                   <div class="form-group{{ errors|yesno:" has-error,"}}">
                                       <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 control-label">RG</label>
                                       <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                          <input name="rg" class="form-control">
+                                          <input name="rg" class="form-control" ng-model="form.rg">
                                           {% for error in errors %}<small>{{error}}</small>{% endfor %}
                                       </div>
                                   </div>
