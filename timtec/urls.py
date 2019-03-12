@@ -154,7 +154,7 @@ urlpatterns = patterns(
     url(r'joca/', include('joca.urls')),
 
     # Smartlab
-    url(r'smartlab/', include('smartlab.urls')),
+    # url(r'smartlab/', include('smartlab.urls')),
 )
 
 if settings.TWITTER_USER != '':
