@@ -42,7 +42,7 @@ home
                     <div class="col-md-8 col-md-offset-2 text-center">
                         <h1 class="home-title">TEC Sala de Aula</h1>
                         <p class="lead">
-                          Cursos online sobre Educação do Século 21. Faça parte você também dessa comunidade de educadores de todo Brasil!
+                            Portal de formação online em Tecnologia, Educação e Cultura (TEC). Venha fazer parte dessa comunidade que hoje já conta com 3000 educadores de diferentes lugares do Brasil!
                         <p>
                             <a href="{% url 'courses' %}" class="btn btn-success text-uppercase">Conheça nossos cursos</a>
                         </p>
@@ -54,7 +54,7 @@ home
         <section id="courses" class="container">
 
             <header>
-                <h2 class="text-center"><strong>Comece agora</strong> a aprender como utilizar tecnologia para enriquecer suas aulas!</h2>
+                <h2 class="text-center"><strong>Comece agora</strong> Cadastre-se e vamos estudar juntos.</h2>
                 <div class="row">
                     {% if in_admin %}
                     <div class="col-xs-12 textright">
@@ -97,8 +97,20 @@ home
                 {% for course in home_courses %}
                     <div class="block course col-md-4 col-sm-6">
                         <a href="{% url "course_intro" course.slug %}" class="course-link">
-                            {% if not course.has_started %}<span class="coming-soon-label">{% trans 'Soon' %}</span>{% endif %}
-                            {% if course.tuition == 0 %}<span class="free-label">Gratuito!</span>{% endif %}
+                            {% if course.right_tag %}
+                                <span class="home-right-label">{{ course.right_tag }}</span>
+                            {% endif %}
+
+                            {% if course.left_tag %}
+                                <span class="home-left-label">{{ course.left_tag }}</span>
+                            {% else %}
+                                {% if course.private %}
+                                    <span class="home-left-label">Exclusivo!</span>
+                                {% elif course.tuition == 0 %}
+                                    <span class="free-label">Gratuito!</span>
+                                {% endif %}
+                            {% endif %}
+                            
                             <div class="thumb-wrapper">
                                 <span class="mouseover"></span>
                                 <span class="thumb" {% if course.home_thumbnail %}style="background-image: url({{ course.home_thumbnail.url }})"{% endif %}></span>

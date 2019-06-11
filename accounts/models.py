@@ -81,8 +81,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
         self.username = self.email
         is_new = self.pk is None
 
-        print(self)
-
         super(AbstractTimtecUser, self).save(*args, **kwargs)
 
         if is_new and settings.REGISTRATION_DEFAULT_GROUP_NAME:
@@ -91,7 +89,6 @@ class AbstractTimtecUser(AbstractBaseUser, PermissionsMixin):
                 self.save()
             except models.exceptions.ObjectDoesNotExist:
                 pass
-
 
 
 #populated by fixture
@@ -146,7 +143,9 @@ class School (models.Model):
     ]
     name = models.CharField(max_length=200, blank=False, null=False)
     school_type = models.CharField(max_length=2, choices=SCHOOL_TYPES, blank=False, null=False)
-    city = models.ForeignKey(City, blank=False, null=False)
+
+    def __unicode__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name
@@ -163,15 +162,23 @@ class TimtecUser(AbstractTimtecUser):
     disciplines = models.ManyToManyField(Discipline, blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, blank=True)
     occupations = models.ManyToManyField(Occupation, blank=True, null=True)
-    education_degrees = models.ManyToManyField(EducationDegree, blank=True, null=True)
-
+    education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
+    cpf = models.CharField(max_length=14, null=True, blank=True)
+    rg = models.CharField(max_length=12, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
+   
     class Meta(AbstractTimtecUser.Meta):
         swappable = 'AUTH_USER_MODEL'
+
+    @property
+    def is_profile_complete(self):
+        if self.first_name and len(self.first_name) > 3 and self.occupations.count() > 0 and self.city and self.biography and len(self.biography) > 3 and self.cpf and self.rg and self.phone:
+            return True
+        return False
 
 class TimtecUserSchool(models.Model):
     professor = models.ForeignKey(TimtecUser)
     school = models.ForeignKey(School)
-    education_levels = models.ManyToManyField(EducationLevel, blank=True, null=True)
 
     def __unicode__(self):
         return self.professor.username + " " + self.school.name

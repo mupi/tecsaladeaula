@@ -21,8 +21,8 @@ DEBUG = True
 # TEMPLATE_DEBUG = DEBUG
 
 SITE_ID = 1
-SITE_HOME = ''
-SITE_NAME = 'Tecnologia para Sala de Aula'
+SITE_HOME = '/'
+SITE_NAME = 'Escola Mupi'
 SITE_DOMAIN = 'tecsaladeaula.com.br'
 
 ADMINS = (
@@ -50,7 +50,7 @@ DATABASES = {
 
 METRON_SETTINGS = {
     "google": {
-        1: "UA-60772693-1",
+        1: "UA-129006565-2",
     },
 }
 
@@ -354,6 +354,7 @@ PIPELINE_JS = {
             'js/accounts/controllers.js',
             'js/accounts/services.js',
             'ui-select/dist/select.js',
+            'angular-input-masks/releases/angular-input-masks-standalone.min.js',
         ),
         'output_filename': 'js/accounts.js'
     }
@@ -557,6 +558,7 @@ LOGGING = {
 }
 
 JOCA_COURSE_ID = 51
+SMARTLAB_COURSE_ID = [53,54]
 
 try:
     execfile(os.path.join(SETTINGS_DIR, 'settings_local.py'))

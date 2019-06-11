@@ -14,10 +14,12 @@
                 <!-- COURSE-SECTION-NAV -->
                 <nav class="course-sections textright" id="course-nav">
                     <a href="{% url 'course_intro' course.slug %}" class="has-tooltip fa fa-home {% if '/intro/' in request.path %}active{% endif %}" data-toggle="tooltip" data-placement="top" data-original-title="Página inicial do curso"></a>
+                    {% if user_is_enrolled %}
                     <a href="{% url 'resume_course' course.slug %}" class="has-tooltip fa fa-book {% if '/lesson/' in request.path %}active{% endif %}" data-toggle="tooltip" data-placement="top" data-original-title="{%  trans 'Resume course' %}"></a>
                     <!-- <a href="http://forum.tecsaladeaula.com.br" target="_blank" class="has-tooltip fa fa-comments {% if '/forum/' in request.path %}active{% endif %}" data-toggle="tooltip" data-placement="top" data-original-title="{%  trans 'Forum' %}"></a> -->
                     <a href="{% url 'course_material' course.slug %}" class="has-tooltip fa fa-file {% if '/material/' in request.path %}active{% endif %}" data-toggle="tooltip" data-placement="top" data-original-title="Referências bibliográficas"></a>
                     <a href="{% url 'user_course_notes' course.slug %}" class="has-tooltip fa fa-pencil-square-o {% if '/mynotes/' in request.path %}active{% endif %}" data-toggle="tooltip" data-placement="top" data-original-title="{%  trans 'Course notes' %}"></a>
+                    {% endif %}
                     {% if user|is_assistant_or_coordinator:course %}
                         <div class="dropdown">
                             <a class="has-tooltip fa fa-cog dropdown-toggle{% if '/messages/' in request.path or '/reports/' in request.path or '/classes/' in request.path %} active{% endif %}" data-placement="top" data-original-title="{% trans 'Tools' %}" id="course-tools" data-toggle="dropdown" aria-expanded="true"></a>

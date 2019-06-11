@@ -5,10 +5,12 @@
   <div class="row">
     <center>
       <div class="col-sm-12 col-xs-12">
-        <img class="img-responsive" src="/static/img/joca_logo.png" />
+        <img class="img-responsive" src="/static/img/smartlab.png" />
         <h1 class="text-center">
-            Bem-vindo ao curso O jornal na escola: como formar o cidadão crítico e ativo do século 21.
+          <p>Bem-vindos ao portal de formação online. Esta é uma parceria entre SmartLab, Secretaria de Educação de Florianópolis e Mupi. </p>
         </h1>
+        <h2>Para realizar o cadastro, utilize o seu email institucional da prefeitura.</h2>
+          <p>Clique <a href="https://github.com/mupi/repoimagens/raw/master/smartlab/guia-formacao-smartlab-mupi.pdf">aqui</a> para fazer o download do GUIA sobre o projeto</p>
       </div>
     </center>
   </div>
@@ -60,14 +62,14 @@
         </div>
 
         <div class="panel-body bottom-xs left-xs right-xs top-xs">
-          <form onclick="event.stopPropagation()" method="post" action="{% url 'joca_signup' %}" class="form-horizontal">{% csrf_token %}
+          <form onclick="event.stopPropagation()" method="post" action="{% url 'smartlab_signup' %}" class="form-horizontal">{% csrf_token %}
 
             <input name="username" type="hidden" value=" ">
 
             <div class="form-group{% if form.errors %} has-error{% endif %}">
               <label class="col-md-3 col-xs-12">{% trans 'Full name' %}</label>
               <div class="col-md-9 col-xs-12">
-                {% if form.fullname.value == False or form.fullname.value == 'False' %}
+                {% if form.fullname.value == False %}
                     <input name="fullname" type="text" value="" class="form-control" placeholder="{% trans 'Insira seu nome completo'%}">
                 {% else %}
                     <input name="fullname" type="text" value="{{form.fullname.value|default_if_none:""}}" class="form-control" placeholder="{% trans 'Insira seu nome completo' %}">
@@ -102,7 +104,7 @@
                   <small>{{error}}</small>
                 {% endfor %}
               </div>
-            </div>            
+            </div>
 
             {% if terms_required %}
             <div class="form-group{% if form.errors %} has-error{% endif %}">

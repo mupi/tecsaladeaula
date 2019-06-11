@@ -1,9 +1,13 @@
 from core.models import Course, CourseAuthor, Lesson, Unit
 from core.serializers import VideoSerializer
-from activities.serializers import ActivityImportExportSerializer
-from course_material.serializers import CourseMaterialImportExportSerializer
+from activities.models import Activity
+from course_material.models import CourseMaterial
+from course_material.serializers import FilesSerializer
 from rest_framework import serializers
 
+
+class JSONSerializerField(serializers.WritableField):
+    pass
 
 class CourseAuthorsExportSerializer(serializers.ModelSerializer):
     name = serializers.Field(source='get_name')
@@ -20,6 +24,23 @@ class CourseAuthorsImportSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseAuthor
         exclude = ('id', 'user', 'course',)
+
+
+class CourseMaterialImportExportSerializer(serializers.ModelSerializer):
+    files = FilesSerializer(many=True, required=False)
+
+    class Meta:
+        model = CourseMaterial
+        fields = ('text', 'files',)
+
+
+class ActivityImportExportSerializer(serializers.ModelSerializer):
+    data = JSONSerializerField('data')
+    expected = JSONSerializerField('expected', required=False)
+
+    class Meta:
+        model = Activity
+        exclude = ('id', 'unit',)
 
 
 class UnitImportExportSerializer(serializers.ModelSerializer):
@@ -41,16 +62,15 @@ class LessonImportExportSerializer(serializers.ModelSerializer):
 
 class CourseExportSerializer(serializers.ModelSerializer):
     lessons = LessonImportExportSerializer(many=True, allow_add_remove=True)
-    course_authors = CourseAuthorsExportSerializer(many=True,
-                                                   allow_add_remove=True,)
+    course_authors = CourseAuthorsExportSerializer(many=True, allow_add_remove=True,)
     intro_video = VideoSerializer()
     course_material = CourseMaterialImportExportSerializer()
 
     class Meta:
         model = Course
         fields = ('slug', 'name', 'intro_video', 'application', 'requirement', 'abstract', 'structure',
-                  'workload', 'pronatec', 'status', 'thumbnail', 'home_thumbnail', 'home_position',
-                  'start_date', 'home_published', 'course_authors', 'lessons', 'course_material',)
+                  'workload', 'status', 'thumbnail', 'home_thumbnail', 'home_position',
+                  'start_date', 'home_published', 'course_authors', 'lessons', 'course_material', 'riw_style')
 
 
 class CourseImportSerializer(serializers.ModelSerializer):
@@ -62,5 +82,5 @@ class CourseImportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('slug', 'name', 'intro_video', 'application', 'requirement', 'abstract', 'structure',
-                  'workload', 'pronatec', 'status', 'thumbnail', 'home_thumbnail', 'home_position',
-                  'start_date', 'home_published', 'course_authors', 'lessons',)
+                  'workload', 'status', 'thumbnail', 'home_thumbnail', 'home_position',
+                  'start_date', 'home_published', 'course_authors', 'lessons', 'riw_style')

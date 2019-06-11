@@ -43,7 +43,6 @@ wrapper-course-intro
 
 <!-- COURSE -->
 <div id="course" class="course-intro" ng-controller="CourseEditController">
-
     {% if in_admin %}
         <!-- ACTIONS -->
         <div class="actions-menu" fixed-bar>
@@ -52,6 +51,7 @@ wrapper-course-intro
                     <button class="btn btn-danger" title="{% trans 'Delete course' %}" ng-click="deleteCourse()">{% trans 'Delete' %} | <i class="fa fa-trash-o"></i></button>
                     <button class="btn btn-success" ng-click="saveCourse()">{% trans 'Save' %} | <i class="fa fa-save"></i></button>
                     <button class="btn btn-warning" ng-click="publishCourse()">{% trans 'Publish' %} | <i class="fa fa-star-o"></i></button>
+                    <button class="btn btn-primary" ng-click="export_course()">{% trans 'Export' %} | <i class="fa fa-download"></i></button>
                 </div>
                 {% include 'administration/_alert.html' %}
             </div>
@@ -272,10 +272,20 @@ wrapper-course-intro
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
-                                {% if course.tuition != 0 %}
-                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% if course.intro_text %}
+                                    <p class="text-success text-uppercase lead">{{ course.intro_text }}</p>
                                 {% else %}
-                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% if course.tuition != 0 %}
+                                        <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                    {% elif course.subscribe_date_limit %}
+                                        <p class="text-success text-uppercase lead">
+                                            {% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} Subscription until {{ subscribe_date_limit }} {% endblocktrans %}
+                                        </p>
+                                    {% elif course.private %}
+                                        <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                    {% else %}
+                                        <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
@@ -283,12 +293,19 @@ wrapper-course-intro
                                 {% if not user_is_enrolled %}
                                     {% if user_enroll_is_pending %}
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+                                    {% elif course.has_subscribe_ended %}
+                                    <div class="has-tooltip js-login-required uppercase"
+                                        href="#"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-original-title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}."
+                                        title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}.">
+                                        <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Subscribe expired" %}</button>
+                                    </div>
+                                    {% elif course.complete_profile and not user.is_profile_complete %}
+                                        <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-profile">Complete o cadastro</a>
                                     {% else %}
-                                        {% if course.name == "Leia em Inglês" %}
-                                            <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
-                                        {% else %}
                                             <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
-                                        {% endif %}
                                     {% endif %}
                                 {% else %}
                                     {% if course.has_started %}
@@ -376,10 +393,20 @@ wrapper-course-intro
                         <div class="page-header-double"><h3>Inscrição</h3></div>
                         <div class="row">
                             <div class="col-sm-7 col-md-7 col-xs-12">
-                                {% if course.tuition != 0 %}
-                                    <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                {% if course.intro_text %}
+                                    <p class="text-success text-uppercase lead">{{ course.intro_text }}</p>
                                 {% else %}
-                                    <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% if course.tuition != 0 %}
+                                        <p><span class="currency">R$</span><span class="value">{{ course.tuition }}</span></p>
+                                        {% elif course.subscribe_date_limit %}
+                                        <p class="text-success text-uppercase lead">
+                                            {% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} Subscription until {{ subscribe_date_limit }} {% endblocktrans %}
+                                        </p>
+                                    {% elif course.private %}
+                                        <p class="text-success text-uppercase lead">Curso Exclusivo!</p>
+                                    {% else %}
+                                        <p class="text-success text-uppercase lead">Curso Gratuito!</p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
@@ -387,12 +414,19 @@ wrapper-course-intro
                                 {% if not user_is_enrolled %}
                                     {% if user_enroll_is_pending %}
                                         <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-success">Inscrição Pendente</a>
+                                    {% elif course.has_subscribe_ended %}
+                                    <div class="has-tooltip js-login-required uppercase"
+                                        href="#"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-original-title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}."
+                                        title="{% blocktrans with subscribe_date_limit=course.subscribe_date_limit|date:"d/m/Y" %} This course subscription has ended on {{ subscribe_date_limit }} {% endblocktrans %}.">
+                                        <button class="btn btn-lg btn-block btn-default" ng-disabled="true">{% trans "Subscribe expired" %}</button>
+                                    </div>
+                                    {% elif course.complete_profile and not user.is_profile_complete %} 
+                                        <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-warning col-xs-12 js-login-required uppercase" data-toggle="modal" data-target="#modal-subscribe-profile">Complete o cadastro</a>
                                     {% else %}
-                                        {% if course.name == "Leia em Inglês" %}
-                                            <a href="http://www.extecamp.unicamp.br/dados.asp?sigla=%8Eg%D5%C2%5E%E2%DF%97&of=%F7%10%A9" class="btn btn-lg btn-info col-xs-12 uppercase">{% trans "Subscribe" %}</a>
-                                        {% else %}
                                             <a href="{% url "course_intro" course.slug %}" class="btn btn-lg btn-info col-xs-12 js-login-required uppercase" ng-click="enrollUser('{{ course.id }}')">{% trans "Subscribe" %}</a>
-                                        {% endif %}
                                     {% endif %}
                                 {% else %}
                                     {% if course.has_started %}
@@ -528,7 +562,9 @@ wrapper-course-intro
                             <!--  COL-LG-9  -->
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                 <a {% verbatim %}href="lessons/{{lesson.id}}"{% endverbatim %} class="title" ng-bind="lesson.name">{% trans 'Lesson name' %}</a>
-                                <div ng-bind-html="lesson.desc|markdown"></div>
+                                {% if not course.riw_style %}
+                                    <div ng-bind-html="lesson.desc|markdown"></div>
+                                {% endif %}
                                 <!--  HIDDEN-XS  -->
                                 <div class="hidden-xs" ng-show="lesson.units">
                                     <table class="table units">
@@ -589,7 +625,7 @@ wrapper-course-intro
                                             {% else %}
                                                 <span class="title">{{ lesson.name }}</span>
                                             {% endif %}
-                                            {% if lesson.course.name != "Leia em Inglês" %}
+                                            {% if not lesson.course.riw_style %}
                                               <div class="description">{{ lesson.desc|timtec_markdown }}</div>
                                             {% endif %}
                                         </p>
