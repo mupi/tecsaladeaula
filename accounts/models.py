@@ -147,6 +147,9 @@ class School (models.Model):
     def __unicode__(self):
         return self.name
 
+    def __unicode__(self):
+        return self.name
+
 class TimtecUser(AbstractTimtecUser):
     """
     Timtec customized user.
