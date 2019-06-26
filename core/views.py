@@ -35,7 +35,7 @@ from .models import (Course, CourseProfessor, Lesson, StudentProgress,
 from .forms import (ContactForm, RemoveStudentForm,
                     AddStudentsForm, )
 
-from .permissions import IsProfessorCoordinatorOrAdminPermissionOrReadOnly, IsAdminOrReadOnly
+from .permissions import IsProfessorCoordinatorOrAdminPermissionOrReadOnly, IsAdminOrReadOnly, IsAdmin
 
 
 class HomeView(ListView):
@@ -112,6 +112,11 @@ class GenericCourseView(DetailView):
     model = Course
     context_object_name = 'course'
     slug_url_kwarg = 'course_slug'
+
+    def get(self, request, *args, **kwargs):
+        if not (request.user and request.user.is_superuser):
+            raise PermissionDenied
+        return super(GenericCourseView, self).get(request, *args, **kwargs)
 
 
 class CourseView(DetailView):
