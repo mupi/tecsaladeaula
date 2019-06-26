@@ -24,7 +24,7 @@ from .serializer import CourseExportSerializer, CourseImportSerializer
 from accounts.models import TimtecUser, Discipline
 from django.utils import timezone
 from datetime import timedelta, time, datetime
-from core.models import CourseStudent
+from core.models import CourseStudent, StudentProgress
 from joca.models import JocaUser
 
 import tarfile
@@ -237,15 +237,16 @@ class ExportUsersByCourseView(ExportUsersView):
         string_for_progress = ''.join((string_for_progress, str(percent), '%'))
         return string_for_progress
     
-    def generate_string_for_lessons(self, lessons):
+    def generate_string_for_lessons(self, lessons, lessons_qty):
         first = True
         string_for_lesson = ''
         for l in lessons:
+            percentage = l['progress'] / lessons_qty[l['name']] * 100
             if first:
                 first = False
-                string_for_lesson = ''.join((string_for_lesson, l['name'].encode('utf-8'), ' | ', str(l['progress']), '%'))
+                string_for_lesson = ''.join((string_for_lesson, l['name'].encode('utf-8'), ' | ', str(percentage), '%'))
             else:
-                string_for_lesson = '\n'.join((string_for_lesson, l['name'].encode('utf-8') + ' | ' + str(l['progress']) + '%'))
+                string_for_lesson = '\n'.join((string_for_lesson, l['name'].encode('utf-8') + ' | ' + str(percentage) + '%'))
         return string_for_lesson
 
     def get(self, request, *args, **kwargs):
@@ -277,7 +278,9 @@ class ExportUsersByCourseView(ExportUsersView):
             'Aulas'
         ])
 
-        queryset = CourseStudent.objects.filter(course=course_id)
+        queryset = CourseStudent.objects.filter(course=course_id).prefetch_related('course__lessons',
+            'user__occupations', 'user__disciplines', 'user__education_levels', 'user__timtecuserschool_set',
+            'user__timtecuserschool_set__school')
         course_id = self.request.GET.get('course_id')
         keyword = self.request.GET.get('keyword')
         from_date = self.request.GET.get('from_date')
@@ -324,8 +327,30 @@ class ExportUsersByCourseView(ExportUsersView):
             from_date = datetime.combine(from_date.date(), t)
             course_students = [cs for cs in course_students if cs.get_last_access() == None or cs.get_last_access() <= from_date]
 
+        lesson_qty = {}
+        for lesson in course.lessons.all():
+            lesson_qty[lesson.name] = lesson.unit_count()
+
+        all_units_dones =  StudentProgress.objects.exclude(complete=None)\
+                                .filter(unit__lesson__course=course)\
+                                .select_related('unit__lesson', 'user')
+
+        all_units_counts_user = {}
+        for unit_done in all_units_dones:
+            user_id = unit_done.user.id
+            lesson_id = unit_done.unit.lesson.id
+
+            if user_id in all_units_counts_user:
+                if lesson_id in all_units_counts_user[user_id]:
+                    all_units_counts_user[user_id][lesson_id] += 1
+                else:
+                    all_units_counts_user[user_id][lesson_id] = 1
+            else:
+                all_units_counts_user[user_id] = {lesson_id : 1}
+
         for course_student in course_students:
             u = course_student.user
+            # u = User.objects.prefetch_related('occupations', 'disciplines', 'education_levels', 'timtecuserschool_set').get(id=course_student.user.id)
             # course_student = self.get_course_student(u.coursestudent_set, course_id)
             if(course_student):
                 if course_student.status == '1':
@@ -342,7 +367,7 @@ class ExportUsersByCourseView(ExportUsersView):
                 progress = self.generate_string_for_progress(course_student)
                 subscribe_date = self.generate_string_for_date(course_student.created_at)
                 last_access = self.generate_string_for_date(course_student.get_last_access())
-                lessons = self.generate_string_for_lessons(course_student.percent_progress_by_lesson())
+                lessons = self.generate_string_for_lessons(course_student.percent_progress_by_lesson(all_units_counts_user), lesson_qty)
 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
@@ -365,7 +390,6 @@ class ExportUsersByCourseView(ExportUsersView):
                     last_access,
                     lessons,
                 ])
-
         return response
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):
