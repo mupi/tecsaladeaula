@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from django.views.generic import TemplateView, DetailView
 from django.views.generic.base import TemplateResponseMixin, ContextMixin, View
 from django.views.generic.edit import ModelFormMixin
@@ -24,14 +25,13 @@ from .serializer import CourseExportSerializer, CourseImportSerializer
 from accounts.models import TimtecUser, Discipline
 from django.utils import timezone
 from datetime import timedelta, time, datetime
-from core.models import CourseStudent
+from core.models import CourseStudent, StudentProgress
 from joca.models import JocaUser
 
 import tarfile
 import StringIO
 import os
 import csv
-
 
 User = get_user_model()
 
@@ -217,40 +217,128 @@ class ExportUsersView(View):
             ])
 
         return response
-
+from django.db import connection
 class ExportUsersByCourseView(ExportUsersView):
-    
-    def get_course_student(self, courses, course_id):
-        for c in courses.all():
-            if(c.course.id == int(course_id)):
-                return c
-        return None
-    
+
     def generate_string_for_date(self, date):
         if date == None:
-            return ""
-        return str(date.day) + '/' + str(date.month) + '/' + str(date.year)
+            return ''
+        return '{}/{}/{}'.format(date.day, date.month, date.year)
 
-    def generate_string_for_progress(self, course):
-        percent = course.percent_progress()
-        string_for_progress = ''
-        string_for_progress = ''.join((string_for_progress, str(percent), '%'))
-        return string_for_progress
+    def generate_string_for_progress(self, course_student, unit_count, all_units_counts_user):
+        if unit_count <= 0:
+            return '0%'
+        user = course_student.user
+
+        units_done_len = all_units_counts_user.get(user.id, {}).get('all', 0)
+        percent = int(units_done_len / unit_count * 100)
+        
+        return '{}%'.format(percent)
     
-    def generate_string_for_lessons(self, lessons):
-        first = True
+    def generate_string_for_lessons(self, course_student, published_lessons, lessons_qty, all_units_counts_user):
+        user = course_student.user
+        course = course_student.course
+        all_units_dones = all_units_counts_user.get(user.id, {})
+
         string_for_lesson = ''
-        for l in lessons:
-            if first:
-                first = False
-                string_for_lesson = ''.join((string_for_lesson, l['name'].encode('utf-8'), ' | ', str(l['progress']), '%'))
+        for lesson in published_lessons:
+            units_done_len = all_units_dones.get(lesson.id, 0)
+            percentage = int(units_done_len / lessons_qty[lesson.id] * 100)
+
+            if not string_for_lesson:
+                string_for_lesson += '{} | {}%'.format(lesson.name.encode('utf-8'), percentage)
             else:
-                string_for_lesson = '\n'.join((string_for_lesson, l['name'].encode('utf-8') + ' | ' + str(l['progress']) + '%'))
+                string_for_lesson += '\n{} | {}%'.format(lesson.name.encode('utf-8'), percentage)
+
         return string_for_lesson
 
     def get(self, request, *args, **kwargs):
         course_id = request.GET.get('course_id')
         course = Course.objects.get(id=course_id)
+
+        queryset = CourseStudent.objects.filter(course=course_id).prefetch_related('course__lessons',
+            'user__occupations', 'user__disciplines', 'user__education_levels', 'user__timtecuserschool_set',
+            'user__timtecuserschool_set__school', 'user__city', 'user__city__uf')
+        course_id = request.GET.get('course_id')
+        keyword = request.GET.get('keyword')
+        from_date = request.GET.get('from_date')
+        until_date = request.GET.get('until_date')
+        percentage_completion = request.GET.get('percentage_completion')
+        days_inactive = request.GET.get('days_inactive')
+
+        queryset = queryset.filter(course=course_id)
+
+        if keyword:
+            queryset = queryset.filter(Q(user__first_name__icontains=keyword) |
+                                       Q(user__last_name__icontains=keyword) |
+                                       Q(user__username__icontains=keyword) |
+                                       Q(user__email__icontains=keyword))
+
+        if from_date:
+            from_date = datetime.fromtimestamp(int(from_date) / 1000)
+
+            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            from_date = datetime.combine(from_date.date(), t)
+            queryset = queryset.filter(created_at__gte=from_date)
+        if until_date:
+            until_date = datetime.fromtimestamp(int(until_date) / 1000)
+
+            t = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            until_date = datetime.combine(until_date.date(), t)
+            queryset = queryset.filter(created_at__lte=until_date)
+
+        course_students = [cs for cs in queryset]
+        if percentage_completion:
+            if percentage_completion == '1':
+                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
+            elif percentage_completion == '2':
+                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
+            elif percentage_completion == '3':
+                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
+            elif percentage_completion == '4':
+                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
+
+        if days_inactive:
+            days_inactive = int(days_inactive)
+            from_date = datetime.now() - timedelta(days=days_inactive)
+            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            from_date = datetime.combine(from_date.date(), t)
+            course_students = [cs for cs in course_students if cs.get_last_access() == None or cs.get_last_access() <= from_date]
+
+        # precomputed useful variables
+
+        unit_count = course.unit_set.count()
+
+        published_lessons = course.lessons.filter(status='published')
+
+        lessons_qty = {}
+        for lesson in published_lessons:
+            lessons_qty[lesson.id] = lesson.unit_count()
+
+        all_units_dones = StudentProgress.objects.exclude(complete=None)\
+                                .filter(unit__lesson__course=course)\
+                                .select_related('unit__lesson', 'user')
+
+        all_units_counts_user = {}
+        for unit_done in all_units_dones:
+            user_id = unit_done.user.id
+            lesson_id = unit_done.unit.lesson.id
+
+            if user_id in all_units_counts_user:
+                all_units_counts_user[user_id]['all'] += 1
+                if lesson_id in all_units_counts_user[user_id]:
+                    all_units_counts_user[user_id][lesson_id] += 1
+                else:
+                    all_units_counts_user[user_id][lesson_id] = 1
+            else:
+                all_units_counts_user[user_id] = {lesson_id : 1, 'all' : 1}
+
+        all_last_accesses = {}
+        for sp in StudentProgress.objects.exclude(complete=None)\
+                .filter(unit__lesson=lesson) \
+                .order_by('user__id', '-last_access').distinct('user__id'):
+            all_last_accesses[sp.user.id] = sp.last_access
+                
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course.name+'.csv"'
         
@@ -276,57 +364,9 @@ class ExportUsersByCourseView(ExportUsersView):
             'Último Acesso',
             'Aulas'
         ])
-
-        queryset = CourseStudent.objects.filter(course=course_id)
-        course_id = self.request.GET.get('course_id')
-        keyword = self.request.GET.get('keyword')
-        from_date = self.request.GET.get('from_date')
-        until_date = self.request.GET.get('until_date')
-        percentage_completion = self.request.GET.get('percentage_completion')
-        days_inactive = self.request.GET.get('days_inactive')
-
-        queryset = queryset.filter(course=course_id)
-
-        if keyword:
-            queryset = queryset.filter(Q(user__first_name__icontains=keyword) |
-                                       Q(user__last_name__icontains=keyword) |
-                                       Q(user__username__icontains=keyword) |
-                                       Q(user__email__icontains=keyword))
-
-        if from_date:
-            from_date = datetime.fromtimestamp(int(from_date) / 1000)
-
-            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
-            from_date = datetime.combine(from_date.date(), t)
-            queryset = queryset.filter(created_at__gte=from_date)
-        if until_date:
-            until_date = datetime.fromtimestamp(int(until_date) / 1000)
-
-            t = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
-            until_date = datetime.combine(until_date.date(), t)
-            queryset = queryset.filter(created_at__lte=until_date)
-        
-        course_students = [cs for cs in queryset]
-        if percentage_completion:
-            if percentage_completion == '1':
-                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
-            elif percentage_completion == '2':
-                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
-            elif percentage_completion == '3':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
-            elif percentage_completion == '4':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
-
-        if days_inactive:
-            days_inactive = int(days_inactive)
-            from_date = datetime.now() - timedelta(days=days_inactive)
-            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
-            from_date = datetime.combine(from_date.date(), t)
-            course_students = [cs for cs in course_students if cs.get_last_access() == None or cs.get_last_access() <= from_date]
-
         for course_student in course_students:
             u = course_student.user
-            # course_student = self.get_course_student(u.coursestudent_set, course_id)
+
             if(course_student):
                 if course_student.status == '1':
                     status = 'Pendente'
@@ -334,15 +374,16 @@ class ExportUsersByCourseView(ExportUsersView):
                     status = 'Ativo'
                 else:
                     status = 'Cancelado'
+
                 occupations = self.generate_string_from_array(u.occupations)
                 disciplines = self.generate_string_from_array(u.disciplines)
                 education_levels = self.generate_string_from_array(u.education_levels)
                 schools = self.generate_string_for_school(u.timtecuserschool_set)
                 schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
-                progress = self.generate_string_for_progress(course_student)
+                progress = self.generate_string_for_progress(course_student, unit_count, all_units_counts_user)
                 subscribe_date = self.generate_string_for_date(course_student.created_at)
-                last_access = self.generate_string_for_date(course_student.get_last_access())
-                lessons = self.generate_string_for_lessons(course_student.percent_progress_by_lesson())
+                last_access = self.generate_string_for_date(all_last_accesses.get(u.id))
+                lessons = self.generate_string_for_lessons(course_student, published_lessons, lessons_qty, all_units_counts_user)
 
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
@@ -365,7 +406,6 @@ class ExportUsersByCourseView(ExportUsersView):
                     last_access,
                     lessons,
                 ])
-
         return response
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):
@@ -596,7 +636,6 @@ class NewStudentsJocaView(AdminView):
             date_init = datetime.strptime(date_init, "%d/%m/%Y").date()
             times = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
             date_init = datetime.combine(date_init, times)
-            print date_init
         except:
             context['error_init'] = 'Data de início em formato incorreto'
             return self.render_to_response(context)
@@ -605,7 +644,6 @@ class NewStudentsJocaView(AdminView):
             date_end = datetime.strptime(date_end, "%d/%m/%Y").date()
             times = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
             date_end = datetime.combine(date_end, times)
-            print date_end
         except:
             context['error_end'] = 'Date de fim em formato incorreto'
             return self.render_to_response(context)
