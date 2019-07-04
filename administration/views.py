@@ -199,7 +199,7 @@ class ExportUsersView(View):
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 u.email,IsAdmin
-                u.business_email if u.business_email is not None else "",
+                (u.business_email if u.business_email is not None else ""),
                 occupations,
                 disciplines,
                 education_levels,
