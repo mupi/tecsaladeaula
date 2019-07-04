@@ -198,7 +198,7 @@ class ExportUsersView(View):
             courses = self.generate_string_for_course(u.coursestudent_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
-                u.email,
+                u.email,IsAdmin
                 u.business_email if u.business_email is not None else "",
                 occupations,
                 disciplines,
@@ -217,7 +217,7 @@ class ExportUsersView(View):
             ])
 
         return response
-from django.db import connection
+
 class ExportUsersByCourseView(ExportUsersView):
 
     def generate_string_for_date(self, date):
@@ -256,9 +256,12 @@ class ExportUsersByCourseView(ExportUsersView):
         course_id = request.GET.get('course_id')
         course = Course.objects.get(id=course_id)
 
-        queryset = CourseStudent.objects.filter(course=course_id).prefetch_related('course__lessons',
-            'user__occupations', 'user__disciplines', 'user__education_levels', 'user__timtecuserschool_set',
-            'user__timtecuserschool_set__school', 'user__city', 'user__city__uf')
+        queryset = CourseStudent.objects.filter(course=course_id).select_related('user', 'course', 'course__lessons') \
+            .prefetch_related(
+                'user__occupations', 'user__disciplines', 'user__education_levels', 'user__timtecuserschool_set',
+                'user__timtecuserschool_set__school', 'user__city', 'user__city__uf'
+            )
+
         course_id = request.GET.get('course_id')
         keyword = request.GET.get('keyword')
         from_date = request.GET.get('from_date')
