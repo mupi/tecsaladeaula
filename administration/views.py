@@ -198,7 +198,7 @@ class ExportUsersView(View):
             courses = self.generate_string_for_course(u.coursestudent_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
-                u.email,IsAdmin
+                u.email,
                 (u.business_email if u.business_email is not None else ""),
                 occupations,
                 disciplines,
