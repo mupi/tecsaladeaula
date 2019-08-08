@@ -36,7 +36,7 @@ import csv
 User = get_user_model()
 
 
-class AdminMixin(TemplateResponseMixin, ContextMixin,):
+class AdminMixin(TemplateResponseMixin, ContextMixin, views.SuperuserRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(AdminMixin, self).get_context_data(**kwargs)
         context['in_admin'] = True
@@ -71,7 +71,7 @@ class UserAdminView(AdminView):
         context['total_users_number'] = User.objects.count()
         return context
 
-class ExportUsersView(View):
+class ExportUsersView(AdminView):
     def generate_string_from_array(self, array):
         first = True
         string_from_array = ''
