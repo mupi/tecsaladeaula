@@ -291,15 +291,6 @@ class ExportUsersByCourseView(ExportUsersView):
             queryset = queryset.filter(created_at__lte=until_date)
 
         course_students = [cs for cs in queryset]
-        if percentage_completion:
-            if percentage_completion == '1':
-                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
-            elif percentage_completion == '2':
-                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
-            elif percentage_completion == '3':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
-            elif percentage_completion == '4':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
 
         if days_inactive:
             days_inactive = int(days_inactive)
@@ -335,6 +326,21 @@ class ExportUsersByCourseView(ExportUsersView):
                     all_units_counts_user[user_id][lesson_id] = 1
             else:
                 all_units_counts_user[user_id] = {lesson_id : 1, 'all' : 1}
+
+        progresses = {}
+        for cs in course_students:
+            user = cs.user
+            units_done_len = all_units_counts_user.get(user.id, {}).get('all', 0)
+            progresses[user.id] = int(units_done_len / unit_count * 100)
+        if percentage_completion:
+            if percentage_completion == '1':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) == 0]
+            elif percentage_completion == '2':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) > 0 and progresses.get(cs.user_id, 0) < 50]
+            elif percentage_completion == '3':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 50 and progresses.get(cs.user_id, 0) < 80]
+            elif percentage_completion == '4':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 80]
 
         all_last_accesses = {}
         for sp in StudentProgress.objects.exclude(complete=None)\
