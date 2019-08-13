@@ -225,20 +225,11 @@ class ExportUsersByCourseView(ExportUsersView):
             return ''
         return '{}/{}/{}'.format(date.day, date.month, date.year)
 
-    def generate_string_for_progress(self, course_student, unit_count, all_units_counts_user):
-        if unit_count <= 0:
-            return '0%'
-        user = course_student.user
-
-        units_done_len = all_units_counts_user.get(user.id, {}).get('all', 0)
-        percent = int(units_done_len / unit_count * 100)
-        
-        return '{}%'.format(percent)
+    def generate_string_for_progress(self, course_student, progresses):
+        return '{}%'.format(progresses.get(course_student.user_id, 0))
     
     def generate_string_for_lessons(self, course_student, published_lessons, lessons_qty, all_units_counts_user):
-        user = course_student.user
-        course = course_student.course
-        all_units_dones = all_units_counts_user.get(user.id, {})
+        all_units_dones = all_units_counts_user.get(course_student.user_id, {})
 
         string_for_lesson = ''
         for lesson in published_lessons:
@@ -290,7 +281,7 @@ class ExportUsersByCourseView(ExportUsersView):
             until_date = datetime.combine(until_date.date(), t)
             queryset = queryset.filter(created_at__lte=until_date)
 
-        course_students = [cs for cs in queryset]
+        course_students = queryset
 
         if days_inactive:
             days_inactive = int(days_inactive)
@@ -309,14 +300,12 @@ class ExportUsersByCourseView(ExportUsersView):
         for lesson in published_lessons:
             lessons_qty[lesson.id] = lesson.unit_count()
 
-        all_units_dones = StudentProgress.objects.exclude(complete=None)\
-                                .filter(unit__lesson__course=course)\
-                                .select_related('unit__lesson', 'user')
-
         all_units_counts_user = {}
-        for unit_done in all_units_dones:
-            user_id = unit_done.user.id
-            lesson_id = unit_done.unit.lesson.id
+        for unit_done in StudentProgress.objects.exclude(complete=None)\
+                                .filter(unit__lesson__course=course)\
+                                .select_related('unit__lesson'):
+            user_id = unit_done.user_id
+            lesson_id = unit_done.unit.lesson_id
 
             if user_id in all_units_counts_user:
                 all_units_counts_user[user_id]['all'] += 1
@@ -329,9 +318,8 @@ class ExportUsersByCourseView(ExportUsersView):
 
         progresses = {}
         for cs in course_students:
-            user = cs.user
-            units_done_len = all_units_counts_user.get(user.id, {}).get('all', 0)
-            progresses[user.id] = int(units_done_len / unit_count * 100)
+            units_done_len = all_units_counts_user.get(cs.user_id, {}).get('all', 0)
+            progresses[cs.user_id] = int(units_done_len / unit_count * 100)
         if percentage_completion:
             if percentage_completion == '1':
                 course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) == 0]
@@ -346,8 +334,7 @@ class ExportUsersByCourseView(ExportUsersView):
         for sp in StudentProgress.objects.exclude(complete=None)\
                 .filter(unit__lesson=lesson) \
                 .order_by('user__id', '-last_access').distinct('user__id'):
-            all_last_accesses[sp.user.id] = sp.last_access
-                
+            all_last_accesses[sp.user_id] = sp.last_access     
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course.name+'.csv"'
         
@@ -389,7 +376,7 @@ class ExportUsersByCourseView(ExportUsersView):
                 education_levels = self.generate_string_from_array(u.education_levels)
                 schools = self.generate_string_for_school(u.timtecuserschool_set)
                 schools_types = self.generate_string_for_school_type(u.timtecuserschool_set)
-                progress = self.generate_string_for_progress(course_student, unit_count, all_units_counts_user)
+                progress = self.generate_string_for_progress(course_student, progresses)
                 subscribe_date = self.generate_string_for_date(course_student.created_at)
                 last_access = self.generate_string_for_date(all_last_accesses.get(u.id))
                 lessons = self.generate_string_for_lessons(course_student, published_lessons, lessons_qty, all_units_counts_user)
@@ -415,6 +402,7 @@ class ExportUsersByCourseView(ExportUsersView):
                     last_access,
                     lessons,
                 ])
+
         return response
 
 class CourseAdminView(AdminMixin, DetailView, views.AccessMixin):

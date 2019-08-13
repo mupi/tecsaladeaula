@@ -62,9 +62,7 @@ class UserCourseStats(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
         course = Course.objects.get(id=self.request.QUERY_PARAMS.get('course'))
         unit_count = course.unit_set.count()
         all_units_dones = StudentProgress.objects.exclude(complete=None)\
-                                .filter(unit__lesson__course=course)\
-                                .select_related('user')
-
+                                .filter(unit__lesson__course=course)
         all_units_counts_user = {}
         for unit_done in all_units_dones:
             user_id = unit_done.user_id
