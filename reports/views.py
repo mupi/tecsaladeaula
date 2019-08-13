@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
 from rest_framework import viewsets
 from rest_framework.response import Response
 from braces.views import LoginRequiredMixin
@@ -11,7 +12,7 @@ from django.utils import timezone
 from datetime import datetime, date, time, timedelta
 from django.utils import timezone
 
-from core.models import Course, CourseStudent, Class
+from core.models import Course, CourseStudent, Class, StudentProgress
 from core.permissions import IsAdmin
 
 
@@ -55,17 +56,37 @@ class UserCourseStats(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
         percentage_completion = self.request.QUERY_PARAMS.get('percentage_completion')
         days_inactive = self.request.QUERY_PARAMS.get('days_inactive')
         page = request.QUERY_PARAMS.get('page')
-        
+
         course_students = [cs for cs in self.get_queryset()]
+        
+        course = Course.objects.get(id=self.request.QUERY_PARAMS.get('course'))
+        unit_count = course.unit_set.count()
+        all_units_dones = StudentProgress.objects.exclude(complete=None)\
+                                .filter(unit__lesson__course=course)\
+                                .select_related('user')
+
+        all_units_counts_user = {}
+        for unit_done in all_units_dones:
+            user_id = unit_done.user_id
+
+            if user_id in all_units_counts_user:
+                all_units_counts_user[user_id] += 1
+            else:
+                all_units_counts_user[user_id] = 1
+        progresses = {}
+        for cs in course_students:
+            units_done_len = all_units_counts_user.get(cs.user_id, 0)
+            progresses[cs.user_id] = int(units_done_len / unit_count * 100)
+
         if percentage_completion:
             if percentage_completion == '1':
-                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) == 0]
             elif percentage_completion == '2':
-                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) > 0 and progresses.get(cs.user_id, 0) < 50]
             elif percentage_completion == '3':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 50 and progresses.get(cs.user_id, 0) < 80]
             elif percentage_completion == '4':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 80]
 
         if days_inactive:
             days_inactive = int(days_inactive)

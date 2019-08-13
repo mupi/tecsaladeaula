@@ -36,7 +36,7 @@ import csv
 User = get_user_model()
 
 
-class AdminMixin(TemplateResponseMixin, ContextMixin,):
+class AdminMixin(TemplateResponseMixin, ContextMixin, views.SuperuserRequiredMixin):
     def get_context_data(self, **kwargs):
         context = super(AdminMixin, self).get_context_data(**kwargs)
         context['in_admin'] = True
@@ -71,7 +71,7 @@ class UserAdminView(AdminView):
         context['total_users_number'] = User.objects.count()
         return context
 
-class ExportUsersView(View):
+class ExportUsersView(AdminView):
     def generate_string_from_array(self, array):
         first = True
         string_from_array = ''
@@ -198,17 +198,17 @@ class ExportUsersView(View):
             courses = self.generate_string_for_course(u.coursestudent_set)
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
-                u.email,
-                (u.business_email if u.business_email is not None else ""),
+                u.email.encode('utf-8') if u.email else "",
+                u.business_email if u.business_email else "",
                 occupations,
                 disciplines,
                 education_levels,
-                (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
-                (u.city.name.encode('utf-8') if u.city is not None else ""),
-                u.biography.encode('utf-8'),
-                u.cpf,
-                u.rg,
-                u.phone,
+                u.city.uf.name.encode('utf-8') if u.city else "",
+                u.city.name.encode('utf-8') if u.city else "",
+                u.biography.encode('utf-8') if u.biography else "",
+                u.cpf.encode('utf-8') if u.cpf else "",
+                u.rg.encode('utf-8') if u.rg else "",
+                u.phone.encode('utf-8') if u.phone else "",
                 schools,
                 schools_types,
                 courses,
@@ -291,15 +291,6 @@ class ExportUsersByCourseView(ExportUsersView):
             queryset = queryset.filter(created_at__lte=until_date)
 
         course_students = [cs for cs in queryset]
-        if percentage_completion:
-            if percentage_completion == '1':
-                course_students = [cs for cs in course_students if cs.percent_progress() == 0]
-            elif percentage_completion == '2':
-                course_students = [cs for cs in course_students if cs.percent_progress() > 0 and cs.percent_progress() < 50]
-            elif percentage_completion == '3':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 50 and cs.percent_progress() < 80]
-            elif percentage_completion == '4':
-                course_students = [cs for cs in course_students if cs.percent_progress() >= 80]
 
         if days_inactive:
             days_inactive = int(days_inactive)
@@ -335,6 +326,21 @@ class ExportUsersByCourseView(ExportUsersView):
                     all_units_counts_user[user_id][lesson_id] = 1
             else:
                 all_units_counts_user[user_id] = {lesson_id : 1, 'all' : 1}
+
+        progresses = {}
+        for cs in course_students:
+            user = cs.user
+            units_done_len = all_units_counts_user.get(user.id, {}).get('all', 0)
+            progresses[user.id] = int(units_done_len / unit_count * 100)
+        if percentage_completion:
+            if percentage_completion == '1':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) == 0]
+            elif percentage_completion == '2':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) > 0 and progresses.get(cs.user_id, 0) < 50]
+            elif percentage_completion == '3':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 50 and progresses.get(cs.user_id, 0) < 80]
+            elif percentage_completion == '4':
+                course_students = [cs for cs in course_students if progresses.get(cs.user_id, 0) >= 80]
 
         all_last_accesses = {}
         for sp in StudentProgress.objects.exclude(complete=None)\
@@ -391,17 +397,17 @@ class ExportUsersByCourseView(ExportUsersView):
                 writer.writerow([
                     u.get_full_name().encode('utf-8'),
                     status,
-                    u.email,
-                    u.business_email if u.business_email is not None else "",
+                    u.email.encode('utf-8') if u.email else "",
+                    u.business_email.encode('utf-8') if u.business_email else "",
                     occupations,
                     disciplines,
                     education_levels,
-                    (u.city.uf.name.encode('utf-8') if u.city is not None else ""),
-                    (u.city.name.encode('utf-8') if u.city is not None else ""),
-                    u.biography.encode('utf-8'),
-                    u.cpf,
-                    u.rg,
-                    u.phone,
+                    u.city.uf.name.encode('utf-8') if u.city else "",
+                    u.city.name.encode('utf-8') if u.city else "",
+                    u.biography.encode('utf-8') if u.biography else "",
+                    u.cpf.encode('utf-8') if u.cpf else "",
+                    u.rg.encode('utf-8') if u.rg else "",
+                    u.phone.encode('utf-8') if u.phone else "",
                     schools,
                     schools_types,
                     progress,
