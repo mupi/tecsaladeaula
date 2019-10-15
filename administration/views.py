@@ -155,7 +155,12 @@ class ExportUsersView(AdminView):
         city = request.GET.get('city')
         occupations = request.GET.getlist('occupations')
         disciplines = request.GET.getlist('disciplines')
-        queryset = User.objects.all()
+
+        queryset = User.objects.all().select_related('city') \
+            .prefetch_related(
+                'occupations', 'disciplines', 'education_levels', 'timtecuserschool_set',
+                'timtecuserschool_set__school', 'coursestudent_set', 'coursestudent_set__course' ,'city__uf'
+            )
 
         if admin == 'true':
             queryset = queryset.filter(is_superuser=True)
@@ -199,7 +204,7 @@ class ExportUsersView(AdminView):
             writer.writerow([
                 u.get_full_name().encode('utf-8'),
                 u.email.encode('utf-8') if u.email else "",
-                u.business_email if u.business_email else "",
+                u.business_email.encode('utf-8') if u.business_email else "",
                 occupations,
                 disciplines,
                 education_levels,
