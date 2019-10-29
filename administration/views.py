@@ -253,7 +253,6 @@ class ExportUsersByCourseView(ExportUsersView):
                 'user__timtecuserschool_set__school', 'user__city', 'user__city__uf'
             )
 
-        course_id = request.GET.get('course_id')
         keyword = request.GET.get('keyword')
         from_date = request.GET.get('from_date')
         until_date = request.GET.get('until_date')
@@ -665,5 +664,33 @@ class NewStudentsJocaView(AdminView):
             writer.writerow([student.email, 'N'])
         for student in new_joca_students:
             writer.writerow([student.email, 'S'])
+
+        return response
+
+class StudentProgressCourseView(AdminView):
+
+    def get(self, request, *args, **kwargs):
+        course_id = request.GET.get('course_id')
+        user_id = request.GET.get('user_id')
+
+        course = Course.objects.get(id=course_id)
+        user = User.objects.get(id=user_id)
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(user.email)
+        writer = csv.writer(response)
+
+        res = []
+        for sp in StudentProgress.objects.prefetch_related('unit', 'unit__lesson'). \
+            filter(user=user).filter(unit__lesson__course=course):
+            res.append([
+                sp.unit.lesson.name.encode('utf-8'),
+                sp.unit.title.encode('utf-8'),
+                sp.complete
+            ])
+
+        res = sorted(res)
+        for r in res:
+            writer.writerow(r)
 
         return response

@@ -205,9 +205,9 @@ wrapper-course-lesson
                                             <span>{% trans 'Loading student report' %}...   <i class="loading fa fa-refresh fa-spin"></i></span>
                                         </div>
                                         <div class="row row-show-lessons">
-                                          <div class="col-sm-12 lesson" ng-repeat="lesson in user_data.lessons_stats.lessons_progress">
+                                            <button class="btn width100" ng-click="export_progress_csv(user_data)"><i class="fa fa-download"></i> Exportar progesso</button>
+                                            <div class="col-sm-12 lesson" ng-repeat="lesson in user_data.lessons_stats.lessons_progress">
                                               {% verbatim %}
-
                                                   <div class="col-lg-5 col-md-6 col-sm-7 col-xs-10">{{ lesson.name }}</div>
                                                   <div class="col-md-1 col-sm-2 col-xs-2 textright">{{ lesson.progress | number:0 }}%</div>
                                                   <div class="col-md-2 col-sm-3 hidden-xs">
@@ -215,7 +215,6 @@ wrapper-course-lesson
                                                           <div class="progress-bar" style="width:{{ lesson.progress }}%;"></div>
                                                       </div>
                                                   </div>
-
                                               {% endverbatim %}
                                           </div>
                                         </div>
