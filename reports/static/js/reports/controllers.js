@@ -26,7 +26,6 @@
                 }
 
                 $scope.export_csv = function() {
-                    console.log('export_csv');
 
                     var query_string = '?';
                     if($scope.filters.course)
@@ -43,6 +42,16 @@
                         query_string += "days_inactive=" + $scope.filters.days_inactive + "&"
 
                     $window.open('/admin/course/users/export/' + query_string);
+                }
+
+                $scope.export_progress_csv = function(user) {
+
+                    var query_string = '?';
+                    if($scope.filters.course)
+                        query_string += 'course_id='+$scope.filters.course + "&";
+                    query_string += "user_id=" + user.user.id
+
+                    $window.open('/admin/course/users_progess/export/' + query_string);
                 }
 
                 $scope.filter_stats = function(){
