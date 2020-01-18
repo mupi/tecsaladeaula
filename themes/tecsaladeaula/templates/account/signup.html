@@ -60,6 +60,7 @@
         {% endif %}
 
         <input type="hidden" name="username">
+        <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
 
         <div class="submit textright">
             <button class="btn btn-success">{% trans "Sign Up" %}</button>
@@ -69,11 +70,8 @@
         {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-
     </form>
 
 <script type="text/javascript" src="{% static 'js/signup_email_tousername.js' %}" charset="utf-8"></script>
-
-
 
 {% endblock %}

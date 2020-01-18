@@ -404,6 +404,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'core.context_processors.site_settings',
     'core.context_processors.get_current_path',
     'core.context_processors.terms_acceptance_required',
+    'core.context_processors.code_google',
     'timtec.locale_context_processor.locale',
 )
 
@@ -587,6 +588,9 @@ TEMPLATE_DIRS = (
 MARKDOWN_EDITOR_SETTINGS = {'previewInWindow': 'width=800, height=600, resizable=yes, scrollbars=yes'}
 MARKDOWN_STYLE='css/main.css'
 
+GOOGLE_RECAPTCHA_SITE_KEY = ''
+GOOGLE_RECAPTCHA_SECRET_KEY = ''
+
 # if DEBUG:
 #     MIDDLEWARE_CLASSES += (
 #         'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -598,3 +602,5 @@ MARKDOWN_STYLE='css/main.css'
 #
 # # Fix debug toolbar issue: https://github.com/django-debug-toolbar/django-debug-toolbar/issues/521
 # DEBUG_TOOLBAR_PATCH_SETTINGS = False
+
+
