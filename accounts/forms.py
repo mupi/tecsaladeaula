@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import requests
 from django.contrib.auth import get_user_model
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -149,13 +150,28 @@ class SchoolAddForm(forms.ModelForm):
 class AcceptTermsForm(forms.Form):
     accept_terms = forms.BooleanField(label=_('Eu aceito os termos de uso'), initial=False, required=False)
 
+    def __init__(self, *args, **kwargs):
+        self.captcha = kwargs
+        super(AcceptTermsForm, self).__init__(*args, **kwargs)
+
     def clean_accept_terms(self):
+        captcha = self.captcha['data']
         data = self.cleaned_data['accept_terms']
         if settings.TERMS_ACCEPTANCE_REQUIRED and not data:
                 raise forms.ValidationError(_('You must agree to the Terms of Use to use %(site_name)s.'),
                                             params={'site_name': settings.SITE_NAME},)
-        return self.cleaned_data['accept_terms']
 
+        #Check captcha
+        if "g-recaptcha-response" in captcha:
+            secret_key = settings.GOOGLE_RECAPTCHA_SECRET_KEY
+            res = {'response': captcha["g-recaptcha-response"],'secret': secret_key}        
+            resp = requests.post('https://www.google.com/recaptcha/api/siteverify', data=res)
+            result_json = resp.json()
+
+            if not result_json.get('success') and not result_json.get('error-codes'):
+                raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
+       
+        return self.cleaned_data['accept_terms']
 
 class SignupForm(SignupForm, AcceptTermsForm):
     username = forms.CharField(initial=False,required=False)
@@ -171,7 +187,7 @@ class SignupForm(SignupForm, AcceptTermsForm):
             return " ".join(names[1:])
         else:
             return ""
-
+        
     def clean_username(self):
         return self.data['email']
 

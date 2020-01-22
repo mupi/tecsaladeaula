@@ -2,6 +2,7 @@
 {% load socialaccount %}
 {% load staticfiles%}
 <!--- PR basic - basic Sign Up Modal -->
+
 <div class="dropdown-menu">
     <form onclick="event.stopPropagation()" id="form-sign-up" method="post" action="{% url 'account_signup' %}" class="navbar-form form-horizontal form-sign-up">{% csrf_token %}
         <div class="form-group">
@@ -38,13 +39,13 @@
         {% endif %}
 
         <input type="hidden" name="username">
+        <input type="hidden" id="g-recaptcha-response2" name="g-recaptcha-response">
 
         <div class="submit textright clearfix">
             <div class="col-xs-12">
                 <button class="btn btn-success">{% trans 'Sign Up' %}</button>
             </div>
         </div>
-
     </form>
 </div>
 

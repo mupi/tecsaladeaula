@@ -21,3 +21,6 @@ def get_current_path(request):
 
 def terms_acceptance_required(request):
     return {'terms_required': settings.TERMS_ACCEPTANCE_REQUIRED}
+
+def code_google(request):
+    return { 'code_google': settings.GOOGLE_RECAPTCHA_SITE_KEY }
