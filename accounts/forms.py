@@ -169,7 +169,7 @@ class AcceptTermsForm(forms.Form):
             result_json = resp.json()
             
             if not result_json.get('success') and not result_json.get('error-codes'):
-                if result_json['score'] <= 0.6: 
+                if result_json['score'] <= 0.7: 
                     raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
        
         return self.cleaned_data['accept_terms']
