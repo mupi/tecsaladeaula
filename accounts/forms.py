@@ -168,7 +168,7 @@ class AcceptTermsForm(forms.Form):
             resp = requests.post('https://www.google.com/recaptcha/api/siteverify', data=res)
             result_json = resp.json()
             
-            if not result_json.get('success') and not result_json.get('error-codes'):
+            if result_json.get('success'):
                 if result_json['score'] <= 0.8: 
                     raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
        
