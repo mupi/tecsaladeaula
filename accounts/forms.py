@@ -156,8 +156,7 @@ class AcceptTermsForm(forms.Form):
 
     def clean_accept_terms(self):
         captcha = self.captcha['data']
-        print('captcha', captcha)
-        print('recaptcha', captcha["g-recaptcha-response"])
+        
         data = self.cleaned_data['accept_terms']
         if settings.TERMS_ACCEPTANCE_REQUIRED and not data:
                 raise forms.ValidationError(_('You must agree to the Terms of Use to use %(site_name)s.'),
@@ -173,7 +172,6 @@ class AcceptTermsForm(forms.Form):
             result = r.json()
             ''' End reCAPTCHA validation '''
             
-            print("result", result['success'])
             if result['success'] == False:
                 raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
        
