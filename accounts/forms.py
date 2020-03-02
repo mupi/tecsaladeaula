@@ -156,21 +156,26 @@ class AcceptTermsForm(forms.Form):
 
     def clean_accept_terms(self):
         captcha = self.captcha['data']
+        print('captcha', captcha)
+        print('recaptcha', captcha["g-recaptcha-response"])
         data = self.cleaned_data['accept_terms']
         if settings.TERMS_ACCEPTANCE_REQUIRED and not data:
                 raise forms.ValidationError(_('You must agree to the Terms of Use to use %(site_name)s.'),
                                             params={'site_name': settings.SITE_NAME},)
 
-        #Check captcha
+        ''' Begin reCAPTCHA validation '''
         if "g-recaptcha-response" in captcha:
-            secret_key = settings.GOOGLE_RECAPTCHA_SECRET_KEY
-            res = {'response': captcha["g-recaptcha-response"],'secret': secret_key}        
-            resp = requests.post('https://www.google.com/recaptcha/api/siteverify', data=res)
-            result_json = resp.json()
+            data = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': captcha["g-recaptcha-response"]
+            }
+            r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+            result = r.json()
+            ''' End reCAPTCHA validation '''
             
-            if result_json.get('success'):
-                if result_json['score'] <= 0.8: 
-                    raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
+            print("result", result['success'])
+            if result['success'] == False:
+                raise forms.ValidationError(_('Invalid reCAPTCHA. Please try again'))
        
         return self.cleaned_data['accept_terms']
 

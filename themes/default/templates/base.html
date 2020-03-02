@@ -13,16 +13,6 @@
     <title>{% block title %}{{ site.name }}{% endblock %}</title>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render={{code_google}}"></script>
-    <script>
-            grecaptcha.ready(function() {
-                grecaptcha.execute("{{code_google}}", {action: "form" })
-                .then(function(token) {
-                document.getElementById('g-recaptcha-response').value = token;
-                document.getElementById('g-recaptcha-response2').value = token;
-                }); 
-            }); 
-    </script> 
 
     {% compressed_css 'common' %}
     {% compressed_css 'public' %}

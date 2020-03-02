@@ -39,8 +39,12 @@
         {% endif %}
 
         <input type="hidden" name="username">
-        <input type="hidden" id="g-recaptcha-response2" name="g-recaptcha-response">
 
+        <div class="col-sm-offset-2 col-sm-10 col-xs-12">
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <div class="g-recaptcha" data-sitekey={{code_google}}></div>
+        </div>
+        
         <div class="submit textright clearfix">
             <div class="col-xs-12">
                 <button class="btn btn-success">{% trans 'Sign Up' %}</button>
