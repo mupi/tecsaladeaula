@@ -97,7 +97,10 @@
         		 {% endif %}
 
                 <input type="hidden" name="username">
-
+                
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey={{code_google}}></div>
+               
                   <div class="submit textright">
                     <div class="row">
                       <div class="col-lg-4 col-lg-offset-8 col-md-5 col-md-offset-7 col-sm-7 col-sm-offset-5 col-xs-12 textright">
@@ -106,8 +109,6 @@
                     </div>
                   </div>
                   <input type="hidden" name="next" />
-                  <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-
                 </form>
               </div>
             </div>
