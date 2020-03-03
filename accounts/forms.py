@@ -163,6 +163,9 @@ class AcceptTermsForm(forms.Form):
                                             params={'site_name': settings.SITE_NAME},)
 
         ''' Begin reCAPTCHA validation '''
+        if not "g-recaptcha-response" in captcha:
+            raise forms.ValidationError(_('Invalid Data'))
+
         if "g-recaptcha-response" in captcha:
             data = {
                 'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
