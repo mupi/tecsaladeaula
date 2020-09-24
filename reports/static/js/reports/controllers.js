@@ -44,6 +44,20 @@
                     $window.open('/admin/course/users/export/' + query_string);
                 }
 
+
+                $scope.export_csv_simple = function() {
+
+                    var query_string = '?';
+                    if($scope.filters.course)
+                        query_string += 'course_id='+$scope.filters.course + "&";
+                    if ($scope.from_date)
+                        query_string += "from_date=" + Date.parse($scope.from_date) + "&"
+                    if ($scope.until_date)
+                        query_string += "until_date=" + Date.parse($scope.until_date) + "&"
+
+                    $window.open('/admin/course/users/export/simple/' + query_string);
+                }
+
                 $scope.export_progress_csv = function(user) {
 
                     var query_string = '?';

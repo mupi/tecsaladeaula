@@ -224,6 +224,59 @@ class ExportUsersView(AdminView):
 
         return response
 
+class ExportSimpleUsersByCourseView(ExportUsersView):
+    def get(self, request, *args, **kwargs):
+        course_id = request.GET.get('course_id')
+        from_date = request.GET.get('from_date')
+        until_date = request.GET.get('until_date')
+
+        course = Course.objects.get(id=course_id)
+        queryset = CourseStudent.objects.filter(course=course_id).select_related('user', 'course')    
+
+        if from_date:
+            from_date = datetime.fromtimestamp(int(from_date) / 1000)
+
+            t = time(0, 0, 0, tzinfo=timezone.get_current_timezone())
+            from_date = datetime.combine(from_date.date(), t)
+            queryset = queryset.filter(created_at__gte=from_date)
+        if until_date:
+            until_date = datetime.fromtimestamp(int(until_date) / 1000)
+
+            t = time(23, 59, 59, tzinfo=timezone.get_current_timezone())
+            until_date = datetime.combine(until_date.date(), t)
+            queryset = queryset.filter(created_at__lte=until_date)
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="alunos_-_'+course.name+'.csv"'
+        
+        writer = csv.writer(response)
+        writer.writerow([
+            'Nome',
+            'Email',
+            'Email Adicional',
+            'Situação',
+        ])
+       
+        for course_student in queryset:
+            u = course_student.user
+
+            if(course_student):
+                if course_student.status == '1':
+                    status = 'Pendente'
+                elif course_student.status == '2':
+                    status = 'Ativo'
+                else:
+                    status = 'Cancelado'
+
+            writer.writerow([
+                u.get_full_name().encode('utf-8'),
+                u.email.encode('utf-8') if u.email else "",
+                u.business_email.encode('utf-8') if u.business_email else "",
+                status,
+            ])
+
+        return response
+
 class ExportUsersByCourseView(ExportUsersView):
 
     def generate_string_for_date(self, date):
