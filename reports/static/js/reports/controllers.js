@@ -41,7 +41,7 @@
                     if ($scope.filters.days_inactive)
                         query_string += "days_inactive=" + $scope.filters.days_inactive + "&"
 
-                    $window.open('/admin/course/users/export/' + query_string);
+                    $window.open('/admin/course/users/export/simple/' + query_string);
                 }
 
 
