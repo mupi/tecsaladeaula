@@ -264,8 +264,8 @@ class ExportUsersByCourseView(ExportUsersView):
         until_date = request.GET.get('until_date')
         percentage_completion = request.GET.get('percentage_completion')
         days_inactive = request.GET.get('days_inactive')
-
-#         queryset = queryset.filter(course=course_id)
+        
+        queryset = queryset.filter(course=course_id)
 
         if keyword:
             queryset = queryset.filter(Q(user__first_name__icontains=keyword) |
